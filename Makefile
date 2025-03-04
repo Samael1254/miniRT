@@ -3,7 +3,7 @@ NAME = miniRT
 SOURCES_DIR = ./srcs
 BUILD_DIR = ./build
 
-SOURCES := main.c
+SOURCES := main.c errors.c check_arguments.c
 
 SOURCES := $(addprefix $(SOURCES_DIR)/, $(SOURCES))
 
@@ -11,7 +11,7 @@ OBJS := $(addprefix $(BUILD_DIR)/, $(notdir $(SOURCES:.c=.o)))
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I./includes -I./libft/includes/ #-g
+CFLAGS = -Wall -Wextra -Werror -I./includes -I./libs/libft/includes/ #-g
 
 LIBFT = ./libs/libft/lib/libft.a
 
@@ -30,19 +30,19 @@ $(BUILD_DIR)/%.o: $(SOURCES_DIR)/%.c
 
 $(LIBFT):
 	@ echo " \033[33mCompiling Libft\033[m"
-	@ cd libft && $(MAKE) -s
+	@ cd libs/libft && $(MAKE) -s -j
 	@ tput cuu1 && tput el
 	@ tput cuu1 && tput el
 	@ echo " \033[34m Libft compiled\033[m"
 
 $(MLX):
 	@ echo " \033[33mCompiling MiniLibX\033[m"
-	@ cd libs/mlx && $(MAKE) -s
+	@ cd libs/mlx && $(MAKE) -s -j
 	@ echo " \033[34m MiniLibX compiled\033[m"
 
 fclean_libft:
 	@ echo " \033[33mCleaning Libft\033[m"
-	@ cd libft && $(MAKE) -s fclean
+	@ cd libs/libft && $(MAKE) -s fclean
 	@ tput cuu1 && tput el
 	@ tput cuu1 && tput el
 	@ echo " \033[34m Libft cleaned\033[m"
