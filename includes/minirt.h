@@ -26,6 +26,17 @@ enum		e_keycode
 
 /* STRUCTS */
 
+// Data for an image buffer
+typedef struct s_img_data
+{
+	void	*img;
+	char	*addr;
+	int		bp_pixel;
+	int		line_len;
+	int		endian;
+}			t_img_data;
+
+// State of the program
 typedef struct s_state
 {
 	void	*display;
