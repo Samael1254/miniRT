@@ -1,5 +1,6 @@
 compile_flags.txt
 libft/
+mlx/
 build/
 test/
 miniRT
