@@ -3,7 +3,7 @@ NAME = miniRT
 SOURCES_DIR = ./srcs
 BUILD_DIR = ./build
 
-SOURCES := main.c errors.c check_arguments.c
+SOURCES := main.c errors.c check_arguments.c exit_program.c
 
 SOURCES := $(addprefix $(SOURCES_DIR)/, $(SOURCES))
 
@@ -11,7 +11,7 @@ OBJS := $(addprefix $(BUILD_DIR)/, $(notdir $(SOURCES:.c=.o)))
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I./includes -I./libs/libft/includes/ #-g
+CFLAGS = -Wall -Wextra -Werror -I./includes -I./libs/libft/includes -I./libs/mlx #-g
 
 LIBFT = ./libs/libft/lib/libft.a
 
