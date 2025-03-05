@@ -26,6 +26,15 @@ enum			e_keycode
 	K_ESC = 0xff1b,
 };
 
+enum			e_object
+{
+	CAMERA = 1,
+	LIGHT = 2,
+	SPHERE = 3,
+	PLANE = 4,
+	CYLINDER = 5
+};
+
 /* STRUCTS */
 
 // Data for an image buffer
