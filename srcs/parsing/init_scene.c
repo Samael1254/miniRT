@@ -16,9 +16,10 @@ static int	get_data_line(t_state *state, char *line)
 	for (int i = 0; split && split[i]; i++)
 		printf("split[%d] -> %s\n", i, split[i]);
 	// retrieve_data(state, split);
+	return (0);
 }
 
-void	read_file(t_state *state, char *filename)
+void	init_scene(t_state *state, char *filename)
 {
 	char	*line;
 	int		fd;

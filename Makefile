@@ -1,14 +1,17 @@
 NAME = miniRT
 
-SOURCES_DIR = ./srcs
-BUILD_DIR = ./build
+SOURCES_DIR = srcs/
+BUILD_DIR = build/
 
-SOURCES := main.c errors.c check_arguments.c exit_program.c events.c \
-		   init_state.c
+SRCS_MAIN := main.c errors.c check_arguments.c exit_program.c \
+             events.c init_state.c
 
-SOURCES := $(addprefix $(SOURCES_DIR)/, $(SOURCES))
+SRCS_PARSING := init_scene.c insert_in_struct.c
 
-OBJS := $(addprefix $(BUILD_DIR)/, $(notdir $(SOURCES:.c=.o)))
+SOURCES := $(addprefix $(SOURCES_DIR)base/, $(SRCS_MAIN)) \
+           $(addprefix $(SOURCES_DIR)parsing/, $(SRCS_PARSING))
+
+OBJS := $(addprefix $(BUILD_DIR), $(notdir $(SOURCES:.c=.o)))
 
 CC = cc
 
@@ -25,7 +28,7 @@ $(NAME): $(LIBFT) $(MLX) $(OBJS)
 	@ $(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFLAGS)
 	@ echo " \033[1;32m MiniRT binary compiled\033[m"
 
-$(BUILD_DIR)/%.o: $(SOURCES_DIR)/%.c
+$(BUILD_DIR)%.o: $(SOURCES_DIR)*/%.c
 	@ mkdir -p $(BUILD_DIR)
 	@ $(CC) $(CFLAGS) -c $< -o $@
 

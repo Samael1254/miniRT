@@ -6,7 +6,8 @@
 // Init state //
 
 // Initializes the program state
-void	init_state(t_state *state);
+void	init_state(t_state *state, char *filename);
+void	init_scene(t_state *state, char *filename);
 
 // Events //
 
@@ -17,9 +18,6 @@ void	loop_events(t_state *state);
 
 // Checks if the program arguments are valid
 int		check_arguments(int argc, char **argv);
-
-// Initialization
-void	init_state(t_state *state);
 
 // Errors //
 
