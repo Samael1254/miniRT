@@ -23,6 +23,10 @@ int		key_pressed(int keycode, t_state *state);
 // Checks if the program arguments are valid
 int		check_arguments(int argc, char **argv);
 
+// Initialization
+void	init_state(t_state *state);
+
+
 // Errors //
 
 // Prints an error

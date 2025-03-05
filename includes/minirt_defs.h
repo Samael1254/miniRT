@@ -76,6 +76,7 @@ typedef struct s_point_light
 
 typedef struct s_scene
 {
+	t_ambiant_light	a_light;
 }				t_scene;
 
 // State of the program
