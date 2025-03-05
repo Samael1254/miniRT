@@ -4,5 +4,5 @@ int	retrieve_data(t_state *state, char **split)
 {
 	if (!*split)
 		return (-1);
-
+	return (0);
 }
