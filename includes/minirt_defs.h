@@ -98,6 +98,7 @@ typedef struct s_camera
 typedef struct s_object
 {
 	enum e_object	type;
+	t_vector3d		color;
 	void			*object_r;
 }					t_object;
 
@@ -114,6 +115,12 @@ typedef struct s_ray
 	t_vector3d		origin;
 	t_vector3d		direction;
 }					t_ray;
+
+typedef struct s_intersection
+{
+	t_vector3d		point;
+	t_vector3d		color;
+}					t_intersection;
 
 // State of the program
 typedef struct s_state

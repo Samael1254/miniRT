@@ -1,9 +1,11 @@
 #include "ft_algebra.h"
+#include "ft_memory.h"
 #include "minirt.h"
 #include "minirt_defs.h"
 #include <math.h>
+#include <stdlib.h>
 
-double	intersect_sphere(t_ray ray, t_sphere sphere)
+static double	intersect_sphere(t_ray ray, t_sphere sphere)
 {
 	t_vector3d	dist;
 	double		dist_proj;
@@ -18,7 +20,7 @@ double	intersect_sphere(t_ray ray, t_sphere sphere)
 	return (dist_proj - sqrt(inner_dist));
 }
 
-double	intersect_plane(t_ray ray, t_plane plane)
+static double	intersect_plane(t_ray ray, t_plane plane)
 {
 	double	dir_dot;
 	double	point_dot;
@@ -31,7 +33,7 @@ double	intersect_plane(t_ray ray, t_plane plane)
 	return (-point_dot / dir_dot);
 }
 
-double	intersect_cylinder(t_ray ray, t_cylinder cylinder)
+static double	intersect_cylinder(t_ray ray, t_cylinder cylinder)
 {
 	double		dist;
 	double		height_dist;
@@ -57,11 +59,8 @@ double	intersect_cylinder(t_ray ray, t_cylinder cylinder)
 	return (dist);
 }
 
-double	intersect_object(t_ray ray, void *obj_data)
+static double	intersect_object(t_ray ray, t_object object)
 {
-	t_object	object;
-
-	object = *(t_object *)obj_data;
 	if (object.type == SPHERE)
 		return (intersect_sphere(ray, *(t_sphere *)object.object_r));
 	if (object.type == PLANE)
@@ -72,15 +71,31 @@ double	intersect_object(t_ray ray, void *obj_data)
 	return (INFINITY);
 }
 
-double	intersect_scene(t_ray ray, t_list *objects)
+t_intersection	*intersect_scene(t_ray ray, t_list *objects)
 {
-	double	distance;
+	double			cur_distance;
+	double			distance_min;
+	t_object		*cur_object;
+	t_object		*closest_object;
+	t_intersection	*inter;
 
-	distance = INFINITY;
+	distance_min = INFINITY;
 	while (objects)
 	{
-		distance = fmin(distance, intersect_object(ray, objects->data));
+		cur_object = (t_object *)objects->data;
+		cur_distance = intersect_object(ray, *cur_object);
+		if (cur_distance < distance_min)
+		{
+			distance_min = cur_distance;
+			closest_object = cur_object;
+		}
 		objects = objects->next;
 	}
-	return (distance);
+	if (distance_min == INFINITY)
+		return (NULL);
+	inter = ft_calloc(1, sizeof(t_intersection));
+	inter->color = closest_object->color;
+	inter->point = ft_add_vectors3d(ray.origin, ft_scale_vector3d(distance_min,
+				ray.direction));
+	return (inter);
 }
