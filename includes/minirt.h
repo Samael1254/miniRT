@@ -8,15 +8,10 @@
 // Initializes the program state
 void	init_state(t_state *state);
 
-// Display //
-
-// Displays the window
-void	display_window(t_state *state);
-
 // Events //
 
-// Function called when a key is pressed
-int		key_pressed(int keycode, t_state *state);
+// Loops while waiting for events
+void	loop_events(t_state *state);
 
 // Check arguments //
 
@@ -25,7 +20,6 @@ int		check_arguments(int argc, char **argv);
 
 // Initialization
 void	init_state(t_state *state);
-
 
 // Errors //
 
