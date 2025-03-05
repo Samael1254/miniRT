@@ -3,7 +3,7 @@ NAME = miniRT
 SOURCES_DIR = ./srcs
 BUILD_DIR = ./build
 
-SOURCES := main.c errors.c check_arguments.c exit_program.c
+SOURCES := main.c errors.c check_arguments.c exit_program.c init_state.c
 
 SOURCES := $(addprefix $(SOURCES_DIR)/, $(SOURCES))
 
