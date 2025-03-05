@@ -4,9 +4,9 @@ SOURCES_DIR = srcs/
 BUILD_DIR = build/
 
 SRCS_MAIN := main.c errors.c check_arguments.c exit_program.c \
-             events.c init_state.c
+             events.c init_state.c print_debug.c
 
-SRCS_PARSING := init_scene.c insert_in_struct.c
+SRCS_PARSING := init_scene.c insert_in_struct.c utils.c objects_list.c
 
 SOURCES := $(addprefix $(SOURCES_DIR)base/, $(SRCS_MAIN)) \
            $(addprefix $(SOURCES_DIR)parsing/, $(SRCS_PARSING))

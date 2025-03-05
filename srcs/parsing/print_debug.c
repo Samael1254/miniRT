@@ -56,7 +56,7 @@ void	print_ambiant_light(t_ambiant_light ambiant_light)
 
 void	print_camera(t_camera camera)
 {
-	printf("- A ");
+	printf("- C ");
 	print_vector3d(camera.pos);
 	printf(" ");
 	print_vector3d(camera.rot);
