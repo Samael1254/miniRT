@@ -8,4 +8,6 @@ int	main(int argc, char **argv)
 	if (check_arguments(argc, argv))
 		return (EXIT_FAILURE);
 	init_state(&state);
+	display_window(&state);
+	exit_program(&state, EXIT_SUCCESS);
 }

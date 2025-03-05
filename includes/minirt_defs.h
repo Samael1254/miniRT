@@ -83,7 +83,7 @@ typedef struct s_state
 {
 	void		*display;
 	void		*win;
-	t_img_data	*img_data;
+	t_img_data	img_data;
 }				t_state;
 
 #endif

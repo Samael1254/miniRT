@@ -3,6 +3,21 @@
 
 # include "minirt_defs.h"
 
+// Init state //
+
+// Initializes the program state
+void	init_state(t_state *state);
+
+// Display //
+
+// Displays the window
+void	display_window(t_state *state);
+
+// Events //
+
+// Function called when a key is pressed
+int		key_pressed(int keycode, t_state *state);
+
 // Check arguments //
 
 // Checks if the program arguments are valid
@@ -18,6 +33,6 @@ void	fatal_error(char const *type, char const *msg, t_state *state);
 // Exit program //
 
 // Frees the program state and exits the program
-void	exit_program(t_state *state, int status);
+int		exit_program(t_state *state, int status);
 
 #endif
