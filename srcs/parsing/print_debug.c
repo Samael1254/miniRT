@@ -66,4 +66,20 @@ void	print_camera(t_camera camera)
 
 void	print_scene(t_scene scene)
 {
+	t_object	*object;
+
+	print_ambiant_light(scene.a_light);
+	print_camera(scene.camera);
+	print_point_light(scene.p_light);
+	while (scene.objects)
+	{
+		object = (t_object *)scene.objects->data;
+		if (object->type == SPHERE)
+			print_sphere(*(t_sphere *)object->object_r);
+		if (object->type == PLANE)
+			print_plane(*(t_plane *)object->object_r);
+		if (object->type == CYLINDER)
+			print_cylinder(*(t_cylinder *)object->object_r);
+		scene.objects = scene.objects->next;
+	}
 }
