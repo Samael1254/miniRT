@@ -30,6 +30,7 @@ enum				e_keycode
 enum				e_light
 {
 	L_POINT,
+	L_AMBIANT,
 };
 
 enum				e_object
@@ -113,6 +114,7 @@ typedef struct s_ray
 	t_vector3d		origin;
 	t_vector3d		direction;
 }					t_ray;
+
 // State of the program
 typedef struct s_state
 {

@@ -1,6 +1,13 @@
+#include "ft_list.h"
 #include "minirt.h"
+#include "minirt_defs.h"
 #include "mlx.h"
 #include <stdlib.h>
+
+static void	free_scene(t_scene *scene_r)
+{
+	ft_list_clear(scene_r->objects, &free);
+}
 
 static void	free_mlx(t_state *state)
 {
@@ -17,6 +24,9 @@ static void	free_mlx(t_state *state)
 int	exit_program(t_state *state, int status)
 {
 	if (state)
+	{
 		free_mlx(state);
+		free_scene(&state->scene);
+	}
 	exit(status);
 }
