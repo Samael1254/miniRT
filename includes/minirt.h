@@ -38,12 +38,13 @@ void			ray_tracing(t_state *state);
 
 // Intersections //
 
-t_intersection	*intersect_scene(t_ray ray, t_list *objects);
+t_intersection	intersect_scene(t_ray ray, t_list *objects);
 
 // Graphics //
 
 int				rgb_to_int(t_color color);
 void			put_pixel(t_img_data *img, t_ivector2d coords, t_color color);
+t_color			get_sky_color(t_ray ray);
 
 // Check arguments //
 

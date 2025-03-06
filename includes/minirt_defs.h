@@ -9,8 +9,10 @@
 # define FALSE 0
 # define TRUE 1
 
-# define WIN_X 1600
-# define WIN_Y 1000
+# define WIN_X 320
+# define WIN_Y 200
+
+# define RAY_REACH_MAX 20
 
 /* ENUMS */
 
@@ -95,7 +97,7 @@ typedef struct s_point_light
 typedef struct s_camera
 {
 	t_vector3d		pos;
-	t_vector3d		rot;
+	t_vector3d		dir;
 	double			fov_2;
 }					t_camera;
 

@@ -21,3 +21,14 @@ t_color	average_colors(t_color color1, t_color color2)
 	avg.b = (unsigned char)(((double)color1.b + (double)color2.b) * 0.5);
 	return (avg);
 }
+
+t_color	get_sky_color(t_ray ray)
+{
+	t_color	sky_color;
+
+	(void)ray;
+	sky_color.r = 42;
+	sky_color.g = 162;
+	sky_color.b = 242;
+	return (sky_color);
+}

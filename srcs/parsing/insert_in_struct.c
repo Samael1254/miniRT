@@ -40,7 +40,7 @@ static void	add_camera(t_state *state, char **split)
 		fatal_error("parsing", "error of ambiant light colors", state);
 	}
 	state->scene.camera.pos = pos;
-	state->scene.camera.rot = rot;
+	state->scene.camera.dir = rot;
 	fov_2 = ft_atod(split[3]) / 2;
 	if (fov_2 < 0 || fov_2 > 180)
 	{

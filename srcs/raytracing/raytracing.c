@@ -71,11 +71,21 @@ static t_ray	**alloc_rays(void)
 	return (rays);
 }
 
+static void	free_rays(t_ray **rays)
+{
+	int	i;
+
+	i = 0;
+	while (i < WIN_Y)
+		free(rays[i++]);
+	free(rays);
+}
+
 void	ray_tracing(t_state *state)
 {
 	t_ray			**rays;
 	t_ivector2d		coords;
-	t_intersection	*inter;
+	t_intersection	inter;
 
 	rays = alloc_rays();
 	init_rays(state->scene.camera, rays);
@@ -87,11 +97,12 @@ void	ray_tracing(t_state *state)
 		{
 			inter = intersect_scene(rays[coords.y][coords.x],
 					state->scene.objects);
-			put_pixel(&state->img_data, coords, inter->color);
+			put_pixel(&state->img_data, coords, inter.color);
+			mlx_put_image_to_window(state->display, state->win,
+				state->img_data.img, 0, 0);
 			coords.x++;
 		}
 		coords.y++;
 	}
-	mlx_put_image_to_window(state->display, state->win, state->img_data.img, 0,
-		0);
+	free_rays(rays);
 }

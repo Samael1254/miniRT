@@ -73,7 +73,7 @@ static void	print_camera(t_camera camera)
 	printf("- C ");
 	print_vector3d(camera.pos);
 	printf(" ");
-	print_vector3d(camera.rot);
+	print_vector3d(camera.dir);
 	printf(" %2.f", ft_rad_to_deg(camera.fov_2 * 2));
 	printf("\n");
 }

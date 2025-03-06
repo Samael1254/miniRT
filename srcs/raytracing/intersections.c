@@ -1,9 +1,7 @@
 #include "ft_algebra.h"
-#include "ft_memory.h"
 #include "minirt.h"
 #include "minirt_defs.h"
 #include <math.h>
-#include <stdlib.h>
 
 static double	intersect_sphere(t_ray ray, t_sphere sphere)
 {
@@ -71,13 +69,13 @@ static double	intersect_object(t_ray ray, t_object object)
 	return (INFINITY);
 }
 
-t_intersection	*intersect_scene(t_ray ray, t_list *objects)
+t_intersection	intersect_scene(t_ray ray, t_list *objects)
 {
 	double			cur_distance;
 	double			distance_min;
 	t_object		*cur_object;
 	t_object		*closest_object;
-	t_intersection	*inter;
+	t_intersection	inter;
 
 	distance_min = INFINITY;
 	while (objects)
@@ -91,11 +89,14 @@ t_intersection	*intersect_scene(t_ray ray, t_list *objects)
 		}
 		objects = objects->next;
 	}
-	if (distance_min == INFINITY)
-		return (NULL);
-	inter = ft_calloc(1, sizeof(t_intersection));
-	inter->color = closest_object->color;
-	inter->point = ft_add_vectors3d(ray.origin, ft_scale_vector3d(distance_min,
+	if (distance_min > RAY_REACH_MAX)
+	{
+		inter.color = get_sky_color(ray);
+		inter.point = ft_init_vector3d(INFINITY);
+		return (inter);
+	}
+	inter.color = closest_object->color;
+	inter.point = ft_add_vectors3d(ray.origin, ft_scale_vector3d(distance_min,
 				ray.direction));
 	return (inter);
 }
