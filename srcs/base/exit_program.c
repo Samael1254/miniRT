@@ -6,6 +6,16 @@
 
 static void	free_scene(t_scene *scene_r)
 {
+	t_object	*object;
+	t_list		*tmp;
+
+	tmp = scene_r->objects;
+	while (tmp)
+	{
+		object = (t_object *)tmp->data;
+		free(object->object_r);
+		tmp = tmp->next;
+	}
 	ft_list_clear(scene_r->objects, &free);
 }
 

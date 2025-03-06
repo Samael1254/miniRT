@@ -57,7 +57,7 @@ static void	print_point_light(t_point_light light)
 static void	print_ambiant_light(t_ambiant_light ambiant_light)
 {
 	printf("- A ");
-	printf("%f ", ambiant_light.intensity);
+	printf("%f ", ambiant_light.brightness);
 	print_color(ambiant_light.color);
 	printf("\n");
 }

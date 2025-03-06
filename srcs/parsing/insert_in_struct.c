@@ -5,17 +5,17 @@
 static void	add_ambient_light(t_state *state, char **split)
 {
 	t_color		color;
-	double		intensity;
+	double		brightness;
 	bool		error;
 
 
-	intensity = ft_atod(split[1]);
-	if (intensity < 0 || intensity > 1)
+	brightness = ft_atod(split[1]);
+	if (brightness < 0 || brightness > 1)
 	{
 		ft_free_strtab(split);
-		fatal_error("parsing", "intensity of ambiant light is wrong", state);
+		fatal_error("parsing", "brightness of ambiant light is wrong", state);
 	}
-	state->scene.a_light.intensity = intensity;
+	state->scene.a_light.brightness = brightness;
 	color = get_color(split[2], &error);
 	if (error == true)
 	{

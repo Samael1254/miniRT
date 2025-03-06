@@ -2,7 +2,6 @@
 #include "libft.h"
 #include <stdlib.h>
 
-// TODO: revoir l'ajout a la list qui segfault
 void	add_object_to_list(t_state *state, char **split)
 {
 	t_object	*obj;
