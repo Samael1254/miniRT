@@ -2,12 +2,12 @@
 #include "minirt_defs.h"
 #include <stdio.h>
 
-void	print_vector3d(t_vector3d vec)
+static void	print_vector3d(t_vector3d vec)
 {
 	printf("%f,%f,%f", vec.x, vec.y, vec.z);
 }
 
-void	print_sphere(t_sphere sphere)
+static void	print_sphere(t_sphere sphere)
 {
 	printf("- sp ");
 	print_vector3d(sphere.pos);
@@ -16,7 +16,7 @@ void	print_sphere(t_sphere sphere)
 	printf("\n");
 }
 
-void	print_plane(t_plane plane)
+static void	print_plane(t_plane plane)
 {
 	printf("- pl ");
 	print_vector3d(plane.point);
@@ -27,7 +27,7 @@ void	print_plane(t_plane plane)
 	printf("\n");
 }
 
-void	print_cylinder(t_cylinder cylinder)
+static void	print_cylinder(t_cylinder cylinder)
 {
 	printf("- cy ");
 	print_vector3d(cylinder.pos);
@@ -37,7 +37,7 @@ void	print_cylinder(t_cylinder cylinder)
 	printf("\n");
 }
 
-void	print_point_light(t_point_light light)
+static void	print_point_light(t_point_light light)
 {
 	printf("- L ");
 	print_vector3d(light.pos);
@@ -46,7 +46,7 @@ void	print_point_light(t_point_light light)
 	printf("\n");
 }
 
-void	print_ambiant_light(t_ambiant_light ambiant_light)
+static void	print_ambiant_light(t_ambiant_light ambiant_light)
 {
 	printf("- A ");
 	printf("%f ", ambiant_light.intensity);
@@ -54,7 +54,7 @@ void	print_ambiant_light(t_ambiant_light ambiant_light)
 	printf("\n");
 }
 
-void	print_camera(t_camera camera)
+static void	print_camera(t_camera camera)
 {
 	printf("- C ");
 	print_vector3d(camera.pos);
