@@ -1,5 +1,6 @@
 #include "minirt.h"
 #include "minirt_defs.h"
+#include <stdio.h>
 
 void	put_pixel(t_img_data *img, t_ivector2d coords, t_color color)
 {
@@ -10,6 +11,7 @@ void	put_pixel(t_img_data *img, t_ivector2d coords, t_color color)
 			&& coords.y < WIN_Y))
 	{
 		error("put pixel", "pixel coords outside of window");
+		printf("x: %d, y: %d\n", coords.x, coords.y);
 		return ;
 	}
 	offset = coords.y * img->line_len + coords.x * (img->bp_pixel) / 8;

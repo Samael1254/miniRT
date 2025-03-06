@@ -1,8 +1,10 @@
 #include "ft_algebra.h"
+#include "ft_memory.h"
 #include "minirt.h"
 #include "minirt_defs.h"
 #include "mlx.h"
 #include <math.h>
+#include <stdlib.h>
 
 static double	vertical_fov_2(double horizontal_fov_2)
 {
@@ -19,7 +21,7 @@ static t_ray	init_ray(t_camera camera, t_vector2d rotator)
 	return (ray);
 }
 
-static void	init_rays(t_camera camera, t_ray rays[WIN_Y][WIN_X])
+static void	init_rays(t_camera camera, t_ray **rays)
 {
 	t_vector2d	rotator;
 	t_ivector2d	coords;
@@ -46,12 +48,36 @@ static void	init_rays(t_camera camera, t_ray rays[WIN_Y][WIN_X])
 	}
 }
 
+static t_ray	**alloc_rays(void)
+{
+	t_ray	**rays;
+	int		i;
+
+	rays = ft_calloc(WIN_Y, sizeof(t_ray *));
+	if (!rays)
+		return (NULL);
+	i = 0;
+	while (i < WIN_Y)
+	{
+		rays[i] = ft_calloc(WIN_X, sizeof(t_ray));
+		if (!rays[i])
+		{
+			while (i > 0)
+				free(rays[--i]);
+			free(rays);
+		}
+		i++;
+	}
+	return (rays);
+}
+
 void	ray_tracing(t_state *state)
 {
-	t_ray			rays[WIN_Y][WIN_X];
+	t_ray			**rays;
 	t_ivector2d		coords;
 	t_intersection	*inter;
 
+	rays = alloc_rays();
 	init_rays(state->scene.camera, rays);
 	coords.y = 0;
 	while (coords.y < WIN_Y)
