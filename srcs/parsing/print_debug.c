@@ -4,7 +4,7 @@
 
 static void	print_vector3d(t_vector3d vec)
 {
-	printf("%f,%f,%f", vec.x, vec.y, vec.z);
+	printf("%2.f,%2.f,%2.f", vec.x, vec.y, vec.z);
 }
 
 static void	print_color(t_color col)
@@ -14,17 +14,21 @@ static void	print_color(t_color col)
 
 static void	print_sphere(t_object object)
 {
-	t_sphere sphere = *(t_sphere *)object.object_r;
+	t_sphere	sphere;
+
+	sphere = *(t_sphere *)object.object_r;
 	printf("- sp ");
 	print_vector3d(sphere.pos);
-	printf(" %f ", sphere.diameter);
+	printf(" %2.f ", sphere.diameter);
 	print_color(object.color);
 	printf("\n");
 }
 
 static void	print_plane(t_object object)
 {
-	t_plane plane = *(t_plane *)object.object_r;
+	t_plane	plane;
+
+	plane = *(t_plane *)object.object_r;
 	printf("- pl ");
 	print_vector3d(plane.point);
 	printf(" ");
@@ -36,11 +40,13 @@ static void	print_plane(t_object object)
 
 static void	print_cylinder(t_object object)
 {
-	t_cylinder cylinder = *(t_cylinder *)object.object_r;
+	t_cylinder	cylinder;
+
+	cylinder = *(t_cylinder *)object.object_r;
 	printf("- cy ");
 	print_vector3d(cylinder.pos);
-	printf(" %f ", cylinder.diameter);
-	printf("%f ", cylinder.height);
+	printf(" %2.f ", cylinder.diameter);
+	printf("%2.f ", cylinder.height);
 	print_color(object.color);
 	printf("\n");
 }
@@ -49,7 +55,7 @@ static void	print_point_light(t_point_light light)
 {
 	printf("- L ");
 	print_vector3d(light.pos);
-	printf(" %f ", light.brightness);
+	printf(" %2.f ", light.brightness);
 	print_color(light.color);
 	printf("\n");
 }
@@ -57,7 +63,7 @@ static void	print_point_light(t_point_light light)
 static void	print_ambiant_light(t_ambiant_light ambiant_light)
 {
 	printf("- A ");
-	printf("%f ", ambiant_light.intensity);
+	printf("%2.f ", ambiant_light.brightness);
 	print_color(ambiant_light.color);
 	printf("\n");
 }
@@ -68,7 +74,7 @@ static void	print_camera(t_camera camera)
 	print_vector3d(camera.pos);
 	printf(" ");
 	print_vector3d(camera.rot);
-	printf(" %f", ft_rad_to_deg(camera.fov));
+	printf(" %2.f", ft_rad_to_deg(camera.fov));
 	printf("\n");
 }
 
