@@ -81,7 +81,8 @@ typedef struct s_cylinder
 
 typedef struct s_ambient_light
 {
-	double			intensity;
+
+	double			brightness;
 	t_color			color;
 }					t_ambiant_light;
 
