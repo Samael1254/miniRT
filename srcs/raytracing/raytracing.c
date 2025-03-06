@@ -2,9 +2,9 @@
 #include "minirt_defs.h"
 #include <math.h>
 
-static double	vertical_fov_2(double horizontal_fov)
+static double	vertical_fov_2(double horizontal_fov_2)
 {
-	return (atan((WIN_Y / WIN_X) * tan(horizontal_fov / 2)));
+	return (atan((WIN_Y / WIN_X) * tan(horizontal_fov_2)));
 }
 
 static t_ray	init_ray(t_camera camera, t_vector2d rotator)
@@ -20,22 +20,24 @@ static t_ray	init_ray(t_camera camera, t_vector2d rotator)
 void	init_rays(t_camera camera)
 {
 	t_vector2d	rotator;
-	int			i;
-	int			j;
+	int			coords[2];
+	int			angle_deltas[2];
 	double		v_fov_2;
 
-	v_fov_2 = vertical_fov_2(camera.fov);
-	i = 0;
+	v_fov_2 = vertical_fov_2(camera.fov_2);
+	coords[0] = 0;
 	rotator.y = v_fov_2;
-	while (i < WIN_Y)
+	angle_deltas[0] = 2 * v_fov_2 / WIN_Y;
+	angle_deltas[1] = 2 * camera.fov_2 / WIN_X;
+	while (coords[0] < WIN_Y)
 	{
-		j = 0;
-		rotator.x = camera.fov / 2;
-		while (j < WIN_X)
+		coords[1] = 0;
+		rotator.x = camera.fov_2;
+		while (coords[1] < WIN_X)
 		{
 			init_ray(camera, rotator);
-			rotator.x -= camera.fov / WIN_X;
+			rotator.x -= angle_deltas[1];
 		}
-		rotator.y -= 2 * v_fov_2 / WIN_Y;
+		rotator.y -= angle_deltas[0];
 	}
 }
