@@ -4,6 +4,7 @@
 #include "minirt_defs.h"
 #include "mlx.h"
 #include <math.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 static double	vertical_fov_2(double horizontal_fov_2)
@@ -33,6 +34,10 @@ static void	init_rays(t_camera camera, t_ray **rays)
 	rotator.y = v_fov_2;
 	angle_deltas.x = 2 * camera.fov_2 / WIN_X;
 	angle_deltas.y = 2 * v_fov_2 / WIN_Y;
+	printf("angle deltas (deg): x = %f, y = %f\n",
+		ft_rad_to_deg(angle_deltas.x), ft_rad_to_deg(angle_deltas.y));
+	printf("fovs (deg): x = %f, y = %f\n", ft_rad_to_deg(camera.fov_2),
+		ft_rad_to_deg(v_fov_2));
 	while (coords.y < WIN_Y)
 	{
 		coords.x = 0;

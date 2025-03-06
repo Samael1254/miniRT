@@ -32,6 +32,10 @@ t_object		*object_cylinder(t_state *state, char **split);
 // Loops while waiting for events
 void			loop_events(t_state *state);
 
+// Transform //
+
+void			transform_scene(t_scene *scene);
+
 // Ray tracing //
 
 void			ray_tracing(t_state *state);

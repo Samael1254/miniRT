@@ -5,10 +5,7 @@
 int	key_pressed(int keycode, t_state *state)
 {
 	if (keycode == K_ESC)
-	{
-		info(NULL, "close program");
 		exit_program(state, EXIT_SUCCESS);
-	}
 	return (1);
 }
 
