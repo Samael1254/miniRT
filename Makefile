@@ -3,14 +3,25 @@ NAME = miniRT
 SOURCES_DIR = srcs/
 BUILD_DIR = build/
 
-SRCS_MAIN := main.c errors.c check_arguments.c exit_program.c \
-             events.c init_state.c print_debug.c
+SRCS_MAIN := main.c exit_program.c events.c init_state.c print_debug.c
 
 SRCS_PARSING := init_scene.c insert_in_struct.c utils.c objects_list.c \
 				object_sphere.c object_plane.c object_cylinder.c
 
+SRCS_GRAPHICS := color.c graphics.c
+
+SRCS_TRANSFORM := transform_scene.c transform_objs.c world_to_view.c
+
+SRCS_ERRORS := errors.c check_arguments.c
+
+SRCS_RAYTRACING := raytracing.c intersections.c
+
 SOURCES := $(addprefix $(SOURCES_DIR)base/, $(SRCS_MAIN)) \
-           $(addprefix $(SOURCES_DIR)parsing/, $(SRCS_PARSING))
+           $(addprefix $(SOURCES_DIR)parsing/, $(SRCS_PARSING)) \
+           $(addprefix $(SOURCES_DIR)graphics/, $(SRCS_GRAPHICS)) \
+           $(addprefix $(SOURCES_DIR)transformation/, $(SRCS_TRANSFORM)) \
+           $(addprefix $(SOURCES_DIR)errors/, $(SRCS_ERRORS)) \
+           $(addprefix $(SOURCES_DIR)raytracing/, $(SRCS_RAYTRACING)) \
 
 OBJS := $(addprefix $(BUILD_DIR), $(notdir $(SOURCES:.c=.o)))
 

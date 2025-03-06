@@ -1,5 +1,7 @@
 #include "ft_algebra.h"
+#include "minirt.h"
 #include "minirt_defs.h"
+#include "mlx.h"
 #include <math.h>
 
 static double	vertical_fov_2(double horizontal_fov_2)
@@ -37,16 +39,33 @@ static void	init_rays(t_camera camera, t_ray rays[WIN_Y][WIN_X])
 		{
 			rays[coords.y][coords.x] = init_ray(camera, rotator);
 			rotator.x -= angle_deltas.x;
+			coords.x++;
 		}
 		rotator.y -= angle_deltas.y;
+		coords.y++;
 	}
 }
 
-void	ray_tracing(t_scene scene)
+void	ray_tracing(t_state *state)
 {
-	t_ray		rays[WIN_Y][WIN_X];
-	t_ivector2d	coords;
+	t_ray			rays[WIN_Y][WIN_X];
+	t_ivector2d		coords;
+	t_intersection	*inter;
 
-	init_rays(scene.camera, rays);
-	coords = ft_set_ivector2d(0, 0);
+	init_rays(state->scene.camera, rays);
+	coords.y = 0;
+	while (coords.y < WIN_Y)
+	{
+		coords.x = 0;
+		while (coords.x < WIN_X)
+		{
+			inter = intersect_scene(rays[coords.y][coords.x],
+					state->scene.objects);
+			put_pixel(&state->img_data, coords, inter->color);
+			coords.x++;
+		}
+		coords.y++;
+	}
+	mlx_put_image_to_window(state->display, state->win, state->img_data.img, 0,
+		0);
 }
