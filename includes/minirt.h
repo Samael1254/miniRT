@@ -10,7 +10,7 @@
 // Initializes the program state
 void		init_state(t_state *state, char *filename);
 void		init_scene(t_state *state, char *filename);
-int			retrieve_data(t_state *state, char **split);
+int			insert_in_struct(t_state *state, char **split);
 
 // Parsing
 

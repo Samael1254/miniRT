@@ -13,7 +13,7 @@ static int	get_data_line(t_state *state, char *line)
 	split = ft_split_charset(line, " \t");
 	if (!split)
 		fatal_error("split", "an error as occured", state);
-	retrieve_data(state, split);
+	insert_in_struct(state, split);
 	ft_free_strtab(split);
 	return (0);
 }

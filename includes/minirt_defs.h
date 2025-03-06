@@ -97,7 +97,7 @@ typedef struct s_camera
 {
 	t_vector3d		pos;
 	t_vector3d		rot;
-	double			fov;
+	double			fov_2;
 }					t_camera;
 
 typedef struct s_object

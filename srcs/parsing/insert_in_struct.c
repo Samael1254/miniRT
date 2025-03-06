@@ -29,7 +29,7 @@ static void	add_camera(t_state *state, char **split)
 {
 	t_vector3d	pos;
 	t_vector3d	rot;
-	double		fov;
+	double		fov_2;
 	bool		error;
 
 	pos = get_vector(split[1], &error);
@@ -41,13 +41,13 @@ static void	add_camera(t_state *state, char **split)
 	}
 	state->scene.camera.pos = pos;
 	state->scene.camera.rot = rot;
-	fov = ft_atod(split[3]);
-	if (fov < 0 || fov > 180)
+	fov_2 = ft_atod(split[3]) / 2;
+	if (fov_2 < 0 || fov_2 > 180)
 	{
 		ft_free_strtab(split);
 		fatal_error("parsing", "error of the camera fov", state);
 	}
-	state->scene.camera.fov = ft_deg_to_rad(fov);
+	state->scene.camera.fov_2 = ft_deg_to_rad(fov_2);
 }
 
 static void	add_light(t_state *state, char **split)
@@ -75,7 +75,7 @@ static void	add_light(t_state *state, char **split)
 	state->scene.p_light.color = color;
 }
 
-int	retrieve_data(t_state *state, char **split)
+int	insert_in_struct(t_state *state, char **split)
 {
 	if (!*split)
 		return (-1);
