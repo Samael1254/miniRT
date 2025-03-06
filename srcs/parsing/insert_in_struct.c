@@ -49,7 +49,9 @@ static void	add_camera(t_state *state, char **split)
 	}
 	state->scene.camera.fov_2 = ft_deg_to_rad(fov_2);
 }
-
+// TODO: mettre une verification sur les norme vector
+// somme des carres des composantes doivent etre egales a un
+// utiliser pow de math.h
 static void	add_light(t_state *state, char **split)
 {
 	t_vector3d	pos;
