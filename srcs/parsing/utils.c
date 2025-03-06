@@ -27,6 +27,32 @@ t_vector3d	get_vector(char *line_vector, bool *error)
 	return (vector);
 }
 
+t_color	get_color(char *line_color, bool *error)
+{
+	t_color	color;
+	char	**split_color;
+	int		r;
+	int		g;
+	int		b;
+	
+	split_color = ft_split(line_color, ',');
+	if (!split_color)
+	{
+		*error = true;
+		return ((t_color){0, 0, 0});
+	}
+	r = ft_atoi(split_color[0]);
+	g = ft_atoi(split_color[1]);
+	b = ft_atoi(split_color[2]);
+	ft_free_strtab(split_color);
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+		*error = true;
+	else
+		*error = false;
+	color = (t_color){(unsigned char)r, (unsigned char)g, (unsigned char)b};
+	return (color);
+}
+
 /*
  *	Check if a vector is in the range min and max (excluded)
  *	Returns (0) if not
@@ -43,3 +69,18 @@ int	is_vector3d_in_range(t_vector3d vec, double min, double max)
 	return (1);
 }
 
+/*
+ *	Check if a vector is in the range min and max (excluded)
+ *	Returns (0) if not
+ *	Returns (1) if yes
+ * */
+int	is_t_color_valid(t_color color, double min, double max)
+{
+	if (color.r < min || color.r > max)
+		return (0);
+	if (color.g < min || color.g > max)
+		return (0);
+	if (color.b < min || color.b > max)
+		return (0);
+	return (1);
+}

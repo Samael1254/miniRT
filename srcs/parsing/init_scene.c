@@ -20,11 +20,17 @@ static int	get_data_line(t_state *state, char *line)
 	return (0);
 }
 
+static void	initialize_state(t_state *state)
+{
+	state->scene.objects = NULL;
+}
+
 void	init_scene(t_state *state, char *filename)
 {
 	char	*line;
 	int		fd;
 
+	initialize_state(state);
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		fatal_error("open", "can't open map", state);
@@ -35,9 +41,5 @@ void	init_scene(t_state *state, char *filename)
 			fatal_error("get_data_line", "an error as occured", state);
 		line = get_next_line(fd);
 	}
-	// print_ambiant_light(state->scene.a_light);
-	// print_camera(state->scene.camera);
-	// print_point_light(state->scene.p_light);
-	// print_sphere(*(t_sphere *)state->scene.objects->data);
 	print_scene(state->scene);
 }

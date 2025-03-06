@@ -81,6 +81,7 @@ typedef struct s_cylinder
 
 typedef struct s_ambient_light
 {
+
 	double			brightness;
 	t_color			color;
 }					t_ambiant_light;
@@ -96,7 +97,7 @@ typedef struct s_camera
 {
 	t_vector3d		pos;
 	t_vector3d		rot;
-	int				fov;
+	double			fov;
 }					t_camera;
 
 typedef struct s_object
