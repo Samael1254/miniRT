@@ -8,7 +8,7 @@
 
 static double	vertical_fov_2(double horizontal_fov_2)
 {
-	return (atan((WIN_Y / WIN_X) * tan(horizontal_fov_2)));
+	return (atan(((double)WIN_Y / (double)WIN_X) * tan(horizontal_fov_2)));
 }
 
 static t_ray	init_ray(t_camera camera, t_vector2d rotator)
@@ -25,7 +25,7 @@ static void	init_rays(t_camera camera, t_ray **rays)
 {
 	t_vector2d	rotator;
 	t_ivector2d	coords;
-	t_ivector2d	angle_deltas;
+	t_vector2d	angle_deltas;
 	double		v_fov_2;
 
 	v_fov_2 = vertical_fov_2(camera.fov_2);
@@ -98,11 +98,11 @@ void	ray_tracing(t_state *state)
 			inter = intersect_scene(rays[coords.y][coords.x],
 					state->scene.objects);
 			put_pixel(&state->img_data, coords, inter.color);
-			mlx_put_image_to_window(state->display, state->win,
-				state->img_data.img, 0, 0);
 			coords.x++;
 		}
 		coords.y++;
 	}
+	mlx_put_image_to_window(state->display, state->win,
+						 state->img_data.img, 0, 0);
 	free_rays(rays);
 }

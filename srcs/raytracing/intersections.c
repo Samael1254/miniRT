@@ -46,7 +46,7 @@ static double	intersect_cylinder(t_ray ray, t_cylinder cylinder)
 	centers_vect = ft_sub_vectors3d(ray.origin, cylinder.pos);
 	v = ft_cross_vectors3d(cylinder.axis, centers_vect);
 	udv = ft_dot_vectors3d(u, v);
-	dist = (udv - sqrt(pow(udv, 2) - ft_vector3d_square_norm(u)
+	dist = (udv + sqrt(pow(udv, 2) - ft_vector3d_square_norm(u)
 				* (ft_vector3d_square_norm(v) - pow(cylinder.diameter / 2, 2))))
 		/ ft_vector3d_square_norm(u);
 	height_dist = ft_dot_vectors3d(cylinder.axis,
@@ -69,6 +69,7 @@ static double	intersect_object(t_ray ray, t_object object)
 	return (INFINITY);
 }
 
+#include <stdio.h>
 t_intersection	intersect_scene(t_ray ray, t_list *objects)
 {
 	double			cur_distance;
