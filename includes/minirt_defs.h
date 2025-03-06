@@ -52,18 +52,23 @@ typedef struct s_img_data
 	int				endian;
 }					t_img_data;
 
+typedef struct s_color
+{
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+}					t_color;
+
 typedef struct s_sphere
 {
 	t_vector3d		pos;
 	double			diameter;
-	t_vector3d		color;
 }					t_sphere;
 
 typedef struct s_plane
 {
 	t_vector3d		point;
 	t_vector3d		normal;
-	t_vector3d		color;
 }					t_plane;
 
 typedef struct s_cylinder
@@ -72,33 +77,32 @@ typedef struct s_cylinder
 	t_vector3d		axis;
 	double			diameter;
 	double			height;
-	t_vector3d		color;
 }					t_cylinder;
 
 typedef struct s_ambient_light
 {
 	double			intensity;
-	t_vector3d		color;
+	t_color			color;
 }					t_ambiant_light;
 
 typedef struct s_point_light
 {
 	t_vector3d		pos;
 	double			brightness;
-	t_vector3d		color;
+	t_color			color;
 }					t_point_light;
 
 typedef struct s_camera
 {
 	t_vector3d		pos;
 	t_vector3d		rot;
-	int				fov;
+	double			fov;
 }					t_camera;
 
 typedef struct s_object
 {
 	enum e_object	type;
-	t_vector3d		color;
+	t_color			color;
 	void			*object_r;
 }					t_object;
 
@@ -119,7 +123,7 @@ typedef struct s_ray
 typedef struct s_intersection
 {
 	t_vector3d		point;
-	t_vector3d		color;
+	t_color			color;
 }					t_intersection;
 
 // State of the program

@@ -4,7 +4,7 @@
 
 static void	add_ambient_light(t_state *state, char **split)
 {
-	t_vector3d	color;
+	t_color		color;
 	double		intensity;
 	bool		error;
 
@@ -16,8 +16,8 @@ static void	add_ambient_light(t_state *state, char **split)
 		fatal_error("parsing", "intensity of ambiant light is wrong", state);
 	}
 	state->scene.a_light.intensity = intensity;
-	color = get_vector(split[2], &error);
-	if (!is_vector3d_in_range(color, 0, 255) || error == true)
+	color = get_color(split[2], &error);
+	if (error == true)
 	{
 		ft_free_strtab(split);
 		fatal_error("parsing", "error of ambiant light colors", state);
@@ -29,7 +29,7 @@ static void	add_camera(t_state *state, char **split)
 {
 	t_vector3d	pos;
 	t_vector3d	rot;
-	int			fov;
+	double		fov;
 	bool		error;
 
 	pos = get_vector(split[1], &error);
@@ -41,20 +41,20 @@ static void	add_camera(t_state *state, char **split)
 	}
 	state->scene.camera.pos = pos;
 	state->scene.camera.rot = rot;
-	fov = ft_atoi(split[3]);
+	fov = ft_atod(split[3]);
 	if (fov < 0 || fov > 180)
 	{
 		ft_free_strtab(split);
 		fatal_error("parsing", "error of the camera fov", state);
 	}
-	state->scene.camera.fov = fov;
+	state->scene.camera.fov = ft_deg_to_rad(fov);
 }
 
 static void	add_light(t_state *state, char **split)
 {
 	t_vector3d	pos;
 	double		brightness;
-	t_vector3d	color;
+	t_color		color;
 	bool		error;
 
 	pos = get_vector(split[1], &error);
@@ -64,8 +64,8 @@ static void	add_light(t_state *state, char **split)
 		ft_free_strtab(split);
 		fatal_error("parsing", "error of the camera fov", state);
 	}
-	color = get_vector(split[3], &error);
-	if (!is_vector3d_in_range(color, 0, 255) || error == true)
+	color = get_color(split[3], &error);
+	if (error == true)
 	{
 		ft_free_strtab(split);
 		fatal_error("parsing", "error of ambiant light colors", state);
@@ -88,6 +88,8 @@ int	retrieve_data(t_state *state, char **split)
 	if (!ft_strncmp(split[0], "sp", 2))
 		add_object_to_list(state, split);
 	if (!ft_strncmp(split[0], "pl", 2))
+		add_object_to_list(state, split);
+	if (!ft_strncmp(split[0], "cy", 2))
 		add_object_to_list(state, split);
 	return (0);
 }
