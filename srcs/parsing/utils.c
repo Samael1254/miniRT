@@ -1,18 +1,20 @@
+#include "ft_conversion.h"
+#include "ft_strings.h"
 #include "minirt.h"
-#include "libft.h"
 #include <stdbool.h>
 
 /*
  * Return a t_vector3d containing the vector RGB based on the line
  * with this format `XXX,XXX,XXX`
- * Takes in parameter a pointer on bool in order to catch an error on the split malloc
+
+	* Takes in parameter a pointer on bool in order to catch an error on the split malloc
  * Error: returns -1,-1,-1 if an error occured
  * */
 t_vector3d	get_vector(char *line_vector, bool *error)
 {
 	t_vector3d	vector;
 	char		**split_vector;
-	
+
 	split_vector = ft_split(line_vector, ',');
 	if (!split_vector)
 	{
@@ -34,7 +36,7 @@ t_color	get_color(char *line_color, bool *error)
 	int		r;
 	int		g;
 	int		b;
-	
+
 	split_color = ft_split(line_color, ',');
 	if (!split_color)
 	{

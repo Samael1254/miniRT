@@ -1,27 +1,28 @@
+#include "ft_memory.h"
+#include "ft_strings.h"
 #include "minirt.h"
-#include "libft.h"
 #include <stdlib.h>
-#include <stdbool.h>
 
 static t_plane	*get_plane_data(t_state *state, char **split)
 {
-	t_plane		*pl;
-	bool		error;
+	t_plane	*pl;
+	bool	has_error;
 
 	pl = ft_calloc(1, sizeof(t_plane));
 	if (!pl)
 	{
 		ft_free_strtab(split);
-		fatal_error(NULL, "as malloc failed", state);
+		error(NULL, "malloc failed", state);
 	}
-	error = false;
-	pl->point = get_vector(split[1], &error);
-	pl->normal = get_vector(split[2], &error);
-	if (!is_vector3d_in_range(pl->normal, -1, 1) || error == true)
+	has_error = false;
+	pl->point = get_vector(split[1], &has_error);
+	pl->normal = get_vector(split[2], &has_error);
+	if (!is_vector3d_in_range(pl->normal, -1, 1) || has_error == true)
 	{
 		free(pl);
 		ft_free_strtab(split);
-		fatal_error("sphere", "plane data isn't valid", state);
+		error("wrong parameter", "plane normal vector should be normalized",
+			state);
 	}
 	return (pl);
 }
@@ -29,21 +30,21 @@ static t_plane	*get_plane_data(t_state *state, char **split)
 t_object	*object_plane(t_state *state, char **split)
 {
 	t_object	*obj;
-	bool		error;
+	bool		has_error;
 
 	obj = ft_calloc(1, sizeof(t_object));
 	if (!obj)
 	{
 		ft_free_strtab(split);
-		fatal_error(NULL, "as malloc failed", state);
+		error(NULL, "malloc failed", state);
 	}
 	obj->object_r = get_plane_data(state, split);
 	obj->type = PLANE;
-	obj->color = get_color(split[3], &error);
-	if (error == true)
+	obj->color = get_color(split[3], &has_error);
+	if (has_error == true)
 	{
 		ft_free_strtab(split);
-		fatal_error(NULL, "as malloc failed", state);
+		error(NULL, "malloc failed", state);
 	}
 	return (obj);
 }
