@@ -1,10 +1,13 @@
 #include "minirt.h"
 #include "libft.h"
+#include <stdbool.h>
 
 static void	add_ambient_light(t_state *state, char **split)
 {
 	t_vector3d	color;
 	double		intensity;
+	bool		error;
+
 
 	intensity = ft_atod(split[1]);
 	if (intensity < 0 || intensity > 1)
@@ -13,8 +16,8 @@ static void	add_ambient_light(t_state *state, char **split)
 		fatal_error("parsing", "intensity of ambiant light is wrong", state);
 	}
 	state->scene.a_light.intensity = intensity;
-	color = get_vector(split[2]);
-	if (color.x == -1 || !is_vector3d_in_range(color, 0, 255))
+	color = get_vector(split[2], &error);
+	if (!is_vector3d_in_range(color, 0, 255) || error == true)
 	{
 		ft_free_strtab(split);
 		fatal_error("parsing", "error of ambiant light colors", state);
@@ -27,10 +30,11 @@ static void	add_camera(t_state *state, char **split)
 	t_vector3d	pos;
 	t_vector3d	rot;
 	int			fov;
+	bool		error;
 
-	pos = get_vector(split[1]);
-	rot = get_vector(split[2]);
-	if (!is_vector3d_in_range(rot, -1, 1))
+	pos = get_vector(split[1], &error);
+	rot = get_vector(split[2], &error);
+	if (!is_vector3d_in_range(rot, -1, 1) || error == true)
 	{
 		ft_free_strtab(split);
 		fatal_error("parsing", "error of ambiant light colors", state);
@@ -51,16 +55,17 @@ static void	add_light(t_state *state, char **split)
 	t_vector3d	pos;
 	double		brightness;
 	t_vector3d	color;
+	bool		error;
 
-	pos = get_vector(split[1]);
+	pos = get_vector(split[1], &error);
 	brightness = ft_atod(split[2]);
-	if (brightness < 0 || brightness > 1)
+	if (brightness < 0 || brightness > 1 || error == true)
 	{
 		ft_free_strtab(split);
 		fatal_error("parsing", "error of the camera fov", state);
 	}
-	color = get_vector(split[3]);
-	if (!is_vector3d_in_range(color, 0, 255))
+	color = get_vector(split[3], &error);
+	if (!is_vector3d_in_range(color, 0, 255) || error == true)
 	{
 		ft_free_strtab(split);
 		fatal_error("parsing", "error of ambiant light colors", state);
@@ -80,7 +85,9 @@ int	retrieve_data(t_state *state, char **split)
 		add_camera(state, split);
 	if (!ft_strncmp(split[0], "L", 1))
 		add_light(state, split);
-	else
+	if (!ft_strncmp(split[0], "sp", 2))
+		add_object_to_list(state, split);
+	if (!ft_strncmp(split[0], "pl", 2))
 		add_object_to_list(state, split);
 	return (0);
 }

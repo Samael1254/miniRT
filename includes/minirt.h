@@ -1,6 +1,8 @@
 #ifndef MINIRT_FCTS_H
 # define MINIRT_FCTS_H
 
+# include <stdbool.h>
+
 # include "minirt_defs.h"
 
 // Init state //
@@ -13,11 +15,14 @@ int			retrieve_data(t_state *state, char **split);
 // Parsing
 
 // utils.c
-t_vector3d	get_vector(char *line_vector);
+t_vector3d	get_vector(char *line_vector, bool *error);
 int			is_vector3d_in_range(t_vector3d vec, double min, double max);
 
 // objects_list.c
 void		add_object_to_list(t_state *state, char **split);
+
+// object_sphere.c
+t_object	*object_sphere(t_state *state, char **split);
 
 // Events //
 
@@ -46,5 +51,7 @@ void		print_scene(t_scene scene);
 void		print_ambiant_light(t_ambiant_light ambiant_light);
 void		print_camera(t_camera camera);
 void		print_point_light(t_point_light light);
+void		print_scene(t_scene scene);
+void		print_sphere(t_sphere sphere);
 
 #endif

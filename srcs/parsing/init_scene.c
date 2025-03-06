@@ -35,7 +35,9 @@ void	init_scene(t_state *state, char *filename)
 			fatal_error("get_data_line", "an error as occured", state);
 		line = get_next_line(fd);
 	}
-	print_ambiant_light(state->scene.a_light);
-	print_camera(state->scene.camera);
-	print_point_light(state->scene.p_light);
+	// print_ambiant_light(state->scene.a_light);
+	// print_camera(state->scene.camera);
+	// print_point_light(state->scene.p_light);
+	// print_sphere(*(t_sphere *)state->scene.objects->data);
+	print_scene(state->scene);
 }
