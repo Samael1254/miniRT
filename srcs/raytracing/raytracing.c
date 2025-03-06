@@ -17,27 +17,36 @@ static t_ray	init_ray(t_camera camera, t_vector2d rotator)
 	return (ray);
 }
 
-void	init_rays(t_camera camera)
+static void	init_rays(t_camera camera, t_ray rays[WIN_Y][WIN_X])
 {
 	t_vector2d	rotator;
-	int			coords[2];
-	int			angle_deltas[2];
+	t_ivector2d	coords;
+	t_ivector2d	angle_deltas;
 	double		v_fov_2;
 
 	v_fov_2 = vertical_fov_2(camera.fov_2);
-	coords[0] = 0;
+	coords.y = 0;
 	rotator.y = v_fov_2;
-	angle_deltas[0] = 2 * v_fov_2 / WIN_Y;
-	angle_deltas[1] = 2 * camera.fov_2 / WIN_X;
-	while (coords[0] < WIN_Y)
+	angle_deltas.y = 2 * v_fov_2 / WIN_Y;
+	angle_deltas.x = 2 * camera.fov_2 / WIN_X;
+	while (coords.y < WIN_Y)
 	{
-		coords[1] = 0;
+		coords.x = 0;
 		rotator.x = camera.fov_2;
-		while (coords[1] < WIN_X)
+		while (coords.x < WIN_X)
 		{
-			init_ray(camera, rotator);
-			rotator.x -= angle_deltas[1];
+			rays[coords.y][coords.x] = init_ray(camera, rotator);
+			rotator.x -= angle_deltas.x;
 		}
-		rotator.y -= angle_deltas[0];
+		rotator.y -= angle_deltas.y;
 	}
+}
+
+void	ray_tracing(t_scene scene)
+{
+	t_ray		rays[WIN_Y][WIN_X];
+	t_ivector2d	coords;
+
+	init_rays(scene.camera, rays);
+	coords = ft_set_ivector2d(0, 0);
 }

@@ -1,13 +1,13 @@
+#include "ft_conversion.h"
+#include "ft_strings.h"
 #include "minirt.h"
-#include "libft.h"
 #include <stdbool.h>
 
 static void	add_ambient_light(t_state *state, char **split)
 {
-	t_color		color;
-	double		brightness;
-	bool		error;
-
+	t_color	color;
+	double	brightness;
+	bool	error;
 
 	brightness = ft_atod(split[1]);
 	if (brightness < 0 || brightness > 1)

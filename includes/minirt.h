@@ -1,9 +1,8 @@
 #ifndef MINIRT_FCTS_H
 # define MINIRT_FCTS_H
 
-# include <stdbool.h>
-
 # include "minirt_defs.h"
+# include <stdbool.h>
 
 // Init state //
 
@@ -32,6 +31,10 @@ t_object	*object_cylinder(t_state *state, char **split);
 
 // Loops while waiting for events
 void		loop_events(t_state *state);
+
+// Graphics //
+
+int			rgb_to_int(t_color color);
 
 // Check arguments //
 
