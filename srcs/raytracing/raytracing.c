@@ -1,19 +1,41 @@
+#include "ft_algebra.h"
 #include "minirt_defs.h"
 #include <math.h>
 
-int	vertical_fov(int horizontal_fov)
+static double	vertical_fov_2(double horizontal_fov)
 {
-	double	h_fov_rad;
-	double	v_fov_rad;
-
-	h_fov_rad = ft_deg_to_rad((double)horizontal_fov);
-	v_fov_rad = 2 * atan((WIN_Y / WIN_X) * tan(h_fov_rad / 2));
-	return (ft_rad_to_deg(v_fov_rad));
+	return (atan((WIN_Y / WIN_X) * tan(horizontal_fov / 2)));
 }
 
-t_ray	init_ray(t_camera camera, int i, int j)
+static t_ray	init_ray(t_camera camera, t_vector2d rotator)
 {
 	t_ray	ray;
 
 	ray.origin = camera.pos;
+	ray.direction = ft_set_vector3d(0, 0, -1);
+	ray.direction = ft_rotate_vector3d(ray.direction, rotator);
+	return (ray);
+}
+
+void	init_rays(t_camera camera)
+{
+	t_vector2d	rotator;
+	int			i;
+	int			j;
+	double		v_fov_2;
+
+	v_fov_2 = vertical_fov_2(camera.fov);
+	i = 0;
+	rotator.y = v_fov_2;
+	while (i < WIN_Y)
+	{
+		j = 0;
+		rotator.x = camera.fov / 2;
+		while (j < WIN_X)
+		{
+			init_ray(camera, rotator);
+			rotator.x -= camera.fov / WIN_X;
+		}
+		rotator.y -= 2 * v_fov_2 / WIN_Y;
+	}
 }
