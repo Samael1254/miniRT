@@ -17,8 +17,9 @@ static t_ray	init_ray(t_camera camera, t_vector2d rotator)
 	t_ray	ray;
 
 	ray.origin = camera.pos;
-	ray.direction = ft_set_vector3d(0, 0, -1);
-	ray.direction = ft_rotate_vector3d(ray.direction, rotator);
+	ray.direction = camera.dir;
+	ray.direction = ft_scale_vector3d(1, ft_rotate_vector3d(ray.direction,
+				rotator));
 	return (ray);
 }
 
@@ -31,24 +32,20 @@ static void	init_rays(t_camera camera, t_ray **rays)
 
 	v_fov_2 = vertical_fov_2(camera.fov_2);
 	coords.y = 0;
-	rotator.y = v_fov_2;
-	angle_deltas.x = 2 * camera.fov_2 / WIN_X;
-	angle_deltas.y = 2 * v_fov_2 / WIN_Y;
-	printf("angle deltas (deg): x = %f, y = %f\n",
-		ft_rad_to_deg(angle_deltas.x), ft_rad_to_deg(angle_deltas.y));
-	printf("fovs (deg): x = %f, y = %f\n", ft_rad_to_deg(camera.fov_2),
-		ft_rad_to_deg(v_fov_2));
+	rotator.x = -v_fov_2;
+	angle_deltas.y = 2 * camera.fov_2 / WIN_X;
+	angle_deltas.x = 2 * v_fov_2 / WIN_Y;
 	while (coords.y < WIN_Y)
 	{
 		coords.x = 0;
-		rotator.x = camera.fov_2;
+		rotator.y = camera.fov_2;
 		while (coords.x < WIN_X)
 		{
 			rays[coords.y][coords.x] = init_ray(camera, rotator);
-			rotator.x -= angle_deltas.x;
+			rotator.y -= angle_deltas.y;
 			coords.x++;
 		}
-		rotator.y -= angle_deltas.y;
+		rotator.x += angle_deltas.x;
 		coords.y++;
 	}
 }

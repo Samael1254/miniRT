@@ -33,6 +33,5 @@ void	init_state(t_state *state, char *filename)
 	info(NULL, "initialize scene...");
 	init_scene(state, filename);
 	info(NULL, "initialize mlx...");
-	// transform_scene(&state->scene);
 	init_mlx(state);
 }
