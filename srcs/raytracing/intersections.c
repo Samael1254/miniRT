@@ -66,7 +66,7 @@ static double	intersect_cylinder(t_ray ray, t_cylinder cylinder)
 	centers_vect = ft_sub_vectors3d(ray.origin, cylinder.pos);
 	v = ft_cross_vectors3d(cylinder.axis, centers_vect);
 	udv = ft_dot_vectors3d(u, v);
-	dist = (udv + sqrt(pow(udv, 2) - ft_vector3d_square_norm(u)
+	dist = (-udv - sqrt(pow(udv, 2) - ft_vector3d_square_norm(u)
 				* (ft_vector3d_square_norm(v) - pow(cylinder.diameter / 2, 2))))
 		/ ft_vector3d_square_norm(u);
 	height_dist = ft_dot_vectors3d(cylinder.axis,
@@ -111,7 +111,7 @@ t_intersection	intersect_scene(t_ray ray, t_list *objects)
 	{
 		cur_object = (t_object *)objects->data;
 		cur_distance = intersect_object(ray, *cur_object);
-		if (cur_distance < distance_min)
+		if (ft_in_rangef(cur_distance, RAY_REACH_MIN, distance_min))
 		{
 			distance_min = cur_distance;
 			closest_object = cur_object;
