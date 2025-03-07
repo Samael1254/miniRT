@@ -7,10 +7,11 @@ void	put_pixel(t_img_data *img, t_ivector2d coords, t_color color)
 	int		offset;
 	char	*mem_pos;
 
+	// printf("x: %d, y: %d\n", coords.x, coords.y);
 	if (!(coords.x >= 0 && coords.x < WIN_X) || !(coords.y >= 0
 			&& coords.y < WIN_Y))
 	{
-		error("put pixel", "pixel coords outside of window");
+		warning("put pixel", "pixel coords outside of window");
 		printf("x: %d, y: %d\n", coords.x, coords.y);
 		return ;
 	}

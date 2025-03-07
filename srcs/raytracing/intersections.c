@@ -65,11 +65,10 @@ static double	intersect_object(t_ray ray, t_object object)
 		return (intersect_plane(ray, *(t_plane *)object.object_r));
 	if (object.type == CYLINDER)
 		return (intersect_cylinder(ray, *(t_cylinder *)object.object_r));
-	error("invalid object", "object type not found");
+	warning("invalid object", "object type not found");
 	return (INFINITY);
 }
 
-#include <stdio.h>
 t_intersection	intersect_scene(t_ray ray, t_list *objects)
 {
 	double			cur_distance;

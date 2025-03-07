@@ -4,6 +4,7 @@
 #include "minirt_defs.h"
 #include "mlx.h"
 #include <math.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 static double	vertical_fov_2(double horizontal_fov_2)
@@ -31,8 +32,12 @@ static void	init_rays(t_camera camera, t_ray **rays)
 	v_fov_2 = vertical_fov_2(camera.fov_2);
 	coords.y = 0;
 	rotator.y = v_fov_2;
-	angle_deltas.y = 2 * v_fov_2 / WIN_Y;
 	angle_deltas.x = 2 * camera.fov_2 / WIN_X;
+	angle_deltas.y = 2 * v_fov_2 / WIN_Y;
+	printf("angle deltas (deg): x = %f, y = %f\n",
+		ft_rad_to_deg(angle_deltas.x), ft_rad_to_deg(angle_deltas.y));
+	printf("fovs (deg): x = %f, y = %f\n", ft_rad_to_deg(camera.fov_2),
+		ft_rad_to_deg(v_fov_2));
 	while (coords.y < WIN_Y)
 	{
 		coords.x = 0;
@@ -88,6 +93,7 @@ void	ray_tracing(t_state *state)
 	t_intersection	inter;
 
 	rays = alloc_rays();
+	info(NULL, "ray tracing...");
 	init_rays(state->scene.camera, rays);
 	coords.y = 0;
 	while (coords.y < WIN_Y)
@@ -102,7 +108,8 @@ void	ray_tracing(t_state *state)
 		}
 		coords.y++;
 	}
-	mlx_put_image_to_window(state->display, state->win,
-						 state->img_data.img, 0, 0);
+	mlx_put_image_to_window(state->display, state->win, state->img_data.img, 0,
+		0);
 	free_rays(rays);
+	info(NULL, "ray tracing finished");
 }

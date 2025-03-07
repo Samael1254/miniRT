@@ -9,10 +9,10 @@
 # define FALSE 0
 # define TRUE 1
 
-# define WIN_X 640
-# define WIN_Y 400
+# define WIN_X 800
+# define WIN_Y 500
 
-# define RAY_REACH_MAX 200
+# define RAY_REACH_MAX 100
 
 /* ENUMS */
 

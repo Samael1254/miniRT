@@ -32,6 +32,10 @@ t_object		*object_cylinder(t_state *state, char **split);
 // Loops while waiting for events
 void			loop_events(t_state *state);
 
+// Transform //
+
+void			transform_scene(t_scene *scene);
+
 // Ray tracing //
 
 void			ray_tracing(t_state *state);
@@ -53,10 +57,10 @@ int				check_arguments(int argc, char **argv);
 
 // Errors //
 
-// Prints an error
-void			error(char const *type, char const *msg);
+void			warning(char const *type, char const *msg);
+void			info(char const *type, char const *msg);
 // Prints an error and exits the program
-void			fatal_error(char const *type, char const *msg, t_state *state);
+void			error(char const *type, char const *msg, t_state *state);
 
 // Exit program //
 
