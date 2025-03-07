@@ -19,6 +19,7 @@ static int	get_data_line(t_state *state, char *line)
 	ft_free_strtab(split);
 	return (0);
 }
+
 static void	check_directory(t_state *state, char *filename)
 {
 	int	fd;

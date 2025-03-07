@@ -16,8 +16,9 @@ int				insert_in_struct(t_state *state, char **split);
 // utils.c
 t_vector3d		get_vector(char *line_vector, bool *error);
 t_color			get_color(char *line_color, bool *error);
-int				is_vector3d_in_range(t_vector3d vec, double min, double max);
-int				is_t_color_valid(t_color color, double min, double max);
+bool			is_vector3d_in_range(t_vector3d vec, double min, double max);
+bool			is_t_color_valid(t_color color, double min, double max);
+bool			is_norm_vector_valid(t_vector3d vec);
 
 // objects_list.c
 void			add_object_to_list(t_state *state, char **split);

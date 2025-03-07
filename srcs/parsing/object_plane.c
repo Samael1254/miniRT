@@ -17,7 +17,8 @@ static t_plane	*get_plane_data(t_state *state, char **split)
 	has_error = false;
 	pl->point = get_vector(split[1], &has_error);
 	pl->normal = get_vector(split[2], &has_error);
-	if (!is_vector3d_in_range(pl->normal, -1, 1) || has_error == true)
+	if (!is_vector3d_in_range(pl->normal, -1, 1) || has_error == true
+		|| !is_norm_vector_valid(pl->normal))
 	{
 		free(pl);
 		ft_free_strtab(split);

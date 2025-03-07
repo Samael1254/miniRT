@@ -18,7 +18,8 @@ static t_cylinder	*get_cylinder_data(t_state *state, char **split)
 	has_error = false;
 	cy->pos = get_vector(split[1], &has_error);
 	cy->axis = get_vector(split[2], &has_error);
-	if (!is_vector3d_in_range(cy->axis, -1, 1) || has_error == true)
+	if (!is_vector3d_in_range(cy->axis, -1, 1) || has_error == true
+		|| !is_norm_vector_valid(cy->axis))
 	{
 		free(cy);
 		ft_free_strtab(split);

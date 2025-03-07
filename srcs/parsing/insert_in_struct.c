@@ -34,10 +34,11 @@ static void	add_camera(t_state *state, char **split)
 
 	pos = get_vector(split[1], &has_error);
 	rot = get_vector(split[2], &has_error);
-	if (!is_vector3d_in_range(rot, -1, 1) || has_error == true)
+	if (!is_vector3d_in_range(rot, -1, 1) || has_error == true
+		|| !is_norm_vector_valid(rot))
 	{
 		ft_free_strtab(split);
-		error("parsing", "error of ambiant light colors", state);
+		error("parsing", "error on camera position or rotation", state);
 	}
 	state->scene.camera.pos = pos;
 	state->scene.camera.dir = rot;
@@ -49,9 +50,7 @@ static void	add_camera(t_state *state, char **split)
 	}
 	state->scene.camera.fov_2 = ft_deg_to_rad(fov_2);
 }
-// TODO: mettre une verification sur les norme vector
-// somme des carres des composantes doivent etre egales a un
-// utiliser pow de math.h
+
 static void	add_light(t_state *state, char **split)
 {
 	t_vector3d	pos;
