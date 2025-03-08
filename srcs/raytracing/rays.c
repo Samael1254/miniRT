@@ -2,6 +2,7 @@
 #include "minirt.h"
 #include "minirt_defs.h"
 #include <math.h>
+#include <stdio.h>
 
 static double	vertical_fov_2(double horizontal_fov_2)
 {
@@ -10,12 +11,21 @@ static double	vertical_fov_2(double horizontal_fov_2)
 
 static t_ray	init_ray(t_camera camera, t_vector2d rotator)
 {
-	t_ray	ray;
+	t_ray		ray;
+	t_vector3d	camera_x;
+	t_vector3d	camera_y;
+	double		m_rot_x[4][4];
+	double		m_rot_y[4][4];
 
+	camera_x = ft_cross_vectors3d(camera.dir, ft_set_vector3d(0, 1, 0));
+	camera_y = ft_cross_vectors3d(camera_x, camera.dir);
+	ft_set_rotation_matrix4d(m_rot_x, rotator.x, camera_x);
+	ft_set_rotation_matrix4d(m_rot_y, rotator.y, camera_y);
+	ft_add_matrixes4d(m_rot_x, m_rot_y, m_rot_x);
+	ray.direction = ft_4dto3d_vector(ft_matrix_vector_product4d(m_rot_y,
+				ft_matrix_vector_product4d(m_rot_x,
+					ft_3dto4d_vector(camera.dir))));
 	ray.origin = camera.pos;
-	ray.direction = camera.dir;
-	ray.direction = ft_scale_vector3d(1, ft_rotate_vector3d(ray.direction,
-				rotator));
 	ray.color.r = 0;
 	ray.color.g = 0;
 	ray.color.b = 0;

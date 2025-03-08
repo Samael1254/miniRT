@@ -1,4 +1,5 @@
 #include "ft_algebra.h"
+#include "ft_math.h"
 #include "minirt.h"
 #include "minirt_defs.h"
 #include <stdbool.h>
@@ -6,9 +7,16 @@
 void	shade_color(t_color *color, t_scene *scene, bool in_shadow)
 {
 	if (in_shadow)
+	{
 		*color = apply_brightness(*color, scene->a_light.brightness);
+		*color = average_colors(*color, scene->a_light.color);
+	}
 	else
-		*color = apply_brightness(*color, scene->p_light.brightness);
+	{
+		*color = apply_brightness(*color, ft_maxf(scene->p_light.brightness,
+					scene->a_light.brightness));
+		*color = average_colors(*color, scene->p_light.color);
+	}
 }
 
 static void	direct_rays_to_light(t_ray **rays, t_point_light light)
