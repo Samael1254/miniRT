@@ -43,7 +43,7 @@ static void	add_camera(t_state *state, char **split)
 	state->scene.camera.pos = pos;
 	state->scene.camera.dir = rot;
 	fov_2 = ft_atod(split[3]) / 2;
-	if (fov_2 < 0 || fov_2 > 180)
+	if (fov_2 < 0 || fov_2 > 90)
 	{
 		ft_free_strtab(split);
 		error("parsing", "error of the camera fov", state);
