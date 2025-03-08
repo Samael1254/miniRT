@@ -6,9 +6,6 @@
 
 /* MACROS */
 
-# define FALSE 0
-# define TRUE 1
-
 # define WIN_X 1000
 # define WIN_Y 800
 

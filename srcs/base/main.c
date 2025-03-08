@@ -5,8 +5,7 @@ int	main(int argc, char **argv)
 {
 	t_state	state;
 
-	if (check_arguments(argc, argv))
-		return (EXIT_FAILURE);
+	check_arguments(argc, argv);
 	init_state(&state, argv[1]);
 	ray_tracing(&state);
 	loop_events(&state);

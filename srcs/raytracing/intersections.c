@@ -89,24 +89,28 @@ static double	intersect_object(t_ray ray, t_object object)
 	return (INFINITY);
 }
 
-void	no_intersection(t_ray *ray)
+t_ray	no_intersection(t_ray ray)
 {
-	ray->color = get_sky_color(*ray);
-	ray->origin = ft_init_vector3d(INFINITY);
+	t_ray	ray_inter;
+
+	ray_inter.color = get_sky_color(ray);
+	ray_inter.origin = ft_init_vector3d(INFINITY);
+	return (ray_inter);
 }
 
-void	intersect_scene(t_ray *ray, t_list *objects)
+t_ray	intersect_scene(t_ray ray, t_list *objects)
 {
 	double		cur_distance;
 	double		distance_min;
 	t_object	*cur_object;
 	t_object	*closest_object;
+	t_ray		ray_inter;
 
 	distance_min = INFINITY;
 	while (objects)
 	{
 		cur_object = (t_object *)objects->data;
-		cur_distance = intersect_object(*ray, *cur_object);
+		cur_distance = intersect_object(ray, *cur_object);
 		if (ft_in_rangef(cur_distance, RAY_REACH_MIN, distance_min))
 		{
 			distance_min = cur_distance;
@@ -116,7 +120,8 @@ void	intersect_scene(t_ray *ray, t_list *objects)
 	}
 	if (!ft_in_rangef(distance_min, RAY_REACH_MIN, RAY_REACH_MAX))
 		return (no_intersection(ray));
-	ray->color = closest_object->color;
-	ray->origin = ft_add_vectors3d(ray->origin, ft_scale_vector3d(distance_min,
-				ray->direction));
+	ray_inter.color = closest_object->color;
+	ray_inter.origin = ft_add_vectors3d(ray.origin,
+			ft_scale_vector3d(distance_min, ray.direction));
+	return (ray_inter);
 }

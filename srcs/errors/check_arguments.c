@@ -15,7 +15,7 @@ static void	check_filename(char **argv)
 		error("wrong filename", "bad file extension (.rt file needed)", NULL);
 }
 
-int	check_arguments(int argc, char **argv)
+void	check_arguments(int argc, char **argv)
 {
 	if (argc == 1)
 		error("wrong arguments", "no .rt scene file provided", NULL);
@@ -23,5 +23,4 @@ int	check_arguments(int argc, char **argv)
 		error("wrong arguments", "too many arguments (only one accepted)",
 			NULL);
 	check_filename(argv);
-	return (FALSE);
 }

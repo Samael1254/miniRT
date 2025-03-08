@@ -40,21 +40,30 @@ void		transform_scene(t_scene *scene);
 
 void		ray_tracing(t_state *state);
 
+// Rays //
+
+void		init_rays(t_camera camera, t_ray **rays);
+void		shoot_rays(t_ray **rays, t_state *state);
+
 // Intersections //
 
-void		intersect_scene(t_ray *ray, t_list *objects);
+t_ray		intersect_scene(t_ray ray, t_list *objects);
+
+// Light //
+
+void		light_scene(t_ray **rays, t_state *state);
 
 // Graphics //
 
 int			rgb_to_int(t_color color);
 t_color		get_sky_color(t_ray ray);
-void		put_pixel(t_img_data *img, t_ivector2d coords, t_color color);
+t_color		apply_brightness(t_color color, double brightness);
 void		render_scene(t_state *state, t_ray **rays);
 
 // Check arguments //
 
 // Checks if the program arguments are valid
-int			check_arguments(int argc, char **argv);
+void		check_arguments(int argc, char **argv);
 
 // Errors //
 

@@ -3,7 +3,7 @@
 #include "mlx.h"
 #include <stdio.h>
 
-void	put_pixel(t_img_data *img, t_ivector2d coords, t_color color)
+static void	put_pixel(t_img_data *img, t_ivector2d coords, t_color color)
 {
 	int		offset;
 	char	*mem_pos;
