@@ -36,6 +36,11 @@ t_object	*object_cylinder(t_state *state, char **split)
 	t_object	*obj;
 	bool		has_error;
 
+	if (ft_strtab_size(split) != 6)
+	{
+		ft_free_strtab(split);
+		error("wrong object definition", "cylinder needs 5 parameters", state);
+	}
 	obj = ft_calloc(1, sizeof(t_object));
 	if (!obj)
 	{

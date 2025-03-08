@@ -1,4 +1,5 @@
 #include "ft_algebra.h"
+#include "ft_math.h"
 #include "minirt.h"
 #include "minirt_defs.h"
 #include <math.h>
@@ -18,16 +19,35 @@ static double	intersect_sphere(t_ray ray, t_sphere sphere)
 	return (dist_proj - sqrt(inner_dist));
 }
 
+// static double	intersect_sphere(t_ray ray, t_sphere sphere)
+// {
+// 	t_vector3d	oc;
+// 	double		a;
+// 	double		b;
+// 	double		c;
+// 	double		delta;
+//
+// 	a = ft_dot_vectors3d(ray.direction, ray.direction);
+// 	oc = ft_sub_vectors3d(ray.origin, sphere.pos);
+// 	b = ft_dot_vectors3d(ray.direction, oc);
+// 	c = ft_dot_vectors3d(oc, oc) - pow(sphere.diameter / 2, 2);
+// 	delta = b * b - a * c;
+// 	if (delta <= 0)
+// 		return (INFINITY);
+// 	printf("hit sphere\n");
+// 	return ((-b - sqrt(delta)) / a);
+// }
+
 static double	intersect_plane(t_ray ray, t_plane plane)
 {
 	double	dir_dot;
 	double	point_dot;
 
 	dir_dot = ft_dot_vectors3d(ray.direction, plane.normal);
-	if (dir_dot == 0.)
-		return (INFINITY);
 	point_dot = ft_dot_vectors3d(ft_sub_vectors3d(ray.origin, plane.point),
 			plane.normal);
+	if (dir_dot == 0. || point_dot == 0.)
+		return (INFINITY);
 	return (-point_dot / dir_dot);
 }
 
@@ -46,7 +66,7 @@ static double	intersect_cylinder(t_ray ray, t_cylinder cylinder)
 	centers_vect = ft_sub_vectors3d(ray.origin, cylinder.pos);
 	v = ft_cross_vectors3d(cylinder.axis, centers_vect);
 	udv = ft_dot_vectors3d(u, v);
-	dist = (udv + sqrt(pow(udv, 2) - ft_vector3d_square_norm(u)
+	dist = (-udv - sqrt(pow(udv, 2) - ft_vector3d_square_norm(u)
 				* (ft_vector3d_square_norm(v) - pow(cylinder.diameter / 2, 2))))
 		/ ft_vector3d_square_norm(u);
 	height_dist = ft_dot_vectors3d(cylinder.axis,
@@ -69,6 +89,15 @@ static double	intersect_object(t_ray ray, t_object object)
 	return (INFINITY);
 }
 
+t_intersection	no_intersection(t_ray ray)
+{
+	t_intersection	inter;
+
+	inter.color = get_sky_color(ray);
+	inter.point = ft_init_vector3d(INFINITY);
+	return (inter);
+}
+
 t_intersection	intersect_scene(t_ray ray, t_list *objects)
 {
 	double			cur_distance;
@@ -82,19 +111,15 @@ t_intersection	intersect_scene(t_ray ray, t_list *objects)
 	{
 		cur_object = (t_object *)objects->data;
 		cur_distance = intersect_object(ray, *cur_object);
-		if (cur_distance < distance_min)
+		if (ft_in_rangef(cur_distance, RAY_REACH_MIN, distance_min))
 		{
 			distance_min = cur_distance;
 			closest_object = cur_object;
 		}
 		objects = objects->next;
 	}
-	if (distance_min > RAY_REACH_MAX)
-	{
-		inter.color = get_sky_color(ray);
-		inter.point = ft_init_vector3d(INFINITY);
-		return (inter);
-	}
+	if (!ft_in_rangef(distance_min, RAY_REACH_MIN, RAY_REACH_MAX))
+		return (no_intersection(ray));
 	inter.color = closest_object->color;
 	inter.point = ft_add_vectors3d(ray.origin, ft_scale_vector3d(distance_min,
 				ray.direction));
