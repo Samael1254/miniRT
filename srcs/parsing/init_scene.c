@@ -13,6 +13,7 @@ static int	get_data_line(t_state *state, char *line)
 	if (!*line)
 		return (-1);
 	split = ft_split_charset(line, " \t");
+	free(line);
 	if (!split)
 		error("split", "an error as occured", state);
 	insert_in_struct(state, split);
@@ -47,12 +48,7 @@ void	init_scene(t_state *state, char *filename)
 	while (line)
 	{
 		if (get_data_line(state, line) == -1)
-		{
-			free(line);
 			error("get_data_line", "an error as occured", state);
-		}
-		free(line);
 		line = get_next_line(fd);
 	}
-	// print_scene(state->scene);
 }

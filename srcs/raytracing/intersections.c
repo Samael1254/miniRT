@@ -4,39 +4,38 @@
 #include "minirt_defs.h"
 #include <math.h>
 
-static double	intersect_sphere(t_ray ray, t_sphere sphere)
-{
-	t_vector3d	dist;
-	double		dist_proj;
-	double		inner_dist;
-
-	dist = ft_sub_vectors3d(sphere.pos, ray.origin);
-	dist_proj = ft_dot_vectors3d(ray.direction, dist);
-	inner_dist = pow(dist_proj, 2) + pow(sphere.diameter / 2, 2)
-		- ft_vector3d_square_norm(dist);
-	if (inner_dist < 0.0)
-		return (INFINITY);
-	return (dist_proj - sqrt(inner_dist));
-}
-
 // static double	intersect_sphere(t_ray ray, t_sphere sphere)
 // {
-// 	t_vector3d	oc;
-// 	double		a;
-// 	double		b;
-// 	double		c;
-// 	double		delta;
+// 	t_vector3d	dist;
+// 	double		dist_proj;
+// 	double		inner_dist;
 //
-// 	a = ft_dot_vectors3d(ray.direction, ray.direction);
-// 	oc = ft_sub_vectors3d(ray.origin, sphere.pos);
-// 	b = ft_dot_vectors3d(ray.direction, oc);
-// 	c = ft_dot_vectors3d(oc, oc) - pow(sphere.diameter / 2, 2);
-// 	delta = b * b - a * c;
-// 	if (delta <= 0)
+// 	dist = ft_sub_vectors3d(sphere.pos, ray.origin);
+// 	dist_proj = ft_dot_vectors3d(ray.direction, dist);
+// 	inner_dist = pow(dist_proj, 2) + pow(sphere.diameter / 2, 2)
+// 		- ft_vector3d_square_norm(dist);
+// 	if (inner_dist < 0.0)
 // 		return (INFINITY);
-// 	printf("hit sphere\n");
-// 	return ((-b - sqrt(delta)) / a);
+// 	return (dist_proj - sqrt(inner_dist));
 // }
+
+static double	intersect_sphere(t_ray ray, t_sphere sphere)
+{
+	t_vector3d	oc;
+	double		a;
+	double		b;
+	double		c;
+	double		delta;
+
+	a = ft_dot_vectors3d(ray.direction, ray.direction);
+	oc = ft_sub_vectors3d(ray.origin, sphere.pos);
+	b = ft_dot_vectors3d(ray.direction, oc);
+	c = ft_dot_vectors3d(oc, oc) - pow(sphere.diameter / 2, 2);
+	delta = b * b - a * c;
+	if (delta <= 0)
+		return (INFINITY);
+	return (-(b + sqrt(delta)) / a);
+}
 
 static double	intersect_plane(t_ray ray, t_plane plane)
 {

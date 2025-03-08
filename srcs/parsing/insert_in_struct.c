@@ -9,6 +9,7 @@ static void	add_ambient_light(t_state *state, char **split)
 	double	brightness;
 	bool	has_error;
 
+	ambiant_light_checker(state, split);
 	brightness = ft_atod(split[1]);
 	if (brightness < 0 || brightness > 1)
 	{
@@ -32,6 +33,7 @@ static void	add_camera(t_state *state, char **split)
 	double		fov_2;
 	bool		has_error;
 
+	// TODO: mettre checker camera
 	pos = get_vector(split[1], &has_error);
 	dir = get_vector(split[2], &has_error);
 	if (!is_vector3d_in_range(dir, -1, 1) || has_error == true)
@@ -57,6 +59,7 @@ static void	add_light(t_state *state, char **split)
 	t_color		color;
 	bool		has_error;
 
+	// TODO: mettre checker ligth
 	pos = get_vector(split[1], &has_error);
 	brightness = ft_atod(split[2]);
 	if (brightness < 0 || brightness > 1 || has_error == true)
@@ -75,6 +78,7 @@ static void	add_light(t_state *state, char **split)
 	state->scene.p_light.color = color;
 }
 
+// TODO: revoir tout le parsing, est-ce que les erreurs renvoyees sont bonnes
 int	insert_in_struct(t_state *state, char **split)
 {
 	if (!*split)

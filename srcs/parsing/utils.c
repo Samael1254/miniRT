@@ -1,6 +1,7 @@
 #include "ft_conversion.h"
 #include "ft_strings.h"
 #include "minirt.h"
+#include "ft_strings.h"
 #include <stdbool.h>
 #include <math.h>
 
@@ -17,8 +18,10 @@ t_vector3d	get_vector(char *line_vector, bool *error)
 	char		**split_vector;
 
 	split_vector = ft_split(line_vector, ',');
-	if (!split_vector)
+	if (!ft_check_split_data(split_vector))
 	{
+		if (split_vector)
+			ft_free_strtab(split_vector);
 		*error = true;
 		return ((t_vector3d){-1, -1, -1});
 	}
@@ -39,8 +42,10 @@ t_color	get_color(char *line_color, bool *error)
 	int		b;
 
 	split_color = ft_split(line_color, ',');
-	if (!split_color)
+	if (!split_color || ft_strtab_size(split_color) < 3)
 	{
+		if (split_color)
+			ft_free_strtab(split_color);
 		*error = true;
 		return ((t_color){0, 0, 0});
 	}

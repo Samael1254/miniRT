@@ -20,6 +20,14 @@ bool			is_vector3d_in_range(t_vector3d vec, double min, double max);
 bool			is_t_color_valid(t_color color, double min, double max);
 bool			is_norm_vector_valid(t_vector3d vec);
 
+// utils2.c
+bool			ft_check_error_line(char **split, int len);
+bool			ft_check_split_data(char **split);
+void			check_line(t_state *state, char **split, int split_len);
+
+// utils_general_objects.c
+void			ambiant_light_checker(t_state *state, char **split);
+
 // objects_list.c
 void			add_object_to_list(t_state *state, char **split);
 
