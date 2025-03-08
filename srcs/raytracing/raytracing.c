@@ -2,7 +2,6 @@
 #include "ft_memory.h"
 #include "minirt.h"
 #include "minirt_defs.h"
-#include "mlx.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,6 +19,9 @@ static t_ray	init_ray(t_camera camera, t_vector2d rotator)
 	ray.direction = camera.dir;
 	ray.direction = ft_scale_vector3d(1, ft_rotate_vector3d(ray.direction,
 				rotator));
+	ray.color.r = 0;
+	ray.color.g = 0;
+	ray.color.b = 0;
 	return (ray);
 }
 
@@ -83,30 +85,33 @@ static void	free_rays(t_ray **rays)
 	free(rays);
 }
 
-void	ray_tracing(t_state *state)
+void	shoot_rays(t_ray **rays, t_state *state)
 {
-	t_ray			**rays;
-	t_ivector2d		coords;
-	t_intersection	inter;
+	t_ivector2d	coords;
 
-	rays = alloc_rays();
-	info(NULL, "ray tracing...");
-	init_rays(state->scene.camera, rays);
 	coords.y = 0;
 	while (coords.y < WIN_Y)
 	{
 		coords.x = 0;
 		while (coords.x < WIN_X)
 		{
-			inter = intersect_scene(rays[coords.y][coords.x],
-					state->scene.objects);
-			put_pixel(&state->img_data, coords, inter.color);
+			intersect_scene(&rays[coords.y][coords.x], state->scene.objects);
 			coords.x++;
 		}
 		coords.y++;
 	}
-	mlx_put_image_to_window(state->display, state->win, state->img_data.img, 0,
-		0);
+}
+
+void	ray_tracing(t_state *state)
+{
+	t_ray	**rays;
+
+	rays = alloc_rays();
+	info(NULL, "ray tracing...");
+	init_rays(state->scene.camera, rays);
+	shoot_rays(rays, state);
+	info(NULL, "rendering...");
+	render_scene(state, rays);
 	free_rays(rays);
-	info(NULL, "ray tracing finished");
+	info(NULL, "done, press ESC to close");
 }
