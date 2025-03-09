@@ -50,4 +50,5 @@ void	ray_tracing(t_state *state)
 	render_scene(state, rays);
 	free_rays(rays);
 	info(NULL, "done, press ESC to close");
+	printf("%u warnings raised\n", warnings_number(false));
 }
