@@ -56,6 +56,7 @@ void		light_scene(t_ray **rays, t_state *state);
 // Graphics //
 
 int			rgb_to_int(t_color color);
+t_color		init_color(unsigned char r, unsigned char g, unsigned char b);
 t_color		get_sky_color(t_ray ray);
 t_color		average_colors(t_color color1, t_color color2);
 t_color		apply_brightness(t_color color, double brightness);

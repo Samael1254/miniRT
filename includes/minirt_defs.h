@@ -6,7 +6,7 @@
 
 /* MACROS */
 
-# define WIN_X 1000
+# define WIN_X 800
 # define WIN_Y 800
 
 # define RAY_REACH_MAX 100
@@ -96,6 +96,8 @@ typedef struct s_camera
 {
 	t_vector3d		pos;
 	t_vector3d		dir;
+	t_vector3d		x_axis;
+	t_vector3d		y_axis;
 	double			fov_2;
 }					t_camera;
 

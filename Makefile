@@ -2,6 +2,10 @@ NAME = miniRT
 
 SOURCES_DIR = srcs/
 BUILD_DIR = build/
+HEADERS_DIR = includes/
+
+HEADERS = minirt.h minirt_defs.h
+HEADERS := $(addprefix $(HEADERS_DIR), $(HEADERS))
 
 SRCS_MAIN := main.c exit_program.c events.c init_state.c print_debug.c
 
@@ -35,7 +39,7 @@ MLX = ./libs/mlx/libmlx.a
 
 LIBFLAGS := -lft -Llibs/libft/lib -lmlx -Llibs/mlx -lX11 -lXext -lm
 
-$(NAME): $(LIBFT) $(MLX) $(OBJS)
+$(NAME): $(LIBFT) $(MLX) $(OBJS) $(HEADERS)
 	@ echo " \033[33mCompiling miniRT\033[m"
 	@ $(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFLAGS)
 	@ echo " \033[1;32m MiniRT binary compiled\033[m"

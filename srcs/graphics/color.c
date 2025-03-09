@@ -40,6 +40,16 @@ t_color	average_colors(t_color color1, t_color color2)
 	return (lerp_colors(color1, color2, 0.5));
 }
 
+t_color	init_color(unsigned char r, unsigned char g, unsigned char b)
+{
+	t_color	color;
+
+	color.r = r;
+	color.g = g;
+	color.b = b;
+	return (color);
+}
+
 t_color	get_sky_color(t_ray ray)
 {
 	t_color			sky_color;
