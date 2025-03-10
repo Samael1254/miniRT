@@ -47,11 +47,12 @@ void			shoot_rays(t_ray **rays, t_state *state);
 
 // Intersections //
 
-t_ray			intersect_scene(t_ray ray, t_list *objects);
+t_intersection	intersect_scene(t_ray ray, t_list *objects);
+t_vector3d		normal_at_point(t_object object, t_vector3d point);
 
 // Light //
 
-void			light_scene(t_ray **rays, t_state *state);
+t_color			shade_ray(t_intersection inter, t_scene *scene);
 
 // Graphics //
 

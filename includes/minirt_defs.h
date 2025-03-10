@@ -123,6 +123,13 @@ typedef struct s_ray
 	t_color			color;
 }					t_ray;
 
+typedef struct s_intersection
+{
+	t_color			color;
+	t_vector3d		point;
+	t_vector3d		normal;
+}					t_intersection;
+
 // State of the program
 typedef struct s_state
 {

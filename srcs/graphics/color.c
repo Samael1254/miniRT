@@ -37,7 +37,12 @@ t_color	lerp_colors(t_color color1, t_color color2, double lambda)
 
 t_color	average_colors(t_color color1, t_color color2)
 {
-	return (lerp_colors(color1, color2, 0.5));
+	t_color	avg;
+
+	avg.r = color1.r * ((double)color2.r / 255);
+	avg.g = color1.g * ((double)color2.g / 255);
+	avg.b = color1.b * ((double)color2.b / 255);
+	return (avg);
 }
 
 t_color	init_color(unsigned char r, unsigned char g, unsigned char b)
@@ -57,8 +62,5 @@ t_color	get_sky_color(t_ray ray)
 	const t_color	color2 = {42, 162, 242};
 
 	sky_color = lerp_colors(color1, color2, (ray.direction.y + 1) / 2);
-	// sky_color.r = (ray.direction.x + 1) / 2 * 255;
-	// sky_color.g = (ray.direction.y + 1) / 2 * 255;
-	// sky_color.b = (ray.direction.z + 1) / 2 * 255;
 	return (sky_color);
 }

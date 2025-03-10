@@ -3,6 +3,7 @@
 #include "minirt.h"
 #include "minirt_defs.h"
 #include <math.h>
+#include <stddef.h>
 
 static double	intersect_sphere(t_ray ray, t_sphere sphere)
 {
@@ -98,15 +99,34 @@ t_ray	no_intersection(t_ray ray)
 	return (ray_inter);
 }
 
-t_ray	intersect_scene(t_ray ray, t_list *objects)
+t_intersection	make_intersection(t_ray ray, t_object *object,
+		double distance_min)
+{
+	t_intersection	inter;
+
+	if (!ft_in_rangef(distance_min, RAY_REACH_MIN, RAY_REACH_MAX))
+	{
+		inter.color = get_sky_color(ray);
+		inter.point = ft_init_vector3d(INFINITY);
+		inter.normal = ft_init_vector3d(0);
+		return (inter);
+	}
+	inter.color = object->color;
+	inter.point = ft_add_vectors3d(ray.origin, ft_scale_vector3d(distance_min,
+				ray.direction));
+	inter.normal = normal_at_point(*object, inter.point);
+	return (inter);
+}
+
+t_intersection	intersect_scene(t_ray ray, t_list *objects)
 {
 	double		cur_distance;
 	double		distance_min;
 	t_object	*cur_object;
 	t_object	*closest_object;
-	t_ray		ray_inter;
 
 	distance_min = INFINITY;
+	closest_object = NULL;
 	while (objects)
 	{
 		cur_object = (t_object *)objects->data;
@@ -118,10 +138,5 @@ t_ray	intersect_scene(t_ray ray, t_list *objects)
 		}
 		objects = objects->next;
 	}
-	if (!ft_in_rangef(distance_min, RAY_REACH_MIN, RAY_REACH_MAX))
-		return (no_intersection(ray));
-	ray_inter.color = closest_object->color;
-	ray_inter.origin = ft_add_vectors3d(ray.origin,
-			ft_scale_vector3d(distance_min, ray.direction));
-	return (ray_inter);
+	return (make_intersection(ray, closest_object, distance_min));
 }

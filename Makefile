@@ -18,7 +18,7 @@ SRCS_TRANSFORM := transform_scene.c transform_objs.c world_to_view.c
 
 SRCS_ERRORS := errors.c check_arguments.c
 
-SRCS_RAYTRACING := raytracing.c intersections.c rays.c light.c
+SRCS_RAYTRACING := raytracing.c intersections.c rays.c light.c normals.c
 
 SOURCES := $(addprefix $(SOURCES_DIR)base/, $(SRCS_MAIN)) \
            $(addprefix $(SOURCES_DIR)parsing/, $(SRCS_PARSING)) \
