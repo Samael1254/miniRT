@@ -56,11 +56,13 @@ void			shoot_rays(t_ray **rays, t_state *state);
 
 // Intersections //
 
-t_ray			intersect_scene(t_ray ray, t_list *objects);
+double			intersect_object(t_ray ray, t_object object);
+t_intersection	intersect_scene(t_ray ray, t_list *objects);
+t_vector3d		normal_at_point(t_object object, t_vector3d point);
 
 // Light //
 
-void			light_scene(t_ray **rays, t_state *state);
+t_color			shade_ray(t_intersection inter, t_scene *scene);
 
 // Graphics //
 
@@ -68,7 +70,6 @@ int				rgb_to_int(t_color color);
 t_color			init_color(unsigned char r, unsigned char g, unsigned char b);
 t_color			get_sky_color(t_ray ray);
 t_color			average_colors(t_color color1, t_color color2);
-t_color			apply_brightness(t_color color, double brightness);
 void			render_scene(t_state *state, t_ray **rays);
 
 // Check arguments //

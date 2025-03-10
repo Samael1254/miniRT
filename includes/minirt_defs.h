@@ -9,7 +9,7 @@
 # define WIN_X 800
 # define WIN_Y 800
 
-# define RAY_REACH_MAX 100
+# define RAY_REACH_MAX 1000
 # define RAY_REACH_MIN 0
 
 /* ENUMS */
@@ -122,6 +122,13 @@ typedef struct s_ray
 	t_vector3d		direction;
 	t_color			color;
 }					t_ray;
+
+typedef struct s_intersection
+{
+	t_color			color;
+	t_vector3d		point;
+	t_vector3d		normal;
+}					t_intersection;
 
 // State of the program
 typedef struct s_state

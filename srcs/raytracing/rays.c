@@ -2,7 +2,6 @@
 #include "minirt.h"
 #include "minirt_defs.h"
 #include <math.h>
-#include <stdio.h>
 
 static double	vertical_fov_2(double horizontal_fov_2)
 {
@@ -54,7 +53,8 @@ void	init_rays(t_camera camera, t_ray **rays)
 
 void	shoot_rays(t_ray **rays, t_state *state)
 {
-	t_ivector2d	coords;
+	t_ivector2d		coords;
+	t_intersection	inter;
 
 	coords.y = 0;
 	while (coords.y < WIN_Y)
@@ -62,8 +62,9 @@ void	shoot_rays(t_ray **rays, t_state *state)
 		coords.x = 0;
 		while (coords.x < WIN_X)
 		{
-			rays[coords.y][coords.x] = intersect_scene(rays[coords.y][coords.x],
+			inter = intersect_scene(rays[coords.y][coords.x],
 					state->scene.objects);
+			rays[coords.y][coords.x].color = shade_ray(inter, &state->scene);
 			coords.x++;
 		}
 		coords.y++;
