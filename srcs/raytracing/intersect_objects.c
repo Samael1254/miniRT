@@ -1,6 +1,7 @@
 #include "ft_algebra.h"
 #include "minirt.h"
 #include "minirt_defs.h"
+#include "ft_math.h"
 #include <math.h>
 #include <stddef.h>
 
@@ -14,7 +15,7 @@ static double	intersect_sphere(t_ray ray, t_sphere sphere)
 	dist_proj = ft_dot_vectors3d(ray.direction, dist);
 	inner_dist = pow(dist_proj, 2) + pow(sphere.diameter / 2, 2)
 		- ft_vector3d_square_norm(dist);
-	if (inner_dist < 0.0)
+	if (ft_in_rangef(inner_dist, 0, 0))
 		return (INFINITY);
 	return (dist_proj - sqrt(inner_dist));
 }
@@ -46,7 +47,7 @@ static double	intersect_plane(t_ray ray, t_plane plane)
 	dir_dot = ft_dot_vectors3d(ray.direction, plane.normal);
 	point_dot = ft_dot_vectors3d(ft_sub_vectors3d(ray.origin, plane.point),
 			plane.normal);
-	if (dir_dot == 0. || point_dot == 0.)
+	if (ft_equalf(dir_dot, 0) || ft_equalf(point_dot, 0))
 		return (INFINITY);
 	return (-point_dot / dir_dot);
 }

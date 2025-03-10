@@ -3,7 +3,7 @@
 
 static t_vector3d	sphere_normal(t_sphere sphere, t_vector3d point)
 {
-	return (ft_sub_vectors3d(point, sphere.pos));
+	return (ft_normalize_vector3d(ft_sub_vectors3d(point, sphere.pos)));
 }
 
 static t_vector3d	plane_normal(t_plane plane)

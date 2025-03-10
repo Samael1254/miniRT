@@ -16,9 +16,10 @@ static t_color	apply_brightness(t_color color, double brightness, double angle)
 {
 	t_color	lit_color;
 
-	lit_color.r = (unsigned char)((double)color.r * brightness * angle);
-	lit_color.g = (unsigned char)((double)color.g * brightness * angle);
-	lit_color.b = (unsigned char)((double)color.b * brightness * angle);
+	// angle = 1;
+	lit_color.r = (unsigned char)(color.r * brightness * angle);
+	lit_color.g = (unsigned char)(color.g * brightness * angle);
+	lit_color.b = (unsigned char)(color.b * brightness * angle);
 	return (lit_color);
 }
 
