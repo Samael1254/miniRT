@@ -16,6 +16,12 @@ bool	ft_check_error_line(char **split, int len)
 	return (true);
 }
 
+/* 
+ *	This function checks if a split initialy formatted as XXX,XXX,XXX contains numbers of '-' or '+'
+ *	Splitted on ','
+ *	Returns false if the data isn't correct
+ *	Returns true if it's correct
+ * */
 bool	ft_check_split_data(char **split)
 {
 	int	i;
@@ -46,7 +52,7 @@ void	check_line(t_state *state, char **split, int split_len)
 		if (!ft_isdigit(*split[i]) && *split[i] != '-' && *split[i] != '+')
 		{
 			ft_free_strtab(split);
-			error("cylinder", "something isn't a number", state);
+			error(NULL, "something isn't a number", state);
 		}
 		i++;
 	}
