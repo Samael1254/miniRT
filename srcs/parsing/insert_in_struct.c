@@ -1,3 +1,4 @@
+#include "ft_algebra.h"
 #include "ft_conversion.h"
 #include "ft_strings.h"
 #include "minirt.h"
@@ -43,6 +44,10 @@ static void	add_camera(t_state *state, char **split)
 	}
 	state->scene.camera.pos = pos;
 	state->scene.camera.dir = dir;
+	state->scene.camera.x_axis = ft_cross_vectors3d(dir, ft_set_vector3d(0, 1,
+				0));
+	state->scene.camera.y_axis = ft_cross_vectors3d(state->scene.camera.x_axis,
+			dir);
 	fov_2 = ft_atod(split[3]) / 2;
 	if (fov_2 < 0 || fov_2 > 90)
 	{

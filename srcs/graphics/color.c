@@ -7,11 +7,14 @@ int	rgb_to_int(t_color color)
 	return (color.r << 16 | color.g << 8 | color.b << 0);
 }
 
-void	apply_brightness(t_color *color, double brightness)
+t_color	apply_brightness(t_color color, double brightness)
 {
-	color->r = (unsigned char)((double)color->r * brightness);
-	color->g = (unsigned char)((double)color->g * brightness);
-	color->b = (unsigned char)((double)color->b * brightness);
+	t_color	lit_color;
+
+	lit_color.r = (unsigned char)((double)color.r * brightness);
+	lit_color.g = (unsigned char)((double)color.g * brightness);
+	lit_color.b = (unsigned char)((double)color.b * brightness);
+	return (lit_color);
 }
 
 t_color	lerp_colors(t_color color1, t_color color2, double lambda)
@@ -37,12 +40,25 @@ t_color	average_colors(t_color color1, t_color color2)
 	return (lerp_colors(color1, color2, 0.5));
 }
 
+t_color	init_color(unsigned char r, unsigned char g, unsigned char b)
+{
+	t_color	color;
+
+	color.r = r;
+	color.g = g;
+	color.b = b;
+	return (color);
+}
+
 t_color	get_sky_color(t_ray ray)
 {
-	const t_color	color1 = {255, 255, 255};
-	const t_color	color2 = {42, 162, 242};
 	t_color			sky_color;
+	const t_color	color1 = {255, 174, 69};
+	const t_color	color2 = {42, 162, 242};
 
 	sky_color = lerp_colors(color1, color2, (ray.direction.y + 1) / 2);
+	// sky_color.r = (ray.direction.x + 1) / 2 * 255;
+	// sky_color.g = (ray.direction.y + 1) / 2 * 255;
+	// sky_color.b = (ray.direction.z + 1) / 2 * 255;
 	return (sky_color);
 }

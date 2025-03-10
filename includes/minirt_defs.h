@@ -6,11 +6,8 @@
 
 /* MACROS */
 
-# define FALSE 0
-# define TRUE 1
-
 # define WIN_X 800
-# define WIN_Y 500
+# define WIN_Y 800
 
 # define RAY_REACH_MAX 100
 # define RAY_REACH_MIN 0
@@ -99,6 +96,8 @@ typedef struct s_camera
 {
 	t_vector3d		pos;
 	t_vector3d		dir;
+	t_vector3d		x_axis;
+	t_vector3d		y_axis;
 	double			fov_2;
 }					t_camera;
 
@@ -121,13 +120,8 @@ typedef struct s_ray
 {
 	t_vector3d		origin;
 	t_vector3d		direction;
-}					t_ray;
-
-typedef struct s_intersection
-{
-	t_vector3d		point;
 	t_color			color;
-}					t_intersection;
+}					t_ray;
 
 // State of the program
 typedef struct s_state

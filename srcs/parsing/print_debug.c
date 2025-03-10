@@ -2,9 +2,9 @@
 #include "minirt_defs.h"
 #include <stdio.h>
 
-static void	print_vector3d(t_vector3d vec)
+void	print_vector3d(t_vector3d vec)
 {
-	printf("%2.f,%2.f,%2.f", vec.x, vec.y, vec.z);
+	printf("%.5f,%.5f,%.5f", vec.x, vec.y, vec.z);
 }
 
 static void	print_color(t_color col)

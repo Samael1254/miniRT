@@ -1,7 +1,17 @@
 #include "ft_strings.h"
 #include "minirt.h"
+#include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+unsigned int	warnings_number(bool add)
+{
+	static int	n_errors;
+
+	if (add)
+		n_errors++;
+	return (n_errors);
+}
 
 void	warning(char const *type, char const *msg)
 {
@@ -14,6 +24,7 @@ void	warning(char const *type, char const *msg)
 	}
 	write(2, msg, ft_strlen(msg));
 	write(2, "\n", 1);
+	warnings_number(true);
 }
 
 void	info(char const *type, char const *msg)
