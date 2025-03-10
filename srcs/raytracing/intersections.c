@@ -4,6 +4,14 @@
 #include "minirt_defs.h"
 #include <math.h>
 
+
+static int	ft_equalf(double value1, double value2)
+{
+	double	epsilon;
+
+	epsilon = 1e-6;
+	return (fabs(value1 - value2) <= epsilon);
+}
 // static double	intersect_sphere(t_ray ray, t_sphere sphere)
 // {
 // 	t_vector3d	dist;
@@ -45,7 +53,7 @@ static double	intersect_plane(t_ray ray, t_plane plane)
 	dir_dot = ft_dot_vectors3d(ray.direction, plane.normal);
 	point_dot = ft_dot_vectors3d(ft_sub_vectors3d(ray.origin, plane.point),
 			plane.normal);
-	if (dir_dot == 0. || point_dot == 0.)
+	if (ft_equalf(dir_dot, 0) || ft_equalf(point_dot, 0))
 		return (INFINITY);
 	return (-point_dot / dir_dot);
 }

@@ -45,7 +45,7 @@ void	ray_tracing(t_state *state)
 	info(NULL, "ray tracing...");
 	init_rays(state->scene.camera, rays);
 	shoot_rays(rays, state);
-	// light_scene(rays, state);
+	light_scene(rays, state);
 	info(NULL, "rendering...");
 	render_scene(state, rays);
 	free_rays(rays);

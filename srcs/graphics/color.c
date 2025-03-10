@@ -11,9 +11,9 @@ t_color	apply_brightness(t_color color, double brightness)
 {
 	t_color	lit_color;
 
-	lit_color.r = (unsigned char)((double)color.r * brightness);
-	lit_color.g = (unsigned char)((double)color.g * brightness);
-	lit_color.b = (unsigned char)((double)color.b * brightness);
+	lit_color.r = (unsigned char)(color.r * brightness);
+	lit_color.g = (unsigned char)(color.g * brightness);
+	lit_color.b = (unsigned char)(color.b * brightness);
 	return (lit_color);
 }
 
@@ -26,12 +26,9 @@ t_color	lerp_colors(t_color color1, t_color color2, double lambda)
 		warning("bad lerp lambda", "should be in range [0-1]");
 		lambda = ft_clampf(lambda, 0., 1.);
 	}
-	lerp.r = (unsigned char)((double)color1.r + (double)(color2.r - color1.r)
-			* lambda);
-	lerp.g = (unsigned char)((double)color1.g + (double)(color2.g - color1.g)
-			* lambda);
-	lerp.b = (unsigned char)((double)color1.b + (double)(color2.b - color1.b)
-			* lambda);
+	lerp.r = (unsigned char)(color1.r + (color2.r - color1.r) * lambda);
+	lerp.g = (unsigned char)(color1.g + (color2.g - color1.g) * lambda);
+	lerp.b = (unsigned char)(color1.b + (color2.b - color1.b) * lambda);
 	return (lerp);
 }
 
