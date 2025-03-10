@@ -33,8 +33,17 @@ static void	free_mlx(t_state *state)
 
 int	exit_program(t_state *state, int status)
 {
+	int	i;
+
 	if (state)
 	{
+		i = 0;
+		while (i < 3)
+		{
+			if (state->id_list[i])
+				free(state->id_list[i]);
+			i++;
+		}
 		free_mlx(state);
 		free_scene(&state->scene);
 	}

@@ -25,6 +25,9 @@ static void	initialize_state(t_state *state)
 {
 	state->display = NULL;
 	state->scene.objects = NULL;
+	state->id_list[0] = NULL;
+	state->id_list[1] = NULL;
+	state->id_list[2] = NULL;
 }
 
 void	init_state(t_state *state, char *filename)

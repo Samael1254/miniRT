@@ -137,6 +137,7 @@ typedef struct s_state
 	void			*win;
 	t_img_data		img_data;
 	t_scene			scene;
+	char*			id_list[3];
 }					t_state;
 
 #endif

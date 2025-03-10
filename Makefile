@@ -9,8 +9,8 @@ HEADERS := $(addprefix $(HEADERS_DIR), $(HEADERS))
 
 SRCS_MAIN := main.c exit_program.c events.c init_state.c print_debug.c
 
-SRCS_PARSING := init_scene.c insert_in_struct.c utils.c objects_list.c \
-				object_sphere.c object_plane.c object_cylinder.c
+SRCS_PARSING := init_scene.c insert_in_struct.c utils.c utils2.c objects_list.c \
+				object_sphere.c object_plane.c object_cylinder.c utils_general_objects.c
 
 SRCS_GRAPHICS := color.c graphics.c
 

@@ -4,7 +4,7 @@
 #include "minirt.h"
 #include <stdlib.h>
 
-static t_sphere	*get_sphere_data(t_state *state, char **split)
+static t_sphere	*get_sphere_data(t_state *state, char **split, t_object *obj)
 {
 	t_sphere	*sp;
 	bool		has_error;
@@ -12,6 +12,7 @@ static t_sphere	*get_sphere_data(t_state *state, char **split)
 	sp = ft_calloc(1, sizeof(t_sphere));
 	if (!sp)
 	{
+		free(obj);
 		ft_free_strtab(split);
 		error(NULL, "as malloc failed", state);
 	}
@@ -20,6 +21,7 @@ static t_sphere	*get_sphere_data(t_state *state, char **split)
 	if (has_error == true)
 	{
 		free(sp);
+		free(obj);
 		ft_free_strtab(split);
 		error("sphere", "sphere color isn't valid", state);
 	}
@@ -31,19 +33,24 @@ t_object	*object_sphere(t_state *state, char **split)
 	t_object	*obj;
 	bool		has_error;
 
+	if (!ft_check_error_line(split, 4))
+		error("wrong object definition", "sphere needs 4 parameters", state);
+	check_line(state, split, 4);
 	obj = ft_calloc(1, sizeof(t_object));
 	if (!obj)
 	{
 		ft_free_strtab(split);
 		error(NULL, "as malloc failed", state);
 	}
-	obj->object_r = get_sphere_data(state, split);
+	obj->object_r = get_sphere_data(state, split, obj);
 	obj->type = SPHERE;
 	obj->color = get_color(split[3], &has_error);
 	if (has_error == true)
 	{
+		free(obj->object_r);
+		free(obj);
 		ft_free_strtab(split);
-		error(NULL, "as malloc failed", state);
+		error(NULL, "malloc failed or vector data invalid", state);
 	}
 	return (obj);
 }

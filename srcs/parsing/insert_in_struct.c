@@ -10,6 +10,7 @@ static void	add_ambient_light(t_state *state, char **split)
 	double	brightness;
 	bool	has_error;
 
+	ambiant_light_checker(state, split);
 	brightness = ft_atod(split[1]);
 	if (brightness < 0 || brightness > 1)
 	{
@@ -38,7 +39,7 @@ static void	add_camera(t_state *state, char **split)
 	if (!is_vector3d_in_range(dir, -1, 1) || has_error == true)
 	{
 		ft_free_strtab(split);
-		error("parsing", "error of ambiant light colors", state);
+		error("parsing", "error on camera position or rotation", state);
 	}
 	state->scene.camera.pos = pos;
 	state->scene.camera.dir = dir;
@@ -47,7 +48,7 @@ static void	add_camera(t_state *state, char **split)
 	state->scene.camera.y_axis = ft_cross_vectors3d(state->scene.camera.x_axis,
 			dir);
 	fov_2 = ft_atod(split[3]) / 2;
-	if (fov_2 < 0 || fov_2 > 180)
+	if (fov_2 < 0 || fov_2 > 90)
 	{
 		ft_free_strtab(split);
 		error("parsing", "error of the camera fov", state);
@@ -84,22 +85,23 @@ int	insert_in_struct(t_state *state, char **split)
 {
 	if (!*split)
 		return (-1);
-	if (!ft_strncmp(split[0], "A", 1))
-		add_ambient_light(state, split);
-	else if (!ft_strncmp(split[0], "C", 1))
-		add_camera(state, split);
-	else if (!ft_strncmp(split[0], "L", 1))
-		add_light(state, split);
-	else if (!ft_strncmp(split[0], "sp", 2))
+	if (!ft_strncmp(split[0], "A", ft_strlen(split[0])))
+		return (add_ambient_light(state, split), 2);
+	else if (!ft_strncmp(split[0], "C", ft_strlen(split[0])))
+		return (add_camera(state, split), 2);
+	else if (!ft_strncmp(split[0], "L", ft_strlen(split[0])))
+		return (add_light(state, split), 2);
+	else if (!ft_strncmp(split[0], "sp", ft_strlen(split[0])))
 		add_object_to_list(state, split);
-	else if (!ft_strncmp(split[0], "pl", 2))
+	else if (!ft_strncmp(split[0], "pl", ft_strlen(split[0])))
 		add_object_to_list(state, split);
-	else if (!ft_strncmp(split[0], "cy", 2))
+	else if (!ft_strncmp(split[0], "cy", ft_strlen(split[0])))
 		add_object_to_list(state, split);
 	else if (ft_strcmp(split[0], "\n"))
 	{
-		split[0][ft_strlen(split[0]) - 1] = '\0';
+		split[0][ft_strlen(split[0])] = '\0';
 		warning("no such object type", split[0]);
+		return (1);
 	}
 	return (0);
 }
