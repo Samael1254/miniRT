@@ -7,16 +7,6 @@ int	rgb_to_int(t_color color)
 	return (color.r << 16 | color.g << 8 | color.b << 0);
 }
 
-t_color	apply_brightness(t_color color, double brightness)
-{
-	t_color	lit_color;
-
-	lit_color.r = (unsigned char)((double)color.r * brightness);
-	lit_color.g = (unsigned char)((double)color.g * brightness);
-	lit_color.b = (unsigned char)((double)color.b * brightness);
-	return (lit_color);
-}
-
 t_color	lerp_colors(t_color color1, t_color color2, double lambda)
 {
 	t_color	lerp;

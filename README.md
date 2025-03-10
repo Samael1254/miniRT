@@ -8,7 +8,6 @@ Basic raytracer for 42 school project miniRT
 - Specify all errors
 - Check that capital letter objects are only declared once
 - Change warnings to errors in the end
-- Add commenting in the .rt file with '#'
 
 ### INTERSECTIONS
 - Inside of objects
@@ -19,3 +18,16 @@ Basic raytracer for 42 school project miniRT
 - Fix shoot rays to light function
 
 ## TODO BONUS
+
+### PARSING
+
+### GRAPHICS
+- Anti aliasing
+
+### MATERIALS
+- Add material structure
+- Texture
+- Bump map
+
+### LIGHT
+- Add a light structure (similar to objects) and a list of lights to the scene

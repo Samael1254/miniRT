@@ -9,7 +9,7 @@
 # define WIN_X 800
 # define WIN_Y 800
 
-# define RAY_REACH_MAX 100
+# define RAY_REACH_MAX 1000
 # define RAY_REACH_MIN 0
 
 /* ENUMS */
