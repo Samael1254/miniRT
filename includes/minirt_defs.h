@@ -12,6 +12,8 @@
 # define RAY_REACH_MAX 1000
 # define RAY_REACH_MIN 0
 
+# define EPSILON 0.5
+
 /* ENUMS */
 
 // Event codes
@@ -137,7 +139,7 @@ typedef struct s_state
 	void			*win;
 	t_img_data		img_data;
 	t_scene			scene;
-	char*			id_list[3];
+	char			*id_list[3];
 }					t_state;
 
 #endif

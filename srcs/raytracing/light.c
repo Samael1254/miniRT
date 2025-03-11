@@ -2,7 +2,6 @@
 #include "ft_math.h"
 #include "minirt.h"
 #include "minirt_defs.h"
-#include <math.h>
 #include <stdbool.h>
 
 static t_vector3d	light_direction(t_ray ray, t_point_light light)
@@ -77,12 +76,13 @@ t_color	shade_ray(t_intersection inter, t_scene *scene)
 	bool			in_shadow;
 	double			attenuation;
 
+	// light_ray.origin = ft_add_vectors3d(inter.point,
+	// ft_scale_vector3d(EPSILON, inter.normal));
 	light_ray.origin = inter.point;
 	light_ray.direction = light_direction(light_ray, scene->p_light);
 	light_inter = intersect_scene(light_ray, scene->objects);
-	in_shadow = ft_distance3d(light_ray.origin,
-			scene->p_light.pos) >= ft_distance3d(light_ray.origin,
-			light_inter.point);
+	in_shadow = ft_supf(ft_distance3d(light_ray.origin, scene->p_light.pos),
+			ft_distance3d(light_ray.origin, light_inter.point));
 	attenuation = get_attenuation(inter, in_shadow, light_ray.direction,
 			*scene);
 	return (shade_material(inter.color, attenuation, in_shadow, *scene));

@@ -11,11 +11,9 @@ Basic raytracer for 42 school project miniRT
 
 ### INTERSECTIONS
 - Inside of objects
-- Bases of cylinder
 
 ### LIGHT
-- Normals functions
-- Fix shoot rays to light function
+- Planes are lit if the light is outside
 
 ## TODO BONUS
 
