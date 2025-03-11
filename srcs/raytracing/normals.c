@@ -13,17 +13,24 @@ static t_vector3d	plane_normal(t_plane plane)
 
 static t_vector3d	cylinder_normal(t_cylinder cylinder, t_vector3d point)
 {
+	t_vector3d	ba;
 	t_vector3d	pa;
-	double		baba;
 	double		h;
-	t_vector3d	radial_vec;
+	double		radius;
+	t_vector3d	a;
 
-	pa = ft_sub_vectors3d(point, cylinder.pos);
-	baba = ft_dot_vectors3d(cylinder.axis, cylinder.axis);
-	h = ft_dot_vectors3d(pa, cylinder.axis) / baba;
-	radial_vec = ft_sub_vectors3d(pa, ft_scale_vector3d(h, cylinder.axis));
-	return (ft_normalize_vector3d(ft_scale_vector3d(1.0 / (cylinder.diameter
-					/ 2.0), radial_vec)));
+	radius = cylinder.diameter / 2.0;
+	ba = ft_scale_vector3d(cylinder.height,
+			ft_normalize_vector3d(cylinder.axis));
+	a = ft_sub_vectors3d(cylinder.pos, ft_scale_vector3d(0.5, ba));
+	pa = ft_sub_vectors3d(point, a);
+	h = ft_dot_vectors3d(pa, ba) / ft_dot_vectors3d(ba, ba);
+	if (h < 0.001)
+		return (ft_normalize_vector3d(ft_scale_vector3d(-1.0, ba)));
+	if (h > 0.999)
+		return (ft_normalize_vector3d(ba));
+	return (ft_normalize_vector3d(ft_scale_vector3d(1.0 / radius,
+				ft_sub_vectors3d(pa, ft_scale_vector3d(h, ba)))));
 }
 
 t_vector3d	normal_at_point(t_object object, t_vector3d point)
