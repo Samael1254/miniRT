@@ -12,25 +12,42 @@ static t_vector3d	light_direction(t_ray ray, t_point_light light)
 	return (light_dir);
 }
 
-static t_color	apply_brightness(t_color color, double brightness, double angle)
+static t_color	attenuate_color(t_color color, double attenuation)
 {
 	t_color	lit_color;
 
-	// angle = 1;
-	lit_color.r = (unsigned char)(color.r * brightness * angle);
-	lit_color.g = (unsigned char)(color.g * brightness * angle);
-	lit_color.b = (unsigned char)(color.b * brightness * angle);
+	lit_color.r = (unsigned char)(color.r * attenuation);
+	lit_color.g = (unsigned char)(color.g * attenuation);
+	lit_color.b = (unsigned char)(color.b * attenuation);
 	return (lit_color);
 }
 
-static t_color	shade_material(t_intersection inter, double brightness,
-		t_color light_color, t_vector3d light_dir)
+static double	get_attenuation(t_intersection inter, bool in_shadow,
+		t_vector3d light_dir, t_scene scene)
+{
+	double	attenuation;
+	double	incidence;
+
+	incidence = ft_absf(ft_dot_vectors3d(light_dir, inter.normal));
+	if (in_shadow)
+		return (scene.a_light.brightness);
+	attenuation = ft_lerpf(scene.a_light.brightness, scene.p_light.brightness,
+			incidence);
+	if (!ft_in_rangef(attenuation, 0, 1))
+		warning("invalid attenuation value", "should be between 0 and 1");
+	return (attenuation);
+}
+
+static t_color	shade_material(t_color color, double attenuation,
+		bool in_shadow, t_scene scene)
 {
 	t_color	lit_color;
 
-	lit_color = apply_brightness(inter.color, brightness,
-			ft_absf(ft_dot_vectors3d(light_dir, inter.normal)));
-	lit_color = average_colors(lit_color, light_color);
+	lit_color = attenuate_color(color, attenuation);
+	if (in_shadow)
+		lit_color = average_colors(lit_color, scene.a_light.color);
+	else
+		lit_color = average_colors(lit_color, scene.p_light.color);
 	return (lit_color);
 }
 
@@ -39,6 +56,7 @@ t_color	shade_ray(t_intersection inter, t_scene *scene)
 	t_ray			light_ray;
 	t_intersection	light_inter;
 	bool			in_shadow;
+	double			attenuation;
 
 	light_ray.origin = inter.point;
 	light_ray.direction = light_direction(light_ray, scene->p_light);
@@ -46,10 +64,7 @@ t_color	shade_ray(t_intersection inter, t_scene *scene)
 	in_shadow = ft_distance3d(light_ray.origin,
 			scene->p_light.pos) >= ft_distance3d(light_ray.origin,
 			light_inter.point);
-	if (in_shadow)
-		return (shade_material(inter, scene->a_light.brightness,
-				scene->a_light.color, light_ray.direction));
-	return (shade_material(inter, ft_maxf(scene->p_light.brightness,
-				scene->a_light.brightness), scene->p_light.color,
-			light_ray.direction));
+	attenuation = get_attenuation(inter, in_shadow, light_ray.direction,
+			*scene);
+	return (shade_material(inter.color, attenuation, in_shadow, *scene));
 }
