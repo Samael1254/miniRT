@@ -2,6 +2,7 @@
 #include "ft_math.h"
 #include "minirt.h"
 #include "minirt_defs.h"
+#include <math.h>
 #include <stdbool.h>
 
 static t_vector3d	light_direction(t_ray ray, t_point_light light)
@@ -22,17 +23,34 @@ static t_color	attenuate_color(t_color color, double attenuation)
 	return (lit_color);
 }
 
+static double	get_dist_attenuation(t_vector3d point, t_vector3d light_pos)
+{
+	double			dist_attenuation;
+	double			distance;
+	const double	a = 0.0001;
+	const double	b = 0.1;
+	const double	c = 0;
+
+	distance = ft_distance3d(point, light_pos);
+	dist_attenuation = 1 / (a * distance * distance + b * distance + c);
+	return (dist_attenuation);
+}
+
 static double	get_attenuation(t_intersection inter, bool in_shadow,
 		t_vector3d light_dir, t_scene scene)
 {
 	double	attenuation;
 	double	incidence;
 
-	incidence = ft_absf(ft_dot_vectors3d(light_dir, inter.normal));
+	incidence = (ft_dot_vectors3d(light_dir, inter.normal));
 	if (in_shadow)
 		return (scene.a_light.brightness);
+	if (incidence < 0)
+		incidence *= -1;
+	attenuation = incidence;
+	attenuation *= get_dist_attenuation(inter.point, scene.p_light.pos);
 	attenuation = ft_lerpf(scene.a_light.brightness, scene.p_light.brightness,
-			incidence);
+			attenuation);
 	if (!ft_in_rangef(attenuation, 0, 1))
 		warning("invalid attenuation value", "should be between 0 and 1");
 	return (attenuation);
