@@ -58,7 +58,8 @@ void			shoot_rays(t_ray **rays, t_state *state);
 
 double			intersect_object(t_ray ray, t_object object);
 t_intersection	intersect_scene(t_ray ray, t_list *objects);
-t_vector3d		normal_at_point(t_object object, t_vector3d point);
+t_vector3d		normal_at_point(t_object object, t_vector3d point,
+					t_vector3d ray_dir);
 
 // Light //
 

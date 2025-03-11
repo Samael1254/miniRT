@@ -20,7 +20,7 @@ static t_intersection	make_intersection(t_ray ray, t_object *object,
 	inter.color = object->color;
 	inter.point = ft_add_vectors3d(ray.origin, ft_scale_vector3d(distance_min,
 				ray.direction));
-	inter.normal = normal_at_point(*object, inter.point);
+	inter.normal = normal_at_point(*object, inter.point, ray.direction);
 	return (inter);
 }
 

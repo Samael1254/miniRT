@@ -43,10 +43,10 @@ static double	get_attenuation(t_intersection inter, bool in_shadow,
 	double	incidence;
 
 	incidence = (ft_dot_vectors3d(light_dir, inter.normal));
-	if (in_shadow)
+	if (in_shadow || incidence < 0)
 		return (scene.a_light.brightness);
-	if (incidence < 0)
-		incidence *= -1;
+	// if (incidence < 0)
+	// 	incidence *= -1;
 	attenuation = incidence;
 	attenuation *= get_dist_attenuation(inter.point, scene.p_light.pos);
 	attenuation = ft_lerpf(scene.a_light.brightness, scene.p_light.brightness,
@@ -76,8 +76,6 @@ t_color	shade_ray(t_intersection inter, t_scene *scene)
 	bool			in_shadow;
 	double			attenuation;
 
-	// light_ray.origin = ft_add_vectors3d(inter.point,
-	// ft_scale_vector3d(EPSILON, inter.normal));
 	light_ray.origin = inter.point;
 	light_ray.direction = light_direction(light_ray, scene->p_light);
 	light_inter = intersect_scene(light_ray, scene->objects);
