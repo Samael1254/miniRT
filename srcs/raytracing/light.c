@@ -33,6 +33,7 @@ static double	get_dist_attenuation(t_vector3d point, t_vector3d light_pos)
 
 	distance = ft_distance3d(point, light_pos);
 	dist_attenuation = 1 / (a * distance * distance + b * distance + c);
+	dist_attenuation = ft_clampf(dist_attenuation, 0, 1);
 	return (dist_attenuation);
 }
 
