@@ -7,6 +7,7 @@ A basic raytracer for 42 school project miniRT
 - Colored diffuse and ambiant lighting
 - Basic shapes, from the outside as well as inside : plane, sphere, cylinder
 - Basic shading : hard shadows, incidence and distance attenuation
+- A background sky with a gradiant of two colors 
 - Single point light
 - Camera with modifiable parameters (position, orientation, field of view)
 - Scenes written in the dedicated .rt file format (documentation not yet available)
@@ -32,6 +33,7 @@ A basic raytracer for 42 school project miniRT
 #### MATERIALS
 - Add material structure
 - Texture
+- Checkerboard procedural texture
 - Normal map
 - Phong reflection model
 - Transparent textures
@@ -51,15 +53,18 @@ A basic raytracer for 42 school project miniRT
 
 #### PARSING
 - .obj parser and triangle converter
+- Add a sky object with two colors to change the sky color
 
 #### GRAPHICS
 - Anti aliasing
+- Depth of field
 
 #### Performance
 - BVH
 
 #### LIGHT
 - Global illumination
+- Soft shadows
 - Directional light
 - Refraction
 - Wave lenght refraction (prisms)
