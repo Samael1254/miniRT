@@ -13,14 +13,17 @@ static t_vector3d	plane_normal(t_plane plane)
 
 static t_vector3d	cylinder_normal(t_cylinder cylinder, t_vector3d point)
 {
-	(void)point;
-	if (0)
-	{
-		if (0)
-			return (cylinder.axis);
-		return (ft_scale_vector3d(-1, cylinder.axis));
-	}
-	return (ft_init_vector3d(0));
+	t_vector3d	pa;
+	double		baba;
+	double		h;
+	t_vector3d	radial_vec;
+
+	pa = ft_sub_vectors3d(point, cylinder.pos);
+	baba = ft_dot_vectors3d(cylinder.axis, cylinder.axis);
+	h = ft_dot_vectors3d(pa, cylinder.axis) / baba;
+	radial_vec = ft_sub_vectors3d(pa, ft_scale_vector3d(h, cylinder.axis));
+	return (ft_normalize_vector3d(ft_scale_vector3d(1.0 / (cylinder.diameter
+					/ 2.0), radial_vec)));
 }
 
 t_vector3d	normal_at_point(t_object object, t_vector3d point)
