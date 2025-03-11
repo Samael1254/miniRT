@@ -15,7 +15,7 @@ static double	intersect_sphere(t_ray ray, t_sphere sphere)
 	dist_proj = ft_dot_vectors3d(ray.direction, dist);
 	inner_dist = pow(dist_proj, 2) + pow(sphere.diameter / 2, 2)
 		- ft_vector3d_square_norm(dist);
-	if (ft_in_rangef(inner_dist, 0, 0))
+	if (ft_in_rangef(inner_dist, 0, 0) || dist_proj < 0)
 		return (INFINITY);
 	return (dist_proj - sqrt(inner_dist));
 }
@@ -33,9 +33,8 @@ static double	intersect_sphere(t_ray ray, t_sphere sphere)
 // 	b = ft_dot_vectors3d(ray.direction, oc);
 // 	c = ft_dot_vectors3d(oc, oc) - pow(sphere.diameter / 2, 2);
 // 	delta = b * b - a * c;
-// 	if (delta <= 0)
+// 	if (ft_equalf(delta, 0))
 // 		return (INFINITY);
-// 	printf("hit sphere\n");
 // 	return ((-b - sqrt(delta)) / a);
 // }
 

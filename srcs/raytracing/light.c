@@ -29,7 +29,7 @@ static t_color	shade_material(t_intersection inter, double brightness,
 	t_color	lit_color;
 
 	lit_color = apply_brightness(inter.color, brightness,
-			ft_dot_vectors3d(light_dir, inter.normal));
+			ft_absf(ft_dot_vectors3d(light_dir, inter.normal)));
 	lit_color = average_colors(lit_color, light_color);
 	return (lit_color);
 }
