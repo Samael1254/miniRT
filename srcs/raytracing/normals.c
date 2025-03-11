@@ -26,9 +26,9 @@ static t_vector3d	cylinder_normal(t_cylinder cylinder, t_vector3d point)
 	a = ft_sub_vectors3d(cylinder.pos, ft_scale_vector3d(0.5, ba));
 	pa = ft_sub_vectors3d(point, a);
 	h = ft_dot_vectors3d(pa, ba) / ft_dot_vectors3d(ba, ba);
-	if (h < 0.001)
+	if (ft_inff(h, 0))
 		return (ft_normalize_vector3d(ft_scale_vector3d(-1.0, ba)));
-	if (h > 0.999)
+	if (ft_supf(h, 1))
 		return (ft_normalize_vector3d(ba));
 	return (ft_normalize_vector3d(ft_scale_vector3d(1.0 / radius,
 				ft_sub_vectors3d(pa, ft_scale_vector3d(h, ba)))));

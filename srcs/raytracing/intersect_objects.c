@@ -42,14 +42,12 @@ static double	intersect_plane(t_ray ray, t_plane plane)
 	return (-point_dot / dir_dot);
 }
 
-static double	calculate_cylinder_params(t_ray ray, t_cylinder cylinder,
-		double params[5], t_vector3d vectors[3])
+static double	cylinder_delta(t_ray ray, t_cylinder cylinder, double params[5],
+		t_vector3d vectors[3])
 {
 	double	h;
 
-	vectors[0] = ft_scale_vector3d(cylinder.height,
-			ft_normalize_vector3d(cylinder.axis));
-	vectors[0] = ft_scale_vector3d(1.0, vectors[0]);
+	vectors[0] = ft_scale_vector3d(cylinder.height, cylinder.axis);
 	vectors[1] = ft_sub_vectors3d(cylinder.pos, ft_scale_vector3d(0.5,
 				vectors[0]));
 	vectors[2] = ft_sub_vectors3d(ray.origin, vectors[1]);
@@ -62,7 +60,7 @@ static double	calculate_cylinder_params(t_ray ray, t_cylinder cylinder,
 		* params[1] - pow(cylinder.diameter / 2.0, 2) * params[0];
 	h = params[3] * params[3] - params[2] * params[4];
 	if (h < 0.0)
-		return (-1.0);
+		return (INFINITY);
 	return (sqrt(h));
 }
 
@@ -72,12 +70,14 @@ static double	intersect_cylinder(t_ray ray, t_cylinder cylinder)
 	double		params[5];
 	double		t;
 	double		y;
-	double		h;
+	double		delta;
 
-	h = calculate_cylinder_params(ray, cylinder, params, vectors);
-	if (h < 0.0)
+	delta = cylinder_delta(ray, cylinder, params, vectors);
+	if (delta == INFINITY)
 		return (INFINITY);
-	t = (-params[3] - h) / params[2];
+	t = (-params[3] - delta) / params[2];
+	if (ft_inff(t, 0))
+		t = (-params[3] + delta) / params[2];
 	y = params[1] + t * ft_dot_vectors3d(vectors[0], ray.direction);
 	if (y > 0.0 && y < params[0])
 		return (t);
@@ -86,10 +86,36 @@ static double	intersect_cylinder(t_ray ray, t_cylinder cylinder)
 	else
 		t = (params[0] - params[1]) / ft_dot_vectors3d(vectors[0],
 				ray.direction);
-	if (ft_absf(params[3] + params[2] * t) < h)
+	if (ft_absf(params[3] + params[2] * t) < delta)
 		return (t);
 	return (INFINITY);
 }
+
+// static double	intersect_cylinder(t_ray ray, t_cylinder cylinder)
+// {
+// 	t_vector3d	bo;
+// 	t_vector3d	u;
+// 	t_vector3d	v;
+// 	double		delta;
+// 	double		distance;
+//
+// 	bo = ft_sub_vectors3d(ray.origin, ft_sub_vectors3d(cylinder.pos,
+// 				ft_scale_vector3d(-cylinder.height / 2, cylinder.axis)));
+// 	u = ft_cross_vectors3d(cylinder.axis, bo);
+// 	v = ft_cross_vectors3d(cylinder.axis, ray.direction);
+// 	delta = pow(ft_dot_vectors3d(u, v), 2) - ft_vector3d_square_norm(v)
+// 		* (ft_vector3d_square_norm(u) - pow(cylinder.diameter / 2, 2));
+// 	if (ft_inff(delta, 0))
+// 		return (INFINITY);
+// 	delta = sqrt(delta);
+// 	distance = closest_root(-ft_dot_vectors3d(u, v) - delta,
+// 			-ft_dot_vectors3d(u, v) + delta) / ft_vector3d_square_norm(v);
+// 	if (ft_in_rangef(ft_dot_vectors3d(cylinder.axis, bo) + distance
+// 			* ft_dot_vectors3d(cylinder.axis, ray.direction), 0,
+// 			cylinder.height))
+// 		return (INFINITY);
+// 	return (distance);
+// }
 
 double	intersect_object(t_ray ray, t_object object)
 {
