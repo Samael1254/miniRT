@@ -13,7 +13,6 @@ Basic raytracer for 42 school project miniRT
 - Inside of objects
 
 ### LIGHT
-- Planes are lit if the light is outside
 
 ## TODO BONUS
 
