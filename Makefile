@@ -1,6 +1,7 @@
 NAME = miniRT
 
 SOURCES_DIR = srcs/
+BONUS_DIR = srcs/
 BUILD_DIR = build/
 HEADERS_DIR = includes/
 
