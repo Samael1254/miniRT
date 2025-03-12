@@ -1,7 +1,7 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# include "minirt_defs.h"
+# include "minirt_defs_bonus.h"
 # include <stdbool.h>
 
 // Init state //
@@ -35,6 +35,9 @@ void			add_object_to_list(t_state *state, char **split);
 t_object		*object_sphere(t_state *state, char **split);
 t_object		*object_plane(t_state *state, char **split);
 t_object		*object_cylinder(t_state *state, char **split);
+
+// create_lights_bonus.c
+void	add_lights_to_list(t_state *state, char **split);
 
 // Events //
 
@@ -96,5 +99,6 @@ int				exit_program(t_state *state, int status);
 // PRINT FOR DEBUGS
 void			print_scene(t_scene scene);
 void			print_vector3d(t_vector3d vec);
+void			print_color(t_color color);
 
 #endif
