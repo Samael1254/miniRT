@@ -1,12 +1,16 @@
 NAME = miniRT
 
 SOURCES_DIR = srcs/
-BONUS_DIR = srcs/
+BONUS_DIR = srcs_bonus/
 BUILD_DIR = build/
 HEADERS_DIR = includes/
+BONUS_HEADERS_DIR = includes_bonus/
 
 HEADERS = minirt.h minirt_defs.h
 HEADERS := $(addprefix $(HEADERS_DIR), $(HEADERS))
+
+BONUS_HEADERS = minirt_bonus.h minirt_defs_bonus.h
+BONUS_HEADERS := $(addprefix $(BONUS_HEADERS_DIR), $(BONUS_HEADERS))
 
 SRCS_MAIN := main.c exit_program.c events.c init_state.c
 
@@ -26,11 +30,42 @@ SOURCES := $(addprefix $(SOURCES_DIR)base/, $(SRCS_MAIN)) \
            $(addprefix $(SOURCES_DIR)errors/, $(SRCS_ERRORS)) \
            $(addprefix $(SOURCES_DIR)raytracing/, $(SRCS_RAYTRACING)) \
 
-OBJS := $(addprefix $(BUILD_DIR), $(notdir $(SOURCES:.c=.o)))
+
+BONUS_MAIN := main_bonus.c exit_program_bonus.c events_bonus.c init_state_bonus.c
+
+BONUS_PARSING := init_scene_bonus.c insert_in_struct_bonus.c utils_bonus.c utils2_bonus.c objects_list_bonus.c \
+				object_sphere_bonus.c object_plane_bonus.c object_cylinder_bonus.c utils_general_objects_bonus.c
+
+BONUS_GRAPHICS := color_bonus.c graphics_bonus.c
+
+BONUS_ERRORS := errors_bonus.c check_arguments_bonus.c
+
+BONUS_RAYTRACING := raytracing_bonus.c intersections_bonus.c intersect_objects_bonus.c rays_bonus.c light_bonus.c \
+				   normals_bonus.c
+
+BONUS := $(addprefix $(BONUS_DIR)base/, $(BONUS_MAIN)) \
+           $(addprefix $(BONUS_DIR)parsing/, $(BONUS_PARSING)) \
+           $(addprefix $(BONUS_DIR)graphics/, $(BONUS_GRAPHICS)) \
+           $(addprefix $(BONUS_DIR)errors/, $(BONUS_ERRORS)) \
+           $(addprefix $(BONUS_DIR)raytracing/, $(BONUS_RAYTRACING)) \
+
+MANDATORY_OBJS := $(addprefix $(BUILD_DIR)mandatory/, $(notdir $(SOURCES:.c=.o)))
+
+BONUS_OBJS := $(addprefix $(BUILD_DIR)bonus/, $(notdir $(BONUS:.c=.o)))
+
+MODE ?= mandatory
+
+ifeq ($(MODE), mandatory)
+	OBJS = $(MANDATORY_OBJS)
+else ifeq ($(MODE), bonus)
+	OBJS = $(BONUS_OBJS)
+else
+	$(error Invalid MODE. Use 'mandatory' or 'bonus'.)
+endif
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I./includes -I./libs/libft/includes -I./libs/mlx #-g
+CFLAGS = -Wall -Wextra -Werror -I./includes -I./includes_bonus -I./libs/libft/includes -I./libs/mlx #-g
 
 LIBFT = ./libs/libft/lib/libft.a
 
@@ -39,12 +74,28 @@ MLX = ./libs/mlx/libmlx.a
 LIBFLAGS := -lft -Llibs/libft/lib -lmlx -Llibs/mlx -lX11 -lXext -lm
 
 $(NAME): $(LIBFT) $(MLX) $(OBJS) $(HEADERS)
-	@ echo " \033[33mCompiling miniRT\033[m"
+	@ echo " \033[33mCompiling miniRT $(MODE)\033[m"
+	@ if [ "$(MODE)" = "mandatory" ]; then \
+		rm -f $(BONUS_OBJS); \
+		rm -df $(BUILD_DIR)bonus; \
+	fi
 	@ $(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFLAGS)
-	@ echo " \033[1;32m MiniRT binary compiled\033[m"
+	@ echo " \033[1;32m MiniRT \033[4m$(MODE)\033[0;1;32m binary compiled\033[m"
 
-$(BUILD_DIR)%.o: $(SOURCES_DIR)*/%.c
-	@ mkdir -p $(BUILD_DIR)
+bonus: $(LIBFT) $(MLX) $(BONUS_OBJS) $(BONUS_HEADERS)
+	@ rm -f $(MANDATORY_OBJS)
+	@ rm -df $(BUILD_DIR)mandatory
+	@if ! $(MAKE) -s -n MODE=bonus | grep -q .; then \
+		echo "make: 'miniRT' (bonus) is up to date."; \
+	fi
+	@ $(MAKE) -s MODE=bonus
+
+$(BUILD_DIR)mandatory/%.o: $(SOURCES_DIR)*/%.c
+	@ mkdir -p $(BUILD_DIR)mandatory
+	@ $(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)bonus/%.o: $(BONUS_DIR)*/%.c
+	@ mkdir -p $(BUILD_DIR)bonus
 	@ $(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):
@@ -73,11 +124,12 @@ check_norm:
 	@ echo " \033[33m... norminette\033[m"
 	@ norminette src > /dev/null 2>&1 && tput cuu1 && tput el && echo " \033[32m norminette valid\033[m" || (tput cuu1 && tput el && echo " \033[31m norminette check failed\033[m"; true)
 
-all: $(NAME) check_norm
+all: $(NAME)
 
 clean:
 	@ echo " \033[33mCleaning\033[m"
-	@ rm -f $(BUILD_DIR)/*.o
+	@ rm -f $(BONUS_OBJ) $(MANDATORY_OBJS)
+	@ rm -df $(BUILD_DIR)/*
 	@ rm -df $(BUILD_DIR)
 	@ echo " \033[32m MiniRT build files cleaned\033[m"
 
@@ -87,4 +139,4 @@ fclean: clean
 
 re: fclean $(LIBFT) all
 
-.PHONY: clean fclean re all libft fclean_libft check_norm
+.PHONY: clean fclean re all libft fclean_libft check_norm bonus
