@@ -17,7 +17,6 @@ A basic raytracer for 42 school project miniRT
 
 #### PARSING
 - Change warnings to errors in the end
-- Handle comments with space after
 
 
 ### TODO BONUS

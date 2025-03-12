@@ -1,5 +1,5 @@
 #include "ft_algebra.h"
-#include "minirt_defs.h"
+#include "minirt_defs_bonus.h"
 #include <stdio.h>
 
 void	print_vector3d(t_vector3d vec)

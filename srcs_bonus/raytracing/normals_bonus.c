@@ -1,6 +1,6 @@
 #include "ft_algebra.h"
 #include "ft_math.h"
-#include "minirt_defs.h"
+#include "minirt_defs_bonus.h"
 
 static t_vector3d	sphere_normal(t_sphere sphere, t_vector3d point)
 {

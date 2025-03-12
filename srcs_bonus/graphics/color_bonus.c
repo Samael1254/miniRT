@@ -1,6 +1,6 @@
 #include "ft_math.h"
-#include "minirt.h"
-#include "minirt_defs.h"
+#include "minirt_bonus.h"
+#include "minirt_defs_bonus.h"
 
 t_color	attenuate_color(t_color color, double attenuation)
 {

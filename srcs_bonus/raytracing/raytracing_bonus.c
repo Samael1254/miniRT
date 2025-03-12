@@ -1,6 +1,6 @@
 #include "ft_memory.h"
-#include "minirt.h"
-#include "minirt_defs.h"
+#include "minirt_bonus.h"
+#include "minirt_defs_bonus.h"
 #include <stdlib.h>
 
 static void	free_rays(t_ray **rays)

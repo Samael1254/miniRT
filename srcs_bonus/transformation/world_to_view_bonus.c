@@ -1,5 +1,5 @@
 #include "ft_algebra.h"
-#include "minirt_defs.h"
+#include "minirt_defs_bonus.h"
 
 t_vector3d	world_to_view(t_vector3d vect, t_camera camera)
 {

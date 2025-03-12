@@ -59,6 +59,14 @@ typedef struct s_color
 	unsigned char	b;
 }					t_color;
 
+typedef struct s_material
+{
+	t_color			kd;
+	t_color			ks;
+	t_color			ka;
+	double			specularity;
+}					t_material;
+
 typedef struct s_sphere
 {
 	t_vector3d		pos;

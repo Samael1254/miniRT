@@ -1,7 +1,7 @@
 #include "ft_chars.h"
 #include "ft_strings.h"
 #include "get_next_line.h"
-#include "minirt.h"
+#include "minirt_bonus.h"
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>

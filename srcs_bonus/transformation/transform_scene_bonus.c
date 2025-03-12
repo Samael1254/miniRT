@@ -1,5 +1,5 @@
-#include "minirt_defs.h"
-#include "minirt_transform.h"
+#include "minirt_defs_bonus.h"
+#include "minirt_transform_bonus.h"
 
 void	transform_scene(t_scene *scene)
 {

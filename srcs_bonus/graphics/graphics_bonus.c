@@ -1,5 +1,5 @@
-#include "minirt.h"
-#include "minirt_defs.h"
+#include "minirt_bonus.h"
+#include "minirt_defs_bonus.h"
 #include "mlx.h"
 #include <stdio.h>
 

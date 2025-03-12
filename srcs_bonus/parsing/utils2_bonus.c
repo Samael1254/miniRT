@@ -1,6 +1,6 @@
 #include "ft_chars.h"
 #include "ft_strings.h"
-#include "minirt.h"
+#include "minirt_bonus.h"
 #include <stdbool.h>
 
 bool	ft_check_error_line(char **split, int len)

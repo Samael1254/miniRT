@@ -1,5 +1,5 @@
-#include "minirt.h"
-#include "libft.h"
+#include "ft_strings.h"
+#include "minirt_bonus.h"
 #include <stdlib.h>
 
 void	add_object_to_list(t_state *state, char **split)

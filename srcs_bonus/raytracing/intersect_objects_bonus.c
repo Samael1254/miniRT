@@ -1,6 +1,6 @@
 #include "ft_algebra.h"
 #include "ft_math.h"
-#include "minirt_defs.h"
+#include "minirt_defs_bonus.h"
 #include <math.h>
 #include <stddef.h>
 

@@ -40,14 +40,18 @@ BONUS_GRAPHICS := color_bonus.c graphics_bonus.c
 
 BONUS_ERRORS := errors_bonus.c check_arguments_bonus.c
 
-BONUS_RAYTRACING := raytracing_bonus.c intersections_bonus.c intersect_objects_bonus.c rays_bonus.c light_bonus.c \
+BONUS_RAYTRACING := raytracing_bonus.c intersections_bonus.c intersect_objects_bonus.c rays_bonus.c \
 				   normals_bonus.c
+
+BONUS_LIGHT := light_bonus.c reflection_bonus.c
 
 BONUS := $(addprefix $(BONUS_DIR)base/, $(BONUS_MAIN)) \
            $(addprefix $(BONUS_DIR)parsing/, $(BONUS_PARSING)) \
            $(addprefix $(BONUS_DIR)graphics/, $(BONUS_GRAPHICS)) \
            $(addprefix $(BONUS_DIR)errors/, $(BONUS_ERRORS)) \
            $(addprefix $(BONUS_DIR)raytracing/, $(BONUS_RAYTRACING)) \
+           $(addprefix $(BONUS_DIR)light/, $(BONUS_LIGHT)) \
+
 
 MANDATORY_OBJS := $(addprefix $(BUILD_DIR)mandatory/, $(notdir $(SOURCES:.c=.o)))
 

@@ -1,14 +1,13 @@
 #include "ft_conversion.h"
 #include "ft_strings.h"
-#include "minirt.h"
-#include "ft_strings.h"
-#include <stdbool.h>
+#include "minirt_bonus.h"
 #include <math.h>
+#include <stdbool.h>
 
 /*
  * Return a t_vector3d containing the vector RGB based on the line
  * with this format `XXX,XXX,XXX`
- * Takes in parameter a pointer on bool in order to catch an error 
+ * Takes in parameter a pointer on bool in order to catch an error
  * on the split malloc
  * Error: returns -1,-1,-1 if an error occured
  * */

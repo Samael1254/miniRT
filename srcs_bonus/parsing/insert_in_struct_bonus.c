@@ -1,7 +1,7 @@
 #include "ft_algebra.h"
 #include "ft_conversion.h"
 #include "ft_strings.h"
-#include "minirt.h"
+#include "minirt_bonus.h"
 #include <stdbool.h>
 
 static void	add_ambient_light(t_state *state, char **split)

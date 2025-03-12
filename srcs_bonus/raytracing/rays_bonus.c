@@ -1,6 +1,6 @@
 #include "ft_algebra.h"
-#include "minirt.h"
-#include "minirt_defs.h"
+#include "minirt_bonus.h"
+#include "minirt_defs_bonus.h"
 #include <math.h>
 
 static double	vertical_fov_2(double horizontal_fov_2)
