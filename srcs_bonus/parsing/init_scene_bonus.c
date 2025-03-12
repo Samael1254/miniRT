@@ -46,15 +46,12 @@ static bool	check_line_chars(char *line)
 {
 	int	i;
 
-	// i = 0;
-	// while (line[i] && !(line[i] == ' ' || line[i] == '\t'))
-	// 	i++;
+	if (line[0] == '#')
+		return (true);
 	i = ft_strcspn(line, " \t");
 	while (line[i] && line[i] != '\n')
 	{
-		if (!ft_isdigit(line[i]) && line[i] != '+' && line[i] != '-'
-			&& line[i] != '.' && line[i] != ',' && line[i] != ' '
-			&& line[i] != '\t')
+		if (!ft_isdigit(line[i]) && !ft_isincharset(line[i], "+-., \t"))
 			break ;
 		i++;
 	}

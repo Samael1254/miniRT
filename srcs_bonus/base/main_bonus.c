@@ -12,5 +12,6 @@ int	main(int argc, char **argv)
 	info(NULL, "done, press ESC to close");
 	printf("Warnings raised: %u\n", warnings_number(false));
 	loop_events(&state);
-	exit_program(&state, EXIT_SUCCESS);
+	warning("unusal exit", "program should be closed with ESC or cross");
+	exit_program(&state, EXIT_FAILURE);
 }
