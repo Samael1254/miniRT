@@ -1,5 +1,5 @@
-#ifndef MINIRT_DEFS_H
-# define MINIRT_DEFS_H
+#ifndef MINIRT_DEFS_BONUS_H
+# define MINIRT_DEFS_BONUS_H
 
 # include "ft_algebra.h"
 # include "ft_list.h"

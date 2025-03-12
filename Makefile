@@ -43,7 +43,7 @@ BONUS_ERRORS := errors_bonus.c check_arguments_bonus.c
 BONUS_RAYTRACING := raytracing_bonus.c intersections_bonus.c intersect_objects_bonus.c rays_bonus.c \
 				   normals_bonus.c
 
-BONUS_LIGHT := light_bonus.c reflection_bonus.c
+BONUS_LIGHT := light_bonus.c phong_bonus.c
 
 BONUS := $(addprefix $(BONUS_DIR)base/, $(BONUS_MAIN)) \
            $(addprefix $(BONUS_DIR)parsing/, $(BONUS_PARSING)) \

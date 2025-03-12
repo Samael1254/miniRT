@@ -1,7 +1,7 @@
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef MINIRT_BONUS_H
+# define MINIRT_BONUS_H
 
-# include "minirt_defs.h"
+# include "minirt_defs_bonus.h"
 # include <stdbool.h>
 
 // Init state //
