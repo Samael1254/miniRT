@@ -7,14 +7,12 @@ HEADERS_DIR = includes/
 HEADERS = minirt.h minirt_defs.h
 HEADERS := $(addprefix $(HEADERS_DIR), $(HEADERS))
 
-SRCS_MAIN := main.c exit_program.c events.c init_state.c print_debug.c
+SRCS_MAIN := main.c exit_program.c events.c init_state.c
 
 SRCS_PARSING := init_scene.c insert_in_struct.c utils.c utils2.c objects_list.c \
 				object_sphere.c object_plane.c object_cylinder.c utils_general_objects.c
 
 SRCS_GRAPHICS := color.c graphics.c
-
-SRCS_TRANSFORM := transform_scene.c transform_objs.c world_to_view.c
 
 SRCS_ERRORS := errors.c check_arguments.c
 
@@ -24,7 +22,6 @@ SRCS_RAYTRACING := raytracing.c intersections.c intersect_objects.c rays.c light
 SOURCES := $(addprefix $(SOURCES_DIR)base/, $(SRCS_MAIN)) \
            $(addprefix $(SOURCES_DIR)parsing/, $(SRCS_PARSING)) \
            $(addprefix $(SOURCES_DIR)graphics/, $(SRCS_GRAPHICS)) \
-           $(addprefix $(SOURCES_DIR)transformation/, $(SRCS_TRANSFORM)) \
            $(addprefix $(SOURCES_DIR)errors/, $(SRCS_ERRORS)) \
            $(addprefix $(SOURCES_DIR)raytracing/, $(SRCS_RAYTRACING)) \
 
