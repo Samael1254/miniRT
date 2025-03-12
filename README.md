@@ -7,7 +7,7 @@ A basic raytracer for 42 school project miniRT
 - Colored diffuse and ambiant lighting
 - Basic shapes, from the outside as well as inside : plane, sphere, cylinder
 - Basic shading : hard shadows, incidence and distance attenuation
-- A background sky with a gradiant of two colors 
+- A background sky with a gradient of two colors
 - Single point light
 - Camera with modifiable parameters (position, orientation, field of view)
 - Scenes written in the dedicated .rt file format (documentation not yet available)
@@ -16,9 +16,9 @@ A basic raytracer for 42 school project miniRT
 ### TODO MANDATORY
 
 #### PARSING
-- Specify all errors
 - Change warnings to errors in the end
-- Handle omments with space after
+- Handle comments with space after
+
 
 ### TODO BONUS
 
@@ -43,6 +43,7 @@ A basic raytracer for 42 school project miniRT
 
 #### SCENES
 - Add scenes to show off all the features
+
 
 ### TODO ULTIMATE
 

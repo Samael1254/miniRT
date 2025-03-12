@@ -32,8 +32,9 @@ void	info(char const *type, char const *msg)
 	write(2, "\e[34;1mInfo: \e[0m", 17);
 	if (type)
 	{
+		write(2, "\e[1m", 4);
 		write(2, type, ft_strlen(type));
-		write(2, ": ", 2);
+		write(2, ": \e[0m", 6);
 	}
 	write(2, msg, ft_strlen(msg));
 	write(2, "\n", 1);

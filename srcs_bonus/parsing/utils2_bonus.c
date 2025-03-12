@@ -52,7 +52,7 @@ void	check_line(t_state *state, char **split, int split_len)
 		if (!ft_isdigit(*split[i]) && *split[i] != '-' && *split[i] != '+')
 		{
 			ft_free_strtab(split);
-			error(NULL, "something isn't a number", state);
+			error("invalid parameter", "parameters must be numbers", state);
 		}
 		i++;
 	}

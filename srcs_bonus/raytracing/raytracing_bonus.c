@@ -1,7 +1,6 @@
 #include "ft_memory.h"
 #include "minirt.h"
 #include "minirt_defs.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 static void	free_rays(t_ray **rays)
@@ -48,6 +47,4 @@ void	ray_tracing(t_state *state)
 	info(NULL, "rendering...");
 	render_scene(state, rays);
 	free_rays(rays);
-	info(NULL, "done, press ESC to close");
-	printf("%u warnings raised\n", warnings_number(false));
 }

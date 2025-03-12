@@ -1,7 +1,7 @@
+#include "ft_chars.h"
 #include "ft_strings.h"
 #include "get_next_line.h"
 #include "minirt.h"
-#include "ft_chars.h"
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>
@@ -50,9 +50,9 @@ static bool	check_line_chars(char *line)
 		i++;
 	while (line[i] && line[i] != '\n')
 	{
-		if (!ft_isdigit(line[i]) && line[i] != '+'
-			&& line[i] != '-' && line[i] != '.' && line[i] != ','
-			&& line[i] != ' ' && line[i] != '\t')
+		if (!ft_isdigit(line[i]) && line[i] != '+' && line[i] != '-'
+			&& line[i] != '.' && line[i] != ',' && line[i] != ' '
+			&& line[i] != '\t')
 			break ;
 		i++;
 	}

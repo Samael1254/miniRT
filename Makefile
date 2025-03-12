@@ -128,8 +128,9 @@ all: $(NAME)
 
 clean:
 	@ echo " \033[33mCleaning\033[m"
-	@ rm -f $(BONUS_OBJ) $(MANDATORY_OBJS)
-	@ rm -df $(BUILD_DIR)/*
+	@ rm -f $(BONUS_OBJS) $(MANDATORY_OBJS)
+	@ rm -df $(BUILD_DIR)mandatory
+	@ rm -df $(BUILD_DIR)bonus
 	@ rm -df $(BUILD_DIR)
 	@ echo " \033[32m MiniRT build files cleaned\033[m"
 

@@ -32,9 +32,9 @@ static void	initialize_state(t_state *state)
 
 void	init_state(t_state *state, char *filename)
 {
+	info("Starting minirt bonus version with following scene", filename);
+	info(NULL, "initialization...");
 	initialize_state(state);
-	info(NULL, "initialize scene...");
 	init_scene(state, filename);
-	info(NULL, "initialize mlx...");
 	init_mlx(state);
 }

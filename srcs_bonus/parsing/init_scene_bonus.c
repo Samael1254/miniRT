@@ -1,7 +1,7 @@
+#include "ft_chars.h"
 #include "ft_strings.h"
 #include "get_next_line.h"
 #include "minirt.h"
-#include "ft_chars.h"
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>
@@ -33,7 +33,8 @@ static int	get_data_line(t_state *state, char *line, int *i)
 	free(line);
 	if (!split)
 		error("split", "an error as occured", state);
-	if (!ft_strncmp(split[0], "#", 1))
+	// if (!ft_strncmp(split[0], "#", 1))
+	if (split[0][0] == '#')
 		return (ft_free_strtab(split), 0);
 	if (insert_in_struct(state, split) == 2)
 		append_to_idlist(state, split, i);
@@ -45,14 +46,15 @@ static bool	check_line_chars(char *line)
 {
 	int	i;
 
-	i = 0;
-	while (line[i] && !(line[i] == ' ' || line[i] == '\t'))
-		i++;
+	// i = 0;
+	// while (line[i] && !(line[i] == ' ' || line[i] == '\t'))
+	// 	i++;
+	i = ft_strcspn(line, " \t");
 	while (line[i] && line[i] != '\n')
 	{
-		if (!ft_isdigit(line[i]) && line[i] != '+'
-			&& line[i] != '-' && line[i] != '.' && line[i] != ','
-			&& line[i] != ' ' && line[i] != '\t')
+		if (!ft_isdigit(line[i]) && line[i] != '+' && line[i] != '-'
+			&& line[i] != '.' && line[i] != ',' && line[i] != ' '
+			&& line[i] != '\t')
 			break ;
 		i++;
 	}
