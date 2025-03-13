@@ -37,7 +37,7 @@ t_object		*object_plane(t_state *state, char **split);
 t_object		*object_cylinder(t_state *state, char **split);
 
 // create_lights_bonus.c
-void	add_lights_to_list(t_state *state, char **split);
+void			add_lights_to_list(t_state *state, char **split);
 
 // Events //
 
@@ -72,10 +72,10 @@ t_color			shade_ray(t_intersection inter, t_scene *scene);
 
 // Graphics //
 
-t_color			attenuate_color(t_color color, double attenuation);
+t_color			scale_color(t_color color, double lambda);
 t_color			init_color(unsigned char r, unsigned char g, unsigned char b);
 t_color			get_sky_color(t_ray ray);
-t_color			average_colors(t_color color1, t_color color2);
+t_color			add_colors(t_color color1, t_color color2);
 void			render_scene(t_state *state, t_ray **rays);
 
 // Check arguments //
