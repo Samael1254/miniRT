@@ -34,7 +34,8 @@ SOURCES := $(addprefix $(SOURCES_DIR)base/, $(SRCS_MAIN)) \
 BONUS_MAIN := main_bonus.c exit_program_bonus.c events_bonus.c init_state_bonus.c
 
 BONUS_PARSING := init_scene_bonus.c insert_in_struct_bonus.c utils_bonus.c utils2_bonus.c objects_list_bonus.c \
-				object_sphere_bonus.c object_plane_bonus.c object_cylinder_bonus.c utils_general_objects_bonus.c
+				object_sphere_bonus.c object_plane_bonus.c object_cylinder_bonus.c utils_general_objects_bonus.c \
+				create_lights_bonus.c
 
 BONUS_GRAPHICS := color_bonus.c graphics_bonus.c
 
@@ -81,14 +82,14 @@ $(NAME): $(LIBFT) $(MLX) $(OBJS) $(HEADERS)
 	@ echo " \033[33mCompiling miniRT $(MODE)\033[m"
 	@ if [ "$(MODE)" = "mandatory" ]; then \
 		rm -f $(BONUS_OBJS); \
-		rm -df $(BUILD_DIR)bonus; \
+		rm -rf $(BUILD_DIR)bonus; \
 	fi
 	@ $(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFLAGS)
 	@ echo " \033[1;32m MiniRT \033[4m$(MODE)\033[0;1;32m binary compiled\033[m"
 
 bonus: $(LIBFT) $(MLX) $(BONUS_OBJS) $(BONUS_HEADERS)
 	@ rm -f $(MANDATORY_OBJS)
-	@ rm -df $(BUILD_DIR)mandatory
+	@ rm -rf $(BUILD_DIR)mandatory
 	@if ! $(MAKE) -s -n MODE=bonus | grep -q .; then \
 		echo "make: 'miniRT' (bonus) is up to date."; \
 	fi
@@ -133,9 +134,9 @@ all: $(NAME)
 clean:
 	@ echo " \033[33mCleaning\033[m"
 	@ rm -f $(BONUS_OBJS) $(MANDATORY_OBJS)
-	@ rm -df $(BUILD_DIR)mandatory
-	@ rm -df $(BUILD_DIR)bonus
-	@ rm -df $(BUILD_DIR)
+	@ rm -rf $(BUILD_DIR)mandatory
+	@ rm -rf $(BUILD_DIR)bonus
+	@ rm -rf $(BUILD_DIR)
 	@ echo " \033[32m MiniRT build files cleaned\033[m"
 
 fclean: clean

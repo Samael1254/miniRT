@@ -121,6 +121,7 @@ typedef struct s_scene
 	t_ambiant_light	a_light;
 	t_camera		camera;
 	t_point_light	p_light;
+	t_list			*lights;
 	t_list			*objects;
 }					t_scene;
 

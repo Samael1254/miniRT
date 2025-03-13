@@ -7,7 +7,7 @@ void	print_vector3d(t_vector3d vec)
 	printf("%.5f,%.5f,%.5f", vec.x, vec.y, vec.z);
 }
 
-static void	print_color(t_color col)
+void	print_color(t_color col)
 {
 	printf("%d,%d,%d", col.r, col.g, col.b);
 }
