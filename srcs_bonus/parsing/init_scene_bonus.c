@@ -12,7 +12,7 @@ static void	append_to_idlist(t_state *state, char **split, int *i)
 	int	j;
 
 	j = 0;
-	while (state->id_list[j] && j < 3 && !ft_strncmp(split[0], "L", 1))
+	while (j < 3 && state->id_list[j] && !ft_strncmp(split[0], "L", 1))
 	{
 		if (!ft_strncmp(state->id_list[j], "L", 1))
 			return ;
@@ -21,7 +21,8 @@ static void	append_to_idlist(t_state *state, char **split, int *i)
 	if (*i >= 3)
 	{
 		ft_free_strtab(split);
-		error("parsing", "you must have only one A, one C and at least one L!", state);
+		error("parsing", "you must have only one A, one C and at least one L!",
+			state);
 	}
 	state->id_list[*i] = ft_strdup(split[0]);
 	if (!state->id_list[*i])
@@ -84,6 +85,7 @@ static void	check_directory(t_state *state, char *filename)
 }
 
 #include <stdio.h>
+
 void	init_scene(t_state *state, char *filename)
 {
 	char	*line;

@@ -112,7 +112,7 @@ typedef struct s_camera
 typedef struct s_object
 {
 	enum e_object	type;
-	t_color			color;
+	t_material		material;
 	void			*object_r;
 }					t_object;
 
@@ -134,7 +134,7 @@ typedef struct s_ray
 
 typedef struct s_intersection
 {
-	t_color			color;
+	t_material		material;
 	t_vector3d		point;
 	t_vector3d		normal;
 }					t_intersection;

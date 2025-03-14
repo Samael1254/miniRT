@@ -5,7 +5,7 @@
 #include <math.h>
 #include <stdbool.h>
 
-static t_vector3d	light_direction(t_ray ray, t_point_light light)
+t_vector3d	light_direction(t_ray ray, t_point_light light)
 {
 	t_vector3d	light_dir;
 
@@ -33,7 +33,7 @@ static double	get_attenuation(t_intersection inter, bool in_shadow,
 	double	attenuation;
 	double	incidence;
 
-	incidence = (ft_dot_vectors3d(light_dir, inter.normal));
+	incidence = ft_dot_vectors3d(light_dir, inter.normal);
 	if (in_shadow || ft_inff(incidence, 0))
 		return (scene.a_light.brightness);
 	attenuation = incidence;
@@ -50,11 +50,11 @@ static t_color	shade_material(t_color color, double attenuation,
 {
 	t_color	lit_color;
 
-	lit_color = attenuate_color(color, attenuation);
+	lit_color = scale_color(color, attenuation);
 	if (in_shadow)
-		lit_color = average_colors(lit_color, scene.a_light.color);
+		lit_color = add_colors(lit_color, scene.a_light.color);
 	else
-		lit_color = average_colors(lit_color, scene.p_light.color);
+		lit_color = add_colors(lit_color, scene.p_light.color);
 	return (lit_color);
 }
 
@@ -66,7 +66,7 @@ t_color	shade_ray(t_intersection inter, t_scene *scene)
 	double			attenuation;
 
 	if (inter.point.x == INFINITY)
-		return (inter.color);
+		return (inter.material.kd);
 	light_ray.origin = inter.point;
 	light_ray.direction = light_direction(light_ray, scene->p_light);
 	light_inter = intersect_scene(light_ray, scene->objects);
@@ -74,5 +74,5 @@ t_color	shade_ray(t_intersection inter, t_scene *scene)
 			ft_distance3d(light_ray.origin, light_inter.point));
 	attenuation = get_attenuation(inter, in_shadow, light_ray.direction,
 			*scene);
-	return (shade_material(inter.color, attenuation, in_shadow, *scene));
+	return (shade_material(inter.material.kd, attenuation, in_shadow, *scene));
 }

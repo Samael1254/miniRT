@@ -1,4 +1,6 @@
+#include "ft_algebra.h"
 #include "ft_conversion.h"
+#include "ft_math.h"
 #include "ft_strings.h"
 #include "minirt_bonus.h"
 #include <math.h>
@@ -94,7 +96,7 @@ bool	is_t_color_valid(t_color color, double min, double max)
 
 bool	is_norm_vector_valid(t_vector3d vec)
 {
-	if (pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.z, 2) != 1)
+	if (!ft_equalf(ft_vector3d_norm(vec), 1))
 		return (false);
 	return (true);
 }
