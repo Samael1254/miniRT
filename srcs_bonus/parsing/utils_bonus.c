@@ -1,9 +1,7 @@
 #include "ft_algebra.h"
 #include "ft_conversion.h"
-#include "ft_math.h"
 #include "ft_strings.h"
 #include "minirt_bonus.h"
-#include <math.h>
 #include <stdbool.h>
 
 /*
@@ -62,20 +60,8 @@ t_color	get_color(char *line_color, bool *error)
 	return (color);
 }
 
-/*
- *	Check if a vector is in the range min and max (excluded)
- *	Returns (0) if not
- *	Returns (1) if yes
- * */
-bool	is_vector3d_in_range(t_vector3d vec, double min, double max)
+t_material	get_material(char *line_mat, bool *error)
 {
-	if (vec.x < min || vec.x > max)
-		return (false);
-	if (vec.y < min || vec.y > max)
-		return (false);
-	if (vec.z < min || vec.z > max)
-		return (false);
-	return (true);
 }
 
 /*
@@ -90,13 +76,6 @@ bool	is_t_color_valid(t_color color, double min, double max)
 	if (color.g < min || color.g > max)
 		return (false);
 	if (color.b < min || color.b > max)
-		return (false);
-	return (true);
-}
-
-bool	is_norm_vector_valid(t_vector3d vec)
-{
-	if (!ft_equalf(ft_vector3d_norm(vec), 1))
 		return (false);
 	return (true);
 }

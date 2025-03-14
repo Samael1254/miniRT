@@ -1,7 +1,31 @@
 #include "ft_chars.h"
+#include "ft_math.h"
 #include "ft_strings.h"
 #include "minirt_bonus.h"
 #include <stdbool.h>
+
+bool	is_norm_vector_valid(t_vector3d vec)
+{
+	if (!ft_equalf(ft_vector3d_norm(vec), 1))
+		return (false);
+	return (true);
+}
+
+/*
+ *	Check if a vector is in the range min and max (excluded)
+ *	Returns (0) if not
+ *	Returns (1) if yes
+ * */
+bool	is_vector3d_in_range(t_vector3d vec, double min, double max)
+{
+	if (vec.x < min || vec.x > max)
+		return (false);
+	if (vec.y < min || vec.y > max)
+		return (false);
+	if (vec.z < min || vec.z > max)
+		return (false);
+	return (true);
+}
 
 bool	ft_check_error_line(char **split, int len)
 {
