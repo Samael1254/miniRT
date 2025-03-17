@@ -22,6 +22,7 @@ A basic raytracer for 42 school project miniRT
 ### TODO BONUS
 
 #### PARSING
+- Create .mat file for materials
 - Create materials with mt keyword
 - Create texture with tx keyword
 - Create normal map with nm keyword

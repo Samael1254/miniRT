@@ -38,6 +38,7 @@ enum				e_object
 	SPHERE,
 	PLANE,
 	CYLINDER,
+	CONE,
 };
 
 /* STRUCTS */
@@ -66,6 +67,13 @@ typedef struct s_material
 	t_color			ka;
 	double			specularity;
 }					t_material;
+
+typedef struct s_cone
+{
+	t_vector3d		pos;
+	t_vector3d		axis;
+	double			slope;
+}					t_cone;
 
 typedef struct s_sphere
 {

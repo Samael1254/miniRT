@@ -11,6 +11,34 @@ static double	closest_root(double root1, double root2)
 	return (root1);
 }
 
+double	cone_delta(double params[3], t_vector3d co, t_ray ray, t_cone cone)
+{
+	double	u;
+	double	v;
+	double	w;
+	double	cos2;
+
+	u = ft_dot_vectors3d(co, cone.axis);
+	v = ft_dot_vectors3d(ray.direction, cone.axis);
+	w = ft_dot_vectors3d(co, ray.direction);
+	cos2 = pow(cos(cone.slope), 2);
+	params[0] = pow(v, 2) - cos2 * ft_vector3d_square_norm(ray.direction);
+	params[1] = u * v - w * cos2;
+	params[2] = pow(u, 2) - ft_vector3d_square_norm(co) * cos2;
+	return (sqrt(pow(params[1], 2) - params[0] * params[2]));
+}
+
+double	intersect_cone(t_ray ray, t_cone cone)
+{
+	t_vector3d	co;
+	double		params[3];
+	double		delta;
+
+	co = ft_sub_vectors3d(ray.origin, cone.pos);
+	delta = cone_delta(params, co, ray, cone);
+	return (closest_root(-params[1] - delta, -params[1] + delta) / params[0]);
+}
+
 double	intersect_sphere(t_ray ray, t_sphere sphere)
 {
 	t_vector3d	co;
