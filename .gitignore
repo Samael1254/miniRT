@@ -4,3 +4,5 @@ mlx/
 build/
 test/
 miniRT
+srcs/
+includes/
