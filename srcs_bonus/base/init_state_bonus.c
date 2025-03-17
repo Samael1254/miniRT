@@ -29,6 +29,8 @@ static void	initialize_state(t_state *state)
 	state->id_list[0] = NULL;
 	state->id_list[1] = NULL;
 	state->id_list[2] = NULL;
+	state->len_mats_tab = 0;
+	state->mats_tab = NULL;
 }
 
 void	init_state(t_state *state, char *filename)

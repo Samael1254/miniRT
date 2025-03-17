@@ -39,6 +39,9 @@ t_object		*object_cylinder(t_state *state, char **split);
 // create_lights_bonus.c
 void			add_lights_to_list(t_state *state, char **split);
 
+// open_and_counts_mats_bonus.c
+int				open_and_count_mats(t_state *state, char *filename);
+
 // Events //
 
 // Loops while waiting for events
