@@ -1,0 +1,79 @@
+This is the documentation of the .rt raytraced scene file format, with an example for each specific element. This file can therefore be run by miniRT.
+
+INTRODUCTION
+
+A scene is made from elements defining all its characteristics, like objects, materials, textures, lights...
+Every element is defined by an identifier (first word of the line) which can be one or more letters. Elements in capital letters are necessary and unique.
+Then follow the parameters specific to the element, separated by spaces or tabs. Parameter fields are specified within brackets []. Optional parameter fields are specified within parentheses ().
+Lines can be commented by putting a # in the beginning. They will not be evaluated by the program.
+An invalid line will trigger an error in the miniRT program and the file will not be executed. Such errors can be : missing identifier, number out of range, vector not normalized, not enough or too many parametres, invalid type of parameter...
+The rest of this document is an explanation of the definition of every available element currently.
+
+GENERAL
+
+Camera
+The camera from which the scene will be viewed
+- position : x,y,z : float coordinates of the position point
+- direction : x,y,z : float coordinates of the direction vector (must be normalized)
+- fov : integer value of the field of view (in range [0-180])
+C [position] [direction] [fov]
+
+Sky color
+Defines the color gradient of the background
+SC [up color] [down color]
+
+LIGHTS
+
+Ambiant light
+A constant light ligthing the whole scene equally
+- brightness : float value
+- color : r,g,b : integer values of the red, green and blue components of the light color (in range [0-255])
+A [brightness] [color]
+
+Point light
+A light emitting from a single point in all directions
+- position : x,y,z : float coordinates of the position point
+- brightness : float value
+- color : r,g,b : integer values of the red, green and blue components of the light color (in range [0-255])
+lp [position] [brightness] [color]
+
+MATERIALS
+
+Texture
+- filename : .xpm file containing the texture (relative path starting from the executable directory)
+tx [filename]
+
+Normal map
+- filename : .xpm file containing the normal map (relative path starting from the executable directory)
+nm [filename]
+
+Material
+A material defining the visual appearance of any object it is applied to.
+Materials must be defined after textures and normal maps
+- kd : r,g,b : diffuse color (in range [0-255])
+- ks : r,g,b : specular color (in range [0-255]) (if not specified, defaults to kd)
+- ka : r,g,b : ambiant color (in range [0-255]) (if not specified, defaults to kd)
+- s : specularity, how much the material shines (in range [0-1]) (if not specified, defaults to 0)
+- tx : texture of the material (merges with the colors given above), as an index of the textures list given above. 0 means no texture. Defaults to 0, but if a normal map is specified a texture must be specified (and vice versa)
+- nm : normal map of the material, as an index of the normal maps list given above. 0 means no normal map. Defaults to 0, but if a texture is specified a normal map must be specified (and vice versa)
+mt kd (ks (ka) s) (tx) (nm)
+
+OBJECTS
+
+Sphere
+sp [position] [diameter] [material]
+
+Plane
+pl [point] [normal] [material]
+
+Cylinder
+cy [position] [axis] [diameter] [height] [material]
+
+Cone
+co [position] [axis] [slope] [material]
+
+Triangle
+tr [vertex1] [vertex2] [vertex3] [material]
+
+Mesh
+obj [filename] [material]
