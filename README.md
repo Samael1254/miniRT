@@ -31,15 +31,14 @@ A basic raytracer for 42 school project miniRT
 - Infinite cone
 
 #### MATERIALS
-- Add material structure
 - Texture
 - Checkerboard procedural texture
 - Normal map
-- Phong reflection model
 - Transparent textures
 
 #### LIGHT
 - Add a light structure (similar to objects) and a list of lights to the scene
+- Phong reflection model
 
 #### SCENES
 - Add scenes to show off all the features
