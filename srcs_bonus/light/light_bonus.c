@@ -4,7 +4,15 @@
 // #include "minirt_defs_bonus.h"
 // #include <math.h>
 // #include <stdbool.h>
-
+//
+// t_vector3d	light_direction(t_ray ray, t_point_light light)
+// {
+// 	t_vector3d	light_dir;
+//
+// 	light_dir = ft_normalize_vector3d(ft_sub_vectors3d(light.pos, ray.origin));
+// 	return (light_dir);
+// }
+//
 // static double	get_dist_attenuation(t_vector3d point, t_vector3d light_pos)
 // {
 // 	double			dist_attenuation;
@@ -18,7 +26,7 @@
 // 	dist_attenuation = ft_clampf(dist_attenuation, 0, 1);
 // 	return (dist_attenuation);
 // }
-
+//
 // static double	get_attenuation(t_intersection inter, bool in_shadow,
 // 		t_vector3d light_dir, t_scene scene)
 // {
@@ -36,7 +44,7 @@
 // 		warning("invalid attenuation value", "should be between 0 and 1");
 // 	return (attenuation);
 // }
-
+//
 // static t_color	shade_material(t_color color, double attenuation,
 // 		bool in_shadow, t_scene scene)
 // {
@@ -49,7 +57,7 @@
 // 		lit_color = add_colors(lit_color, scene.p_light.color);
 // 	return (lit_color);
 // }
-
+//
 // t_color	shade_ray(t_intersection inter, t_scene *scene)
 // {
 // 	t_ray			light_ray;
