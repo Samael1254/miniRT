@@ -97,9 +97,9 @@ void	print_materials(t_state *state)
 	{
 		mat = state->mats_tab[i];
 		printf("mt ");
-		printf("%c,%c,%c ", mat.kd.r, mat.kd.g, mat.kd.b);
-		printf("%c,%c,%c ", mat.ks.r, mat.ks.g, mat.ks.b);
-		printf("%c,%c,%c ", mat.ka.r, mat.ka.g, mat.ka.b);
+		printf("%d,%d,%d ", mat.kd.r, mat.kd.g, mat.kd.b);
+		printf("%d,%d,%d ", mat.ks.r, mat.ks.g, mat.ks.b);
+		printf("%d,%d,%d ", mat.ka.r, mat.ka.g, mat.ka.b);
 		printf(" %f\n", mat.specularity);
 		i++;
 	}

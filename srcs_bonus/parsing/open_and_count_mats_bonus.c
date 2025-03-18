@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include <stdio.h>
 static void	insert_color_in_mat(t_state *state, char **line_mat, int *i)
 {
 	t_material	mat;
@@ -39,7 +40,7 @@ static void	material_handling(t_state *state, int fd)
 		free(line);
 		if (!tmp_split)
 			error("malloc", "material_handling", state);
-		if (!ft_strncmp("mt", tmp_split[0], ft_strlen(tmp_split[0])))
+		if (!ft_strncmp("mt", tmp_split[0], 2))
 			insert_color_in_mat(state, tmp_split, &i);
 		ft_free_strtab(tmp_split);
 	}
@@ -76,10 +77,17 @@ static int	line_mt_handler(t_state *state, char *line_mat)
 	if (ft_strtab_size(tmp_split) > 2)
 		return (ft_free_strtab(tmp_split), 1);
 	fd = open(tmp_split[1], O_RDONLY);
+	if (fd <= 0)
+	{
+		ft_free_strtab(tmp_split);
+		error("open", "can't open file", state);
+	}
+	count_nb_mats(state, fd);
+	close (fd);
+	fd = open(tmp_split[1], O_RDONLY);
 	ft_free_strtab(tmp_split);
 	if (fd <= 0)
 		error("open", "can't open file", state);
-	count_nb_mats(state, fd);
 	state->mats_tab = ft_calloc(state->len_mats_tab + 1, sizeof(t_material));
 	if (!state->mats_tab)
 		error("malloc", "open_and_count_mats", state);
