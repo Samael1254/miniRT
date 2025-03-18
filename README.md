@@ -22,23 +22,18 @@ A basic raytracer for 42 school project miniRT
 ### TODO BONUS
 
 #### PARSING
-- Create .mat file for materials
-- Create materials with mt keyword
 - Create texture with tx keyword
 - Create normal map with nm keyword
 
 #### SHAPES
-- Infinite cone
+- Infinite cone (fix inside)
 
 #### MATERIALS
 - Texture
 - Checkerboard procedural texture
+- Sky procedural texture ?
 - Normal map
 - Transparent textures
-
-#### LIGHT
-- Add a light structure (similar to objects) and a list of lights to the scene
-- Phong reflection model
 
 #### SCENES
 - Add scenes to show off all the features
@@ -48,7 +43,6 @@ A basic raytracer for 42 school project miniRT
 
 #### SHAPES
 - Triangle
-- Disk
 - Box
 
 #### PARSING
@@ -59,10 +53,11 @@ A basic raytracer for 42 school project miniRT
 - Anti aliasing
 - Depth of field
 
-#### Performance
+#### Optimisation
 - BVH
 
 #### LIGHT
+- Add a light structure (similar to objects) and a list of lights to the scene
 - Global illumination
 - Soft shadows
 - Directional light

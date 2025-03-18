@@ -78,6 +78,20 @@ t_color	specular_color(t_intersection inter, t_vector3d light_dir,
 				inter.normal, material)));
 }
 
+static double	get_dist_attenuation(t_vector3d point, t_vector3d light_pos)
+{
+	double			dist_attenuation;
+	double			distance;
+	const double	a = 0.0008;
+	const double	b = 0;
+	const double	c = 0;
+
+	distance = ft_distance3d(point, light_pos);
+	dist_attenuation = 1 / (a * distance * distance + b * distance + c);
+	dist_attenuation = ft_clampf(dist_attenuation, 0, 1);
+	return (dist_attenuation);
+}
+
 t_color	shade_from_one_light(t_intersection inter, t_vector3d view_dir,
 		t_state *state, t_point_light light)
 {
@@ -95,7 +109,8 @@ t_color	shade_from_one_light(t_intersection inter, t_vector3d view_dir,
 			state->mats_tab[inter.index_mat].kd);
 	color = add_colors(color, specular_color(inter, light_ray.direction,
 				view_dir, state));
-	color = absorb_colors(color, scale_color(light.color, light.brightness));
+	color = absorb_colors(color, scale_color(light.color, light.brightness
+				* get_dist_attenuation(inter.point, light.pos)));
 	return (color);
 }
 
