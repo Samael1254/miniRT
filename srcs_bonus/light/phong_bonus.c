@@ -31,6 +31,7 @@ static t_color	ambiant_color(t_ambiant_light a_light, t_color ka)
 
 static t_color	diffuse_color(double incidence, t_color kd)
 {
+	incidence = ft_clampf(incidence, 0, 1);
 	return (scale_color(kd, incidence));
 }
 
