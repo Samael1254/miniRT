@@ -83,7 +83,6 @@ static void	check_directory(t_state *state, char *filename)
 	close(fd);
 }
 
-#include <stdio.h>
 void	init_scene(t_state *state, char *filename)
 {
 	char	*line;
@@ -93,7 +92,6 @@ void	init_scene(t_state *state, char *filename)
 	check_directory(state, filename);
 	fd = open_and_count_mats(state, filename);
 	// TODO: free tab_mats
-	printf("taille tab = %d\n", state->len_mats_tab);
 	if (fd == -1)
 		error("wrong filename", "cannot open file", state);
 	i = 0;

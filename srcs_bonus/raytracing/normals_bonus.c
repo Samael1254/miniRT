@@ -12,6 +12,16 @@ static t_vector3d	plane_normal(t_plane plane)
 	return (plane.normal);
 }
 
+static t_vector3d	cone_normal(t_cone cone, t_vector3d point)
+{
+	t_vector3d	cp;
+	t_vector3d	tan;
+
+	cp = ft_sub_vectors3d(point, cone.pos);
+	tan = ft_cross_vectors3d(cone.axis, cp);
+	return (ft_normalize_vector3d(ft_cross_vectors3d(cp, tan)));
+}
+
 static t_vector3d	cylinder_normal(t_cylinder cylinder, t_vector3d point)
 {
 	t_vector3d	ba;
@@ -45,6 +55,8 @@ t_vector3d	normal_at_point(t_object object, t_vector3d point,
 		normal = plane_normal(*(t_plane *)object.object_r);
 	else if (object.type == CYLINDER)
 		normal = cylinder_normal(*(t_cylinder *)object.object_r, point);
+	else if (object.type == CONE)
+		normal = cone_normal(*(t_cone *)object.object_r, point);
 	else
 		return (ft_init_vector3d(0));
 	if (ft_supf(ft_dot_vectors3d(normal, ray_dir), 0))
