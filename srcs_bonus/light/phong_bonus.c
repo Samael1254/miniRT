@@ -105,7 +105,7 @@ t_color	phong_illumination(t_state *state, t_intersection inter, t_ray ray)
 	t_list	*iter;
 
 	if (inter.point.x == INFINITY)
-		return ((state->mats_tab[inter.index_mat]).kd);
+		return (get_sky_color(ray));
 	color = ambiant_color(state->scene.a_light,
 			state->mats_tab[inter.index_mat].kd);
 	iter = state->scene.lights;

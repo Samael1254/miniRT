@@ -84,7 +84,7 @@ t_color			blend_colors(t_color color1, t_color color2);
 t_color			scale_color(t_color color, double lambda);
 t_color			init_color(unsigned char r, unsigned char g, unsigned char b);
 t_color			absorb_colors(t_color color1, t_color color2);
-t_material		get_sky_material(t_ray ray);
+t_color			get_sky_color(t_ray ray);
 void			render_scene(t_state *state, t_ray **rays);
 
 // Check arguments //
