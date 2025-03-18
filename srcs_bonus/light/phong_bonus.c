@@ -14,6 +14,14 @@
 // 			light_dir));
 // }
 
+static t_vector3d	light_direction(t_ray ray, t_point_light light)
+{
+	t_vector3d	light_dir;
+
+	light_dir = ft_normalize_vector3d(ft_sub_vectors3d(light.pos, ray.origin));
+	return (light_dir);
+}
+
 static t_color	ambiant_color(t_ambiant_light a_light, t_color ka)
 {
 	return (scale_color(ka, a_light.brightness));
@@ -43,48 +51,51 @@ static double	get_specular_term(t_vector3d light_dir, t_vector3d view_dir,
 	return (specular);
 }
 static t_color	specular_color(t_intersection inter, t_vector3d light_dir,
-		t_vector3d view_dir)
+		t_vector3d view_dir, t_state *state)
 {
-	return (scale_color(inter.material.ks, inter.material.specularity
-			* get_specular_term(inter.normal, light_dir, view_dir,
-				inter.material)));
+	t_material	material;
+
+	material = state->mats_tab[inter.index_mat];
+	return (scale_color(material.ks, material.specularity
+			* get_specular_term(inter.normal, light_dir, view_dir, material)));
 }
 
 static t_color	shade_from_one_light(t_intersection inter, t_vector3d view_dir,
-		t_scene scene)
+		t_state *state)
 {
 	t_color			color;
 	t_ray			light_ray;
 	t_intersection	light_inter;
 	t_point_light	light;
 
-	light = *(t_point_light *)scene.lights;
+	light = *(t_point_light *)state->scene.lights;
 	light_ray.origin = inter.point;
 	light_ray.direction = light_direction(light_ray, light);
-	light_inter = intersect_scene(light_ray, scene.objects);
-	if (ft_supf(ft_distance3d(light_ray.origin, scene.p_light.pos),
+	light_inter = intersect_scene(light_ray, state->scene.objects);
+	if (ft_supf(ft_distance3d(light_ray.origin, state->scene.p_light.pos),
 			ft_distance3d(light_ray.origin, light_inter.point)))
 		return (init_color(0, 0, 0));
 	color = diffuse_color(ft_dot_vectors3d(light_ray.direction, inter.normal),
-			inter.material.kd);
+			state->mats_tab[inter.index_mat].kd);
 	color = add_colors(color, specular_color(inter, light_ray.direction,
-				view_dir));
+				view_dir, state));
 	color = add_colors(color, scale_color(light.color, light.brightness));
 	return (color);
 }
 
-t_color	phong_illumination(t_scene scene, t_intersection inter, t_ray ray)
+t_color	phong_illumination(t_state *state, t_intersection inter, t_ray ray)
 {
 	t_color	color;
 
 	if (inter.point.x == INFINITY)
-		return (inter.material.kd);
-	color = ambiant_color(scene.a_light, inter.material.ka);
-	while (scene.lights)
+		return ((state->mats_tab[inter.index_mat]).kd);
+	color = ambiant_color(state->scene.a_light,
+			state->mats_tab[inter.index_mat].kd);
+	while (state->scene.lights)
 	{
 		color = add_colors(color, shade_from_one_light(inter, ray.direction,
-					scene));
-		scene.lights = scene.lights->next;
+					state));
+		state->scene.lights = state->scene.lights->next;
 	}
 	return (color);
 }

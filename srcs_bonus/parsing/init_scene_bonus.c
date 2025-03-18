@@ -43,7 +43,6 @@ static int	get_data_line(t_state *state, char *line, int *i)
 	free(line);
 	if (!split)
 		error("split", "an error as occured", state);
-	// if (!ft_strncmp(split[0], "#", 1))
 	if (split[0][0] == '#')
 		return (ft_free_strtab(split), 0);
 	if (insert_in_struct(state, split) == 2)
@@ -85,7 +84,6 @@ static void	check_directory(t_state *state, char *filename)
 }
 
 #include <stdio.h>
-
 void	init_scene(t_state *state, char *filename)
 {
 	char	*line;
@@ -93,7 +91,9 @@ void	init_scene(t_state *state, char *filename)
 	int		i;
 
 	check_directory(state, filename);
-	fd = open(filename, O_RDONLY);
+	fd = open_and_count_mats(state, filename);
+	// TODO: free tab_mats
+	printf("taille tab = %d\n", state->len_mats_tab);
 	if (fd == -1)
 		error("wrong filename", "cannot open file", state);
 	i = 0;

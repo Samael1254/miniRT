@@ -91,7 +91,7 @@ int	insert_in_struct(t_state *state, char **split)
 		return (add_camera(state, split), 2);
 	else if (!ft_strncmp(split[0], "L", ft_strlen(split[0])))
 	{
-		add_light(state, split); // TODO: to delete
+		add_light(state, split); // TODO: to delete when several spot-lights will be implemented
 		return (add_lights_to_list(state, split), 2);
 	}
 	else if (!ft_strncmp(split[0], "sp", ft_strlen(split[0])))
