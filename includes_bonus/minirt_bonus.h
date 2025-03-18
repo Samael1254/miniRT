@@ -71,10 +71,8 @@ t_vector3d		normal_at_point(t_object object, t_vector3d point,
 
 // Light //
 
-t_vector3d		light_direction(t_ray ray, t_point_light light);
-t_color			phong_illumination(t_scene scene, t_intersection inter,
+t_color			phong_illumination(t_state *state, t_intersection inter,
 					t_ray ray);
-t_color			shade_ray(t_intersection inter, t_scene *scene);
 
 // Graphics //
 
