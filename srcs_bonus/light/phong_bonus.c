@@ -5,6 +5,7 @@
 #include "minirt_defs_bonus.h"
 #include <math.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 // static t_vector3d	get_reflection_dir(t_vector3d light_dir,
 // double incidence,
@@ -22,7 +23,7 @@ static t_vector3d	light_direction(t_ray ray, t_point_light light)
 	return (light_dir);
 }
 
-static t_color	ambiant_color(t_ambiant_light a_light, t_color ka)
+t_color	ambiant_color(t_ambiant_light a_light, t_color ka)
 {
 	return (scale_color(ka, a_light.brightness));
 }
@@ -50,7 +51,8 @@ static double	get_specular_term(t_vector3d light_dir, t_vector3d view_dir,
 					lpv), normal), material.specularity);
 	return (specular);
 }
-static t_color	specular_color(t_intersection inter, t_vector3d light_dir,
+
+t_color	specular_color(t_intersection inter, t_vector3d light_dir,
 		t_vector3d view_dir, t_state *state)
 {
 	t_material	material;
@@ -60,7 +62,7 @@ static t_color	specular_color(t_intersection inter, t_vector3d light_dir,
 			* get_specular_term(inter.normal, light_dir, view_dir, material)));
 }
 
-static t_color	shade_from_one_light(t_intersection inter, t_vector3d view_dir,
+t_color	shade_from_one_light(t_intersection inter, t_vector3d view_dir,
 		t_state *state)
 {
 	t_color			color;
@@ -77,25 +79,48 @@ static t_color	shade_from_one_light(t_intersection inter, t_vector3d view_dir,
 		return (init_color(0, 0, 0));
 	color = diffuse_color(ft_dot_vectors3d(light_ray.direction, inter.normal),
 			state->mats_tab[inter.index_mat].kd);
-	color = add_colors(color, specular_color(inter, light_ray.direction,
-				view_dir, state));
+	(void)view_dir;
+	// color = add_colors(color, specular_color(inter, light_ray.direction,
+	// 			view_dir, state));
 	color = add_colors(color, scale_color(light.color, light.brightness));
 	return (color);
+}
+
+void	print_materials(t_state *state)
+{
+	unsigned int	i;
+	t_material		mat;
+
+	i = 1;
+	printf("nb materials: %u\n", state->len_mats_tab);
+	while (i < state->len_mats_tab)
+	{
+		mat = state->mats_tab[i];
+		printf("mt ");
+		printf("%c,%c,%c ", mat.kd.r, mat.kd.g, mat.kd.b);
+		printf("%c,%c,%c ", mat.ks.r, mat.ks.g, mat.ks.b);
+		printf("%c,%c,%c ", mat.ka.r, mat.ka.g, mat.ka.b);
+		printf(" %f\n", mat.specularity);
+		i++;
+	}
 }
 
 t_color	phong_illumination(t_state *state, t_intersection inter, t_ray ray)
 {
 	t_color	color;
 
+	print_materials(state);
 	if (inter.point.x == INFINITY)
 		return ((state->mats_tab[inter.index_mat]).kd);
-	color = ambiant_color(state->scene.a_light,
-			state->mats_tab[inter.index_mat].kd);
-	while (state->scene.lights)
-	{
-		color = add_colors(color, shade_from_one_light(inter, ray.direction,
-					state));
-		state->scene.lights = state->scene.lights->next;
-	}
+	// color = ambiant_color(state->scene.a_light,
+	// 		state->mats_tab[inter.index_mat].kd);
+	(void)ray;
+	color = shade_from_one_light(inter, ray.direction, state);
+	// while (state->scene.lights)
+	// {
+	// 	color = add_colors(color, shade_from_one_light(inter, ray.direction,
+	// 				state));
+	// 	state->scene.lights = state->scene.lights->next;
+	// }
 	return (color);
 }
