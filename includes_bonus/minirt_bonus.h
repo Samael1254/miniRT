@@ -35,6 +35,7 @@ void			add_object_to_list(t_state *state, char **split);
 t_object		*object_sphere(t_state *state, char **split);
 t_object		*object_plane(t_state *state, char **split);
 t_object		*object_cylinder(t_state *state, char **split);
+t_object		*object_cone(t_state *state, char **split);
 
 // create_lights_bonus.c
 void			add_lights_to_list(t_state *state, char **split);
@@ -66,6 +67,7 @@ t_color			shade_ray(t_intersection inter, t_state *state);
 double			intersect_sphere(t_ray ray, t_sphere sphere);
 double			intersect_plane(t_ray ray, t_plane plane);
 double			intersect_cylinder(t_ray ray, t_cylinder cylinder);
+double			intersect_cone(t_ray ray, t_cone cone);
 t_intersection	intersect_scene(t_ray ray, t_list *objects);
 t_vector3d		normal_at_point(t_object object, t_vector3d point,
 					t_vector3d ray_dir);
