@@ -11,6 +11,21 @@ static double	closest_root(double root1, double root2)
 	return (root1);
 }
 
+double	intersect_triangle(t_ray ray, t_triangle triangle)
+{
+	t_vector3d	ab;
+	t_vector3d	ac;
+	t_vector3d	n;
+	double		d;
+
+	ab = ft_sub_vectors3d(triangle.b, triangle.a);
+	ac = ft_sub_vectors3d(triangle.c, triangle.a);
+	n = ft_cross_vectors3d(ab, ac);
+	d = ft_dot_vectors3d(ray.direction, n);
+	if (ft_equalf(d, 0))
+		return (INFINITY);
+}
+
 double	cone_delta(double params[3], t_vector3d co, t_ray ray, t_cone cone)
 {
 	double	u;
