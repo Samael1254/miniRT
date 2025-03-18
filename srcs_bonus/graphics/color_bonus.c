@@ -47,12 +47,15 @@ t_color	init_color(unsigned char r, unsigned char g, unsigned char b)
 	return (color);
 }
 
-t_color	get_sky_color(t_ray ray)
+t_material	get_sky_material(t_ray ray)
 {
-	t_color			sky_color;
+	t_material		sky_material;
 	const t_color	color1 = {255, 174, 69};
 	const t_color	color2 = {42, 162, 242};
 
-	sky_color = lerp_colors(color1, color2, (ray.direction.y + 1) / 2);
-	return (sky_color);
+	sky_material.kd = lerp_colors(color1, color2, (ray.direction.y + 1) / 2);
+	sky_material.ks = init_color(0, 0, 0);
+	sky_material.ka = init_color(0, 0, 0);
+	sky_material.specularity = 0;
+	return (sky_material);
 }

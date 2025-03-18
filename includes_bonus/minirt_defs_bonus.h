@@ -127,7 +127,7 @@ typedef struct s_camera
 typedef struct s_object
 {
 	enum e_object	type;
-	t_material		material;
+	unsigned int	index_mat;
 	void			*object_r;
 }					t_object;
 
@@ -149,7 +149,7 @@ typedef struct s_ray
 
 typedef struct s_intersection
 {
-	t_material		material;
+	unsigned int	index_mat;
 	t_vector3d		point;
 	t_vector3d		normal;
 }					t_intersection;
@@ -162,6 +162,8 @@ typedef struct s_state
 	t_img_data		img_data;
 	t_scene			scene;
 	char			*id_list[3];
+	t_material		*mats_tab;
+	unsigned int	len_mats_tab;
 }					t_state;
 
 #endif

@@ -60,9 +60,13 @@ t_color	get_color(char *line_color, bool *error)
 	return (color);
 }
 
-t_material	get_material(char *line_mat, bool *error)
-{
-}
+// t_material	get_material(char *line_mat, bool *error)
+// {
+// 	t_material	mat;
+//
+// 	mat.kd = get_color(char *line_color, bool *error)
+//
+// }
 
 /*
  *	Check if a vector is in the range min and max (excluded)

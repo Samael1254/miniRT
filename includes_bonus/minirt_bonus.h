@@ -39,6 +39,9 @@ t_object		*object_cylinder(t_state *state, char **split);
 // create_lights_bonus.c
 void			add_lights_to_list(t_state *state, char **split);
 
+// open_and_counts_mats_bonus.c
+int				open_and_count_mats(t_state *state, char *filename);
+
 // Events //
 
 // Loops while waiting for events
@@ -68,17 +71,15 @@ t_vector3d		normal_at_point(t_object object, t_vector3d point,
 
 // Light //
 
-t_vector3d		light_direction(t_ray ray, t_point_light light);
-t_color			phong_illumination(t_scene scene, t_intersection inter,
+t_color			phong_illumination(t_state *state, t_intersection inter,
 					t_ray ray);
-t_color			shade_ray(t_intersection inter, t_scene *scene);
 
 // Graphics //
 
 t_color			scale_color(t_color color, double lambda);
 t_color			init_color(unsigned char r, unsigned char g, unsigned char b);
-t_color			get_sky_color(t_ray ray);
 t_color			add_colors(t_color color1, t_color color2);
+t_material		get_sky_material(t_ray ray);
 void			render_scene(t_state *state, t_ray **rays);
 
 // Check arguments //
