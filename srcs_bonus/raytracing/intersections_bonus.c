@@ -36,7 +36,7 @@ static double	intersect_object(t_ray ray, t_object object)
 	return (INFINITY);
 }
 
-t_intersection	intersect_scene(t_ray ray, t_list *objects, t_state *state)
+t_intersection	intersect_scene(t_ray ray, t_list *objects)
 {
 	double		cur_distance;
 	double		distance_min;
