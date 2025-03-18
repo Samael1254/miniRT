@@ -56,7 +56,7 @@ static void	add_camera(t_state *state, char **split)
 	state->scene.camera.fov_2 = ft_deg_to_rad(fov_2);
 }
 
-static void	add_light(t_state *state, char **split)
+void	add_light(t_state *state, char **split)
 {
 	t_vector3d	pos;
 	double		brightness;
@@ -91,8 +91,8 @@ int	insert_in_struct(t_state *state, char **split)
 		return (add_camera(state, split), 2);
 	else if (!ft_strncmp(split[0], "L", ft_strlen(split[0])))
 	{
-		add_light(state, split);
-			// TODO: to delete when several spot-lights will be implemented
+		// add_light(state, split);
+		// TODO: to delete when several spot-lights will be implemented
 		return (add_lights_to_list(state, split), 2);
 	}
 	else if (!ft_strncmp(split[0], "sp", ft_strlen(split[0])))

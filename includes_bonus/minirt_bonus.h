@@ -59,6 +59,7 @@ void			ray_tracing(t_state *state);
 
 void			init_rays(t_camera camera, t_ray **rays);
 void			shoot_rays(t_ray **rays, t_state *state);
+t_color			shade_ray(t_intersection inter, t_state *state);
 
 // Intersections //
 
@@ -76,9 +77,11 @@ t_color			phong_illumination(t_state *state, t_intersection inter,
 
 // Graphics //
 
+t_color			add_colors(t_color color1, t_color color2);
+t_color			blend_colors(t_color color1, t_color color2);
 t_color			scale_color(t_color color, double lambda);
 t_color			init_color(unsigned char r, unsigned char g, unsigned char b);
-t_color			add_colors(t_color color1, t_color color2);
+t_color			absorb_colors(t_color color1, t_color color2);
 t_material		get_sky_material(t_ray ray);
 void			render_scene(t_state *state, t_ray **rays);
 
