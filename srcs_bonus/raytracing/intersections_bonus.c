@@ -12,12 +12,12 @@ static t_intersection	make_intersection(t_ray ray, t_object *object,
 
 	if (!ft_in_rangef(distance_min, RAY_REACH_MIN, RAY_REACH_MAX))
 	{
-		inter.material.kd = get_sky_color(ray);
+		inter.index_mat = 0;
 		inter.point = ft_init_vector3d(INFINITY);
 		inter.normal = ft_init_vector3d(0);
 		return (inter);
 	}
-	inter.material = object->material;
+	inter.index_mat = object->index_mat;
 	inter.point = ft_add_vectors3d(ray.origin, ft_scale_vector3d(distance_min,
 				ray.direction));
 	inter.normal = normal_at_point(*object, inter.point, ray.direction);
@@ -36,7 +36,7 @@ static double	intersect_object(t_ray ray, t_object object)
 	return (INFINITY);
 }
 
-t_intersection	intersect_scene(t_ray ray, t_list *objects)
+t_intersection	intersect_scene(t_ray ray, t_list *objects, t_state *state)
 {
 	double		cur_distance;
 	double		distance_min;
