@@ -40,7 +40,7 @@ double	cone_delta(double params[3], t_vector3d co, t_ray ray, t_cone cone)
 	params[0] = pow(v, 2) - cos2 * ft_vector3d_square_norm(ray.direction);
 	params[1] = u * v - w * cos2;
 	params[2] = pow(u, 2) - ft_vector3d_square_norm(co) * cos2;
-	return (sqrt(pow(params[1], 2) - params[0] * params[2]));
+	return (pow(params[1], 2) - params[0] * params[2]);
 }
 
 double	intersect_cone(t_ray ray, t_cone cone)
@@ -51,6 +51,9 @@ double	intersect_cone(t_ray ray, t_cone cone)
 
 	co = ft_sub_vectors3d(ray.origin, cone.pos);
 	delta = cone_delta(params, co, ray, cone);
+	if (ft_inff(delta, 0))
+		return (INFINITY);
+	delta = sqrt(delta);
 	return (closest_root(-params[1] - delta, -params[1] + delta) / params[0]);
 }
 

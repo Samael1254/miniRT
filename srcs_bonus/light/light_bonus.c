@@ -52,13 +52,13 @@
 //
 // 	lit_color = scale_color(color, attenuation);
 // 	if (in_shadow)
-// 		lit_color = add_colors(lit_color, scene.a_light.color);
+// 		lit_color = absorb_colors(lit_color, scene.a_light.color);
 // 	else
-// 		lit_color = add_colors(lit_color, scene.p_light.color);
+// 		lit_color = absorb_colors(lit_color, scene.p_light.color);
 // 	return (lit_color);
 // }
 //
-// t_color	shade_ray(t_intersection inter, t_scene *scene)
+// t_color	shade_ray(t_intersection inter, t_state *state)
 // {
 // 	t_ray			light_ray;
 // 	t_intersection	light_inter;
@@ -66,13 +66,15 @@
 // 	double			attenuation;
 //
 // 	if (inter.point.x == INFINITY)
-// 		return (inter.material.kd);
+// 		return (state->mats_tab[inter.index_mat].kd);
 // 	light_ray.origin = inter.point;
-// 	light_ray.direction = light_direction(light_ray, scene->p_light);
-// 	light_inter = intersect_scene(light_ray, scene->objects);
-// 	in_shadow = ft_supf(ft_distance3d(light_ray.origin, scene->p_light.pos),
-// 			ft_distance3d(light_ray.origin, light_inter.point));
+// 	light_ray.direction = light_direction(light_ray, state->scene.p_light);
+// 	light_inter = intersect_scene(light_ray, state->scene.objects);
+// 	in_shadow = ft_supf(ft_distance3d(light_ray.origin,
+// 				state->scene.p_light.pos), ft_distance3d(light_ray.origin,
+// 				light_inter.point));
 // 	attenuation = get_attenuation(inter, in_shadow, light_ray.direction,
-// 			*scene);
-// 	return (shade_material(inter.material.kd, attenuation, in_shadow, *scene));
+// 			state->scene);
+// 	return (shade_material(state->mats_tab[inter.index_mat].kd, attenuation,
+// 			in_shadow, state->scene));
 // }

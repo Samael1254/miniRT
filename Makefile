@@ -35,7 +35,7 @@ BONUS_MAIN := main_bonus.c exit_program_bonus.c events_bonus.c init_state_bonus.
 
 BONUS_PARSING := init_scene_bonus.c insert_in_struct_bonus.c utils_bonus.c utils2_bonus.c objects_list_bonus.c \
 				object_sphere_bonus.c object_plane_bonus.c object_cylinder_bonus.c utils_general_objects_bonus.c \
-				create_lights_bonus.c open_and_count_mats_bonus.c
+				create_lights_bonus.c open_and_count_mats_bonus.c object_cone_bonus.c
 
 BONUS_GRAPHICS := color_bonus.c graphics_bonus.c
 

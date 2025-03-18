@@ -1,8 +1,8 @@
-#include "minirt_bonus.h"
-#include "get_next_line.h"
-#include "ft_strings.h"
-#include "ft_memory.h"
 #include "ft_conversion.h"
+#include "ft_memory.h"
+#include "ft_strings.h"
+#include "get_next_line.h"
+#include "minirt_bonus.h"
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -29,6 +29,7 @@ static void	material_handling(t_state *state, int fd)
 	char	**tmp_split;
 
 	i = 1;
+	// state->mats_tab[0] = init_color(0, 0, 0);
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -38,11 +39,13 @@ static void	material_handling(t_state *state, int fd)
 		free(line);
 		if (!tmp_split)
 			error("malloc", "material_handling", state);
-		if (!ft_strncmp("mt", tmp_split[0], ft_strlen(tmp_split[0])))
+		if (!ft_strncmp("mt", tmp_split[0], 2))
 			insert_color_in_mat(state, tmp_split, &i);
 		ft_free_strtab(tmp_split);
 	}
 }
+
+#include <stdio.h>
 
 static void	count_nb_mats(t_state *state, int fd)
 {
@@ -55,6 +58,7 @@ static void	count_nb_mats(t_state *state, int fd)
 			break ;
 		if (!ft_strncmp("mt", line, 2))
 			state->len_mats_tab++;
+		free(line);
 	}
 	if (state->len_mats_tab == 0)
 		error("len_mats_tab", "is null...", state);
@@ -65,17 +69,24 @@ static int	line_mt_handler(t_state *state, char *line_mat)
 	char	**tmp_split;
 	int		fd;
 
-	tmp_split = ft_split_charset(line_mat, " =");
+	tmp_split = ft_split_charset(line_mat, " \t\n");
 	free(line_mat);
 	if (!tmp_split)
 		return (1);
 	if (ft_strtab_size(tmp_split) > 2)
 		return (ft_free_strtab(tmp_split), 1);
 	fd = open(tmp_split[1], O_RDONLY);
-	ft_free_strtab(tmp_split);
-	if (!fd)
-		error("open", "line_mt_handler", state);
+	if (fd <= 0)
+	{
+		ft_free_strtab(tmp_split);
+		error("open", "can't open file", state);
+	}
 	count_nb_mats(state, fd);
+	close(fd);
+	fd = open(tmp_split[1], O_RDONLY);
+	ft_free_strtab(tmp_split);
+	if (fd <= 0)
+		error("open", "can't open file", state);
 	state->mats_tab = ft_calloc(state->len_mats_tab + 1, sizeof(t_material));
 	if (!state->mats_tab)
 		error("malloc", "open_and_count_mats", state);
@@ -95,7 +106,7 @@ int	open_and_count_mats(t_state *state, char *filename)
 	char	*line;
 
 	fd = open(filename, O_RDONLY);
-	if (!fd)
+	if (fd <= 0)
 		error("wrong filename", "cannot open file", state);
 	nb_mt_found = 0;
 	while (1)

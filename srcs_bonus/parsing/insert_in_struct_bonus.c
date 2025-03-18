@@ -56,7 +56,7 @@ static void	add_camera(t_state *state, char **split)
 	state->scene.camera.fov_2 = ft_deg_to_rad(fov_2);
 }
 
-static void	add_light(t_state *state, char **split)
+void	add_light(t_state *state, char **split)
 {
 	t_vector3d	pos;
 	double		brightness;
@@ -90,17 +90,16 @@ int	insert_in_struct(t_state *state, char **split)
 	else if (!ft_strncmp(split[0], "C", ft_strlen(split[0])))
 		return (add_camera(state, split), 2);
 	else if (!ft_strncmp(split[0], "L", ft_strlen(split[0])))
-	{
-		add_light(state, split); // TODO: to delete when several spot-lights will be implemented
 		return (add_lights_to_list(state, split), 2);
-	}
 	else if (!ft_strncmp(split[0], "sp", ft_strlen(split[0])))
 		add_object_to_list(state, split);
 	else if (!ft_strncmp(split[0], "pl", ft_strlen(split[0])))
 		add_object_to_list(state, split);
 	else if (!ft_strncmp(split[0], "cy", ft_strlen(split[0])))
 		add_object_to_list(state, split);
-	else if (ft_strcmp(split[0], "\n"))
+	else if (!ft_strncmp(split[0], "co", ft_strlen(split[0])))
+		add_object_to_list(state, split);
+	else if (ft_strcmp(split[0], "\n") && ft_strncmp(split[0], "MT", 2))
 	{
 		split[0][ft_strlen(split[0])] = '\0';
 		warning("no such object type", split[0]);

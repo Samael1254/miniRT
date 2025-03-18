@@ -35,6 +35,7 @@ void			add_object_to_list(t_state *state, char **split);
 t_object		*object_sphere(t_state *state, char **split);
 t_object		*object_plane(t_state *state, char **split);
 t_object		*object_cylinder(t_state *state, char **split);
+t_object		*object_cone(t_state *state, char **split);
 
 // create_lights_bonus.c
 void			add_lights_to_list(t_state *state, char **split);
@@ -59,12 +60,14 @@ void			ray_tracing(t_state *state);
 
 void			init_rays(t_camera camera, t_ray **rays);
 void			shoot_rays(t_ray **rays, t_state *state);
+t_color			shade_ray(t_intersection inter, t_state *state);
 
 // Intersections //
 
 double			intersect_sphere(t_ray ray, t_sphere sphere);
 double			intersect_plane(t_ray ray, t_plane plane);
 double			intersect_cylinder(t_ray ray, t_cylinder cylinder);
+double			intersect_cone(t_ray ray, t_cone cone);
 t_intersection	intersect_scene(t_ray ray, t_list *objects);
 t_vector3d		normal_at_point(t_object object, t_vector3d point,
 					t_vector3d ray_dir);
@@ -76,10 +79,12 @@ t_color			phong_illumination(t_state *state, t_intersection inter,
 
 // Graphics //
 
+t_color			add_colors(t_color color1, t_color color2);
+t_color			blend_colors(t_color color1, t_color color2);
 t_color			scale_color(t_color color, double lambda);
 t_color			init_color(unsigned char r, unsigned char g, unsigned char b);
-t_color			add_colors(t_color color1, t_color color2);
-t_material		get_sky_material(t_ray ray);
+t_color			absorb_colors(t_color color1, t_color color2);
+t_color			get_sky_color(t_ray ray);
 void			render_scene(t_state *state, t_ray **rays);
 
 // Check arguments //
