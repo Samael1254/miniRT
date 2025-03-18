@@ -45,8 +45,10 @@ static double	get_specular_term(t_vector3d light_dir, t_vector3d view_dir,
 		return (0);
 	reflection_dir = get_reflection_dir(light_dir, normal);
 	rv = ft_dot_vectors3d(reflection_dir, view_dir);
-	rv = ft_clampf(rv, 0, 1);
+	rv = ft_clampf(rv, 0, rv);
 	specular = pow(rv, 100 * material.specularity);
+	specular *= material.specularity;
+	// specular *= (material.specularity + 2) / 8.0;
 	return (specular);
 }
 

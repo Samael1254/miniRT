@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <stdio.h>
 static void	insert_color_in_mat(t_state *state, char **line_mat, int *i)
 {
 	t_material	mat;
@@ -83,7 +82,7 @@ static int	line_mt_handler(t_state *state, char *line_mat)
 		error("open", "can't open file", state);
 	}
 	count_nb_mats(state, fd);
-	close (fd);
+	close(fd);
 	fd = open(tmp_split[1], O_RDONLY);
 	ft_free_strtab(tmp_split);
 	if (fd <= 0)
