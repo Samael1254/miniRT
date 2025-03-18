@@ -2,6 +2,7 @@
 #include "ft_memory.h"
 #include "ft_strings.h"
 #include "minirt_bonus.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 static t_sphere	*get_sphere_data(t_state *state, char **split, t_object *obj)
@@ -44,7 +45,7 @@ t_object	*object_sphere(t_state *state, char **split)
 	obj->object_r = get_sphere_data(state, split, obj);
 	obj->type = SPHERE;
 	obj->index_mat = ft_atoi(split[3]);
-	if (obj->index_mat < 0 && obj->index_mat >= state->len_mats_tab)
+	if (obj->index_mat < 0 || obj->index_mat > state->len_mats_tab)
 	{
 		free(obj->object_r);
 		free(obj);

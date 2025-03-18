@@ -48,7 +48,7 @@ t_object	*object_cylinder(t_state *state, char **split)
 	obj->object_r = get_cylinder_data(state, split, obj);
 	obj->type = CYLINDER;
 	obj->index_mat = ft_atoi(split[5]);
-	if (obj->index_mat < 0 && obj->index_mat >= state->len_mats_tab)
+	if (obj->index_mat < 0 || obj->index_mat > state->len_mats_tab)
 	{
 		free(obj->object_r);
 		free(obj);

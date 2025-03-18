@@ -1,8 +1,8 @@
-#include "minirt_bonus.h"
-#include "get_next_line.h"
-#include "ft_strings.h"
-#include "ft_memory.h"
 #include "ft_conversion.h"
+#include "ft_memory.h"
+#include "ft_strings.h"
+#include "get_next_line.h"
+#include "minirt_bonus.h"
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -29,6 +29,7 @@ static void	material_handling(t_state *state, int fd)
 	char	**tmp_split;
 
 	i = 1;
+	// state->mats_tab[0] = init_color(0, 0, 0);
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -45,6 +46,7 @@ static void	material_handling(t_state *state, int fd)
 }
 
 #include <stdio.h>
+
 static void	count_nb_mats(t_state *state, int fd)
 {
 	char	*line;

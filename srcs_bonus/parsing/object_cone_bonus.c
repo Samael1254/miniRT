@@ -34,7 +34,6 @@ static t_cone	*get_cone_data(t_state *state, char **split, t_object *obj)
 t_object	*object_cone(t_state *state, char **split)
 {
 	t_object	*obj;
-	bool		has_error;
 
 	if (!ft_check_error_line(split, 4))
 		error("wrong object definition", "cone needs 4 parameters", state);
@@ -47,8 +46,8 @@ t_object	*object_cone(t_state *state, char **split)
 	}
 	obj->object_r = get_cone_data(state, split, obj);
 	obj->type = CONE;
-	obj->color = get_color(split[3], &has_error);
-	if (has_error == true)
+	obj->index_mat = ft_atoi(split[3]);
+	if (obj->index_mat < 0 || obj->index_mat > state->len_mats_tab)
 	{
 		free(obj->object_r);
 		free(obj);
