@@ -26,7 +26,10 @@ static void	insert_color_in_mat(t_state *state, char **line_mat, int *i)
 		get_normal_map_img(state, line_mat[6], &mat);
 	}
 	else
+	{
 		mat.img_texture.img = NULL;
+		mat.img_normal.img = NULL;
+	}
 	state->mats_tab[*i] = mat;
 	(*i)++;
 }

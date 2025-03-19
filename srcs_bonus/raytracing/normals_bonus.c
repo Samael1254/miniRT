@@ -63,6 +63,7 @@ t_vector3d	blend_normal_map(t_vector2d uv, t_vector3d normal,
 	if (!material.img_normal.img)
 		return (normal);
 	new_normal = color_to_normal(get_pixel_color(material.img_normal, uv));
+	(void)new_normal;
 	return (ft_lerp3d(normal, new_normal, 0.5));
 }
 
