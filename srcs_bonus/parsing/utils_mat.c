@@ -16,7 +16,6 @@ void	get_normal_map_img(t_state *state, char *filename, t_material *mat)
 		*n = '\0';
 	mat->img_texture.img = mlx_xpm_file_to_image(state->display, filename,
 			&width, &height);
-	printf("%s\n", filename);
 	if (!mat->img_texture.img)
 		error("normal map", "loading error", state);
 	mat->img_texture.addr = mlx_get_data_addr(mat->img_texture.img,
