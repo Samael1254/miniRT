@@ -4,7 +4,6 @@
 #include "get_next_line.h"
 #include "minirt_bonus.h"
 #include <fcntl.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -15,14 +14,17 @@ static void	insert_color_in_mat(t_state *state, char **line_mat, int *i)
 	bool		error;
 
 	tab_len = ft_strtab_size(line_mat);
-	if (tab_len < 5 || tab_len > 6)
-		return ;
+	if (tab_len != 5 && tab_len != 7)
+		error(".mtr", "Enter 5 or 7 elements in line", state);
 	mat.kd = get_color(line_mat[1], &error);
 	mat.ks = get_color(line_mat[2], &error);
 	mat.ka = get_color(line_mat[3], &error);
 	mat.specularity = ft_atod(line_mat[4]);
-	if (tab_len == 6)
-		get_normal_map_img(state, line_mat[5], &mat);
+	if (tab_len == 7)
+	{
+		get_texture_map_img(state, line_mat[6], &mat);
+		get_normal_map_img(state, line_mat[6], &mat);
+	}
 	else
 		mat.img_texture.img = NULL;
 	state->mats_tab[*i] = mat;
