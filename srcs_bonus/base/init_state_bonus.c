@@ -38,6 +38,6 @@ void	init_state(t_state *state, char *filename)
 	info("Starting minirt bonus version with following scene", filename);
 	info(NULL, "initialization...");
 	initialize_state(state);
-	init_scene(state, filename);
 	init_mlx(state);
+	init_scene(state, filename);
 }
