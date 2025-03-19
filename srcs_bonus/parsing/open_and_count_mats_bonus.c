@@ -7,17 +7,24 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include <stdio.h>
 static void	insert_color_in_mat(t_state *state, char **line_mat, int *i)
 {
+	int			tab_len;
 	t_material	mat;
 	bool		error;
 
-	if (ft_strtab_size(line_mat) != 5)
+	tab_len = ft_strtab_size(line_mat);
+	if (tab_len < 5 || tab_len > 6)
 		return ;
 	mat.kd = get_color(line_mat[1], &error);
 	mat.ks = get_color(line_mat[2], &error);
 	mat.ka = get_color(line_mat[3], &error);
 	mat.specularity = ft_atod(line_mat[4]);
+	if (tab_len == 6)
+		mat.img_normal_map = get_normal_map_img(state, line_mat[5], &mat);
+	else
+		mat.img_normal_map = NULL;
 	state->mats_tab[*i] = mat;
 	(*i)++;
 }
@@ -39,13 +46,11 @@ static void	material_handling(t_state *state, int fd)
 		free(line);
 		if (!tmp_split)
 			error("malloc", "material_handling", state);
-		if (!ft_strncmp("mt", tmp_split[0], 2))
+		if (!ft_strncmp(tmp_split[0], "mt", 2))
 			insert_color_in_mat(state, tmp_split, &i);
 		ft_free_strtab(tmp_split);
 	}
 }
-
-#include <stdio.h>
 
 static void	count_nb_mats(t_state *state, int fd)
 {

@@ -31,7 +31,7 @@ void			ambiant_light_checker(t_state *state, char **split);
 // objects_list.c
 void			add_object_to_list(t_state *state, char **split);
 
-// object_sphere.c
+// objects*.c
 t_object		*object_sphere(t_state *state, char **split);
 t_object		*object_plane(t_state *state, char **split);
 t_object		*object_cylinder(t_state *state, char **split);
@@ -42,6 +42,9 @@ void			add_lights_to_list(t_state *state, char **split);
 
 // open_and_counts_mats_bonus.c
 int				open_and_count_mats(t_state *state, char *filename);
+
+// utils_mats.c
+void			*get_normal_map_img(t_state *state, char *filename, t_material* mat);
 
 // Events //
 
