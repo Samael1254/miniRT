@@ -51,6 +51,7 @@ typedef struct s_img_data
 	int				bp_pixel;
 	int				line_len;
 	int				endian;
+	int				height;
 }					t_img_data;
 
 typedef struct s_color
@@ -59,13 +60,6 @@ typedef struct s_color
 	unsigned char	g;
 	unsigned char	b;
 }					t_color;
-
-typedef struct s_texture
-{
-	void			*img;
-	int				width;
-	int				height;
-}					t_texture;
 
 typedef struct s_material
 {

@@ -18,6 +18,7 @@ void	get_normal_map_img(t_state *state, char *filename, t_material *mat)
 			&width, &height);
 	if (!mat->img_texture.img)
 		error("normal map", "loading error", state);
+	mat->img_texture.height = height;
 	mat->img_texture.addr = mlx_get_data_addr(mat->img_texture.img,
 			&mat->img_texture.bp_pixel, &mat->img_texture.line_len,
 			&mat->img_texture.endian);
