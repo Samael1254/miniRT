@@ -4,10 +4,10 @@
 #include "get_next_line.h"
 #include "minirt_bonus.h"
 #include <fcntl.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <stdio.h>
 static void	insert_color_in_mat(t_state *state, char **line_mat, int *i)
 {
 	int			tab_len;

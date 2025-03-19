@@ -40,8 +40,11 @@ t_color	get_pixel_color(t_img_data texture, t_vector2d uv)
 {
 	unsigned int	color;
 	int				offset;
+	t_ivector2d		xy;
 
-	offset = uv.y * texture.line_len + uv.x * (texture.bp_pixel) / 8;
+	xy.x = uv.x * texture.line_len;
+	xy.y = uv.y * texture.height;
+	offset = xy.y * texture.line_len + xy.x * (texture.bp_pixel) / 8;
 	color = *(unsigned int *)(texture.addr + offset);
 	return (int_to_rgb(color));
 }
