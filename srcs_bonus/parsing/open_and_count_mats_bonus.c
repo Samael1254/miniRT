@@ -42,11 +42,11 @@ static void	material_handling(t_state *state, int fd)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		tmp_split = ft_split_charset(line, " \t");
+		tmp_split = ft_split_charset(line, " \t\n");
 		free(line);
 		if (!tmp_split)
 			error("malloc", "material_handling", state);
-		if (!ft_strncmp(tmp_split[0], "mt", 2))
+		if (tmp_split[0] && !ft_strncmp(tmp_split[0], "mt", 2))
 			insert_color_in_mat(state, tmp_split, &i);
 		ft_free_strtab(tmp_split);
 	}
