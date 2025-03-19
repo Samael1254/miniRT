@@ -22,9 +22,9 @@ static void	insert_color_in_mat(t_state *state, char **line_mat, int *i)
 	mat.ka = get_color(line_mat[3], &error);
 	mat.specularity = ft_atod(line_mat[4]);
 	if (tab_len == 6)
-		mat.img_normal_map = get_normal_map_img(state, line_mat[5], &mat);
+		get_normal_map_img(state, line_mat[5], &mat);
 	else
-		mat.img_normal_map = NULL;
+		mat.img_texture.img = NULL;
 	state->mats_tab[*i] = mat;
 	(*i)++;
 }

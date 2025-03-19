@@ -44,7 +44,7 @@ void			add_lights_to_list(t_state *state, char **split);
 int				open_and_count_mats(t_state *state, char *filename);
 
 // utils_mats.c
-void			*get_normal_map_img(t_state *state, char *filename, t_material* mat);
+void			get_normal_map_img(t_state *state, char *filename, t_material* mat);
 
 // Events //
 
