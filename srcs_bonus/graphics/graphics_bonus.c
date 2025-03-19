@@ -1,3 +1,4 @@
+#include "ft_algebra.h"
 #include "minirt_bonus.h"
 #include "minirt_defs_bonus.h"
 #include "mlx.h"
@@ -6,6 +7,16 @@
 static int	rgb_to_int(t_color color)
 {
 	return (color.r << 16 | color.g << 8 | color.b << 0);
+}
+
+static t_color	int_to_rgb(int colorint)
+{
+	t_color	color;
+
+	color.r = colorint & 15;
+	color.g = colorint & 240;
+	color.b = colorint & 3840;
+	return (color);
 }
 
 static void	put_pixel(t_img_data *img, t_ivector2d coords, t_color color)
@@ -23,6 +34,16 @@ static void	put_pixel(t_img_data *img, t_ivector2d coords, t_color color)
 	offset = coords.y * img->line_len + coords.x * (img->bp_pixel) / 8;
 	mem_pos = img->addr + offset;
 	*(unsigned int *)mem_pos = rgb_to_int(color);
+}
+
+t_color	get_pixel_color(t_img_data texture, t_vector2d uv)
+{
+	unsigned int	color;
+	int				offset;
+
+	offset = uv.y * texture.line_len + uv.x * (texture.bp_pixel) / 8;
+	color = *(unsigned int *)(texture.addr + offset);
+	return (int_to_rgb(color));
 }
 
 void	render_scene(t_state *state, t_ray **rays)

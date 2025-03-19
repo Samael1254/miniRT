@@ -60,6 +60,13 @@ typedef struct s_color
 	unsigned char	b;
 }					t_color;
 
+typedef struct s_texture
+{
+	void			*img;
+	int				width;
+	int				height;
+}					t_texture;
+
 typedef struct s_material
 {
 	t_color			kd;
