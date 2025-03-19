@@ -32,7 +32,7 @@ t_color	ambiant_color(t_ambiant_light a_light, t_material material,
 	if (material.img_texture.img)
 		color = get_pixel_color(material.img_texture, inter.uv);
 	else
-		color = material.kd;
+		color = material.ka;
 	return (scale_color(color, a_light.brightness));
 }
 
@@ -115,7 +115,7 @@ t_color	shade_from_one_light(t_intersection inter, t_vector3d view_dir,
 
 	light_ray.origin = inter.point;
 	light_ray.direction = light_direction(light_ray, light);
-	light_inter = intersect_scene(light_ray, state->scene.objects);
+	light_inter = intersect_scene(light_ray, state);
 	if (ft_supf(ft_distance3d(light_ray.origin, light.pos),
 			ft_distance3d(light_ray.origin, light_inter.point)))
 		return (init_color(0, 0, 0));

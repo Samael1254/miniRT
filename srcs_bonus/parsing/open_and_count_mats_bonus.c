@@ -11,18 +11,18 @@ static void	insert_color_in_mat(t_state *state, char **line_mat, int *i)
 {
 	int			tab_len;
 	t_material	mat;
-	bool		error;
+	bool		has_error;
 
 	tab_len = ft_strtab_size(line_mat);
 	if (tab_len != 5 && tab_len != 7)
-		error(".mtr", "Enter 5 or 7 elements in line", state);
-	mat.kd = get_color(line_mat[1], &error);
-	mat.ks = get_color(line_mat[2], &error);
-	mat.ka = get_color(line_mat[3], &error);
+		error(".mrt", "Enter 5 or 7 elements in line", state);
+	mat.kd = get_color(line_mat[1], &has_error);
+	mat.ks = get_color(line_mat[2], &has_error);
+	mat.ka = get_color(line_mat[3], &has_error);
 	mat.specularity = ft_atod(line_mat[4]);
 	if (tab_len == 7)
 	{
-		get_texture_map_img(state, line_mat[6], &mat);
+		get_texture_map_img(state, line_mat[5], &mat);
 		get_normal_map_img(state, line_mat[6], &mat);
 	}
 	else

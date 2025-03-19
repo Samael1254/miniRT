@@ -8,8 +8,8 @@ static t_vector2d	sphere_mapping(t_sphere sphere, t_vector3d point)
 	t_vector2d	uv;
 
 	cp = ft_normalize_vector3d(ft_sub_vectors3d(point, sphere.pos));
-	uv.x = 0.5 + (atan2(cp.z, cp.x) / (2 * M_PI));
-	uv.y = 0.5 + (asin(cp.y) / M_PI);
+	uv.x = 0.5 + (atan2(cp.z, -cp.x) / (2 * M_PI));
+	uv.y = 0.5 + (asin(-cp.y) / M_PI);
 	return (uv);
 }
 

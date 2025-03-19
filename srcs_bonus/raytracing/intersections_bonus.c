@@ -6,7 +6,7 @@
 #include <stddef.h>
 
 static t_intersection	make_intersection(t_ray ray, t_object *object,
-		double distance_min)
+		double distance_min, t_state *state)
 {
 	t_intersection	inter;
 
@@ -20,8 +20,8 @@ static t_intersection	make_intersection(t_ray ray, t_object *object,
 	inter.index_mat = object->index_mat;
 	inter.point = ft_add_vectors3d(ray.origin, ft_scale_vector3d(distance_min,
 				ray.direction));
-	inter.normal = normal_at_point(*object, inter.point, ray.direction);
 	inter.uv = uv_at_point(*object, inter.point);
+	inter.normal = normal_at_point(*object, inter, ray.direction, state);
 	return (inter);
 }
 
@@ -39,25 +39,27 @@ static double	intersect_object(t_ray ray, t_object object)
 	return (INFINITY);
 }
 
-t_intersection	intersect_scene(t_ray ray, t_list *objects)
+t_intersection	intersect_scene(t_ray ray, t_state *state)
 {
 	double		cur_distance;
 	double		distance_min;
 	t_object	*cur_object;
 	t_object	*closest_object;
+	t_list		*iter;
 
 	distance_min = INFINITY;
 	closest_object = NULL;
-	while (objects)
+	iter = state->scene.objects;
+	while (iter)
 	{
-		cur_object = (t_object *)objects->data;
+		cur_object = (t_object *)iter->data;
 		cur_distance = intersect_object(ray, *cur_object);
 		if (ft_in_rangef(cur_distance, RAY_REACH_MIN, distance_min))
 		{
 			distance_min = cur_distance;
 			closest_object = cur_object;
 		}
-		objects = objects->next;
+		iter = iter->next;
 	}
-	return (make_intersection(ray, closest_object, distance_min));
+	return (make_intersection(ray, closest_object, distance_min, state));
 }

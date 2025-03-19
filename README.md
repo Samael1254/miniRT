@@ -26,8 +26,6 @@ A basic raytracer for 42 school project miniRT
 - Create normal map with nm keyword
 
 #### MATERIALS
-- Texture
-- Checkerboard procedural texture
 - Sky procedural texture ?
 - Normal map
 - Transparent textures
@@ -36,10 +34,7 @@ A basic raytracer for 42 school project miniRT
 - Add scenes to show off all the features
 
 #### MISC
-- change .mat to .mrt
 - normal maps
-- textures
-- change error name
 - check angle of cone
 - ka for ambiant color
 

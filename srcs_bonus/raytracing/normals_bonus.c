@@ -49,37 +49,42 @@ t_vector3d	color_to_normal(t_color color)
 {
 	t_vector3d	normal;
 
-	normal.x = (double)color.r / 255;
-	normal.y = (double)color.g / 255;
-	normal.z = (double)color.b / 255;
+	normal.x = -(double)color.r / 127.5 + 1;
+	normal.y = -(double)color.g / 127.5 + 1;
+	normal.z = -(double)color.b / 127.5 + 1;
 	return (normal);
 }
 
-t_vector3d	blend_normal_map(t_vector3d normal, t_material material,
-		t_intersection inter)
+t_vector3d	blend_normal_map(t_vector2d uv, t_vector3d normal,
+		t_material material)
 {
 	t_vector3d	new_normal;
 
-	new_normal = color_to_normal(get_pixel_color(material.img_normal,
-				inter.uv));
+	if (!material.img_normal.img)
+		return (normal);
+	new_normal = color_to_normal(get_pixel_color(material.img_normal, uv));
+	return (ft_lerp3d(normal, new_normal, 0.5));
 }
 
-t_vector3d	normal_at_point(t_object object, t_vector3d point,
-		t_vector3d ray_dir)
+t_vector3d	normal_at_point(t_object object, t_intersection inter,
+		t_vector3d ray_dir, t_state *state)
 {
 	t_vector3d	normal;
 
 	if (object.type == SPHERE)
-		normal = sphere_normal(*(t_sphere *)object.object_r, point);
+		normal = sphere_normal(*(t_sphere *)object.object_r, inter.point);
 	else if (object.type == PLANE)
 		normal = plane_normal(*(t_plane *)object.object_r);
 	else if (object.type == CYLINDER)
-		normal = cylinder_normal(*(t_cylinder *)object.object_r, point);
+		normal = cylinder_normal(*(t_cylinder *)object.object_r, inter.point);
 	else if (object.type == CONE)
-		normal = cone_normal(*(t_cone *)object.object_r, point);
+		normal = cone_normal(*(t_cone *)object.object_r, inter.point);
 	else
 		return (ft_init_vector3d(0));
 	if (ft_supf(ft_dot_vectors3d(normal, ray_dir), 0))
-		return (ft_scale_vector3d(-1, normal));
+		normal = ft_scale_vector3d(-1, normal);
+	normal = blend_normal_map(inter.uv, normal,
+			state->mats_tab[inter.index_mat]);
+	(void)state;
 	return (normal);
 }

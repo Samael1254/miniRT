@@ -74,10 +74,10 @@ double			intersect_sphere(t_ray ray, t_sphere sphere);
 double			intersect_plane(t_ray ray, t_plane plane);
 double			intersect_cylinder(t_ray ray, t_cylinder cylinder);
 double			intersect_cone(t_ray ray, t_cone cone);
-t_intersection	intersect_scene(t_ray ray, t_list *objects);
+t_intersection	intersect_scene(t_ray ray, t_state *state);
 
-t_vector3d		normal_at_point(t_object object, t_vector3d point,
-					t_vector3d ray_dir);
+t_vector3d		normal_at_point(t_object object, t_intersection inter,
+					t_vector3d ray_dir, t_state *state);
 
 t_vector2d		uv_at_point(t_object object, t_vector3d point);
 

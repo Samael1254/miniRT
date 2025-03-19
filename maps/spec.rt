@@ -1,6 +1,6 @@
 C	0,30,-150		0,0,1	50
 A	0.2									255,255,255
-MT	mat/spec_grad.mat
+MT	materials/spec_grad.mrt
 L	0,40,-50				1			200,200,255
 #L	30,40,-50				1			200,200,255
 

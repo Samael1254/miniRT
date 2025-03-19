@@ -24,7 +24,7 @@
 # SC [up color] [down color]
 
 # Material file
-# Defines the .mat material file to be loaded for all objects in the scene
+# Defines the .mrt material file to be loaded for all objects in the scene
 # MT [filename]
 
 # LIGHTS

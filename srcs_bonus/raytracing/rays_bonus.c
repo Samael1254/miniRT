@@ -62,8 +62,7 @@ void	shoot_rays(t_ray **rays, t_state *state)
 		coords.x = 0;
 		while (coords.x < WIN_X)
 		{
-			inter = intersect_scene(rays[coords.y][coords.x],
-					state->scene.objects);
+			inter = intersect_scene(rays[coords.y][coords.x], state);
 			rays[coords.y][coords.x].color = phong_illumination(state, inter,
 					rays[coords.y][coords.x]);
 			coords.x++;
