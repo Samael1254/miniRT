@@ -25,9 +25,6 @@ A basic raytracer for 42 school project miniRT
 - Create texture with tx keyword
 - Create normal map with nm keyword
 
-#### SHAPES
-- Infinite cone (fix inside)
-
 #### MATERIALS
 - Texture
 - Checkerboard procedural texture

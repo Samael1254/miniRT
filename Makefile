@@ -46,12 +46,15 @@ BONUS_RAYTRACING := raytracing_bonus.c intersections_bonus.c intersect_objects_b
 
 BONUS_LIGHT := light_bonus.c phong_bonus.c
 
+BONUS_TEXTURING := uv_mapping_bonus.c
+
 BONUS := $(addprefix $(BONUS_DIR)base/, $(BONUS_MAIN)) \
            $(addprefix $(BONUS_DIR)parsing/, $(BONUS_PARSING)) \
            $(addprefix $(BONUS_DIR)graphics/, $(BONUS_GRAPHICS)) \
            $(addprefix $(BONUS_DIR)errors/, $(BONUS_ERRORS)) \
            $(addprefix $(BONUS_DIR)raytracing/, $(BONUS_RAYTRACING)) \
            $(addprefix $(BONUS_DIR)light/, $(BONUS_LIGHT)) \
+           $(addprefix $(BONUS_DIR)texturing/, $(BONUS_TEXTURING)) \
 
 
 MANDATORY_OBJS := $(addprefix $(BUILD_DIR)mandatory/, $(notdir $(SOURCES:.c=.o)))
