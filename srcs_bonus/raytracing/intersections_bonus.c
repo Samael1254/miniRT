@@ -21,6 +21,7 @@ static t_intersection	make_intersection(t_ray ray, t_object *object,
 	inter.point = ft_add_vectors3d(ray.origin, ft_scale_vector3d(distance_min,
 				ray.direction));
 	inter.normal = normal_at_point(*object, inter.point, ray.direction);
+	inter.uv = uv_at_point(*object, inter.point);
 	return (inter);
 }
 

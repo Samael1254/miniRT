@@ -29,10 +29,17 @@ static t_color	ambiant_color(t_ambiant_light a_light, t_color ka)
 	return (scale_color(ka, a_light.brightness));
 }
 
-static t_color	diffuse_color(double incidence, t_color kd)
+static t_color	diffuse_color(double incidence, t_material material,
+		t_intersection inter)
 {
+	t_color	color;
+
+	if (material.img_texture.img)
+		color = get_pixel_color(material.img_texture, inter.uv);
+	else
+		color = material.kd;
 	incidence = ft_clampf(incidence, 0, 1);
-	return (scale_color(kd, incidence));
+	return (scale_color(color, incidence));
 }
 
 static double	get_specular_term(t_vector3d light_dir, t_vector3d view_dir,
@@ -106,7 +113,7 @@ t_color	shade_from_one_light(t_intersection inter, t_vector3d view_dir,
 			ft_distance3d(light_ray.origin, light_inter.point)))
 		return (init_color(0, 0, 0));
 	color = diffuse_color(ft_dot_vectors3d(light_ray.direction, inter.normal),
-			state->mats_tab[inter.index_mat].kd);
+			state->mats_tab[inter.index_mat], inter);
 	color = add_colors(color, specular_color(inter, light_ray.direction,
 				view_dir, state));
 	color = absorb_colors(color, scale_color(light.color, light.brightness

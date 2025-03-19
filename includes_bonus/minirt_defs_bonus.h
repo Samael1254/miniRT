@@ -160,6 +160,7 @@ typedef struct s_intersection
 	unsigned int	index_mat;
 	t_vector3d		point;
 	t_vector3d		normal;
+	t_vector2d		uv;
 }					t_intersection;
 
 // State of the program
