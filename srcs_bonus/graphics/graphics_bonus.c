@@ -13,9 +13,9 @@ static t_color	int_to_rgb(int colorint)
 {
 	t_color	color;
 
-	color.r = colorint & 15;
-	color.g = colorint & 240;
-	color.b = colorint & 3840;
+	color.r = (colorint >> 16) & 0xFF;
+	color.g = (colorint >> 8) & 0xFF;
+	color.b = colorint & 0xFF;
 	return (color);
 }
 
@@ -42,7 +42,7 @@ t_color	get_pixel_color(t_img_data texture, t_vector2d uv)
 	int				offset;
 	t_ivector2d		xy;
 
-	xy.x = uv.x * texture.line_len;
+	xy.x = uv.x * texture.line_len / (texture.bp_pixel) * 8;
 	xy.y = uv.y * texture.height;
 	offset = xy.y * texture.line_len + xy.x * (texture.bp_pixel) / 8;
 	color = *(unsigned int *)(texture.addr + offset);

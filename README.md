@@ -35,6 +35,14 @@ A basic raytracer for 42 school project miniRT
 #### SCENES
 - Add scenes to show off all the features
 
+#### MISC
+- change .mat to .mrt
+- normal maps
+- textures
+- change error name
+- check angle of cone
+- ka for ambiant color
+
 
 ### TODO ULTIMATE
 

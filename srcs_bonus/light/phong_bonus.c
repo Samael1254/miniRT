@@ -24,9 +24,16 @@ static t_vector3d	light_direction(t_ray ray, t_point_light light)
 	return (light_dir);
 }
 
-static t_color	ambiant_color(t_ambiant_light a_light, t_color ka)
+t_color	ambiant_color(t_ambiant_light a_light, t_material material,
+		t_intersection inter)
 {
-	return (scale_color(ka, a_light.brightness));
+	t_color	color;
+
+	if (material.img_texture.img)
+		color = get_pixel_color(material.img_texture, inter.uv);
+	else
+		color = material.kd;
+	return (scale_color(color, a_light.brightness));
 }
 
 static t_color	diffuse_color(double incidence, t_material material,
@@ -129,7 +136,7 @@ t_color	phong_illumination(t_state *state, t_intersection inter, t_ray ray)
 	if (inter.point.x == INFINITY)
 		return (get_sky_color(ray));
 	color = ambiant_color(state->scene.a_light,
-			state->mats_tab[inter.index_mat].kd);
+			state->mats_tab[inter.index_mat], inter);
 	iter = state->scene.lights;
 	while (iter)
 	{

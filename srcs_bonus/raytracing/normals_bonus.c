@@ -1,5 +1,6 @@
 #include "ft_algebra.h"
 #include "ft_math.h"
+#include "minirt_bonus.h"
 #include "minirt_defs_bonus.h"
 
 static t_vector3d	sphere_normal(t_sphere sphere, t_vector3d point)
@@ -42,6 +43,25 @@ static t_vector3d	cylinder_normal(t_cylinder cylinder, t_vector3d point)
 		return (ft_normalize_vector3d(ba));
 	return (ft_normalize_vector3d(ft_scale_vector3d(1.0 / radius,
 				ft_sub_vectors3d(pa, ft_scale_vector3d(h, ba)))));
+}
+
+t_vector3d	color_to_normal(t_color color)
+{
+	t_vector3d	normal;
+
+	normal.x = (double)color.r / 255;
+	normal.y = (double)color.g / 255;
+	normal.z = (double)color.b / 255;
+	return (normal);
+}
+
+t_vector3d	blend_normal_map(t_vector3d normal, t_material material,
+		t_intersection inter)
+{
+	t_vector3d	new_normal;
+
+	new_normal = color_to_normal(get_pixel_color(material.img_normal,
+				inter.uv));
 }
 
 t_vector3d	normal_at_point(t_object object, t_vector3d point,
