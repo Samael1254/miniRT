@@ -60,7 +60,7 @@ static bool	check_line_chars(char *line)
 	i = ft_strcspn(line, " \t");
 	while (line[i] && line[i] != '\n')
 	{
-		if (!ft_isalnum(line[i]) && !ft_isincharset(line[i], "+-., \t"))
+		if (!ft_isalnum(line[i]) && !ft_isincharset(line[i], "\\+-., \t"))
 			break ;
 		i++;
 	}

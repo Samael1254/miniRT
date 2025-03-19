@@ -68,6 +68,13 @@ typedef struct s_material
 	double			specularity;
 }					t_material;
 
+typedef struct s_triangle
+{
+	t_vector3d		a;
+	t_vector3d		b;
+	t_vector3d		c;
+}					t_triangle;
+
 typedef struct s_cone
 {
 	t_vector3d		pos;
