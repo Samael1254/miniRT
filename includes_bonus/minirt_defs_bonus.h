@@ -73,7 +73,7 @@ typedef struct s_material
 	t_color			ks;
 	t_color			ka;
 	double			specularity;
-	t_img_data		img_normal_map;
+	t_img_data		img_texture;
 }					t_material;
 
 typedef struct s_triangle
