@@ -4,6 +4,7 @@
 #include "minirt_bonus.h"
 #include <errno.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -60,7 +61,7 @@ static bool	check_line_chars(char *line)
 	i = ft_strcspn(line, " \t");
 	while (line[i] && line[i] != '\n')
 	{
-		if (!ft_isalnum(line[i]) && !ft_isincharset(line[i], "\\+-., \t"))
+		if (!ft_isalnum(line[i]) && !ft_isincharset(line[i], "/+-_., \t"))
 			break ;
 		i++;
 	}

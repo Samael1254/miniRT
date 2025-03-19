@@ -44,6 +44,7 @@ int	exit_program(t_state *state, int status)
 				free(state->id_list[i]);
 			i++;
 		}
+		free(state->mats_tab);
 		free_mlx(state);
 		free_scene(&state->scene);
 	}
