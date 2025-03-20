@@ -22,7 +22,7 @@
 
 #mt	kd			ks			ka			specularity		texture						normal_map
 mt	255,255,255	255,255,255	255,255,255	1				
-mt	255,255,255	255,255,255	255,255,255	1				0							materials/normal_maps/Moon.Normal_8192x4096-1024x512.xpm
+mt	255,255,255	255,255,255	255,255,255	1				materials/textures/line.xpm	0
 mt	0,255,0		255,255,255	0,255,0		0.2
 mt	255,255,0	255,255,255	255,255,0	1
 mt	0,0,255		255,255,255	0,0,255	1
