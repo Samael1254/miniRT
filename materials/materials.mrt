@@ -21,8 +21,8 @@
 # - nm : normal map of the material, as an index of the normal maps list given above. 0 means no normal map. Defaults to 0, but if a texture is specified a normal map must be specified (and vice versa)
 
 #mt	kd			ks			ka			specularity		texture						normal_map
-mt	255,255,255	255,255,255	255,255,255	1				
-mt	255,255,255	255,255,255	255,255,255	1				materials/textures/18921804_0zaq_ag24_210203.xpm							materials/normal_maps/Moon.Normal_8192x4096-1024x512.xpm
-mt	0,255,0		255,255,255	0,255,0		0.2
+mt	255,255,255	255,255,255	255,255,255	1
+mt	255,255,255	255,255,255	255,255,255	1				materials/textures/earth.xpm	0
+mt	0,255,0		255,255,255	0,255,0		0.2				materials/textures/earth.xpm	0
 mt	255,255,0	255,255,255	255,255,0	1
 mt	0,0,255		255,255,255	0,0,255	1

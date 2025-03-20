@@ -56,6 +56,24 @@ t_vector3d	color_to_normal(t_color color)
 	return (normal);
 }
 
+static t_vector3d	get_reference_vector(t_vector3d normal)
+{
+	t_vector3d	r;
+
+	if (ft_supf(fabs(normal.y), 0.9))
+	{
+		if (ft_supf(fabs(normal.z), 0.9))
+			r = ft_set_vector3d(0, 0, 1);
+		else
+			r = ft_set_vector3d(0, 1, 0);
+	}
+	else if (ft_supf(fabs(normal.x), 0.9))
+		r = ft_set_vector3d(0, 1, 0);
+	else
+		r = ft_set_vector3d(1, 0, 0);
+	return (r);
+}
+
 t_vector3d	tangent_to_world(t_vector3d normal_tx, t_vector3d normal_world)
 {
 	t_vector3d	r;
@@ -63,10 +81,7 @@ t_vector3d	tangent_to_world(t_vector3d normal_tx, t_vector3d normal_world)
 	t_vector3d	bitangent;
 	t_vector3d	new_normal;
 
-	if (ft_inff(fabs(normal_world.y), 0.9))
-		r = ft_set_vector3d(0, 1, 0);
-	else
-		r = ft_set_vector3d(1, 0, 0);
+	r = get_reference_vector(normal_world);
 	tangent = ft_normalize_vector3d(ft_cross_vectors3d(r, normal_tx));
 	bitangent = ft_normalize_vector3d(ft_cross_vectors3d(normal_tx, tangent));
 	new_normal = ft_normalize_vector3d(ft_add_vectors3d(ft_add_vectors3d(ft_scale_vector3d(normal_tx.x,
@@ -105,6 +120,5 @@ t_vector3d	normal_at_point(t_object object, t_intersection inter,
 		normal = ft_scale_vector3d(-1, normal);
 	normal = blend_normal_map(inter.uv, normal,
 			state->mats_tab[inter.index_mat]);
-	(void)state;
 	return (normal);
 }

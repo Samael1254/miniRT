@@ -21,22 +21,16 @@ A basic raytracer for 42 school project miniRT
 
 ### TODO BONUS
 
-#### PARSING
-- Create texture with tx keyword
-- Create normal map with nm keyword
-
 #### MATERIALS
-- Sky procedural texture ?
-- Normal map
 - Transparent textures
 
 #### SCENES
 - Add scenes to show off all the features
 
 #### MISC
-- normal maps
 - check angle of cone
-- ka for ambiant color
+- merge kd and texture
+- plane normals
 
 
 ### TODO ULTIMATE
