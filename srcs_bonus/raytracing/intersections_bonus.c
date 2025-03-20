@@ -20,8 +20,10 @@ static t_intersection	make_intersection(t_ray ray, t_object *object,
 	inter.index_mat = object->index_mat;
 	inter.point = ft_add_vectors3d(ray.origin, ft_scale_vector3d(distance_min,
 				ray.direction));
-	inter.uv = uv_at_point(*object, inter.point);
 	inter.normal = normal_at_point(*object, inter, ray.direction, state);
+	inter.uv = uv_at_point(*object, inter.point, inter.normal);
+	inter.normal = blend_normal_map(inter.uv, inter.normal,
+			state->mats_tab[inter.index_mat]);
 	return (inter);
 }
 

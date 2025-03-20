@@ -78,8 +78,10 @@ t_intersection	intersect_scene(t_ray ray, t_state *state);
 
 t_vector3d		normal_at_point(t_object object, t_intersection inter,
 					t_vector3d ray_dir, t_state *state);
+t_vector3d	blend_normal_map(t_vector2d uv, t_vector3d normal,
+		t_material material);
 
-t_vector2d		uv_at_point(t_object object, t_vector3d point);
+t_vector2d		uv_at_point(t_object object, t_vector3d point, t_vector3d normal);
 
 // Light //
 

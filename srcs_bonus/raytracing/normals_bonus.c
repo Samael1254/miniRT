@@ -118,7 +118,6 @@ t_vector3d	normal_at_point(t_object object, t_intersection inter,
 		return (ft_init_vector3d(0));
 	if (ft_supf(ft_dot_vectors3d(normal, ray_dir), 0))
 		normal = ft_scale_vector3d(-1, normal);
-	normal = blend_normal_map(inter.uv, normal,
-			state->mats_tab[inter.index_mat]);
+	(void)state;
 	return (normal);
 }
