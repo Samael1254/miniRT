@@ -29,10 +29,10 @@ t_color	ambiant_color(t_ambiant_light a_light, t_material material,
 {
 	t_color	color;
 
+	color = material.ka;
 	if (material.img_texture.img)
-		color = get_pixel_color(material.img_texture, inter.uv);
-	else
-		color = material.ka;
+		color = absorb_colors(color, get_pixel_color(material.img_texture,
+					inter.uv));
 	return (scale_color(color, a_light.brightness));
 }
 
@@ -41,10 +41,10 @@ static t_color	diffuse_color(double incidence, t_material material,
 {
 	t_color	color;
 
+	color = material.kd;
 	if (material.img_texture.img)
-		color = get_pixel_color(material.img_texture, inter.uv);
-	else
-		color = material.kd;
+		color = absorb_colors(color, get_pixel_color(material.img_texture,
+					inter.uv));
 	incidence = ft_clampf(incidence, 0, 1);
 	return (scale_color(color, incidence));
 }

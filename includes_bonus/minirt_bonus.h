@@ -78,10 +78,11 @@ t_intersection	intersect_scene(t_ray ray, t_state *state);
 
 t_vector3d		normal_at_point(t_object object, t_intersection inter,
 					t_vector3d ray_dir, t_state *state);
-t_vector3d	blend_normal_map(t_vector2d uv, t_vector3d normal,
-		t_material material);
+t_vector3d		blend_normal_map(t_vector2d uv, t_vector3d normal,
+					t_material material);
 
-t_vector2d		uv_at_point(t_object object, t_vector3d point, t_vector3d normal);
+t_vector2d		uv_at_point(t_object object, t_vector3d point,
+					t_vector3d normal);
 
 // Light //
 
@@ -91,7 +92,6 @@ t_color			phong_illumination(t_state *state, t_intersection inter,
 // Graphics //
 
 t_color			add_colors(t_color color1, t_color color2);
-t_color			blend_colors(t_color color1, t_color color2);
 t_color			scale_color(t_color color, double lambda);
 t_color			init_color(unsigned char r, unsigned char g, unsigned char b);
 t_color			absorb_colors(t_color color1, t_color color2);

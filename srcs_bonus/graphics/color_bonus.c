@@ -47,16 +47,6 @@ t_color	add_colors(t_color color1, t_color color2)
 	return (sum);
 }
 
-t_color	blend_colors(t_color color1, t_color color2)
-{
-	t_color	avg;
-
-	avg.r = (color1.r + color2.r) / 2;
-	avg.g = (color1.g + color2.g) / 2;
-	avg.b = (color1.b + color2.b) / 2;
-	return (avg);
-}
-
 t_color	init_color(unsigned char r, unsigned char g, unsigned char b)
 {
 	t_color	color;
@@ -75,17 +65,4 @@ t_color	get_sky_color(t_ray ray)
 
 	sky_color = lerp_colors(color1, color2, (ray.direction.y + 1) / 2);
 	return (sky_color);
-}
-
-t_material	get_sky_material(t_ray ray)
-{
-	t_material		sky_material;
-	const t_color	color1 = {255, 174, 69};
-	const t_color	color2 = {42, 162, 242};
-
-	sky_material.kd = lerp_colors(color1, color2, (ray.direction.y + 1) / 2);
-	sky_material.ks = init_color(0, 0, 0);
-	sky_material.ka = init_color(0, 0, 0);
-	sky_material.specularity = 0;
-	return (sky_material);
 }

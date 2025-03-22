@@ -22,16 +22,13 @@ A basic raytracer for 42 school project miniRT
 
 ### TODO BONUS
 
-#### MATERIALS
-- Transparent textures
-
 #### SCENES
 - Add scenes to show off all the features
 
 #### MISC
 - check angle of cone in parsing
 - merge kd and texture
-- cylinder and cone normals
+- cylinder and cone textures
 
 
 ### TODO ULTIMATE
@@ -48,6 +45,13 @@ A basic raytracer for 42 school project miniRT
 - Anti aliasing
 - Depth of field
 
+#### REALTIME
+- Camera rotation
+- Camera translation
+- Change camera rotation speed
+- Change camera translation speed
+- Display frame rendering time
+
 #### Optimisation
 - BVH
 
@@ -60,5 +64,6 @@ A basic raytracer for 42 school project miniRT
 - Wave lenght refraction (prisms)
 
 #### MATERIALS
+- Transparent textures
 - Transparent materials
 - Emissive materials
