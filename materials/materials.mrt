@@ -22,7 +22,7 @@
 
 #mt	kd			ks			ka			specularity		texture						normal_map
 mt	255,255,255	255,255,255	255,255,255	1
-mt	255,127,0	255,255,255	255,127,0	1				0							materials/normal_maps/ceres_nm.xpm
-mt	0,255,0		255,255,255	0,255,0		0.2				0	0
+mt	255,127,0	255,255,255	255,127,0	1				materials/textures/checkerboard.xpm	materials/normal_maps/ceres_nm.xpm
+mt	0,255,0		255,255,255	0,255,0		0.2
 mt	255,255,0	255,255,255	255,255,0	1
 mt	0,0,255		255,255,255	0,0,255	1

@@ -27,7 +27,6 @@ A basic raytracer for 42 school project miniRT
 
 #### MISC
 - check angle of cone in parsing
-- merge kd and texture
 - cylinder and cone textures
 
 
