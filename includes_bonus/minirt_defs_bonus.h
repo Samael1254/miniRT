@@ -3,6 +3,7 @@
 
 # include "ft_algebra.h"
 # include "ft_list.h"
+# include <sys/time.h>
 
 /* MACROS */
 
@@ -168,6 +169,7 @@ typedef struct s_state
 	char			*id_list[3];
 	t_material		*mats_tab;
 	unsigned int	len_mats_tab;
+	struct timeval	start_time;
 }					t_state;
 
 #endif

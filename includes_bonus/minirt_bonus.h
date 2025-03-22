@@ -11,6 +11,11 @@ void			init_state(t_state *state, char *filename);
 void			init_scene(t_state *state, char *filename);
 int				insert_in_struct(t_state *state, char **split);
 
+// Time //
+
+struct timeval	get_time(t_state *state);
+long			get_time_diff(struct timeval time, struct timeval start_time);
+
 // Parsing
 
 // utils.c

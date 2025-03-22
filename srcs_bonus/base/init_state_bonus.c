@@ -40,4 +40,5 @@ void	init_state(t_state *state, char *filename)
 	initialize_state(state);
 	init_mlx(state);
 	init_scene(state, filename);
+	state->start_time = get_time(state);
 }
