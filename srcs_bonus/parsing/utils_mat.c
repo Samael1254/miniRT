@@ -19,7 +19,6 @@ void	get_normal_map_img(t_state *state, char *filename, t_material *mat)
 	n = ft_strchr(filename, '\n');
 	if (n)
 		*n = '\0';
-	printf("%s\n", filename);
 	mat->img_normal.img = mlx_xpm_file_to_image(state->display, filename,
 			&width, &height);
 	if (!mat->img_normal.img)

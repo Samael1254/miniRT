@@ -9,7 +9,7 @@ BONUS_HEADERS_DIR = includes_bonus/
 HEADERS = minirt.h minirt_defs.h
 HEADERS := $(addprefix $(HEADERS_DIR), $(HEADERS))
 
-BONUS_HEADERS = minirt_bonus.h minirt_defs_bonus.h
+BONUS_HEADERS = minirt_bonus.h minirt_defs_bonus.h minirt_obj_parser.h
 BONUS_HEADERS := $(addprefix $(BONUS_HEADERS_DIR), $(BONUS_HEADERS))
 
 SRCS_MAIN := main.c exit_program.c events.c init_state.c
@@ -48,7 +48,7 @@ BONUS_LIGHT := light_bonus.c phong_bonus.c
 
 BONUS_TEXTURING := uv_mapping_bonus.c
 
-BONUS_MESH := init_mesh_bonus.c utils_bonus.c parse_obj_element_bonus.c parse_obj_file_bonus.c
+BONUS_MESH := init_mesh_bonus.c mesh_utils_bonus.c parse_obj_element_bonus.c parse_obj_file_bonus.c
 
 BONUS := $(addprefix $(BONUS_DIR)base/, $(BONUS_MAIN)) \
            $(addprefix $(BONUS_DIR)parsing/, $(BONUS_PARSING)) \
@@ -57,7 +57,7 @@ BONUS := $(addprefix $(BONUS_DIR)base/, $(BONUS_MAIN)) \
            $(addprefix $(BONUS_DIR)raytracing/, $(BONUS_RAYTRACING)) \
            $(addprefix $(BONUS_DIR)light/, $(BONUS_LIGHT)) \
            $(addprefix $(BONUS_DIR)texturing/, $(BONUS_TEXTURING)) \
-           $(addprefix $(BONUS_DIR)mesh_parsing/, $(BONUS_MESH)) \
+           # $(addprefix $(BONUS_DIR)mesh_parsing/, $(BONUS_MESH)) \
 
 
 MANDATORY_OBJS := $(addprefix $(BUILD_DIR)mandatory/, $(notdir $(SOURCES:.c=.o)))

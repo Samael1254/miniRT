@@ -2,16 +2,18 @@
 #include "ft_math.h"
 #include "minirt_defs_bonus.h"
 #include <math.h>
-#include <stdio.h>
 
-static t_vector2d	sphere_mapping(t_sphere sphere, t_vector3d point, t_vector3d normal)
+static t_vector2d	sphere_mapping(t_sphere sphere, t_vector3d point,
+		t_vector3d normal)
 {
-	t_vector2d	uv;
+	t_vector2d		uv;
+	const double	offset_x = 0;
 
 	(void)sphere;
 	(void)point;
 	uv.x = 0.5 + (atan2(normal.z, -normal.x) / (2 * M_PI));
 	uv.y = 0.5 + (asin(-normal.y) / M_PI);
+	uv.x = fmod(uv.x + offset_x, 1.0f);
 	return (uv);
 }
 
@@ -26,7 +28,8 @@ static t_vector3d	get_reference_vector(t_vector3d normal)
 	return (r);
 }
 
-static t_vector2d	plane_mapping(t_plane plane, t_vector3d point, t_vector3d normal)
+static t_vector2d	plane_mapping(t_plane plane, t_vector3d point,
+		t_vector3d normal)
 {
 	t_vector3d	r;
 	t_vector3d	relp;
@@ -36,8 +39,7 @@ static t_vector2d	plane_mapping(t_plane plane, t_vector3d point, t_vector3d norm
 
 	r = get_reference_vector(normal);
 	tangent = ft_normalize_vector3d(ft_cross_vectors3d(r, normal));
-	bitangent = ft_normalize_vector3d(ft_cross_vectors3d(normal,
-				tangent));
+	bitangent = ft_normalize_vector3d(ft_cross_vectors3d(normal, tangent));
 	relp = ft_sub_vectors3d(point, plane.point);
 	uv.x = ft_dot_vectors3d(tangent, relp) / 32;
 	uv.y = -ft_dot_vectors3d(bitangent, relp) / 32;
