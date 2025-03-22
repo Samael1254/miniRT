@@ -48,6 +48,8 @@ BONUS_LIGHT := light_bonus.c phong_bonus.c
 
 BONUS_TEXTURING := uv_mapping_bonus.c
 
+BONUS_MESH := init_mesh_bonus.c utils_bonus.c parse_obj_element_bonus.c parse_obj_file_bonus.c
+
 BONUS := $(addprefix $(BONUS_DIR)base/, $(BONUS_MAIN)) \
            $(addprefix $(BONUS_DIR)parsing/, $(BONUS_PARSING)) \
            $(addprefix $(BONUS_DIR)graphics/, $(BONUS_GRAPHICS)) \
@@ -55,6 +57,7 @@ BONUS := $(addprefix $(BONUS_DIR)base/, $(BONUS_MAIN)) \
            $(addprefix $(BONUS_DIR)raytracing/, $(BONUS_RAYTRACING)) \
            $(addprefix $(BONUS_DIR)light/, $(BONUS_LIGHT)) \
            $(addprefix $(BONUS_DIR)texturing/, $(BONUS_TEXTURING)) \
+           $(addprefix $(BONUS_DIR)mesh_parsing/, $(BONUS_MESH)) \
 
 
 MANDATORY_OBJS := $(addprefix $(BUILD_DIR)mandatory/, $(notdir $(SOURCES:.c=.o)))
