@@ -12,7 +12,7 @@ A basic raytracer for 42 school project miniRT
 - Camera with modifiable parameters (position, orientation, field of view)
 - Scenes written in the dedicated .rt file format (see documentation.rt for more details)
 - Materials in .mrt files, able to load textures and normal maps from .xpm image files
-- Comes with a few pre-made scenes to select from
+- Comes with a few pre-made scenes, textures and materials to select from
 
 ### TODO MANDATORY
 
