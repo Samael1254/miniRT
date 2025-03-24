@@ -58,6 +58,8 @@ void			get_texture_map_img(t_state *state, char *filename,
 
 // Loops while waiting for events
 void			loop_events(t_state *state);
+void			modify_angle_step_size(t_state *state, char sign);
+void			modify_step_size(t_state *state, char sign);
 
 // Transform //
 

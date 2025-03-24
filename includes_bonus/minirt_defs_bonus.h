@@ -21,6 +21,16 @@ enum				e_event
 {
 	ON_KEYPRESS = 2,
 	ON_CLIENTMSG = 33,
+	W_KEY = 119,
+	A_KEY = 97,
+	S_KEY = 115,
+	D_KEY = 100,
+	Q_KEY = 113,
+	E_KEY = 101,
+	UP_ARROW_KEY = 65362,
+	DOWN_ARROW_KEY = 65364,
+	LEFT_ARROW_KEY = 65361,
+	RIGHT_ARROW_KEY = 65363,
 };
 
 // Keyboard codes
@@ -129,6 +139,8 @@ typedef struct s_camera
 	t_vector3d		x_axis;
 	t_vector3d		y_axis;
 	double			fov_2;
+	unsigned char	deplacement_step;
+	unsigned char	angle_step;
 }					t_camera;
 
 typedef struct s_object
