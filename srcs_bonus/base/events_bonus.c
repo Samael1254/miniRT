@@ -1,5 +1,6 @@
 #include "ft_algebra.h"
 #include "minirt_bonus.h"
+#include "minirt_defs_bonus.h"
 #include "mlx.h"
 #include <stdlib.h>
 
@@ -22,31 +23,41 @@ static void	recreate_image(t_state *state)
 		0);
 }
 
-static void	move_camera(t_state *state, t_camera *camera, char sign)
+static void	move_camera(t_state *state, t_camera *camera,
+		enum e_keycode keycode)
 {
-	if (sign == '+')
+	t_vector3d	lateral_axis;
+	t_vector3d	translator;
+
+	if (keycode == W_KEY)
+		translator = ft_scale_vector3d(camera->deplacement_step, camera->dir);
+	else if (keycode == S_KEY)
+		translator = ft_scale_vector3d(-camera->deplacement_step, camera->dir);
+	else if (keycode == A_KEY || keycode == D_KEY)
 	{
-		camera->pos.x += camera->dir.x * camera->deplacement_step;
-		camera->pos.y += camera->dir.y * camera->deplacement_step;
-		camera->pos.z += camera->dir.z * camera->deplacement_step;
-		recreate_image(state);
+		lateral_axis = ft_cross_vectors3d(ft_set_vector3d(0, 1, 0),
+				camera->dir);
+		if (keycode == D_KEY)
+			translator = ft_scale_vector3d(-camera->deplacement_step,
+					lateral_axis);
+		else
+			translator = ft_scale_vector3d(camera->deplacement_step,
+					lateral_axis);
 	}
-	else if (sign == '-')
-	{
-		camera->pos.x -= camera->dir.x * camera->deplacement_step;
-		camera->pos.y -= camera->dir.y * camera->deplacement_step;
-		camera->pos.z -= camera->dir.z * camera->deplacement_step;
-		recreate_image(state);
-	}
+	else
+		translator = ft_init_vector3d(0);
+	camera->pos = ft_add_vectors3d(camera->pos, translator);
+	recreate_image(state);
 }
 
-static void	rotate_camera(t_state *state, t_camera *camera, char sign)
+static void	rotate_camera(t_state *state, t_camera *camera,
+		enum e_keycode keycode)
 {
 	t_vector2d	rotator;
 
-	if (sign == '+')
+	if (keycode == Q_KEY)
 		rotator = ft_set_vector2d(0, ft_deg_to_rad(camera->angle_step));
-	else if (sign == '-')
+	else if (keycode == E_KEY)
 		rotator = ft_set_vector2d(0, -ft_deg_to_rad(camera->angle_step));
 	else
 		rotator = ft_init_vector2d(0);
@@ -68,14 +79,11 @@ static int	key_pressed(int keycode, t_state *state)
 		modify_angle_step_size(state, '+');
 	if (keycode == LEFT_ARROW_KEY)
 		modify_angle_step_size(state, '-');
-	if (keycode == W_KEY)
-		move_camera(state, &state->scene.camera, '+');
-	if (keycode == S_KEY)
-		move_camera(state, &state->scene.camera, '-');
-	if (keycode == Q_KEY)
-		rotate_camera(state, &state->scene.camera, '+');
-	if (keycode == E_KEY)
-		rotate_camera(state, &state->scene.camera, '-');
+	if (keycode == W_KEY || keycode == S_KEY || keycode == A_KEY
+		|| keycode == D_KEY)
+		move_camera(state, &state->scene.camera, keycode);
+	if (keycode == Q_KEY || keycode == E_KEY)
+		rotate_camera(state, &state->scene.camera, keycode);
 	return (1);
 }
 
