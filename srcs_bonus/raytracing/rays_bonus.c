@@ -2,6 +2,9 @@
 #include "minirt_bonus.h"
 #include "minirt_defs_bonus.h"
 #include <math.h>
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 static double	vertical_fov_2(double horizontal_fov_2)
 {
@@ -34,29 +37,51 @@ static void	trace_ray(t_vector2d rotator, t_ivector2d coords, t_state *state)
 	put_pixel(&state->img_data, coords, phong_illumination(state, inter, ray));
 }
 
-void	shoot_rays(t_state *state)
+static void	*thread_shoot_rays(void *arg)
 {
-	t_ivector2d	coords;
-	t_vector2d	angle_deltas;
-	double		v_fov_2;
-	t_vector2d	rotator;
+	t_thread_data	*data;
+	t_ivector2d		coords;
+	t_vector2d		delta;
+	t_vector2d		rotator;
 
-	v_fov_2 = vertical_fov_2(state->scene.camera.fov_2);
-	angle_deltas.y = 2 * state->scene.camera.fov_2 / WIN_X;
-	angle_deltas.x = 2 * v_fov_2 / WIN_Y;
-	rotator.x = v_fov_2;
-	coords.y = 0;
-	while (coords.y < WIN_Y)
+	data = (t_thread_data *)arg;
+	delta.y = 2 * data->state->scene.camera.fov_2 / WIN_X;
+	delta.x = 2 * vertical_fov_2(data->state->scene.camera.fov_2) / WIN_Y;
+	coords.y = data->start_y;
+	rotator.x = vertical_fov_2(data->state->scene.camera.fov_2)
+		- delta.x * data->start_y;
+	while (coords.y < data->end_y)
 	{
-		rotator.y = state->scene.camera.fov_2;
+		rotator.y = data->state->scene.camera.fov_2;
 		coords.x = 0;
 		while (coords.x < WIN_X)
 		{
-			trace_ray(rotator, coords, state);
-			rotator.y -= angle_deltas.y;
+			trace_ray(rotator, coords, data->state);
+			rotator.y -= delta.y;
 			coords.x++;
 		}
-		rotator.x -= angle_deltas.x;
+		rotator.x -= delta.x;
 		coords.y++;
 	}
+	return (NULL);
+}
+
+void	shoot_rays(t_state *state)
+{
+	pthread_t		threads[THREAD_COUNT];
+	t_thread_data	thread_data[THREAD_COUNT];
+	int				i;
+
+	i = 0;
+	while (i < THREAD_COUNT)
+	{
+		thread_data[i].start_y = i * (WIN_Y / THREAD_COUNT);
+		thread_data[i].end_y = (i + 1) * (WIN_Y / THREAD_COUNT);
+		thread_data[i].state = state;
+		pthread_create(&threads[i], NULL, thread_shoot_rays, &thread_data[i]);
+		i++;
+	}
+	i = 0;
+	while (i < THREAD_COUNT)
+		pthread_join(threads[i++], NULL);
 }

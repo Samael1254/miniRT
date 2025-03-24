@@ -8,6 +8,8 @@
 
 /* MACROS */
 
+#define THREAD_COUNT 32
+
 # define WIN_X 800
 # define WIN_Y 800
 
@@ -186,5 +188,11 @@ typedef struct s_state
 	unsigned int	len_mats_tab;
 	struct timeval	start_time;
 }					t_state;
+
+typedef struct s_thread_data {
+    int				start_y;
+    int				end_y;
+    t_state			*state;
+}					t_thread_data;
 
 #endif
