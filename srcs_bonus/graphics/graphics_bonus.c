@@ -19,7 +19,7 @@ static t_color	int_to_rgb(int colorint)
 	return (color);
 }
 
-static void	put_pixel(t_img_data *img, t_ivector2d coords, t_color color)
+void	put_pixel(t_img_data *img, t_ivector2d coords, t_color color)
 {
 	int		offset;
 	char	*mem_pos;

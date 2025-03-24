@@ -28,13 +28,13 @@ static t_vector3d	get_reference_vector(t_vector3d normal)
 	return (r);
 }
 
-static t_vector2d	cylinder_mapping(t_cylinder cylinder, t_vector3d normal)
-{
-	t_vector2d	uv;
-
-	uv.x = 0.5 + (atan2(normal.z, -normal.x) / (2 * M_PI));
-	uv.y = ;
-}
+// static t_vector2d	cylinder_mapping(t_cylinder cylinder, t_vector3d normal)
+// {
+// 	t_vector2d	uv;
+//
+// 	uv.x = 0.5 + (atan2(normal.z, -normal.x) / (2 * M_PI));
+// 	uv.y = ;
+// }
 
 static t_vector2d	plane_mapping(t_plane plane, t_vector3d point,
 		t_vector3d normal)

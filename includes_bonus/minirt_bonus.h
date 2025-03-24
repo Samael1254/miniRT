@@ -69,9 +69,7 @@ void			ray_tracing(t_state *state);
 
 // Rays //
 
-void			init_rays(t_camera camera, t_ray **rays);
-void			shoot_rays(t_ray **rays, t_state *state);
-t_color			shade_ray(t_intersection inter, t_state *state);
+void			shoot_rays(t_state *state);
 
 // Intersections //
 
@@ -103,6 +101,7 @@ t_color			absorb_colors(t_color color1, t_color color2);
 t_color			get_sky_color(t_ray ray);
 t_color			get_pixel_color(t_img_data texture, t_vector2d uv);
 void			render_scene(t_state *state, t_ray **rays);
+void			put_pixel(t_img_data *img, t_ivector2d coords, t_color color);
 
 // Check arguments //
 
