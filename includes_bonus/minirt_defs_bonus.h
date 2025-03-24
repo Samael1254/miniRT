@@ -21,6 +21,12 @@ enum				e_event
 {
 	ON_KEYPRESS = 2,
 	ON_CLIENTMSG = 33,
+};
+
+// Keyboard codes
+enum				e_keycode
+{
+	K_ESC = 0xff1b,
 	W_KEY = 119,
 	A_KEY = 97,
 	S_KEY = 115,
@@ -31,12 +37,6 @@ enum				e_event
 	DOWN_ARROW_KEY = 65364,
 	LEFT_ARROW_KEY = 65361,
 	RIGHT_ARROW_KEY = 65363,
-};
-
-// Keyboard codes
-enum				e_keycode
-{
-	K_ESC = 0xff1b,
 };
 
 enum				e_light
