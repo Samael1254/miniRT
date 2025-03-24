@@ -1,7 +1,6 @@
 #include "ft_algebra.h"
 #include "minirt_bonus.h"
 #include "minirt_defs_bonus.h"
-#include "mlx.h"
 #include <stdio.h>
 
 static int	rgb_to_int(t_color color)
@@ -47,23 +46,4 @@ t_color	get_pixel_color(t_img_data texture, t_vector2d uv)
 	offset = xy.y * texture.line_len + xy.x * (texture.bp_pixel) / 8;
 	color = *(unsigned int *)(texture.addr + offset);
 	return (int_to_rgb(color));
-}
-
-void	render_scene(t_state *state, t_ray **rays)
-{
-	t_ivector2d	coords;
-
-	coords.y = 0;
-	while (coords.y < WIN_Y)
-	{
-		coords.x = 0;
-		while (coords.x < WIN_X)
-		{
-			put_pixel(&state->img_data, coords, rays[coords.y][coords.x].color);
-			coords.x++;
-		}
-		coords.y++;
-	}
-	mlx_put_image_to_window(state->display, state->win, state->img_data.img, 0,
-		0);
 }

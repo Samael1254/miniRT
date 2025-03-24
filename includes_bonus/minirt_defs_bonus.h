@@ -3,6 +3,7 @@
 
 # include "ft_algebra.h"
 # include "ft_list.h"
+# include <stdint.h>
 # include <sys/time.h>
 
 /* MACROS */
@@ -71,12 +72,14 @@ typedef struct s_material
 	t_img_data		img_texture;
 	t_img_data		img_normal;
 }					t_material;
+# include "minirt_obj_parser.h"
 
 typedef struct s_triangle
 {
-	t_vector3d		a;
-	t_vector3d		b;
-	t_vector3d		c;
+	t_mesh			*mesh;
+	int				vertices[3];
+	int				normals[3];
+	int				uvs[3];
 }					t_triangle;
 
 typedef struct s_cone

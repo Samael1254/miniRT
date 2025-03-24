@@ -24,14 +24,22 @@ static t_ray	init_ray(t_camera camera, t_vector2d rotator)
 	return (ray);
 }
 
+static void	trace_ray(t_vector2d rotator, t_ivector2d coords, t_state *state)
+{
+	t_ray			ray;
+	t_intersection	inter;
+
+	ray = init_ray(state->scene.camera, rotator);
+	inter = intersect_scene(ray, state);
+	put_pixel(&state->img_data, coords, phong_illumination(state, inter, ray));
+}
+
 void	shoot_rays(t_state *state)
 {
-	t_ivector2d		coords;
-	t_intersection	inter;
-	t_vector2d		angle_deltas;
-	double			v_fov_2;
-	t_vector2d		rotator;
-	t_ray			ray;
+	t_ivector2d	coords;
+	t_vector2d	angle_deltas;
+	double		v_fov_2;
+	t_vector2d	rotator;
 
 	v_fov_2 = vertical_fov_2(state->scene.camera.fov_2);
 	angle_deltas.y = 2 * state->scene.camera.fov_2 / WIN_X;
@@ -44,10 +52,7 @@ void	shoot_rays(t_state *state)
 		coords.x = 0;
 		while (coords.x < WIN_X)
 		{
-			ray = init_ray(state->scene.camera, rotator);
-			inter = intersect_scene(ray, state);
-			put_pixel(&state->img_data, coords, phong_illumination(state, inter,
-					ray));
+			trace_ray(rotator, coords, state);
 			rotator.y -= angle_deltas.y;
 			coords.x++;
 		}
