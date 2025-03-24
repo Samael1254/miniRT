@@ -8,7 +8,7 @@
 
 /* MACROS */
 
-#define THREAD_COUNT sysconf(_SC_NPROCESSORS_ONLN)
+# define THREAD_COUNT sysconf(_SC_NPROCESSORS_ONLN)
 
 # define WIN_X 800
 # define WIN_Y 800
@@ -35,6 +35,10 @@ enum				e_keycode
 	D_KEY = 100,
 	Q_KEY = 113,
 	E_KEY = 101,
+	I_KEY = 0x069,
+	J_KEY = 0x06a,
+	K_KEY = 0x06b,
+	L_KEY = 0x06c,
 	UP_ARROW_KEY = 65362,
 	DOWN_ARROW_KEY = 65364,
 	LEFT_ARROW_KEY = 65361,

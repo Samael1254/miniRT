@@ -69,9 +69,9 @@ static void	rotate_camera(t_state *state, t_camera *camera,
 {
 	t_vector2d	rotator;
 
-	if (keycode == Q_KEY)
+	if (keycode == J_KEY)
 		rotator = ft_set_vector2d(0, ft_deg_to_rad(camera->angle_step));
-	else if (keycode == E_KEY)
+	else if (keycode == L_KEY)
 		rotator = ft_set_vector2d(0, -ft_deg_to_rad(camera->angle_step));
 	else
 		rotator = ft_init_vector2d(0);
@@ -96,7 +96,7 @@ static int	key_pressed(int keycode, t_state *state)
 	if (keycode == W_KEY || keycode == S_KEY || keycode == A_KEY
 		|| keycode == D_KEY)
 		move_camera(state, &state->scene.camera, keycode);
-	if (keycode == Q_KEY || keycode == E_KEY)
+	if (keycode == J_KEY || keycode == L_KEY)
 		rotate_camera(state, &state->scene.camera, keycode);
 	if (keycode == H_KEY)
 		display_help(state);
