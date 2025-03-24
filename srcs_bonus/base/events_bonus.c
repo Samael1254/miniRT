@@ -1,3 +1,4 @@
+#include "ft_algebra.h"
 #include "minirt_bonus.h"
 #include "mlx.h"
 #include <stdlib.h>
@@ -41,19 +42,18 @@ static void	move_camera(t_state *state, t_camera *camera, char sign)
 
 static void	rotate_camera(t_state *state, t_camera *camera, char sign)
 {
-	double	rad;
+	t_vector2d	rotator;
 
-	rad = ft_deg_to_rad(camera->angle_step);
 	if (sign == '+')
-	{
-		camera->dir = ft_4dto3d_vector(ft_rotate_vector4d(ft_3dto4d_vector(camera->dir), ft_set_vector3d(0, rad, 0)));
-		recreate_image(state);
-	}
+		rotator = ft_set_vector2d(0, ft_deg_to_rad(camera->angle_step));
 	else if (sign == '-')
-	{
-		camera->dir = ft_4dto3d_vector(ft_rotate_vector4d(ft_3dto4d_vector(camera->dir), ft_set_vector3d(0, -rad, 0)));
-		recreate_image(state);
-	}
+		rotator = ft_set_vector2d(0, -ft_deg_to_rad(camera->angle_step));
+	else
+		rotator = ft_init_vector2d(0);
+	camera->dir = ft_rotate_vector3d(camera->dir, rotator);
+	camera->x_axis = ft_rotate_vector3d(camera->x_axis, rotator);
+	camera->y_axis = ft_rotate_vector3d(camera->y_axis, rotator);
+	recreate_image(state);
 }
 
 static int	key_pressed(int keycode, t_state *state)

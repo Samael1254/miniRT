@@ -7,12 +7,13 @@ A basic raytracer for 42 school project miniRT
 - Colored diffuse, ambiant and specular lighting from multiple point sources
 - Basic shapes, from the outside as well as inside : plane, sphere, cylinder, cone
 - Basic shading : hard shadows, incidence and distance attenuation
-- Texturing and normal mapping available for spheres and planes
+- Texturing and normal mapping available for all shapes
 - A background sky with a gradient of two colors
-- Camera with modifiable parameters (position, orientation, field of view)
+- Camera with modifiable parameters (position, orientation, field of view), and movement/rotation in real time
 - Scenes written in the dedicated .rt file format (see documentation.rt for more details)
-- Materials in .mrt files, able to load textures and normal maps from .xpm image files
+- Materials in .mrt files, able to load textures and normal maps from .xpm image files (see documentation.mrt for more details)
 - Comes with a few pre-made scenes, textures and materials to select from
+
 
 ### TODO MANDATORY
 
@@ -27,18 +28,17 @@ A basic raytracer for 42 school project miniRT
 
 #### MISC
 - check angle of cone in parsing
-- cylinder and cone textures
 
 
 ### TODO ULTIMATE
 
 #### SHAPES
-- Triangle
-- Box
+- Triangle intersection
+- Box intersection
 
 #### PARSING
-- .obj parser and triangle converter
 - Add a sky object with two colors to change the sky color
+- Set the texture scaling in the .mrt file
 
 #### GRAPHICS
 - Anti aliasing
