@@ -1,6 +1,6 @@
 ## MINIRT
 
-A basic raytracer for 42 school project miniRT
+A basic multithreaded raytracer for 42 school project miniRT
 
 ### FEATURES
 

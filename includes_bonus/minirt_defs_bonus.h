@@ -8,7 +8,7 @@
 
 /* MACROS */
 
-#define THREAD_COUNT 32
+# define THREAD_COUNT 32
 
 # define WIN_X 800
 # define WIN_Y 800
@@ -28,7 +28,7 @@ enum				e_event
 // Keyboard codes
 enum				e_keycode
 {
-	K_ESC = 0xff1b,
+	ESC_KEY = 0xff1b,
 	W_KEY = 119,
 	A_KEY = 97,
 	S_KEY = 115,
@@ -39,6 +39,7 @@ enum				e_keycode
 	DOWN_ARROW_KEY = 65364,
 	LEFT_ARROW_KEY = 65361,
 	RIGHT_ARROW_KEY = 65363,
+	H_KEY = 0x0068,
 };
 
 enum				e_light
@@ -189,10 +190,11 @@ typedef struct s_state
 	struct timeval	start_time;
 }					t_state;
 
-typedef struct s_thread_data {
-    int				start_y;
-    int				end_y;
-    t_state			*state;
+typedef struct s_thread_data
+{
+	int				start_y;
+	int				end_y;
+	t_state			*state;
 }					t_thread_data;
 
 #endif

@@ -23,6 +23,20 @@ static void	recreate_image(t_state *state)
 		0);
 }
 
+int	display_help(t_state *state)
+{
+	mlx_string_put(state->display, state->win, 20, 20, 0xFFFFFF, "-- HELP --");
+	mlx_string_put(state->display, state->win, 20, 40, 0xFFFFFF, "Move: WASD");
+	mlx_string_put(state->display, state->win, 20, 55, 0xFFFFFF, "Rotate: QE");
+	mlx_string_put(state->display, state->win, 20, 70, 0xFFFFFF,
+		"Change movement speed: UP/DOWN");
+	mlx_string_put(state->display, state->win, 20, 85, 0xFFFFFF,
+		"Change rotation speed: LEFT/RIGHT");
+	mlx_string_put(state->display, state->win, 20, 100, 0xFFFFFF,
+		"Exit program: ESC");
+	return (0);
+}
+
 static void	move_camera(t_state *state, t_camera *camera,
 		enum e_keycode keycode)
 {
@@ -69,7 +83,7 @@ static void	rotate_camera(t_state *state, t_camera *camera,
 
 static int	key_pressed(int keycode, t_state *state)
 {
-	if (keycode == K_ESC)
+	if (keycode == ESC_KEY)
 		exit_program(state, EXIT_SUCCESS);
 	if (keycode == UP_ARROW_KEY)
 		modify_step_size(state, '+');
@@ -84,6 +98,8 @@ static int	key_pressed(int keycode, t_state *state)
 		move_camera(state, &state->scene.camera, keycode);
 	if (keycode == Q_KEY || keycode == E_KEY)
 		rotate_camera(state, &state->scene.camera, keycode);
+	if (keycode == H_KEY)
+		display_help(state);
 	return (1);
 }
 
