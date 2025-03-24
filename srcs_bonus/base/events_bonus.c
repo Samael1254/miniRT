@@ -23,7 +23,7 @@ static void	recreate_image(t_state *state)
 		0);
 }
 
-int	display_help(t_state *state)
+static int	display_help(t_state *state)
 {
 	mlx_string_put(state->display, state->win, 20, 20, 0xFFFFFF, "-- HELP --");
 	mlx_string_put(state->display, state->win, 20, 40, 0xFFFFFF, "Move: WASD");
@@ -73,11 +73,20 @@ static void	rotate_camera(t_state *state, t_camera *camera,
 		rotator = ft_set_vector2d(0, ft_deg_to_rad(camera->angle_step));
 	else if (keycode == L_KEY)
 		rotator = ft_set_vector2d(0, -ft_deg_to_rad(camera->angle_step));
+	else if (keycode == I_KEY)
+		rotator = ft_set_vector2d(-ft_deg_to_rad(camera->angle_step), 0);
+	else if (keycode == K_KEY)
+		rotator = ft_set_vector2d(ft_deg_to_rad(camera->angle_step), 0);
 	else
 		rotator = ft_init_vector2d(0);
 	camera->dir = ft_rotate_vector3d(camera->dir, rotator);
-	camera->x_axis = ft_rotate_vector3d(camera->x_axis, rotator);
-	camera->y_axis = ft_rotate_vector3d(camera->y_axis, rotator);
+	if (keycode == J_KEY || keycode == L_KEY)
+	{
+		camera->x_axis = ft_rotate_vector3d(camera->x_axis, rotator);
+		camera->y_axis = ft_rotate_vector3d(camera->y_axis, rotator);
+	}
+	camera->dir = ft_normalize_vector3d(camera->dir);
+	// TODO: revoir avec Guillaume, bizarre quand on se decalle et tourne la camera
 	recreate_image(state);
 }
 
@@ -96,7 +105,8 @@ static int	key_pressed(int keycode, t_state *state)
 	if (keycode == W_KEY || keycode == S_KEY || keycode == A_KEY
 		|| keycode == D_KEY)
 		move_camera(state, &state->scene.camera, keycode);
-	if (keycode == J_KEY || keycode == L_KEY)
+	if (keycode == J_KEY || keycode == L_KEY || keycode == I_KEY
+		|| keycode == K_KEY)
 		rotate_camera(state, &state->scene.camera, keycode);
 	if (keycode == H_KEY)
 		display_help(state);
