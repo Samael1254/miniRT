@@ -5,6 +5,7 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 static double	vertical_fov_2(double horizontal_fov_2)
 {

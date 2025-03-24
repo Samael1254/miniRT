@@ -8,7 +8,7 @@
 
 /* MACROS */
 
-# define THREAD_COUNT 32
+#define THREAD_COUNT sysconf(_SC_NPROCESSORS_ONLN)
 
 # define WIN_X 800
 # define WIN_Y 800
