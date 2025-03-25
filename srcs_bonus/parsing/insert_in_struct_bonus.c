@@ -52,8 +52,8 @@ static void	add_camera(t_state *state, char **split)
 		error("parsing", "error of the camera fov", state);
 	}
 	state->scene.camera.fov_2 = ft_deg_to_rad(fov_2);
-	state->scene.camera.deplacement_step = 5;
-	state->scene.camera.angle_step = 15;
+	state->scene.camera.move_step = 5;
+	state->scene.camera.rot_step = 15;
 }
 
 void	add_light(t_state *state, char **split)

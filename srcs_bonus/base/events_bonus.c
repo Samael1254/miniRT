@@ -37,29 +37,23 @@ static int	display_help(t_state *state)
 	return (0);
 }
 
-static void	move_camera(t_state *state, t_camera *camera,
-		enum e_keycode keycode)
+static void	move_camera(t_state *state, t_camera *camera, enum e_keycode key)
 {
-	t_vector3d	lateral_axis;
 	t_vector3d	translator;
+	t_vector3d	axis;
+	short		sign;
 
-	if (keycode == W_KEY)
-		translator = ft_scale_vector3d(camera->deplacement_step, camera->dir);
-	else if (keycode == S_KEY)
-		translator = ft_scale_vector3d(-camera->deplacement_step, camera->dir);
-	else if (keycode == A_KEY || keycode == D_KEY)
-	{
-		lateral_axis = ft_cross_vectors3d(ft_set_vector3d(0, 1, 0),
-				camera->dir);
-		if (keycode == D_KEY)
-			translator = ft_scale_vector3d(-camera->deplacement_step,
-					lateral_axis);
-		else
-			translator = ft_scale_vector3d(camera->deplacement_step,
-					lateral_axis);
-	}
-	else
-		translator = ft_init_vector3d(0);
+	axis = ft_init_vector3d(0);
+	sign = 1;
+	if (key == W_KEY || key == S_KEY)
+		axis = camera->dir;
+	else if (key == A_KEY || key == D_KEY)
+		axis = ft_cross_vectors3d(ft_set_vector3d(0, 1, 0), camera->dir);
+	else if (key == Q_KEY || key == E_KEY)
+		axis = ft_set_vector3d(0, 1, 0);
+	if (key == S_KEY || key == D_KEY || key == E_KEY)
+		sign = -1;
+	translator = ft_scale_vector3d(sign * camera->move_step, axis);
 	camera->pos = ft_add_vectors3d(camera->pos, translator);
 	recreate_image(state);
 }
@@ -67,48 +61,44 @@ static void	move_camera(t_state *state, t_camera *camera,
 static void	rotate_camera(t_state *state, t_camera *camera,
 		enum e_keycode keycode)
 {
-	t_vector2d	rotator;
+	double	angle;
+	double	m_rot[4][4];
 
-	if (keycode == J_KEY)
-		rotator = ft_set_vector2d(0, ft_deg_to_rad(camera->angle_step));
-	else if (keycode == L_KEY)
-		rotator = ft_set_vector2d(0, -ft_deg_to_rad(camera->angle_step));
-	else if (keycode == I_KEY)
-		rotator = ft_set_vector2d(-ft_deg_to_rad(camera->angle_step), 0);
-	else if (keycode == K_KEY)
-		rotator = ft_set_vector2d(ft_deg_to_rad(camera->angle_step), 0);
-	else
-		rotator = ft_init_vector2d(0);
-	camera->dir = ft_rotate_vector3d(camera->dir, rotator);
+	angle = ft_deg_to_rad(camera->rot_step);
+	if (keycode == L_KEY || keycode == K_KEY)
+		angle *= -1;
 	if (keycode == J_KEY || keycode == L_KEY)
-	{
-		camera->x_axis = ft_rotate_vector3d(camera->x_axis, rotator);
-		camera->y_axis = ft_rotate_vector3d(camera->y_axis, rotator);
-	}
-	camera->dir = ft_normalize_vector3d(camera->dir);
-	// TODO: revoir avec Guillaume, bizarre quand on se decalle et tourne la camera
+		ft_set_base_rotation_matrix4d(m_rot, angle, Y_AXIS);
+	else if (keycode == I_KEY || keycode == K_KEY)
+		ft_set_rotation_matrix4d(m_rot, angle, camera->x_axis);
+	camera->dir = ft_4dto3d_vector(ft_matrix_vector_product4d(m_rot,
+				ft_3dto4d_vector(camera->dir)));
+	if (keycode == J_KEY || keycode == L_KEY)
+		camera->x_axis = ft_4dto3d_vector(ft_matrix_vector_product4d(m_rot,
+					ft_3dto4d_vector(camera->x_axis)));
+	camera->y_axis = ft_4dto3d_vector(ft_matrix_vector_product4d(m_rot,
+				ft_3dto4d_vector(camera->y_axis)));
 	recreate_image(state);
 }
 
-static int	key_pressed(int keycode, t_state *state)
+static int	key_pressed(enum e_keycode key, t_state *state)
 {
-	if (keycode == ESC_KEY)
+	if (key == ESC_KEY)
 		exit_program(state, EXIT_SUCCESS);
-	if (keycode == UP_ARROW_KEY)
+	if (key == UP_ARROW_KEY)
 		modify_step_size(state, '+');
-	if (keycode == DOWN_ARROW_KEY)
+	if (key == DOWN_ARROW_KEY)
 		modify_step_size(state, '-');
-	if (keycode == RIGHT_ARROW_KEY)
-		modify_angle_step_size(state, '+');
-	if (keycode == LEFT_ARROW_KEY)
-		modify_angle_step_size(state, '-');
-	if (keycode == W_KEY || keycode == S_KEY || keycode == A_KEY
-		|| keycode == D_KEY)
-		move_camera(state, &state->scene.camera, keycode);
-	if (keycode == J_KEY || keycode == L_KEY || keycode == I_KEY
-		|| keycode == K_KEY)
-		rotate_camera(state, &state->scene.camera, keycode);
-	if (keycode == H_KEY)
+	if (key == RIGHT_ARROW_KEY)
+		modify_rot_step_size(state, '+');
+	if (key == LEFT_ARROW_KEY)
+		modify_rot_step_size(state, '-');
+	if (key == W_KEY || key == S_KEY || key == A_KEY || key == D_KEY
+		|| key == Q_KEY || key == E_KEY)
+		move_camera(state, &state->scene.camera, key);
+	if (key == J_KEY || key == L_KEY || key == I_KEY || key == K_KEY)
+		rotate_camera(state, &state->scene.camera, key);
+	if (key == H_KEY)
 		display_help(state);
 	return (1);
 }

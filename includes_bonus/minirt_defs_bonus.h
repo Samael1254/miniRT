@@ -146,8 +146,8 @@ typedef struct s_camera
 	t_vector3d		x_axis;
 	t_vector3d		y_axis;
 	double			fov_2;
-	unsigned char	deplacement_step;
-	unsigned char	angle_step;
+	unsigned char	move_step;
+	unsigned char	rot_step;
 }					t_camera;
 
 typedef struct s_object
