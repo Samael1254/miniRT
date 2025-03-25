@@ -20,20 +20,41 @@ static double	closest_root(double root1, double root2)
 	return (ft_minf(root1, root2));
 }
 
-// double	intersect_triangle(t_ray ray, t_triangle triangle)
-// {
-// 	t_vector3d	ab;
-// 	t_vector3d	ac;
-// 	t_vector3d	n;
-// 	double		d;
-//
-// 	ab = ft_sub_vectors3d(triangle.b, triangle.a);
-// 	ac = ft_sub_vectors3d(triangle.c, triangle.a);
-// 	n = ft_cross_vectors3d(ab, ac);
-// 	d = ft_dot_vectors3d(ray.direction, n);
-// 	if (ft_equalf(d, 0))
-// 		return (INFINITY);
-// }
+double	triangle_distance(double d, t_ray ray, t_vector3d vectors[3],
+		t_vector3d a)
+{
+	double		params[2];
+	t_vector3d	ao;
+	t_vector3d	cross;
+
+	d = 1 / d;
+	ao = ft_sub_vectors3d(ray.origin, a);
+	cross = ft_cross_vectors3d(ray.direction, ao);
+	params[0] = d * ft_dot_vectors3d(vectors[1], cross);
+	params[1] = -d * ft_dot_vectors3d(vectors[0], cross);
+	if (ft_inff(params[0], 0) || ft_inff(params[1], 0) || ft_supf(params[0]
+			+ params[1], 1))
+		return (INFINITY);
+	return (d * ft_dot_vectors3d(ao, vectors[2]));
+}
+
+double	intersect_triangle(t_ray ray, t_triangle triangle)
+{
+	t_vector3d	vertices[3];
+	t_vector3d	vectors[3];
+	double		d;
+
+	vertices[0] = triangle.mesh->vertices[triangle.vertices[0]];
+	vertices[1] = triangle.mesh->vertices[triangle.vertices[1]];
+	vertices[2] = triangle.mesh->vertices[triangle.vertices[2]];
+	vectors[0] = ft_sub_vectors3d(vertices[1], vertices[0]);
+	vectors[1] = ft_sub_vectors3d(vertices[2], vertices[0]);
+	vectors[2] = ft_cross_vectors3d(vectors[0], vectors[1]);
+	d = ft_dot_vectors3d(ray.direction, vectors[2]);
+	if (ft_equalf(d, 0))
+		return (INFINITY);
+	return (triangle_distance(d, ray, vectors, vertices[0]));
+}
 
 double	cone_delta(double params[3], t_vector3d co, t_ray ray, t_cone cone)
 {

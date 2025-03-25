@@ -11,8 +11,8 @@ A basic multithreaded raytracer for 42 school project miniRT
 - Texturing and normal mapping available for all shapes
 - A background sky with a gradient of two colors
 - Camera with modifiable parameters (position, orientation, field of view)
-- The user can move and rotate the camera around in real time to get different views of the scene without changing the camera configuration in the scene file
-- Scenes written in the dedicated .rt file format (see documentation.rt for more details)
+- The user can move and rotate the camera around in real time to get different views of the scene
+- Scenes configured in the dedicated .rt file format (see documentation.rt for more details)
 - Materials in .mrt files, able to load textures and normal maps from .xpm image files (see documentation.mrt for more details)
 - Comes with a few pre-made scenes, textures and materials to select from
 
@@ -53,13 +53,10 @@ The following keybindings allow the user to interact with miniRT:
 - Triangle intersection
 - Box intersection
 
-#### CAMERA MOVEMENT
-- Up/down movement
-- Up/down rotation
-
 #### PARSING
 - Add a sky object with two colors to change the sky color
 - Set the texture scaling in the .mrt file
+- Set the texture repetition in the .mrt file
 
 #### GRAPHICS
 - Anti aliasing
@@ -78,9 +75,12 @@ The following keybindings allow the user to interact with miniRT:
 
 #### MATERIALS
 - Transparent textures
+- Non-repetitive textures
 - Transparent materials
 - Emissive materials
 
 #### BUGS
 - uv mapping inside a sphere is upside down
 - cylinder base disapears when in axis
+- normal map issues and inverting (see moon)
+- abnormal deformation up and down the screen
