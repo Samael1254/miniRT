@@ -26,6 +26,8 @@ The following keybindings allow the user to interact with miniRT:
 - Exit program : Escape
 - Move horizontally : WASD
 - Rotate horizontally : JL
+- Move up/down : QE
+- Rotate up/down : IK
 - Change movement speed : Up/Down arrows
 - Change rotation speed : Left/Right arrows
 

@@ -26,8 +26,10 @@ static void	recreate_image(t_state *state)
 static int	display_help(t_state *state)
 {
 	mlx_string_put(state->display, state->win, 20, 20, 0xFFFFFF, "-- HELP --");
-	mlx_string_put(state->display, state->win, 20, 40, 0xFFFFFF, "Move: WASD");
-	mlx_string_put(state->display, state->win, 20, 55, 0xFFFFFF, "Rotate: QE");
+	mlx_string_put(state->display, state->win, 20, 40, 0xFFFFFF,
+		"Move: WASDQE");
+	mlx_string_put(state->display, state->win, 20, 55, 0xFFFFFF,
+		"Rotate: JLIK");
 	mlx_string_put(state->display, state->win, 20, 70, 0xFFFFFF,
 		"Change movement speed: UP/DOWN");
 	mlx_string_put(state->display, state->win, 20, 85, 0xFFFFFF,
