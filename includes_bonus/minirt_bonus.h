@@ -89,6 +89,9 @@ t_vector3d		blend_normal_map(t_vector2d uv, t_vector3d normal,
 t_vector2d		uv_at_point(t_object object, t_vector3d point,
 					t_vector3d normal);
 
+t_vector3d		get_reference_vector(t_vector3d normal);
+t_vector2d		clamp_uv(t_vector2d uv);
+
 // Light //
 
 t_color			phong_illumination(t_state *state, t_intersection inter,
