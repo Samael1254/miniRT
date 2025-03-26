@@ -58,6 +58,7 @@ enum				e_object
 	PLANE,
 	CYLINDER,
 	CONE,
+	MESH,
 };
 
 /* STRUCTS */
@@ -89,7 +90,25 @@ typedef struct s_material
 	t_img_data		img_texture;
 	t_img_data		img_normal;
 }					t_material;
-# include "minirt_obj_parser.h"
+
+typedef struct vertex
+{
+	int				geo_id;
+	int				text_id;
+	int				norm_id;
+}					t_vertex;
+
+typedef struct s_mesh
+{
+	t_vector3d		*vertices;
+	int				n_vertices;
+	t_vector3d		*normals;
+	int				n_normals;
+	t_vector3d		*uvs;
+	int				n_uvs;
+	t_vertex		**faces;
+	int				n_faces;
+}					t_mesh;
 
 typedef struct s_triangle
 {
@@ -159,8 +178,8 @@ typedef struct s_object
 
 typedef struct s_sky
 {
-	t_color	top;
-	t_color	bottom;
+	t_color			top;
+	t_color			bottom;
 }					t_sky;
 
 typedef struct s_scene

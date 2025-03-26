@@ -79,10 +79,11 @@ double			intersect_sphere(t_ray ray, t_sphere sphere);
 double			intersect_plane(t_ray ray, t_plane plane);
 double			intersect_cylinder(t_ray ray, t_cylinder cylinder);
 double			intersect_cone(t_ray ray, t_cone cone);
+double			intersect_mesh(t_ray ray, t_mesh *mesh);
 t_intersection	intersect_scene(t_ray ray, t_state *state);
 
 t_vector3d		normal_at_point(t_object object, t_intersection inter,
-					t_vector3d ray_dir, t_state *state);
+					t_vector3d ray_dir);
 t_vector3d		blend_normal_map(t_vector2d uv, t_vector3d normal,
 					t_material material);
 
@@ -91,6 +92,8 @@ t_vector2d		uv_at_point(t_object object, t_vector3d point,
 
 t_vector3d		get_reference_vector(t_vector3d normal);
 t_vector2d		clamp_uv(t_vector2d uv);
+t_vector3d		interpolate_triangle_data3d(t_vector3d vertices[3],
+					t_vector3d point, t_vector3d data[3]);
 
 // Light //
 

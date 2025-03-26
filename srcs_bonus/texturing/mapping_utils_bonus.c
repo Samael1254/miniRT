@@ -23,3 +23,38 @@ t_vector2d	clamp_uv(t_vector2d uv)
 		uv.y = 1 + uv.y;
 	return (uv);
 }
+
+static t_vector3d	cartesian_to_barycentric3d(t_vector3d vertices[3],
+		t_vector3d point)
+{
+	t_vector3d	bary;
+	double		areas[3];
+	t_vector3d	edges[2];
+	t_vector3d	vectors[3];
+
+	edges[0] = ft_sub_vectors3d(vertices[1], vertices[0]);
+	edges[1] = ft_sub_vectors3d(vertices[2], vertices[0]);
+	vectors[0] = ft_sub_vectors3d(vertices[0], point);
+	vectors[1] = ft_sub_vectors3d(vertices[1], point);
+	vectors[2] = ft_sub_vectors3d(vertices[2], point);
+	areas[0] = ft_vector3d_norm(ft_cross_vectors3d(edges[0], edges[1]));
+	areas[1] = ft_vector3d_norm(ft_cross_vectors3d(vectors[1], vectors[2]));
+	areas[0] = ft_vector3d_norm(ft_cross_vectors3d(vectors[2], vectors[0]));
+	bary.x = areas[1] / areas[0];
+	bary.y = areas[2] / areas[0];
+	bary.z = 1 - bary.x - bary.y;
+	return (bary);
+}
+
+t_vector3d	interpolate_triangle_data3d(t_vector3d vertices[3],
+		t_vector3d point, t_vector3d data[3])
+{
+	t_vector3d	bary;
+	t_vector3d	lerp;
+
+	bary = cartesian_to_barycentric3d(vertices, point);
+	lerp.x = bary.x * data[0].x + bary.y * data[1].x + bary.z * data[2].x;
+	lerp.y = bary.x * data[0].y + bary.y * data[1].y + bary.z * data[2].y;
+	lerp.z = bary.x * data[0].z + bary.y * data[1].z + bary.z * data[2].z;
+	return (lerp);
+}

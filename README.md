@@ -57,6 +57,7 @@ The following keybindings allow the user to interact with miniRT:
 - Add a sky object with two colors to change the sky color
 - Set the texture scaling in the .mrt file
 - Set the texture repetition in the .mrt file
+- Fix obj aprsing for uvs
 
 #### GRAPHICS
 - Anti aliasing
