@@ -157,11 +157,18 @@ typedef struct s_object
 	void			*object_r;
 }					t_object;
 
+typedef struct s_sky
+{
+	t_color	top;
+	t_color	bottom;
+}					t_sky;
+
 typedef struct s_scene
 {
 	t_ambiant_light	a_light;
 	t_camera		camera;
 	t_point_light	p_light;
+	t_sky			sky;
 	t_list			*lights;
 	t_list			*objects;
 }					t_scene;
@@ -188,7 +195,7 @@ typedef struct s_state
 	void			*win;
 	t_img_data		img_data;
 	t_scene			scene;
-	char			*id_list[3];
+	char			*id_list[4];
 	t_material		*mats_tab;
 	unsigned int	len_mats_tab;
 	struct timeval	start_time;

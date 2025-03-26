@@ -81,6 +81,19 @@ void	add_light(t_state *state, char **split)
 	state->scene.p_light.color = color;
 }
 
+static void	add_sky(t_state *state, char **split)
+{
+	bool	has_error;
+
+	state->scene.sky.bottom = get_color(split[2], &has_error);
+	state->scene.sky.top = get_color(split[1], &has_error);
+	if (has_error == true)
+	{
+		ft_free_strtab(split);
+		error("wrong parameter value", "sky must be valid colors.", state);
+	}
+}
+
 int	insert_in_struct(t_state *state, char **split)
 {
 	if (!*split)
@@ -91,6 +104,8 @@ int	insert_in_struct(t_state *state, char **split)
 		return (add_camera(state, split), 2);
 	else if (!ft_strncmp(split[0], "L", ft_strlen(split[0])))
 		return (add_lights_to_list(state, split), 2);
+	else if (!ft_strncmp(split[0], "SKY", ft_strlen(split[0])))
+		return (add_sky(state, split), 2);
 	else if (!ft_strncmp(split[0], "sp", ft_strlen(split[0])))
 		add_object_to_list(state, split);
 	else if (!ft_strncmp(split[0], "pl", ft_strlen(split[0])))
@@ -102,8 +117,7 @@ int	insert_in_struct(t_state *state, char **split)
 	else if (ft_strcmp(split[0], "\n") && ft_strncmp(split[0], "MT", 2))
 	{
 		split[0][ft_strlen(split[0])] = '\0';
-		warning("no such object type", split[0]);
-		return (1);
+		return (warning("no such object type", split[0]), 1);
 	}
 	return (0);
 }

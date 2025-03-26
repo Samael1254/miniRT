@@ -103,7 +103,7 @@ t_color			add_colors(t_color color1, t_color color2);
 t_color			scale_color(t_color color, double lambda);
 t_color			init_color(unsigned char r, unsigned char g, unsigned char b);
 t_color			absorb_colors(t_color color1, t_color color2);
-t_color			get_sky_color(t_ray ray);
+t_color			get_sky_color(t_sky sky, t_ray ray);
 t_color			get_pixel_color(t_img_data texture, t_vector2d uv);
 void			render_scene(t_state *state, t_ray **rays);
 void			put_pixel(t_img_data *img, t_ivector2d coords, t_color color);

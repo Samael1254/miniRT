@@ -57,12 +57,10 @@ t_color	init_color(unsigned char r, unsigned char g, unsigned char b)
 	return (color);
 }
 
-t_color	get_sky_color(t_ray ray)
+t_color	get_sky_color(t_sky sky, t_ray ray)
 {
-	t_color			sky_color;
-	const t_color	color1 = {255, 174, 69};
-	const t_color	color2 = {42, 162, 242};
+	t_color	sky_color;
 
-	sky_color = lerp_colors(color1, color2, (ray.direction.y + 1) / 2);
+	sky_color = lerp_colors(sky.bottom, sky.top, (ray.direction.y + 1) / 2);
 	return (sky_color);
 }

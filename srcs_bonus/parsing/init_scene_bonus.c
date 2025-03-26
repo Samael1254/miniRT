@@ -13,16 +13,16 @@ static void	append_to_idlist(t_state *state, char **split, int *i)
 	int	j;
 
 	j = 0;
-	while (j < 3 && state->id_list[j] && !ft_strncmp(split[0], "L", 1))
+	while (j < 4 && state->id_list[j] && !ft_strncmp(split[0], "L", 1))
 	{
 		if (!ft_strncmp(state->id_list[j], "L", 1))
 			return ;
 		j++;
 	}
-	if (*i >= 3)
+	if (*i >= 4)
 	{
 		ft_free_strtab(split);
-		error("parsing", "you must have only one A, one C and at least one L!",
+		error("parsing", "need one A, one C, one SKY and at least one L!",
 			state);
 	}
 	state->id_list[*i] = ft_strdup(split[0]);
@@ -108,7 +108,7 @@ void	init_scene(t_state *state, char *filename)
 			error("get_data_line", "an error as occured", state);
 		line = get_next_line(fd);
 	}
-	if (i != 3)
-		error("parsing", "one or more major elements missing: A, C, or L",
+	if (i != 4)
+		error("parsing", "one or more major elements missing: A, C, SKY, or L",
 			state);
 }
