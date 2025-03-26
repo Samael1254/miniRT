@@ -82,5 +82,4 @@ The following keybindings allow the user to interact with miniRT:
 #### BUGS
 - uv mapping inside a sphere is upside down
 - cylinder base disapears when in axis
-- normal map issues and inverting (see moon)
 - abnormal deformation up and down the screen (fisheye)

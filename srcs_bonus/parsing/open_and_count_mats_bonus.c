@@ -84,14 +84,14 @@ static int	line_mt_handler(t_state *state, char *line_mat)
 	if (fd <= 0)
 	{
 		ft_free_strtab(tmp_split);
-		error("open", "can't open file", state);
+		error("open", "can't open material file", state);
 	}
 	count_nb_mats(state, fd);
 	close(fd);
 	fd = open(tmp_split[1], O_RDONLY);
 	ft_free_strtab(tmp_split);
 	if (fd <= 0)
-		error("open", "can't open file", state);
+		error("open", "can't open material file", state);
 	state->mats_tab = ft_calloc(state->len_mats_tab + 1, sizeof(t_material));
 	if (!state->mats_tab)
 		error("malloc", "open_and_count_mats", state);
