@@ -31,9 +31,9 @@ t_color	absorb_colors(t_color color1, t_color color2)
 {
 	t_color	avg;
 
-	avg.r = color1.r * ((double)color2.r / 255);
-	avg.g = color1.g * ((double)color2.g / 255);
-	avg.b = color1.b * ((double)color2.b / 255);
+	avg.r = color1.r * (double)color2.r / 255;
+	avg.g = color1.g * (double)color2.g / 255;
+	avg.b = color1.b * (double)color2.b / 255;
 	return (avg);
 }
 

@@ -6,7 +6,7 @@ t_vector3d	get_reference_vector(t_vector3d normal)
 {
 	t_vector3d	r;
 
-	if (ft_supf(fabs(normal.y), 0.9))
+	if (ft_supf(fabs(normal.y), 0.999))
 		r = ft_set_vector3d(0, 0, copysign(1, normal.y));
 	else
 		r = ft_set_vector3d(0, 1, 0);
