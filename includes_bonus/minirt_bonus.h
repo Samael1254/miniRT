@@ -79,15 +79,21 @@ double			intersect_sphere(t_ray ray, t_sphere sphere);
 double			intersect_plane(t_ray ray, t_plane plane);
 double			intersect_cylinder(t_ray ray, t_cylinder cylinder);
 double			intersect_cone(t_ray ray, t_cone cone);
+double			intersect_mesh(t_ray ray, t_mesh *mesh);
 t_intersection	intersect_scene(t_ray ray, t_state *state);
 
 t_vector3d		normal_at_point(t_object object, t_intersection inter,
-					t_vector3d ray_dir, t_state *state);
+					t_vector3d ray_dir);
 t_vector3d		blend_normal_map(t_vector2d uv, t_vector3d normal,
 					t_material material);
 
 t_vector2d		uv_at_point(t_object object, t_vector3d point,
 					t_vector3d normal);
+
+t_vector3d		get_reference_vector(t_vector3d normal);
+t_vector2d		clamp_uv(t_vector2d uv);
+t_vector3d		interpolate_triangle_data3d(t_vector3d vertices[3],
+					t_vector3d point, t_vector3d data[3]);
 
 // Light //
 
@@ -100,7 +106,7 @@ t_color			add_colors(t_color color1, t_color color2);
 t_color			scale_color(t_color color, double lambda);
 t_color			init_color(unsigned char r, unsigned char g, unsigned char b);
 t_color			absorb_colors(t_color color1, t_color color2);
-t_color			get_sky_color(t_ray ray);
+t_color			get_sky_color(t_sky sky, t_ray ray);
 t_color			get_pixel_color(t_img_data texture, t_vector2d uv);
 void			render_scene(t_state *state, t_ray **rays);
 void			put_pixel(t_img_data *img, t_ivector2d coords, t_color color);

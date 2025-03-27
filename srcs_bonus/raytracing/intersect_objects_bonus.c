@@ -20,7 +20,7 @@ static double	closest_root(double root1, double root2)
 	return (ft_minf(root1, root2));
 }
 
-double	triangle_distance(double d, t_ray ray, t_vector3d vectors[3],
+static double	triangle_distance(double d, t_ray ray, t_vector3d vectors[3],
 		t_vector3d a)
 {
 	double		params[2];
@@ -56,7 +56,48 @@ double	intersect_triangle(t_ray ray, t_triangle triangle)
 	return (triangle_distance(d, ray, vectors, vertices[0]));
 }
 
-double	cone_delta(double params[3], t_vector3d co, t_ray ray, t_cone cone)
+static t_triangle	face_to_triangle(t_mesh *mesh, t_vertex *face)
+{
+	t_triangle	triangle;
+	int			i;
+
+	triangle.mesh = mesh;
+	i = 0;
+	{
+		triangle.vertices[i] = face[i].geo_id;
+		triangle.normals[i] = face[i].norm_id;
+		triangle.uvs[i] = face[i].text_id;
+		i++;
+	}
+	return (triangle);
+}
+
+double	intersect_mesh(t_ray ray, t_mesh *mesh)
+{
+	double		cur_distance;
+	double		distance_min;
+	t_triangle	cur_tr;
+	t_triangle	closest_tr;
+	int			i;
+
+	distance_min = INFINITY;
+	i = 0;
+	while (i < mesh->n_faces)
+	{
+		cur_tr = face_to_triangle(mesh, mesh->faces[i]);
+		cur_distance = intersect_triangle(ray, cur_tr);
+		if (ft_in_rangef(cur_distance, RAY_REACH_MIN, distance_min))
+		{
+			distance_min = cur_distance;
+			closest_tr = cur_tr;
+		}
+		i++;
+	}
+	return (distance_min);
+}
+
+static double	cone_delta(double params[3], t_vector3d co, t_ray ray,
+		t_cone cone)
 {
 	double	u;
 	double	v;

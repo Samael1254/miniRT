@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static void	insert_color_in_mat(t_state *state, char **line_mat, int *i)
+static void	insert_color_in_mat(t_state *state, char **line_mat, int i)
 {
 	int			tab_len;
 	t_material	mat;
@@ -20,18 +20,14 @@ static void	insert_color_in_mat(t_state *state, char **line_mat, int *i)
 	mat.ks = get_color(line_mat[2], &has_error);
 	mat.ka = get_color(line_mat[3], &has_error);
 	mat.specularity = ft_atod(line_mat[4]);
+	mat.img_texture.img = NULL;
+	mat.img_normal.img = NULL;
 	if (tab_len == 7)
 	{
 		get_texture_map_img(state, line_mat[5], &mat);
 		get_normal_map_img(state, line_mat[6], &mat);
 	}
-	else
-	{
-		mat.img_texture.img = NULL;
-		mat.img_normal.img = NULL;
-	}
-	state->mats_tab[*i] = mat;
-	(*i)++;
+	state->mats_tab[i] = mat;
 }
 
 static void	material_handling(t_state *state, int fd)
@@ -41,7 +37,6 @@ static void	material_handling(t_state *state, int fd)
 	char	**tmp_split;
 
 	i = 1;
-	// state->mats_tab[0] = init_color(0, 0, 0);
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -52,7 +47,7 @@ static void	material_handling(t_state *state, int fd)
 		if (!tmp_split)
 			error("malloc", "material_handling", state);
 		if (tmp_split[0] && !ft_strncmp(tmp_split[0], "mt", 2))
-			insert_color_in_mat(state, tmp_split, &i);
+			insert_color_in_mat(state, tmp_split, i++);
 		ft_free_strtab(tmp_split);
 	}
 }
@@ -89,14 +84,14 @@ static int	line_mt_handler(t_state *state, char *line_mat)
 	if (fd <= 0)
 	{
 		ft_free_strtab(tmp_split);
-		error("open", "can't open file", state);
+		error("open", "can't open material file", state);
 	}
 	count_nb_mats(state, fd);
 	close(fd);
 	fd = open(tmp_split[1], O_RDONLY);
 	ft_free_strtab(tmp_split);
 	if (fd <= 0)
-		error("open", "can't open file", state);
+		error("open", "can't open material file", state);
 	state->mats_tab = ft_calloc(state->len_mats_tab + 1, sizeof(t_material));
 	if (!state->mats_tab)
 		error("malloc", "open_and_count_mats", state);

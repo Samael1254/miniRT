@@ -52,7 +52,7 @@ static void	move_camera(t_state *state, t_camera *camera, enum e_keycode key)
 	else if (key == A_KEY || key == D_KEY)
 		axis = ft_cross_vectors3d(ft_set_vector3d(0, 1, 0), camera->dir);
 	else if (key == Q_KEY || key == E_KEY)
-		axis = ft_set_vector3d(0, 1, 0);
+		axis = camera->y_axis;
 	if (key == S_KEY || key == D_KEY || key == E_KEY)
 		sign = -1;
 	translator = ft_scale_vector3d(sign * camera->move_step, axis);

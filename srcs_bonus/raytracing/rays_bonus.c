@@ -18,11 +18,14 @@ static t_ray	init_ray(t_camera camera, t_vector2d rotator)
 	double	m_rot_x[4][4];
 	double	m_rot_y[4][4];
 
-	ft_set_rotation_matrix4d(m_rot_x, rotator.x, camera.x_axis);
 	ft_set_rotation_matrix4d(m_rot_y, rotator.y, camera.y_axis);
 	ray.direction = ft_4dto3d_vector(ft_matrix_vector_product4d(m_rot_y,
-				ft_matrix_vector_product4d(m_rot_x,
-					ft_3dto4d_vector(camera.dir))));
+				ft_3dto4d_vector(camera.dir)));
+	camera.x_axis = ft_4dto3d_vector(ft_matrix_vector_product4d(m_rot_y,
+				ft_3dto4d_vector(camera.x_axis)));
+	ft_set_rotation_matrix4d(m_rot_x, rotator.x, camera.x_axis);
+	ray.direction = ft_4dto3d_vector(ft_matrix_vector_product4d(m_rot_x,
+				ft_3dto4d_vector(ray.direction)));
 	ray.origin = camera.pos;
 	ray.color = init_color(0, 0, 0);
 	return (ray);
@@ -49,8 +52,8 @@ static void	*thread_shoot_rays(void *arg)
 	delta.y = 2 * data->state->scene.camera.fov_2 / WIN_X;
 	delta.x = 2 * vertical_fov_2(data->state->scene.camera.fov_2) / WIN_Y;
 	coords.y = data->start_y;
-	rotator.x = vertical_fov_2(data->state->scene.camera.fov_2)
-		- delta.x * data->start_y;
+	rotator.x = vertical_fov_2(data->state->scene.camera.fov_2) - delta.x
+		* data->start_y;
 	while (coords.y < data->end_y)
 	{
 		rotator.y = data->state->scene.camera.fov_2;

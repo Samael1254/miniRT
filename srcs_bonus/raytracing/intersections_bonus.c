@@ -20,7 +20,7 @@ static t_intersection	make_intersection(t_ray ray, t_object *object,
 	inter.index_mat = object->index_mat;
 	inter.point = ft_add_vectors3d(ray.origin, ft_scale_vector3d(distance_min,
 				ray.direction));
-	inter.normal = normal_at_point(*object, inter, ray.direction, state);
+	inter.normal = normal_at_point(*object, inter, ray.direction);
 	inter.uv = uv_at_point(*object, inter.point, inter.normal);
 	inter.normal = blend_normal_map(inter.uv, inter.normal,
 			state->mats_tab[inter.index_mat]);
@@ -37,6 +37,8 @@ static double	intersect_object(t_ray ray, t_object object)
 		return (intersect_cylinder(ray, *(t_cylinder *)object.object_r));
 	if (object.type == CONE)
 		return (intersect_cone(ray, *(t_cone *)object.object_r));
+	if (object.type == MESH)
+		return (intersect_mesh(ray, (t_mesh *)object.object_r));
 	warning("invalid object", "object type not found");
 	return (INFINITY);
 }
