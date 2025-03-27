@@ -72,12 +72,11 @@ static t_triangle	face_to_triangle(t_mesh *mesh, t_vertex *face)
 	return (triangle);
 }
 
-double	intersect_mesh(t_ray ray, t_mesh *mesh)
+double	intersect_mesh(t_ray ray, t_mesh *mesh, t_triangle *triangle_hit)
 {
 	double		cur_distance;
 	double		distance_min;
 	t_triangle	cur_tr;
-	t_triangle	closest_tr;
 	int			i;
 
 	distance_min = INFINITY;
@@ -89,7 +88,7 @@ double	intersect_mesh(t_ray ray, t_mesh *mesh)
 		if (ft_in_rangef(cur_distance, RAY_REACH_MIN, distance_min))
 		{
 			distance_min = cur_distance;
-			closest_tr = cur_tr;
+			*triangle_hit = cur_tr;
 		}
 		i++;
 	}
@@ -196,7 +195,7 @@ double	cylinder_params(t_ray ray, t_cylinder cylinder, double params[3])
 	params[0] = ft_vector3d_square_norm(v);
 	params[1] = pow(ft_dot_vectors3d(u, v), 2);
 	params[2] = ft_vector3d_square_norm(u) - pow(cylinder.diameter / 2, 2);
-	delta = pow(params[2], 2) - params[0] * params[3];
+	delta = pow(params[1], 2) - params[0] * params[2];
 	if (ft_inff(delta, 0))
 		return (INFINITY);
 	return (sqrt(delta));

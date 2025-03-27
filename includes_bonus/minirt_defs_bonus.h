@@ -59,6 +59,7 @@ enum				e_object
 	CYLINDER,
 	CONE,
 	MESH,
+	TRIANGLE,
 };
 
 /* STRUCTS */

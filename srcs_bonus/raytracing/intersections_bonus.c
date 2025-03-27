@@ -27,18 +27,19 @@ static t_intersection	make_intersection(t_ray ray, t_object *object,
 	return (inter);
 }
 
-static double	intersect_object(t_ray ray, t_object object)
+static double	intersect_object(t_ray ray, t_object *object)
 {
-	if (object.type == SPHERE)
-		return (intersect_sphere(ray, *(t_sphere *)object.object_r));
-	if (object.type == PLANE)
-		return (intersect_plane(ray, *(t_plane *)object.object_r));
-	if (object.type == CYLINDER)
-		return (intersect_cylinder(ray, *(t_cylinder *)object.object_r));
-	if (object.type == CONE)
-		return (intersect_cone(ray, *(t_cone *)object.object_r));
-	if (object.type == MESH)
-		return (intersect_mesh(ray, (t_mesh *)object.object_r));
+	if (object->type == SPHERE)
+		return (intersect_sphere(ray, *(t_sphere *)object->object_r));
+	if (object->type == PLANE)
+		return (intersect_plane(ray, *(t_plane *)object->object_r));
+	if (object->type == CYLINDER)
+		return (intersect_cylinder(ray, *(t_cylinder *)object->object_r));
+	if (object->type == CONE)
+		return (intersect_cone(ray, *(t_cone *)object->object_r));
+	if (object->type == MESH)
+		return (intersect_mesh(ray, (t_mesh *)object->object_r,
+				object->object_r));
 	warning("invalid object", "object type not found");
 	return (INFINITY);
 }
@@ -57,15 +58,14 @@ t_intersection	intersect_scene(t_ray ray, t_state *state)
 	while (iter)
 	{
 		cur_object = (t_object *)iter->data;
-		cur_distance = intersect_object(ray, *cur_object);
+		cur_distance = intersect_object(ray, cur_object);
 		if (ft_in_rangef(cur_distance, RAY_REACH_MIN, distance_min)
 			&& state->mats_tab[cur_object->index_mat].kd.a != 0)
-			{
-				distance_min = cur_distance;
-				closest_object = cur_object;
-			}
-			iter = iter->next;
-			}
-			return (make_intersection(ray, closest_object, distance_min,
-					state));
-			}
+		{
+			distance_min = cur_distance;
+			closest_object = cur_object;
+		}
+		iter = iter->next;
+	}
+	return (make_intersection(ray, closest_object, distance_min, state));
+}
