@@ -79,6 +79,7 @@ typedef struct s_color
 	unsigned char	r;
 	unsigned char	g;
 	unsigned char	b;
+	unsigned char	a;
 }					t_color;
 
 typedef struct s_material

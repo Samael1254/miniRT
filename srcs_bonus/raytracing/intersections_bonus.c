@@ -58,12 +58,14 @@ t_intersection	intersect_scene(t_ray ray, t_state *state)
 	{
 		cur_object = (t_object *)iter->data;
 		cur_distance = intersect_object(ray, *cur_object);
-		if (ft_in_rangef(cur_distance, RAY_REACH_MIN, distance_min))
-		{
-			distance_min = cur_distance;
-			closest_object = cur_object;
-		}
-		iter = iter->next;
-	}
-	return (make_intersection(ray, closest_object, distance_min, state));
-}
+		if (ft_in_rangef(cur_distance, RAY_REACH_MIN, distance_min)
+			&& state->mats_tab[cur_object->index_mat].kd.a != 0)
+			{
+				distance_min = cur_distance;
+				closest_object = cur_object;
+			}
+			iter = iter->next;
+			}
+			return (make_intersection(ray, closest_object, distance_min,
+					state));
+			}
