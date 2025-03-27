@@ -92,7 +92,6 @@ void	init_scene(t_state *state, char *filename)
 
 	check_directory(state, filename);
 	fd = open_and_count_mats(state, filename);
-	// TODO: free tab_mats
 	if (fd == -1)
 		error("wrong filename", "cannot open file", state);
 	i = 0;

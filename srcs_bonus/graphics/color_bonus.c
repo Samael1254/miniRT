@@ -54,6 +54,7 @@ t_color	init_color(unsigned char r, unsigned char g, unsigned char b)
 	color.r = r;
 	color.g = g;
 	color.b = b;
+	color.a = 100;
 	return (color);
 }
 

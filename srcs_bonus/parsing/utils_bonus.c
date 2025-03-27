@@ -32,41 +32,53 @@ t_vector3d	get_vector(char *line_vector, bool *error)
 	return (vector);
 }
 
+static unsigned char	get_transparency(char *line, bool *error)
+{
+	if (!line || !*line)
+		return (100);
+	if (*line == '1')
+	{
+		if (line[1] != '\0')
+			*error = true;
+		return (100);
+	}
+	else if (*line == '0')
+		return (ft_atod(line) * 100);
+	else
+		*error = true;
+	return (100);
+}
+
+#include <stdio.h>
 t_color	get_color(char *line_color, bool *error)
 {
 	t_color	color;
 	char	**split_color;
-	int		r;
-	int		g;
-	int		b;
 
 	split_color = ft_split(line_color, ',');
-	if (!split_color || ft_strtab_size(split_color) < 3)
+	if (!split_color || ft_strtab_size(split_color) < 3 || ft_strtab_size(split_color) > 4)
 	{
 		if (split_color)
 			ft_free_strtab(split_color);
 		*error = true;
-		return ((t_color){0, 0, 0});
+		return ((t_color){0, 0, 0, 0});
 	}
-	r = ft_atoi(split_color[0]);
-	g = ft_atoi(split_color[1]);
-	b = ft_atoi(split_color[2]);
+	color.r = ft_atoi(split_color[0]);
+	color.g = ft_atoi(split_color[1]);
+	color.b = ft_atoi(split_color[2]);
+	if (ft_strtab_size(split_color) == 4)
+		color.a = get_transparency(split_color[3], error);
+	else
+		color.a = 100;
+	printf("color = %d\n", color.a);
 	ft_free_strtab(split_color);
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+	if (color.r < 0 || color.r > 255 || color.g < 0 || color.g > 255 ||
+		color.b < 0 || color.b > 255 || color.a < 0 || color.a > 100)
 		*error = true;
 	else
 		*error = false;
-	color = (t_color){(unsigned char)r, (unsigned char)g, (unsigned char)b};
 	return (color);
 }
-
-// t_material	get_material(char *line_mat, bool *error)
-// {
-// 	t_material	mat;
-//
-// 	mat.kd = get_color(char *line_color, bool *error)
-//
-// }
 
 /*
  *	Check if a vector is in the range min and max (excluded)
