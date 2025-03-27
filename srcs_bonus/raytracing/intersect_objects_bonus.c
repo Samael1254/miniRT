@@ -3,6 +3,7 @@
 #include "minirt_defs_bonus.h"
 #include <math.h>
 #include <stddef.h>
+#include <stdio.h>
 
 static double	closest_root(double root1, double root2)
 {
@@ -63,6 +64,7 @@ static t_triangle	face_to_triangle(t_mesh *mesh, t_vertex *face)
 
 	triangle.mesh = mesh;
 	i = 0;
+	while (i < 3)
 	{
 		triangle.vertices[i] = face[i].geo_id;
 		triangle.normals[i] = face[i].norm_id;

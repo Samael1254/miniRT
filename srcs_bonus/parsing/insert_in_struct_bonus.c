@@ -114,6 +114,8 @@ int	insert_in_struct(t_state *state, char **split)
 		add_object_to_list(state, split);
 	else if (!ft_strncmp(split[0], "co", ft_strlen(split[0])))
 		add_object_to_list(state, split);
+	else if (!ft_strncmp(split[0], "mesh", ft_strlen(split[0])))
+		add_object_to_list(state, split);
 	else if (ft_strcmp(split[0], "\n") && ft_strncmp(split[0], "MT", 2))
 	{
 		split[0][ft_strlen(split[0])] = '\0';
