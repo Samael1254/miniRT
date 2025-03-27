@@ -94,6 +94,8 @@ t_vector3d		get_reference_vector(t_vector3d normal);
 t_vector2d		clamp_uv(t_vector2d uv);
 t_vector3d		interpolate_triangle_data3d(t_vector3d vertices[3],
 					t_vector3d point, t_vector3d data[3]);
+t_vector2d		interpolate_triangle_data2d(t_vector3d vertices[3],
+					t_vector3d point, t_vector2d data[3]);
 
 // Light //
 

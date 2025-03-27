@@ -79,23 +79,23 @@ static t_vector2d	plane_mapping(t_plane plane, t_vector3d point,
 	return (clamp_uv(uv));
 }
 
-static t_vector3d	triangle_mapping(t_triangle triangle, t_vector3d point)
-{
-	t_vector2d	uv;
-	t_vector3d	vertices[3];
-	t_vector2d	uvs[3];
-	int			i;
-
-	i = 0;
-	while (i < 3)
-	{
-		vertices[i] = triangle.mesh->vertices[triangle.vertices[i]];
-		uvs[i] = triangle.mesh->uvs[triangle.uvs[i]];
-		i++;
-	}
-	normal = interpolate_triangle_data3d(vertices, point, uvs);
-	return (normal);
-}
+// static t_vector2d	triangle_mapping(t_triangle triangle, t_vector3d point)
+// {
+// 	t_vector2d	uv;
+// 	t_vector3d	vertices[3];
+// 	t_vector2d	uvs[3];
+// 	int			i;
+//
+// 	i = 0;
+// 	while (i < 3)
+// 	{
+// 		vertices[i] = triangle.mesh->vertices[triangle.vertices[i]];
+// 		uvs[i] = triangle.mesh->uvs[triangle.uvs[i]];
+// 		i++;
+// 	}
+// 	uv = interpolate_triangle_data2d(vertices, point, uvs);
+// 	return (uv);
+// }
 
 t_vector2d	uv_at_point(t_object object, t_vector3d point, t_vector3d normal)
 {

@@ -2,7 +2,6 @@
 #include "ft_memory.h"
 #include "ft_strings.h"
 #include "minirt_bonus.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 static t_sphere	*get_sphere_data(t_state *state, char **split, t_object *obj)

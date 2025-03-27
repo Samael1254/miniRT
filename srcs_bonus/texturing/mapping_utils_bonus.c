@@ -58,3 +58,15 @@ t_vector3d	interpolate_triangle_data3d(t_vector3d vertices[3],
 	lerp.z = bary.x * data[0].z + bary.y * data[1].z + bary.z * data[2].z;
 	return (lerp);
 }
+
+t_vector2d	interpolate_triangle_data2d(t_vector3d vertices[3],
+		t_vector3d point, t_vector2d data[3])
+{
+	t_vector3d	bary;
+	t_vector2d	lerp;
+
+	bary = cartesian_to_barycentric3d(vertices, point);
+	lerp.x = bary.x * data[0].x + bary.y * data[1].x + bary.z * data[2].x;
+	lerp.y = bary.x * data[0].y + bary.y * data[1].y + bary.z * data[2].y;
+	return (lerp);
+}

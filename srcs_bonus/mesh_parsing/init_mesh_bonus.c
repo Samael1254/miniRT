@@ -1,48 +1,35 @@
 #include "ft_memory.h"
 #include "get_next_line.h"
-#include "minirt.h"
+#include "minirt_bonus.h"
 #include "minirt_obj_parser.h"
 #include <fcntl.h>
-#include <stdbool.h>
-#include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-static void	count_elements(char *filename, int count[4], t_mesh *mesh)
+static void	count_elements(char *filename, t_mesh *mesh, t_state *state)
 {
 	int		fd;
 	char	*line;
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		error("could not open file", filename, mesh);
+		mesh_error("could not open file", filename, state, mesh);
 	while (true)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
 		if (is_element(line, "v"))
-			count[0]++;
+			mesh->n_vertices++;
 		else if (is_element(line, "vn"))
-			count[1]++;
+			mesh->n_normals++;
 		else if (is_element(line, "vt"))
-			count[2]++;
+			mesh->n_uvs++;
 		else if (is_element(line, "f"))
-			count[3]++;
+			mesh->n_faces++;
 		free(line);
 	}
 	close(fd);
-}
-static void	set_to_null(t_mesh *mesh)
-{
-	mesh->n_vertices = 0;
-	mesh->vertices = NULL;
-	mesh->n_normals = 0;
-	mesh->normals = NULL;
-	mesh->n_uvs = 0;
-	mesh->uvs = NULL;
-	mesh->n_faces = 0;
-	mesh->faces = NULL;
 }
 
 static void	free_faces(t_vertex **faces)
@@ -55,29 +42,30 @@ static void	free_faces(t_vertex **faces)
 	free(faces);
 }
 
-void	init_mesh(char *filename, t_mesh *mesh)
+t_mesh	*init_mesh(char *filename, t_state *state)
 {
-	int	count[4];
-	int	i;
+	t_mesh	*mesh;
+	int		i;
 
-	set_to_null(mesh);
-	ft_bzero(count, 4 * sizeof(int));
-	count_elements(filename, count, mesh);
-	mesh->n_vertices = count[0];
-	mesh->vertices = malloc(count[0] * sizeof(t_vector3d));
-	mesh->n_normals = count[1];
-	mesh->normals = malloc(count[1] * sizeof(t_vector3d));
-	mesh->n_uvs = count[2];
-	mesh->uvs = malloc(count[2] * sizeof(t_vector3d));
-	mesh->n_faces = count[3];
-	mesh->faces = malloc(count[3] * sizeof(t_vertex *));
+	mesh = ft_calloc(1, sizeof(t_mesh));
+	if (!mesh)
+		error("malloc failed", " in init_mesh", state);
+	count_elements(filename, mesh, state);
+	mesh->vertices = malloc(mesh->n_vertices * sizeof(t_vector3d));
+	mesh->normals = malloc(mesh->n_normals * sizeof(t_vector3d));
+	mesh->uvs = malloc(mesh->n_uvs * sizeof(t_vector3d));
+	mesh->faces = malloc(mesh->n_faces * sizeof(t_vertex *));
 	if (!mesh->vertices || !mesh->normals || !mesh->uvs || !mesh->faces)
-		error("malloc failed", "in init_mesh", mesh);
+		mesh_error("malloc failed", "in init_mesh", state, mesh);
 	i = 0;
 	while (i < mesh->n_faces)
 	{
 		mesh->faces[i] = malloc(3 * sizeof(t_vertex));
 		if (!mesh->faces[i++])
+		{
 			free_faces(mesh->faces);
+			mesh_error("malloc failed", "in init_mesh", state, mesh);
+		}
 	}
+	return (mesh);
 }

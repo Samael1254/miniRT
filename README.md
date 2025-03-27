@@ -50,11 +50,9 @@ The following keybindings allow the user to interact with miniRT:
 ### TODO ULTIMATE
 
 #### SHAPES
-- Triangle intersection
 - Box intersection
 
 #### PARSING
-- Add a sky object with two colors to change the sky color
 - Set the texture scaling in the .mrt file
 - Set the texture repetition in the .mrt file
 - Fix obj aprsing for uvs

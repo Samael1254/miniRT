@@ -4,12 +4,17 @@
 # include "minirt_defs_bonus.h"
 # include <stdbool.h>
 
-void		init_mesh(char *filename, t_mesh *mesh);
-bool		is_element(char *line, const char *elem);
+t_mesh		*init_mesh(char *filename, t_state *state);
 
-t_mesh		parse_obj_file(char *filename);
-t_vertex	*parse_face(char *line, t_mesh *mesh);
-t_vector3d	parse_vertex(char *line, t_mesh *mesh);
+bool		is_element(char *line, const char *elem);
+void		free_mesh(t_mesh *mesh);
+void		mesh_error(char const *type, char const *msg, t_state *state,
+				t_mesh *mesh);
+
+t_mesh		*parse_obj_file(char *filename, t_state *state);
+t_vertex	*parse_face(char *line, t_mesh *mesh, t_state *state);
+t_vector2d	parse_uv(char *line, t_mesh *mesh, t_state *state);
+t_vector3d	parse_vertex(char *line, t_mesh *mesh, t_state *state);
 
 void		print_mesh(t_mesh *mesh);
 

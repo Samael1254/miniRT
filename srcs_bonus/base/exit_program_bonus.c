@@ -1,10 +1,11 @@
 #include "ft_list.h"
 #include "minirt_bonus.h"
 #include "minirt_defs_bonus.h"
+#include "minirt_obj_parser.h"
 #include "mlx.h"
 #include <stdlib.h>
 
-void	free_materials(t_state *state)
+static void	free_materials(t_state *state)
 {
 	unsigned int	i;
 	t_material		material;
@@ -30,7 +31,10 @@ static void	free_scene(t_scene *scene_r)
 	while (tmp)
 	{
 		object = (t_object *)tmp->data;
-		free(object->object_r);
+		if (object->type == MESH)
+			free_mesh((t_mesh *)object->object_r);
+		else
+			free(object->object_r);
 		tmp = tmp->next;
 	}
 	ft_list_clear(scene_r->objects, &free);

@@ -2,12 +2,17 @@
 #include "minirt_obj_parser.h"
 #include <stdio.h>
 
-static void	print_vertex(t_vector3d vertex, char *type)
+static void	print_vertex(t_vector3d vertex, const char *type)
 {
 	printf("%s %f %f %f\n", type, vertex.x, vertex.y, vertex.z);
 }
 
-static void	print_face(t_vertex *face)
+static void	print_uv(t_vector2d uv, const char *type)
+{
+	printf("%s %f %f\n", type, uv.x, uv.y);
+}
+
+static void	print_face(const t_vertex *face)
 {
 	int	i;
 
@@ -45,7 +50,7 @@ void	print_mesh(t_mesh *mesh)
 		printf("\n");
 	i = 0;
 	while (i < mesh->n_uvs)
-		print_vertex(mesh->uvs[i++], "vt");
+		print_uv(mesh->uvs[i++], "vt");
 	if (mesh->n_uvs > 0)
 		printf("\n");
 	i = 0;

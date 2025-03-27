@@ -104,7 +104,7 @@ typedef struct s_mesh
 	int				n_vertices;
 	t_vector3d		*normals;
 	int				n_normals;
-	t_vector3d		*uvs;
+	t_vector2d		*uvs;
 	int				n_uvs;
 	t_vertex		**faces;
 	int				n_faces;

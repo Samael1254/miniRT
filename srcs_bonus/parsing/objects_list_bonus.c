@@ -15,6 +15,8 @@ void	add_object_to_list(t_state *state, char **split)
 		obj = object_cylinder(state, split);
 	if (!ft_strncmp(split[0], "co", 2))
 		obj = object_cone(state, split);
+	if (!ft_strncmp(split[0], "mesh", 4))
+		obj = object_cone(state, split);
 	if (obj)
 		ft_list_push_back(&state->scene.objects, obj);
 }
