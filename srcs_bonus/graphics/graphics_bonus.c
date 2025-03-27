@@ -5,7 +5,8 @@
 
 static int	rgb_to_int(t_color color)
 {
-	return (color.r << 16 | color.g << 8 | color.b << 0);
+	color.a *= 2.55;
+	return (color.a << 24 | color.r << 16 | color.g << 8 | color.b << 0);
 }
 
 static t_color	int_to_rgb(int colorint)
@@ -15,6 +16,7 @@ static t_color	int_to_rgb(int colorint)
 	color.r = (colorint >> 16) & 0xFF;
 	color.g = (colorint >> 8) & 0xFF;
 	color.b = colorint & 0xFF;
+	color.a = (colorint >> 24) & 0xFF;
 	return (color);
 }
 
