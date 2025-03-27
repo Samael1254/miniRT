@@ -47,13 +47,13 @@ static void	move_camera(t_state *state, t_camera *camera, enum e_keycode key)
 
 	axis = ft_init_vector3d(0);
 	sign = 1;
-	if (key == W_KEY || key == S_KEY)
+	if (key == SCROLL_UP || key == SCROLL_DOWN)
 		axis = camera->dir;
 	else if (key == A_KEY || key == D_KEY)
 		axis = ft_cross_vectors3d(ft_set_vector3d(0, 1, 0), camera->dir);
-	else if (key == Q_KEY || key == E_KEY)
+	else if (key == W_KEY || key == S_KEY)
 		axis = camera->y_axis;
-	if (key == S_KEY || key == D_KEY || key == E_KEY)
+	if (key == SCROLL_DOWN || key == D_KEY || key == S_KEY)
 		sign = -1;
 	translator = ft_scale_vector3d(sign * camera->move_step, axis);
 	camera->pos = ft_add_vectors3d(camera->pos, translator);
@@ -67,15 +67,15 @@ static void	rotate_camera(t_state *state, t_camera *camera,
 	double	m_rot[4][4];
 
 	angle = ft_deg_to_rad(camera->rot_step);
-	if (keycode == L_KEY || keycode == K_KEY)
+	if (keycode == D_KEY || keycode == S_KEY)
 		angle *= -1;
-	if (keycode == J_KEY || keycode == L_KEY)
+	if (keycode == A_KEY || keycode == D_KEY)
 		ft_set_base_rotation_matrix4d(m_rot, angle, Y_AXIS);
-	else if (keycode == I_KEY || keycode == K_KEY)
+	else if (keycode == W_KEY || keycode == S_KEY)
 		ft_set_rotation_matrix4d(m_rot, angle, camera->x_axis);
 	camera->dir = ft_4dto3d_vector(ft_matrix_vector_product4d(m_rot,
 				ft_3dto4d_vector(camera->dir)));
-	if (keycode == J_KEY || keycode == L_KEY)
+	if (keycode == A_KEY || keycode == D_KEY)
 		camera->x_axis = ft_4dto3d_vector(ft_matrix_vector_product4d(m_rot,
 					ft_3dto4d_vector(camera->x_axis)));
 	camera->y_axis = ft_4dto3d_vector(ft_matrix_vector_product4d(m_rot,
@@ -87,6 +87,12 @@ static int	key_pressed(enum e_keycode key, t_state *state)
 {
 	if (key == ESC_KEY)
 		exit_program(state, EXIT_SUCCESS);
+	if (key == ALT_KEY && state->hold_alt == 0)
+		state->hold_alt = 1;
+	if (state->hold_alt == 0 && (key == W_KEY || key == S_KEY || key == A_KEY || key == D_KEY))
+		move_camera(state, &state->scene.camera, key);
+	else if (state->hold_alt == 1 && (key == W_KEY || key == S_KEY || key == A_KEY || key == D_KEY))
+		rotate_camera(state, &state->scene.camera, key);
 	if (key == UP_ARROW_KEY)
 		modify_step_size(state, '+');
 	if (key == DOWN_ARROW_KEY)
@@ -95,19 +101,34 @@ static int	key_pressed(enum e_keycode key, t_state *state)
 		modify_rot_step_size(state, '+');
 	if (key == LEFT_ARROW_KEY)
 		modify_rot_step_size(state, '-');
-	if (key == W_KEY || key == S_KEY || key == A_KEY || key == D_KEY
-		|| key == Q_KEY || key == E_KEY)
-		move_camera(state, &state->scene.camera, key);
-	if (key == J_KEY || key == L_KEY || key == I_KEY || key == K_KEY)
-		rotate_camera(state, &state->scene.camera, key);
 	if (key == H_KEY)
 		display_help(state);
 	return (1);
 }
 
+static int	on_mouse_moov(enum e_keycode key, int x, int y, t_state *state)
+{
+	(void) x;
+	(void) y;
+	if (key == SCROLL_UP)
+		move_camera(state, &state->scene.camera, SCROLL_UP);
+	if (key == SCROLL_DOWN)
+		move_camera(state, &state->scene.camera, SCROLL_DOWN);
+	return (0);
+}
+
+static int	end_hold_alt_hook(int button, t_state *state)
+{
+	if (button == ALT_KEY && state->hold_alt == 1)
+		state->hold_alt = 0;
+	return (0);
+}
+
 void	loop_events(t_state *state)
 {
-	mlx_hook(state->win, ON_KEYPRESS, 1L << 0, &key_pressed, state);
-	mlx_hook(state->win, ON_CLIENTMSG, 0L, &exit_program, state);
+	mlx_hook(state->win, 2, 1L << 0, key_pressed, state);
+	mlx_hook(state->win, 3, 1L << 1, end_hold_alt_hook, state);
+	mlx_hook(state->win, 4, 1L << 2, on_mouse_moov, state);
+	mlx_hook(state->win, ON_CLIENTMSG, 0L, exit_program, state);
 	mlx_loop(state->display);
 }

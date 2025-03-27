@@ -29,6 +29,8 @@ enum				e_event
 enum				e_keycode
 {
 	ESC_KEY = 0xff1b,
+	SCROLL_UP = 4,
+	SCROLL_DOWN = 5,
 	W_KEY = 119,
 	A_KEY = 97,
 	S_KEY = 115,
@@ -43,6 +45,7 @@ enum				e_keycode
 	DOWN_ARROW_KEY = 65364,
 	LEFT_ARROW_KEY = 65361,
 	RIGHT_ARROW_KEY = 65363,
+	ALT_KEY = 65513,
 	H_KEY = 0x0068,
 };
 
@@ -220,6 +223,7 @@ typedef struct s_state
 	t_material		*mats_tab;
 	unsigned int	len_mats_tab;
 	struct timeval	start_time;
+	unsigned char	hold_alt;
 }					t_state;
 
 typedef struct s_thread_data

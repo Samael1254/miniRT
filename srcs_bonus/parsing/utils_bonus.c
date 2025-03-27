@@ -49,7 +49,6 @@ static unsigned char	get_transparency(char *line, bool *error)
 	return (100);
 }
 
-#include <stdio.h>
 t_color	get_color(char *line_color, bool *error)
 {
 	t_color	color;
@@ -70,7 +69,6 @@ t_color	get_color(char *line_color, bool *error)
 		color.a = get_transparency(split_color[3], error);
 	else
 		color.a = 100;
-	printf("color = %d\n", color.a);
 	ft_free_strtab(split_color);
 	if (color.r < 0 || color.r > 255 || color.g < 0 || color.g > 255 ||
 		color.b < 0 || color.b > 255 || color.a < 0 || color.a > 100)
