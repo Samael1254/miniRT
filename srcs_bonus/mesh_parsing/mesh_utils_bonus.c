@@ -28,7 +28,8 @@ void	free_mesh(t_mesh *mesh)
 		free(mesh->uvs);
 	i = 0;
 	while (i < mesh->n_faces)
-		free(mesh->faces[i++]);
+		if (mesh->faces[i++])
+			free(mesh->faces[i - 1]);
 	if (mesh->faces)
 		free(mesh->faces);
 }

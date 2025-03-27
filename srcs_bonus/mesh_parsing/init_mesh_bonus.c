@@ -32,20 +32,9 @@ static void	count_elements(char *filename, t_mesh *mesh, t_state *state)
 	close(fd);
 }
 
-static void	free_faces(t_vertex **faces)
-{
-	int	i;
-
-	i = 0;
-	while (faces[i])
-		free(faces[i++]);
-	free(faces);
-}
-
 t_mesh	*init_mesh(char *filename, t_state *state)
 {
 	t_mesh	*mesh;
-	int		i;
 
 	mesh = ft_calloc(1, sizeof(t_mesh));
 	if (!mesh)
@@ -57,15 +46,5 @@ t_mesh	*init_mesh(char *filename, t_state *state)
 	mesh->faces = malloc(mesh->n_faces * sizeof(t_vertex *));
 	if (!mesh->vertices || !mesh->normals || !mesh->uvs || !mesh->faces)
 		mesh_error("malloc failed", "in init_mesh", state, mesh);
-	i = 0;
-	while (i < mesh->n_faces)
-	{
-		mesh->faces[i] = malloc(3 * sizeof(t_vertex));
-		if (!mesh->faces[i++])
-		{
-			free_faces(mesh->faces);
-			mesh_error("malloc failed", "in init_mesh", state, mesh);
-		}
-	}
 	return (mesh);
 }

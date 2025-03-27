@@ -15,8 +15,8 @@ t_vector3d	parse_vertex(char *line, t_mesh *mesh, t_state *state)
 	if (ft_strtab_size(line_data) != 4)
 	{
 		ft_free_strtab(line_data);
-		mesh_error("vertex", "wrong number of parameters (must be 3)", state,
-			mesh);
+		mesh_error("mesh parsing",
+			"wrong number of vertex parameters (must be 3)", state, mesh);
 	}
 	new_vertex.x = ft_atod(line_data[1]);
 	new_vertex.y = ft_atod(line_data[2]);
@@ -34,8 +34,8 @@ t_vector2d	parse_uv(char *line, t_mesh *mesh, t_state *state)
 	if (ft_strtab_size(line_data) != 3)
 	{
 		ft_free_strtab(line_data);
-		mesh_error("vertex", "wrong number of parameters (must be 2)", state,
-			mesh);
+		mesh_error("mesh parsing", "wrong number of uv parameters (must be 2)",
+			state, mesh);
 	}
 	new_vertex.x = ft_atod(line_data[1]);
 	new_vertex.y = ft_atod(line_data[2]);

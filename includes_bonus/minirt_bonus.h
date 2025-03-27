@@ -41,6 +41,7 @@ t_object		*object_sphere(t_state *state, char **split);
 t_object		*object_plane(t_state *state, char **split);
 t_object		*object_cylinder(t_state *state, char **split);
 t_object		*object_cone(t_state *state, char **split);
+t_object		*object_mesh(t_state *state, char **split);
 
 // create_lights_bonus.c
 void			add_lights_to_list(t_state *state, char **split);
