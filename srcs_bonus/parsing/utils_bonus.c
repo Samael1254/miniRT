@@ -55,7 +55,8 @@ t_color	get_color(char *line_color, bool *error)
 	char	**split_color;
 
 	split_color = ft_split(line_color, ',');
-	if (!split_color || ft_strtab_size(split_color) < 3 || ft_strtab_size(split_color) > 4)
+	if (!split_color || ft_strtab_size(split_color) < 3
+		|| ft_strtab_size(split_color) > 4)
 	{
 		if (split_color)
 			ft_free_strtab(split_color);
@@ -70,8 +71,8 @@ t_color	get_color(char *line_color, bool *error)
 	else
 		color.a = 100;
 	ft_free_strtab(split_color);
-	if (color.r < 0 || color.r > 255 || color.g < 0 || color.g > 255 ||
-		color.b < 0 || color.b > 255 || color.a < 0 || color.a > 100)
+	if (color.r < 0 || color.r > 255 || color.g < 0 || color.g > 255
+		|| color.b < 0 || color.b > 255 || color.a < 0 || color.a > 100)
 		*error = true;
 	else
 		*error = false;
