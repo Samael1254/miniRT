@@ -105,9 +105,9 @@ typedef struct vertex
 
 typedef struct s_triangle
 {
-	int				vertices[3];
-	int				normals[3];
-	int				uvs[3];
+	t_vector3d		vertices[3];
+	t_vector3d		normals[3];
+	t_vector2d		uvs[3];
 }					t_triangle;
 
 typedef struct s_mesh

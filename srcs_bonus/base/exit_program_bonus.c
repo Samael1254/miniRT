@@ -60,7 +60,7 @@ int	exit_program(t_state *state, int status)
 	if (state)
 	{
 		i = 0;
-		while (i < 3)
+		while (i < 4)
 		{
 			if (state->id_list[i])
 				free(state->id_list[i]);

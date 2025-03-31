@@ -32,6 +32,7 @@ void	free_mesh(t_mesh *mesh)
 			free(mesh->faces[i - 1]);
 	if (mesh->faces)
 		free(mesh->faces);
+	free(mesh);
 }
 
 void	mesh_error(char const *type, char const *msg, t_state *state,

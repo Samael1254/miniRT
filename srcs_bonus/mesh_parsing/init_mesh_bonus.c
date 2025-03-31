@@ -42,7 +42,7 @@ t_mesh	*init_mesh(char *filename, t_state *state)
 	count_elements(filename, mesh, state);
 	mesh->vertices = malloc(mesh->n_vertices * sizeof(t_vector3d));
 	mesh->normals = malloc(mesh->n_normals * sizeof(t_vector3d));
-	mesh->uvs = malloc(mesh->n_uvs * sizeof(t_vector3d));
+	mesh->uvs = malloc(mesh->n_uvs * sizeof(t_vector2d));
 	mesh->faces = malloc(mesh->n_faces * sizeof(t_vertex *));
 	if (!mesh->vertices || !mesh->normals || !mesh->uvs || !mesh->faces)
 		mesh_error("malloc failed", "in init_mesh", state, mesh);

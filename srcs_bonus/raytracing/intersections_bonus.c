@@ -4,6 +4,17 @@
 #include "minirt_defs_bonus.h"
 #include <math.h>
 #include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+static void	free_triangle_obj(t_object *object)
+{
+	if (object && object->type == TRIANGLE)
+	{
+		free(object->object_r);
+		free(object);
+	}
+}
 
 static t_intersection	make_intersection(t_ray ray, t_object *object,
 		double distance_min, t_state *state)
@@ -15,6 +26,7 @@ static t_intersection	make_intersection(t_ray ray, t_object *object,
 		inter.index_mat = 0;
 		inter.point = ft_init_vector3d(INFINITY);
 		inter.normal = ft_init_vector3d(0);
+		free_triangle_obj(object);
 		return (inter);
 	}
 	inter.index_mat = object->index_mat;
@@ -24,21 +36,25 @@ static t_intersection	make_intersection(t_ray ray, t_object *object,
 	inter.uv = uv_at_point(*object, inter.point, inter.normal);
 	inter.normal = blend_normal_map(inter.uv, inter.normal,
 			state->mats_tab[inter.index_mat]);
+	free_triangle_obj(object);
 	return (inter);
 }
 
-static double	intersect_object(t_ray ray, t_object *object)
+static double	intersect_object(t_ray ray, t_object **object)
 {
-	if (object->type == SPHERE)
-		return (intersect_sphere(ray, *(t_sphere *)object->object_r));
-	else if (object->type == PLANE)
-		return (intersect_plane(ray, *(t_plane *)object->object_r));
-	else if (object->type == CYLINDER)
-		return (intersect_cylinder(ray, *(t_cylinder *)object->object_r));
-	else if (object->type == CONE)
-		return (intersect_cone(ray, *(t_cone *)object->object_r));
-	else if (object->type == MESH)
-		return (intersect_mesh(ray, (t_mesh *)object->object_r));
+	void	*object_r;
+
+	object_r = (*object)->object_r;
+	if ((*object)->type == SPHERE)
+		return (intersect_sphere(ray, *(t_sphere *)object_r));
+	else if ((*object)->type == PLANE)
+		return (intersect_plane(ray, *(t_plane *)object_r));
+	else if ((*object)->type == CYLINDER)
+		return (intersect_cylinder(ray, *(t_cylinder *)object_r));
+	else if ((*object)->type == CONE)
+		return (intersect_cone(ray, *(t_cone *)object_r));
+	else if ((*object)->type == MESH)
+		return (intersect_mesh(ray, (t_mesh *)object_r, object));
 	warning("invalid object", "object type not found");
 	return (INFINITY);
 }
@@ -57,13 +73,18 @@ t_intersection	intersect_scene(t_ray ray, t_state *state)
 	while (iter)
 	{
 		cur_object = (t_object *)iter->data;
-		cur_distance = intersect_object(ray, cur_object);
+		cur_distance = intersect_object(ray, &cur_object);
+		if (cur_distance == NAN)
+			error("malloc failed", "in face_to_triangle", state);
 		if (ft_in_rangef(cur_distance, RAY_REACH_MIN, distance_min)
 			&& state->mats_tab[cur_object->index_mat].kd.a != 0)
 		{
 			distance_min = cur_distance;
+			free_triangle_obj(closest_object);
 			closest_object = cur_object;
 		}
+		else
+			free_triangle_obj(cur_object);
 		iter = iter->next;
 	}
 	return (make_intersection(ray, closest_object, distance_min, state));

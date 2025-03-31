@@ -34,12 +34,12 @@ static t_vector3d	cartesian_to_barycentric3d(t_vector3d vertices[3],
 
 	edges[0] = ft_sub_vectors3d(vertices[1], vertices[0]);
 	edges[1] = ft_sub_vectors3d(vertices[2], vertices[0]);
-	vectors[0] = ft_sub_vectors3d(vertices[0], point);
-	vectors[1] = ft_sub_vectors3d(vertices[1], point);
-	vectors[2] = ft_sub_vectors3d(vertices[2], point);
+	vectors[0] = ft_sub_vectors3d(point, vertices[0]);
+	vectors[1] = ft_sub_vectors3d(point, vertices[1]);
+	vectors[2] = ft_sub_vectors3d(point, vertices[2]);
 	areas[0] = ft_vector3d_norm(ft_cross_vectors3d(edges[0], edges[1]));
 	areas[1] = ft_vector3d_norm(ft_cross_vectors3d(vectors[1], vectors[2]));
-	areas[0] = ft_vector3d_norm(ft_cross_vectors3d(vectors[2], vectors[0]));
+	areas[2] = ft_vector3d_norm(ft_cross_vectors3d(vectors[2], vectors[0]));
 	bary.x = areas[1] / areas[0];
 	bary.y = areas[2] / areas[0];
 	bary.z = 1 - bary.x - bary.y;

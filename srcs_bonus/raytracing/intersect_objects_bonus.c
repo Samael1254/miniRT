@@ -1,9 +1,11 @@
 #include "ft_algebra.h"
 #include "ft_math.h"
+#include "ft_memory.h"
 #include "minirt_defs_bonus.h"
 #include <math.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 static double	closest_root(double root1, double root2)
 {
@@ -39,15 +41,15 @@ static double	triangle_distance(double d, t_ray ray, t_vector3d vectors[3],
 	return (ft_absf(d * ft_dot_vectors3d(ao, vectors[2])));
 }
 
-double	intersect_triangle(t_ray ray, t_triangle triangle, t_mesh mesh)
+static double	intersect_triangle(t_ray ray, t_triangle triangle)
 {
 	t_vector3d	vertices[3];
 	t_vector3d	vectors[3];
 	double		d;
 
-	vertices[0] = mesh.vertices[triangle.vertices[0]];
-	vertices[1] = mesh.vertices[triangle.vertices[1]];
-	vertices[2] = mesh.vertices[triangle.vertices[2]];
+	vertices[0] = triangle.vertices[0];
+	vertices[1] = triangle.vertices[1];
+	vertices[2] = triangle.vertices[2];
 	vectors[0] = ft_sub_vectors3d(vertices[1], vertices[0]);
 	vectors[1] = ft_sub_vectors3d(vertices[2], vertices[0]);
 	vectors[2] = ft_cross_vectors3d(vectors[0], vectors[1]);
@@ -57,41 +59,74 @@ double	intersect_triangle(t_ray ray, t_triangle triangle, t_mesh mesh)
 	return (triangle_distance(d, ray, vectors, vertices[0]));
 }
 
-static t_triangle	face_to_triangle(t_vertex *face)
+static t_triangle	*face_to_triangle(t_mesh mesh, t_vertex *face)
 {
-	t_triangle	triangle;
+	t_triangle	*triangle;
 	int			i;
 
+	triangle = malloc(1 * sizeof(t_triangle));
+	if (!triangle)
+		return (NULL);
 	i = 0;
 	while (i < 3)
 	{
-		triangle.vertices[i] = face[i].geo_id - 1;
-		triangle.normals[i] = face[i].norm_id - 1;
-		triangle.uvs[i] = face[i].text_id - 1;
+		if (face[i].geo_id != -1)
+			triangle->vertices[i] = mesh.vertices[face[i].geo_id - 1];
+		if (face[i].norm_id != -1)
+			triangle->normals[i] = mesh.normals[face[i].norm_id - 1];
+		if (face[i].text_id != -1)
+			triangle->uvs[i] = mesh.uvs[face[i].text_id - 1];
 		i++;
 	}
 	return (triangle);
 }
 
-double	intersect_mesh(t_ray ray, t_mesh *mesh)
+static t_object	*object_triangle(t_triangle *triangle, unsigned int index_mat)
+{
+	t_object	*obj;
+
+	obj = ft_calloc(1, sizeof(t_object));
+	if (!obj)
+		return (NULL);
+	obj->type = TRIANGLE;
+	obj->object_r = triangle;
+	obj->index_mat = index_mat;
+	return (obj);
+}
+
+double	intersect_mesh(t_ray ray, t_mesh *mesh, t_object **triangle_obj)
 {
 	double		cur_distance;
 	double		distance_min;
-	t_triangle	cur_tr;
+	t_triangle	*cur_tr;
+	t_triangle	*closest_tr;
 	int			i;
 
 	distance_min = INFINITY;
+	closest_tr = NULL;
 	i = 0;
 	while (i < mesh->n_faces)
 	{
-		cur_tr = face_to_triangle(mesh->faces[i]);
-		cur_distance = intersect_triangle(ray, cur_tr, *mesh);
+		cur_tr = face_to_triangle(*mesh, mesh->faces[i]);
+		if (!cur_tr)
+			return (NAN);
+		cur_distance = intersect_triangle(ray, *cur_tr);
 		if (ft_in_rangef(cur_distance, RAY_REACH_MIN, distance_min))
 		{
 			distance_min = cur_distance;
-			mesh->triangle_hit = cur_tr;
+			if (closest_tr)
+				free(closest_tr);
+			closest_tr = cur_tr;
 		}
+		else
+			free(cur_tr);
 		i++;
+	}
+	if (i > 0)
+	{
+		*triangle_obj = object_triangle(closest_tr, (*triangle_obj)->index_mat);
+		if (!*triangle_obj)
+			return (NAN);
 	}
 	return (distance_min);
 }

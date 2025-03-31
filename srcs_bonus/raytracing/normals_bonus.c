@@ -23,21 +23,12 @@ static t_vector3d	cone_normal(t_cone cone, t_vector3d point)
 	return (ft_normalize_vector3d(ft_cross_vectors3d(cp, tan)));
 }
 
-t_vector3d	triangle_normal(t_mesh mesh, t_vector3d point)
+static t_vector3d	triangle_normal(t_triangle triangle, t_vector3d point)
 {
 	t_vector3d	normal;
-	t_vector3d	vertices[3];
-	t_vector3d	normals[3];
-	int			i;
 
-	i = 0;
-	while (i < 3)
-	{
-		vertices[i] = mesh.vertices[mesh.triangle_hit.vertices[i]];
-		normals[i] = mesh.normals[mesh.triangle_hit.normals[i]];
-		i++;
-	}
-	normal = interpolate_triangle_data3d(vertices, point, normals);
+	normal = interpolate_triangle_data3d(triangle.vertices, point,
+			triangle.normals);
 	return (normal);
 }
 
@@ -76,8 +67,8 @@ t_vector3d	normal_at_point(t_object object, t_intersection inter,
 		normal = cylinder_normal(*(t_cylinder *)object.object_r, inter.point);
 	else if (object.type == CONE)
 		normal = cone_normal(*(t_cone *)object.object_r, inter.point);
-	else if (object.type == MESH)
-		normal = triangle_normal(*(t_mesh *)object.object_r, inter.point);
+	else if (object.type == TRIANGLE)
+		normal = triangle_normal(*(t_triangle *)object.object_r, inter.point);
 	else
 		return (ft_init_vector3d(0));
 	if (ft_supf(ft_dot_vectors3d(normal, ray_dir), 0))
