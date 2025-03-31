@@ -38,8 +38,7 @@ static double	intersect_object(t_ray ray, t_object *object)
 	else if (object->type == CONE)
 		return (intersect_cone(ray, *(t_cone *)object->object_r));
 	else if (object->type == MESH)
-		return (intersect_mesh(ray, *(t_mesh *)object->object_r,
-				object->object_r));
+		return (intersect_mesh(ray, (t_mesh *)object->object_r));
 	warning("invalid object", "object type not found");
 	return (INFINITY);
 }

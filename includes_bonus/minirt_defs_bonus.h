@@ -8,8 +8,7 @@
 
 /* MACROS */
 
-// # define THREAD_COUNT 20
-# define THREAD_COUNT 1
+# define THREAD_COUNT 20
 
 # define WIN_X 800
 # define WIN_Y 800
@@ -104,6 +103,13 @@ typedef struct vertex
 	int				norm_id;
 }					t_vertex;
 
+typedef struct s_triangle
+{
+	int				vertices[3];
+	int				normals[3];
+	int				uvs[3];
+}					t_triangle;
+
 typedef struct s_mesh
 {
 	t_vector3d		*vertices;
@@ -114,15 +120,8 @@ typedef struct s_mesh
 	int				n_uvs;
 	t_vertex		**faces;
 	int				n_faces;
+	t_triangle		triangle_hit;
 }					t_mesh;
-
-typedef struct s_triangle
-{
-	t_mesh			*mesh;
-	int				vertices[3];
-	int				normals[3];
-	int				uvs[3];
-}					t_triangle;
 
 typedef struct s_cone
 {

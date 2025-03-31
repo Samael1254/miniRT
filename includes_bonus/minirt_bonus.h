@@ -80,8 +80,7 @@ double			intersect_sphere(t_ray ray, t_sphere sphere);
 double			intersect_plane(t_ray ray, t_plane plane);
 double			intersect_cylinder(t_ray ray, t_cylinder cylinder);
 double			intersect_cone(t_ray ray, t_cone cone);
-double			intersect_mesh(t_ray ray, t_mesh mesh,
-					t_triangle *triangle_hit);
+double			intersect_mesh(t_ray ray, t_mesh *mesh);
 t_intersection	intersect_scene(t_ray ray, t_state *state);
 
 t_vector3d		normal_at_point(t_object object, t_intersection inter,
