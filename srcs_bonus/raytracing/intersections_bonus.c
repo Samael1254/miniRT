@@ -31,14 +31,14 @@ static double	intersect_object(t_ray ray, t_object *object)
 {
 	if (object->type == SPHERE)
 		return (intersect_sphere(ray, *(t_sphere *)object->object_r));
-	if (object->type == PLANE)
+	else if (object->type == PLANE)
 		return (intersect_plane(ray, *(t_plane *)object->object_r));
-	if (object->type == CYLINDER)
+	else if (object->type == CYLINDER)
 		return (intersect_cylinder(ray, *(t_cylinder *)object->object_r));
-	if (object->type == CONE)
+	else if (object->type == CONE)
 		return (intersect_cone(ray, *(t_cone *)object->object_r));
-	if (object->type == MESH)
-		return (intersect_mesh(ray, (t_mesh *)object->object_r,
+	else if (object->type == MESH)
+		return (intersect_mesh(ray, *(t_mesh *)object->object_r,
 				object->object_r));
 	warning("invalid object", "object type not found");
 	return (INFINITY);

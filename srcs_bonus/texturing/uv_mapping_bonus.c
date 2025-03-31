@@ -76,7 +76,7 @@ static t_vector2d	plane_mapping(t_plane plane, t_vector3d point,
 	return (clamp_uv(uv));
 }
 
-static t_vector2d	triangle_mapping(t_triangle triangle, t_vector3d point)
+t_vector2d	triangle_mapping(t_triangle triangle, t_vector3d point)
 {
 	t_vector2d	uv;
 	t_vector3d	vertices[3];
@@ -106,8 +106,8 @@ t_vector2d	uv_at_point(t_object object, t_vector3d point, t_vector3d normal)
 		uv = cylinder_mapping(*(t_cylinder *)object.object_r, point, normal);
 	else if (object.type == CONE)
 		uv = cone_mapping(*(t_cone *)object.object_r, point, normal);
-	else if (object.type == TRIANGLE)
-		uv = triangle_mapping(*(t_triangle *)object.object_r, point);
+	// else if (object.type == TRIANGLE)
+	// 	uv = triangle_mapping(*(t_triangle *)object.object_r, point);
 	else
 		return (ft_init_vector2d(0));
 	return (uv);

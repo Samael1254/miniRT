@@ -39,15 +39,23 @@ static double	triangle_distance(double d, t_ray ray, t_vector3d vectors[3],
 	return (d * ft_dot_vectors3d(ao, vectors[2]));
 }
 
-double	intersect_triangle(t_ray ray, t_triangle triangle)
+double	intersect_triangle(t_ray ray, t_triangle triangle, t_mesh mesh)
 {
 	t_vector3d	vertices[3];
 	t_vector3d	vectors[3];
 	double		d;
 
-	vertices[0] = triangle.mesh->vertices[triangle.vertices[0]];
-	vertices[1] = triangle.mesh->vertices[triangle.vertices[1]];
-	vertices[2] = triangle.mesh->vertices[triangle.vertices[2]];
+	vertices[0] = mesh.vertices[triangle.vertices[0]];
+	// printf("mesh 2: %p\n", mesh);
+	// printf("vertices 0: %d\n", triangle.vertices[0]);
+	// printf("x = %f, y = %f, z = %f\n", vertices[0].x, vertices[0].y,
+	// 	vertices[0].z);
+	vertices[1] = mesh.vertices[triangle.vertices[1]];
+	vertices[2] = mesh.vertices[triangle.vertices[2]];
+	(void)triangle;
+	// vertices[0] = ft_init_vector3d(0);
+	// vertices[1] = ft_init_vector3d(0);
+	// vertices[2] = ft_init_vector3d(0);
 	vectors[0] = ft_sub_vectors3d(vertices[1], vertices[0]);
 	vectors[1] = ft_sub_vectors3d(vertices[2], vertices[0]);
 	vectors[2] = ft_cross_vectors3d(vectors[0], vectors[1]);
@@ -62,7 +70,8 @@ static t_triangle	face_to_triangle(t_mesh *mesh, t_vertex *face)
 	t_triangle	triangle;
 	int			i;
 
-	triangle.mesh = mesh;
+	// triangle.mesh = mesh;
+	(void)mesh;
 	i = 0;
 	while (i < 3)
 	{
@@ -71,29 +80,36 @@ static t_triangle	face_to_triangle(t_mesh *mesh, t_vertex *face)
 		triangle.uvs[i] = face[i].text_id;
 		i++;
 	}
+	// printf("vertices index: %d\n", triangle.vertices[0]);
 	return (triangle);
 }
 
-double	intersect_mesh(t_ray ray, t_mesh *mesh, t_triangle *triangle_hit)
+double	intersect_mesh(t_ray ray, t_mesh mesh, void *triangle_hit)
 {
 	double		cur_distance;
 	double		distance_min;
 	t_triangle	cur_tr;
 	int			i;
 
+	// t_triangle	closest_tr;
 	distance_min = INFINITY;
 	i = 0;
-	while (i < mesh->n_faces)
+	// printf("mesh 1: %p\n", mesh);
+	while (i < mesh.n_faces)
 	{
-		cur_tr = face_to_triangle(mesh, mesh->faces[i]);
-		cur_distance = intersect_triangle(ray, cur_tr);
+		// printf("mesh 1: %p\n", mesh);
+		cur_tr = face_to_triangle(&mesh, mesh.faces[i]);
+		cur_distance = intersect_triangle(ray, cur_tr, mesh);
 		if (ft_in_rangef(cur_distance, RAY_REACH_MIN, distance_min))
 		{
 			distance_min = cur_distance;
-			*triangle_hit = cur_tr;
+			// closest_tr = cur_tr;
 		}
 		i++;
 	}
+	(void)triangle_hit;
+	// if (i > 0)
+	// 	*(t_triangle *)triangle_hit = closest_tr;
 	return (distance_min);
 }
 

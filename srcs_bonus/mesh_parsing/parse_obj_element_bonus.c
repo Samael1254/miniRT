@@ -4,6 +4,7 @@
 #include "minirt_obj_parser.h"
 #include <fcntl.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 t_vector3d	parse_vertex(char *line, t_mesh *mesh, t_state *state)

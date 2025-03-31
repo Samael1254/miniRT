@@ -55,7 +55,6 @@ The following keybindings allow the user to interact with miniRT:
 #### PARSING
 - Set the texture scaling in the .mrt file
 - Set the texture repetition in the .mrt file
-- Fix obj aprsing for uvs
 
 #### GRAPHICS
 - Anti aliasing
