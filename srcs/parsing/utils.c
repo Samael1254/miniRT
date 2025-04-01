@@ -6,15 +6,15 @@
 #include <math.h>
 
 /*
- * Return a t_vector3d containing the vector RGB based on the line
+ * Return a t_vec3 containing the vector RGB based on the line
  * with this format `XXX,XXX,XXX`
  * Takes in parameter a pointer on bool in order to catch an error 
  * on the split malloc
  * Error: returns -1,-1,-1 if an error occured
  * */
-t_vector3d	get_vector(char *line_vector, bool *error)
+t_vec3	get_vector(char *line_vector, bool *error)
 {
-	t_vector3d	vector;
+	t_vec3	vector;
 	char		**split_vector;
 
 	split_vector = ft_split(line_vector, ',');
@@ -23,7 +23,7 @@ t_vector3d	get_vector(char *line_vector, bool *error)
 		if (split_vector)
 			ft_free_strtab(split_vector);
 		*error = true;
-		return ((t_vector3d){-1, -1, -1});
+		return ((t_vec3){-1, -1, -1});
 	}
 	vector.x = ft_atod(split_vector[0]);
 	vector.y = ft_atod(split_vector[1]);
@@ -66,7 +66,7 @@ t_color	get_color(char *line_color, bool *error)
  *	Returns (0) if not
  *	Returns (1) if yes
  * */
-bool	is_vector3d_in_range(t_vector3d vec, double min, double max)
+bool	is_vec3_in_range(t_vec3 vec, double min, double max)
 {
 	if (vec.x < min || vec.x > max)
 		return (false);
@@ -93,7 +93,7 @@ bool	is_t_color_valid(t_color color, double min, double max)
 	return (true);
 }
 
-bool	is_norm_vector_valid(t_vector3d vec)
+bool	is_norm_vector_valid(t_vec3 vec)
 {
 	if (pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.z, 2) != 1)
 		return (false);

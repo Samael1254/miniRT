@@ -13,12 +13,12 @@ static t_intersection	make_intersection(t_ray ray, t_object *object,
 	if (!ft_in_rangef(distance_min, RAY_REACH_MIN, RAY_REACH_MAX))
 	{
 		inter.color = get_sky_color(ray);
-		inter.point = ft_init_vector3d(INFINITY);
-		inter.normal = ft_init_vector3d(0);
+		inter.point = ft_init_vec3(INFINITY);
+		inter.normal = ft_init_vec3(0);
 		return (inter);
 	}
 	inter.color = object->color;
-	inter.point = ft_add_vectors3d(ray.origin, ft_scale_vector3d(distance_min,
+	inter.point = ft_add_vec3(ray.origin, ft_scale_vec3(distance_min,
 				ray.direction));
 	inter.normal = normal_at_point(*object, inter.point, ray.direction);
 	return (inter);

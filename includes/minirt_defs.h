@@ -61,20 +61,20 @@ typedef struct s_color
 
 typedef struct s_sphere
 {
-	t_vector3d		pos;
+	t_vec3		pos;
 	double			diameter;
 }					t_sphere;
 
 typedef struct s_plane
 {
-	t_vector3d		point;
-	t_vector3d		normal;
+	t_vec3		point;
+	t_vec3		normal;
 }					t_plane;
 
 typedef struct s_cylinder
 {
-	t_vector3d		pos;
-	t_vector3d		axis;
+	t_vec3		pos;
+	t_vec3		axis;
 	double			diameter;
 	double			height;
 }					t_cylinder;
@@ -87,17 +87,17 @@ typedef struct s_ambient_light
 
 typedef struct s_point_light
 {
-	t_vector3d		pos;
+	t_vec3		pos;
 	double			brightness;
 	t_color			color;
 }					t_point_light;
 
 typedef struct s_camera
 {
-	t_vector3d		pos;
-	t_vector3d		dir;
-	t_vector3d		x_axis;
-	t_vector3d		y_axis;
+	t_vec3		pos;
+	t_vec3		dir;
+	t_vec3		x_axis;
+	t_vec3		y_axis;
 	double			fov_2;
 }					t_camera;
 
@@ -118,16 +118,16 @@ typedef struct s_scene
 
 typedef struct s_ray
 {
-	t_vector3d		origin;
-	t_vector3d		direction;
+	t_vec3		origin;
+	t_vec3		direction;
 	t_color			color;
 }					t_ray;
 
 typedef struct s_intersection
 {
 	t_color			color;
-	t_vector3d		point;
-	t_vector3d		normal;
+	t_vec3		point;
+	t_vec3		normal;
 }					t_intersection;
 
 // State of the program
