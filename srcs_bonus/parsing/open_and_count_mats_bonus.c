@@ -95,8 +95,7 @@ static int	line_mt_handler(t_state *state, char *line_mat)
 	state->mats_tab = ft_calloc(state->len_mats_tab + 1, sizeof(t_material));
 	if (!state->mats_tab)
 		error("malloc", "open_and_count_mats", state);
-	material_handling(state, fd);
-	return (0);
+	return (material_handling(state, fd), 0);
 }
 
 /*
@@ -128,8 +127,7 @@ int	open_and_count_mats(t_state *state, char *filename)
 		else
 			free(line);
 	}
-	close(fd);
-	if (nb_mt_found != 1)
+	if (close(fd) == -1 && nb_mt_found != 1)
 		error("materials", "need one and only one MT line", state);
 	return (open(filename, O_RDONLY));
 }

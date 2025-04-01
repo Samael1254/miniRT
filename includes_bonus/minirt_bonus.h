@@ -22,7 +22,6 @@ long			get_time_diff(struct timeval time, struct timeval start_time);
 t_vec3			get_vector(char *line_vector, bool *error);
 t_color			get_color(char *line_color, bool *error);
 bool			is_vec3_in_range(t_vec3 vec, double min, double max);
-bool			is_t_color_valid(t_color color, double min, double max);
 bool			is_norm_vector_valid(t_vec3 vec);
 
 // utils2.c
@@ -61,6 +60,11 @@ void			get_texture_map_img(t_state *state, char *filename,
 void			loop_events(t_state *state);
 void			modify_rot_step_size(t_state *state, char sign);
 void			modify_step_size(t_state *state, char sign);
+int				on_mouse_moov(enum e_keycode key, int x, int y, t_state *state);
+void			recreate_image(t_state *state);
+int				on_mouse_moov(enum e_keycode key, int x, int y, t_state *state);
+int				end_hold_alt_hook(int button, t_state *state);
+void			move_camera(t_state *state, t_camera *camera, enum e_keycode key);
 
 // Transform //
 
@@ -101,6 +105,10 @@ t_vec2			interpolate_triangle_data2d(t_vec3 vertices[3], t_vec3 point,
 
 t_color			phong_illumination(t_state *state, t_intersection inter,
 					t_ray ray);
+t_vec3			get_reflection_dir(t_vec3 light_dir, t_vec3 normal);
+double			get_dist_attenuation(t_vec3 point, t_vec3 light_pos);
+t_color			shade_from_one_light(t_intersection inter, t_vec3 view_dir,
+		t_state *state, t_point_light light);
 
 // Graphics //
 

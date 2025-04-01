@@ -9,7 +9,8 @@ BONUS_HEADERS_DIR = includes_bonus/
 HEADERS = minirt.h minirt_defs.h
 HEADERS := $(addprefix $(HEADERS_DIR), $(HEADERS))
 
-BONUS_HEADERS = minirt_bonus.h minirt_defs_bonus.h minirt_obj_parser.h
+BONUS_HEADERS = minirt_bonus.h minirt_base_bonus.h minirt_defs_bonus.h minirt_errors_bonus.h minirt_graphics_bonus.h \
+				minirt_light_bonus.h minirt_obj_parser.h minirt_parsing_bonus.h
 BONUS_HEADERS := $(addprefix $(BONUS_HEADERS_DIR), $(BONUS_HEADERS))
 
 SRCS_MAIN := main.c exit_program.c events.c init_state.c
@@ -32,20 +33,20 @@ SOURCES := $(addprefix $(SOURCES_DIR)base/, $(SRCS_MAIN)) \
 
 
 BONUS_MAIN := main_bonus.c exit_program_bonus.c events_bonus.c init_state_bonus.c \
-			  time_bonus.c events_bonus_utils.c
+			  time_bonus.c events_utils_bonus.c
 
 BONUS_PARSING := init_scene_bonus.c insert_in_struct_bonus.c utils_bonus.c utils2_bonus.c objects_list_bonus.c \
 				object_sphere_bonus.c object_plane_bonus.c object_cylinder_bonus.c utils_general_objects_bonus.c \
 				create_lights_bonus.c open_and_count_mats_bonus.c object_cone_bonus.c utils_mat.c object_mesh_bonus.c
 
-BONUS_GRAPHICS := color_bonus.c graphics_bonus.c
+BONUS_GRAPHICS := color_bonus.c graphics_bonus.c color_utils_bonus.c
 
 BONUS_ERRORS := errors_bonus.c check_arguments_bonus.c
 
 BONUS_RAYTRACING := raytracing_bonus.c intersections_bonus.c intersect_objects_bonus.c rays_bonus.c \
 				   normals_bonus.c
 
-BONUS_LIGHT := light_bonus.c phong_bonus.c
+BONUS_LIGHT := light_bonus.c light_utils_bonus.c
 
 BONUS_TEXTURING := uv_mapping_bonus.c normal_map_bonus.c mapping_utils_bonus.c
 
