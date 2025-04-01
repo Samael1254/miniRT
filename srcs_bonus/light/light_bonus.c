@@ -1,8 +1,9 @@
 #include "ft_algebra.h"
 #include "ft_list.h"
 #include "ft_math.h"
-#include "minirt_bonus.h"
 #include "minirt_defs_bonus.h"
+#include "minirt_graphics_bonus.h"
+#include "minirt_light_bonus.h"
 #include <math.h>
 #include <stdbool.h>
 
@@ -12,8 +13,7 @@ t_vec3	get_reflection_dir(t_vec3 light_dir, t_vec3 normal)
 
 	light_dir = ft_scale_vec3(-1, light_dir);
 	incidence = ft_dot_vec3(light_dir, normal);
-	return (ft_sub_vec3(ft_scale_vec3(2 * incidence, normal),
-			light_dir));
+	return (ft_sub_vec3(ft_scale_vec3(2 * incidence, normal), light_dir));
 }
 
 t_color	ambiant_color(t_ambiant_light a_light, t_material material,

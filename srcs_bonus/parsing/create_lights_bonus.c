@@ -1,7 +1,10 @@
 #include "ft_conversion.h"
-#include "minirt_bonus.h"
-#include "ft_strings.h"
 #include "ft_memory.h"
+#include "ft_strings.h"
+#include "minirt_defs_bonus.h"
+#include "minirt_errors_bonus.h"
+#include "minirt_parsing_bonus.h"
+#include <stdbool.h>
 #include <stdlib.h>
 
 static t_point_light	*elem_light(t_state *state, char **split)

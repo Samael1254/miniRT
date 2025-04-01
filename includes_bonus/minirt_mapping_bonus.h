@@ -4,6 +4,9 @@
 # include "ft_algebra.h"
 # include "minirt_defs_bonus.h"
 
+t_vec2	uv_at_point(t_object object, t_vec3 point, t_vec3 normal);
+t_vec3	blend_normal_map(t_vec2 uv, t_vec3 normal, t_material material);
+
 // Object mapping
 
 t_vec2	sphere_mapping(t_vec3 normal);

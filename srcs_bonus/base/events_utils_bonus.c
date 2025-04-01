@@ -1,7 +1,9 @@
+#include "minirt_base_bonus.h"
 #include "minirt_defs_bonus.h"
-#include "minirt_bonus.h"
-#include <stdio.h>
+#include "minirt_errors_bonus.h"
+#include "minirt_raytracing_bonus.h"
 #include "mlx.h"
+#include <stdio.h>
 
 void	modify_step_size(t_state *state, char sign)
 {

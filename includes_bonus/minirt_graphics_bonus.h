@@ -7,6 +7,7 @@
 t_color	scale_color(t_color color, double lambda);
 t_color	add_colors(t_color color1, t_color color2);
 t_color	add_colors(t_color color1, t_color color2);
+t_color	absorb_colors(t_color color1, t_color color2);
 
 // color_utils_bonus.c
 t_color	init_color(unsigned char r, unsigned char g, unsigned char b);

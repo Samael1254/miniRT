@@ -1,7 +1,7 @@
 #include "ft_algebra.h"
 #include "ft_conversion.h"
 #include "ft_strings.h"
-#include "minirt_bonus.h"
+#include "minirt_parsing_bonus.h"
 #include <stdbool.h>
 
 /*

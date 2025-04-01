@@ -1,5 +1,5 @@
 #include "ft_algebra.h"
-#include "minirt_bonus.h"
+#include "minirt_base_bonus.h"
 #include "minirt_defs_bonus.h"
 #include "mlx.h"
 #include <stdlib.h>

@@ -1,7 +1,7 @@
 #include "ft_algebra.h"
 #include "ft_math.h"
-#include "minirt_bonus.h"
 #include "minirt_defs_bonus.h"
+#include "minirt_mapping_bonus.h"
 
 t_vec3	sphere_normal(t_sphere sphere, t_vec3 point)
 {

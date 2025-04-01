@@ -1,7 +1,9 @@
 #include "ft_algebra.h"
 #include "ft_conversion.h"
 #include "ft_strings.h"
-#include "minirt_bonus.h"
+#include "minirt_defs_bonus.h"
+#include "minirt_errors_bonus.h"
+#include "minirt_parsing_bonus.h"
 #include <stdbool.h>
 
 static void	add_ambient_light(t_state *state, char **split)
@@ -41,10 +43,8 @@ static void	add_camera(t_state *state, char **split)
 		ft_free_strtab(split);
 		error("parsing", "error on camera position or rotation", state);
 	}
-	state->scene.camera.x_axis = ft_cross_vec3(dir, ft_set_vec3(0, 1,
-				0));
-	state->scene.camera.y_axis = ft_cross_vec3(state->scene.camera.x_axis,
-			dir);
+	state->scene.camera.x_axis = ft_cross_vec3(dir, ft_set_vec3(0, 1, 0));
+	state->scene.camera.y_axis = ft_cross_vec3(state->scene.camera.x_axis, dir);
 	fov_2 = ft_atod(split[3]) / 2;
 	if (fov_2 < 0 || fov_2 > 90)
 	{

@@ -1,7 +1,10 @@
 #include "ft_algebra.h"
 #include "ft_math.h"
-#include "minirt_bonus.h"
 #include "minirt_defs_bonus.h"
+#include "minirt_errors_bonus.h"
+#include "minirt_intersections_bonus.h"
+#include "minirt_mapping_bonus.h"
+#include "minirt_normals_bonus.h"
 #include <math.h>
 #include <stddef.h>
 #include <stdio.h>

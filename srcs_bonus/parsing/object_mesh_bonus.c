@@ -2,9 +2,10 @@
 #include "ft_conversion.h"
 #include "ft_memory.h"
 #include "ft_strings.h"
-#include "minirt_bonus.h"
+#include "minirt_defs_bonus.h"
+#include "minirt_errors_bonus.h"
 #include "minirt_obj_parser.h"
-#include <stdio.h>
+#include "minirt_parsing_bonus.h"
 #include <stdlib.h>
 
 static void	transform_mesh(t_mesh *mesh, t_vec3 pos, double scale)

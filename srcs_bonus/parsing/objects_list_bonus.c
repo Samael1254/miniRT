@@ -1,5 +1,7 @@
 #include "ft_strings.h"
-#include "minirt_bonus.h"
+#include "minirt_defs_bonus.h"
+#include "minirt_parsing_bonus.h"
+#include <stdbool.h>
 #include <stdlib.h>
 
 void	add_object_to_list(t_state *state, char **split)

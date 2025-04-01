@@ -2,8 +2,11 @@
 #include "ft_memory.h"
 #include "ft_strings.h"
 #include "get_next_line.h"
-#include "minirt_bonus.h"
+#include "minirt_defs_bonus.h"
+#include "minirt_errors_bonus.h"
+#include "minirt_parsing_bonus.h"
 #include <fcntl.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
 

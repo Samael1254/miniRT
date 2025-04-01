@@ -1,6 +1,6 @@
-#include "minirt_bonus.h"
-#include "minirt_defs_bonus.h"
 #include "ft_math.h"
+#include "minirt_defs_bonus.h"
+#include "minirt_errors_bonus.h"
 
 static t_color	lerp_colors(t_color color1, t_color color2, double lambda)
 {

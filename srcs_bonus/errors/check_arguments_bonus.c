@@ -1,5 +1,5 @@
 #include "ft_strings.h"
-#include "minirt_bonus.h"
+#include "minirt_errors_bonus.h"
 #include "stddef.h"
 
 static void	check_filename(char **argv)

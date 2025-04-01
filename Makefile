@@ -9,10 +9,6 @@ BONUS_HEADERS_DIR = includes_bonus/
 HEADERS = minirt.h minirt_defs.h
 HEADERS := $(addprefix $(HEADERS_DIR), $(HEADERS))
 
-BONUS_HEADERS = minirt_bonus.h minirt_base_bonus.h minirt_defs_bonus.h minirt_errors_bonus.h minirt_graphics_bonus.h \
-				minirt_light_bonus.h minirt_obj_parser.h minirt_parsing_bonus.h
-BONUS_HEADERS := $(addprefix $(BONUS_HEADERS_DIR), $(BONUS_HEADERS))
-
 SRCS_MAIN := main.c exit_program.c events.c init_state.c
 
 SRCS_PARSING := init_scene.c insert_in_struct.c utils.c utils2.c objects_list.c \
@@ -95,7 +91,7 @@ $(NAME): $(LIBFT) $(MLX) $(OBJS) $(HEADERS)
 	@ $(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFLAGS)
 	@ echo " \033[1;32m MiniRT \033[4m$(MODE)\033[0;1;32m binary compiled\033[m"
 
-bonus: $(LIBFT) $(MLX) $(BONUS_OBJS) $(BONUS_HEADERS)
+bonus: $(LIBFT) $(MLX) $(BONUS_OBJS)
 	@ rm -f $(MANDATORY_OBJS)
 	@ rm -rf $(BUILD_DIR)mandatory
 	@if ! $(MAKE) -s -n MODE=bonus | grep -q .; then \

@@ -1,7 +1,8 @@
 #include "ft_chars.h"
 #include "ft_math.h"
 #include "ft_strings.h"
-#include "minirt_bonus.h"
+#include "minirt_defs_bonus.h"
+#include "minirt_errors_bonus.h"
 #include <stdbool.h>
 
 bool	is_norm_vector_valid(t_vec3 vec)

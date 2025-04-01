@@ -3,6 +3,8 @@
 
 # include "minirt_defs_bonus.h"
 
+t_vec3	normal_at_point(t_object object, t_intersection inter, t_vec3 ray_dir);
+
 // Object normal
 
 t_vec3	sphere_normal(t_sphere sphere, t_vec3 point);

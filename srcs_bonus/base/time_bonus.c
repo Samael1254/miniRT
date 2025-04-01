@@ -1,5 +1,5 @@
-#include "minirt_bonus.h"
 #include "minirt_defs_bonus.h"
+#include "minirt_errors_bonus.h"
 #include <sys/time.h>
 #include <unistd.h>
 

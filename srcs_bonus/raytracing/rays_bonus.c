@@ -1,6 +1,8 @@
 #include "ft_algebra.h"
-#include "minirt_bonus.h"
 #include "minirt_defs_bonus.h"
+#include "minirt_graphics_bonus.h"
+#include "minirt_intersections_bonus.h"
+#include "minirt_light_bonus.h"
 #include <math.h>
 #include <pthread.h>
 #include <stdio.h>

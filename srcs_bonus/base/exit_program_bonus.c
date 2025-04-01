@@ -1,6 +1,4 @@
 #include "ft_list.h"
-#include "minirt_bonus.h"
-#include "minirt_defs_bonus.h"
 #include "minirt_obj_parser.h"
 #include "mlx.h"
 #include <stdlib.h>

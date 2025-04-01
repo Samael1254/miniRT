@@ -1,7 +1,10 @@
 #include "ft_conversion.h"
 #include "ft_memory.h"
 #include "ft_strings.h"
-#include "minirt_bonus.h"
+#include "minirt_defs_bonus.h"
+#include "minirt_errors_bonus.h"
+#include "minirt_parsing_bonus.h"
+#include <stdbool.h>
 #include <stdlib.h>
 
 static t_sphere	*get_sphere_data(t_state *state, char **split, t_object *obj)

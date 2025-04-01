@@ -1,6 +1,6 @@
 #include "ft_algebra.h"
-#include "minirt_bonus.h"
 #include "minirt_defs_bonus.h"
+#include "minirt_graphics_bonus.h"
 #include "minirt_mapping_bonus.h"
 
 static t_vec3	color_to_normal(t_color color)

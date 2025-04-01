@@ -1,5 +1,4 @@
 #include "ft_math.h"
-#include "minirt_bonus.h"
 #include "minirt_defs_bonus.h"
 
 t_color	scale_color(t_color color, double lambda)

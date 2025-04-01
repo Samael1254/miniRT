@@ -1,6 +1,6 @@
 #include "ft_algebra.h"
-#include "minirt_bonus.h"
 #include "minirt_defs_bonus.h"
+#include "minirt_errors_bonus.h"
 #include <stdio.h>
 
 static int	rgb_to_int(t_color color)

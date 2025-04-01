@@ -1,4 +1,7 @@
-#include "minirt_bonus.h"
+#include "minirt_base_bonus.h"
+#include "minirt_defs_bonus.h"
+#include "minirt_errors_bonus.h"
+#include "minirt_raytracing_bonus.h"
 #include <stdio.h>
 #include <stdlib.h>
 

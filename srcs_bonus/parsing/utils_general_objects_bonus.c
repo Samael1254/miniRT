@@ -1,6 +1,7 @@
 #include "ft_chars.h"
 #include "ft_strings.h"
-#include "minirt_bonus.h"
+#include "minirt_defs_bonus.h"
+#include "minirt_errors_bonus.h"
 
 void	ambiant_light_checker(t_state *state, char **split)
 {
