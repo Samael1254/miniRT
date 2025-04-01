@@ -4,25 +4,6 @@
 #include "mlx.h"
 #include <stdlib.h>
 
-static void	recreate_image(t_state *state)
-{
-	void	*tmp;
-
-	tmp = state->img_data.img;
-	state->img_data.img = mlx_new_image(state->display, WIN_X, WIN_Y);
-	if (!state->img_data.img)
-		error("init_mlx", "failed to create img", state);
-	state->img_data.addr = mlx_get_data_addr(state->img_data.img,
-			&state->img_data.bp_pixel, &state->img_data.line_len,
-			&state->img_data.endian);
-	if (!state->img_data.addr)
-		error("init_mlx", "failed to retrieve addr", state);
-	shoot_rays(state);
-	mlx_destroy_image(state->display, tmp);
-	mlx_put_image_to_window(state->display, state->win, state->img_data.img, 0,
-		0);
-}
-
 static int	display_help(t_state *state)
 {
 	mlx_string_put(state->display, state->win, 20, 20, 0xFFFFFF, "-- HELP --");
@@ -39,11 +20,11 @@ static int	display_help(t_state *state)
 	return (0);
 }
 
-static void	move_camera(t_state *state, t_camera *camera, enum e_keycode key)
+void	move_camera(t_state *state, t_camera *camera, enum e_keycode key)
 {
 	t_vec3	translator;
 	t_vec3	axis;
-	short		sign;
+	short	sign;
 
 	axis = ft_init_vec3(0);
 	sign = 1;
@@ -106,24 +87,6 @@ static int	key_pressed(enum e_keycode key, t_state *state)
 	if (key == H_KEY)
 		display_help(state);
 	return (1);
-}
-
-static int	on_mouse_moov(enum e_keycode key, int x, int y, t_state *state)
-{
-	(void)x;
-	(void)y;
-	if (key == SCROLL_UP)
-		move_camera(state, &state->scene.camera, SCROLL_UP);
-	if (key == SCROLL_DOWN)
-		move_camera(state, &state->scene.camera, SCROLL_DOWN);
-	return (0);
-}
-
-static int	end_hold_alt_hook(int button, t_state *state)
-{
-	if (button == ALT_KEY && state->hold_alt == 1)
-		state->hold_alt = 0;
-	return (0);
 }
 
 void	loop_events(t_state *state)

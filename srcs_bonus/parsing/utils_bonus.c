@@ -14,7 +14,7 @@
 t_vec3	get_vector(char *line_vector, bool *error)
 {
 	t_vec3	vector;
-	char		**split_vector;
+	char	**split_vector;
 
 	split_vector = ft_split(line_vector, ',');
 	if (!ft_check_split_data(split_vector))
@@ -52,45 +52,28 @@ static unsigned char	get_transparency(char *line, bool *error)
 t_color	get_color(char *line_color, bool *error)
 {
 	t_color	color;
-	char	**split_color;
+	char	**split;
 
-	split_color = ft_split(line_color, ',');
-	if (!split_color || ft_strtab_size(split_color) < 3
-		|| ft_strtab_size(split_color) > 4)
+	split = ft_split(line_color, ',');
+	if (!split || ft_strtab_size(split) < 3 || ft_strtab_size(split) > 4)
 	{
-		if (split_color)
-			ft_free_strtab(split_color);
+		if (split)
+			ft_free_strtab(split);
 		*error = true;
 		return ((t_color){0, 0, 0, 0});
 	}
-	color.r = ft_atoi(split_color[0]);
-	color.g = ft_atoi(split_color[1]);
-	color.b = ft_atoi(split_color[2]);
-	if (ft_strtab_size(split_color) == 4)
-		color.a = get_transparency(split_color[3], error);
+	color.r = ft_atoi(split[0]);
+	color.g = ft_atoi(split[1]);
+	color.b = ft_atoi(split[2]);
+	if (ft_strtab_size(split) == 4)
+		color.a = get_transparency(split[3], error);
 	else
 		color.a = 100;
-	ft_free_strtab(split_color);
+	ft_free_strtab(split);
 	if (color.r < 0 || color.r > 255 || color.g < 0 || color.g > 255
 		|| color.b < 0 || color.b > 255 || color.a < 0 || color.a > 100)
 		*error = true;
 	else
 		*error = false;
 	return (color);
-}
-
-/*
- *	Check if a vector is in the range min and max (excluded)
- *	Returns (0) if not
- *	Returns (1) if yes
- * */
-bool	is_t_color_valid(t_color color, double min, double max)
-{
-	if (color.r < min || color.r > max)
-		return (false);
-	if (color.g < min || color.g > max)
-		return (false);
-	if (color.b < min || color.b > max)
-		return (false);
-	return (true);
 }

@@ -44,6 +44,8 @@ static int	get_data_line(t_state *state, char *line, int *i)
 	free(line);
 	if (!split)
 		error("split", "an error as occured", state);
+	if (!*split)
+		return (ft_free_strtab(split), 0);
 	if (split[0][0] == '#')
 		return (ft_free_strtab(split), 0);
 	if (insert_in_struct(state, split) == 2)

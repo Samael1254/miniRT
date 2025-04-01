@@ -30,8 +30,8 @@ static void	add_ambient_light(t_state *state, char **split)
 static void	add_camera(t_state *state, char **split)
 {
 	t_vec3	dir;
-	double		fov_2;
-	bool		has_error;
+	double	fov_2;
+	bool	has_error;
 
 	dir = get_vector(split[2], &has_error);
 	state->scene.camera.pos = get_vector(split[1], &has_error);
@@ -59,9 +59,9 @@ static void	add_camera(t_state *state, char **split)
 void	add_light(t_state *state, char **split)
 {
 	t_vec3	pos;
-	double		brightness;
-	t_color		color;
-	bool		has_error;
+	double	brightness;
+	t_color	color;
+	bool	has_error;
 
 	pos = get_vector(split[1], &has_error);
 	brightness = ft_atod(split[2]);
@@ -96,8 +96,6 @@ static void	add_sky(t_state *state, char **split)
 
 int	insert_in_struct(t_state *state, char **split)
 {
-	if (!*split)
-		return (-1);
 	if (!ft_strncmp(split[0], "A", ft_strlen(split[0])))
 		return (add_ambient_light(state, split), 2);
 	else if (!ft_strncmp(split[0], "C", ft_strlen(split[0])))

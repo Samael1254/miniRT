@@ -41,7 +41,7 @@ t_color	get_pixel_color(t_img_data texture, t_vec2 uv)
 {
 	unsigned int	color;
 	int				offset;
-	t_ivec2		xy;
+	t_ivec2			xy;
 
 	xy.x = uv.x * texture.line_len / (texture.bp_pixel) * 8;
 	xy.y = uv.y * texture.height;

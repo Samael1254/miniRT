@@ -1,5 +1,5 @@
 #include "ft_strings.h"
-#include "minirt_bonus.h"
+#include "minirt_base_bonus.h"
 #include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
