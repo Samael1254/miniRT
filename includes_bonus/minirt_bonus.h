@@ -19,11 +19,11 @@ long			get_time_diff(struct timeval time, struct timeval start_time);
 // Parsing
 
 // utils.c
-t_vector3d		get_vector(char *line_vector, bool *error);
+t_vec3			get_vector(char *line_vector, bool *error);
 t_color			get_color(char *line_color, bool *error);
-bool			is_vector3d_in_range(t_vector3d vec, double min, double max);
+bool			is_vec3_in_range(t_vec3 vec, double min, double max);
 bool			is_t_color_valid(t_color color, double min, double max);
-bool			is_norm_vector_valid(t_vector3d vec);
+bool			is_norm_vector_valid(t_vec3 vec);
 
 // utils2.c
 bool			ft_check_error_line(char **split, int len);
@@ -84,20 +84,18 @@ double			intersect_mesh(t_ray ray, t_mesh *mesh,
 					t_object **triangle_obj);
 t_intersection	intersect_scene(t_ray ray, t_state *state);
 
-t_vector3d		normal_at_point(t_object object, t_intersection inter,
-					t_vector3d ray_dir);
-t_vector3d		blend_normal_map(t_vector2d uv, t_vector3d normal,
-					t_material material);
+t_vec3			normal_at_point(t_object object, t_intersection inter,
+					t_vec3 ray_dir);
+t_vec3			blend_normal_map(t_vec2 uv, t_vec3 normal, t_material material);
 
-t_vector2d		uv_at_point(t_object object, t_vector3d point,
-					t_vector3d normal);
+t_vec2			uv_at_point(t_object object, t_vec3 point, t_vec3 normal);
 
-t_vector3d		get_reference_vector(t_vector3d normal);
-t_vector2d		clamp_uv(t_vector2d uv);
-t_vector3d		interpolate_triangle_data3d(t_vector3d vertices[3],
-					t_vector3d point, t_vector3d data[3]);
-t_vector2d		interpolate_triangle_data2d(t_vector3d vertices[3],
-					t_vector3d point, t_vector2d data[3]);
+t_vec3			get_ref_vec(t_vec3 normal);
+t_vec2			clamp_uv(t_vec2 uv);
+t_vec3			interpolate_triangle_data3d(t_vec3 vertices[3], t_vec3 point,
+					t_vec3 data[3]);
+t_vec2			interpolate_triangle_data2d(t_vec3 vertices[3], t_vec3 point,
+					t_vec2 data[3]);
 
 // Light //
 
@@ -111,9 +109,9 @@ t_color			scale_color(t_color color, double lambda);
 t_color			init_color(unsigned char r, unsigned char g, unsigned char b);
 t_color			absorb_colors(t_color color1, t_color color2);
 t_color			get_sky_color(t_sky sky, t_ray ray);
-t_color			get_pixel_color(t_img_data texture, t_vector2d uv);
+t_color			get_pixel_color(t_img_data texture, t_vec2 uv);
 void			render_scene(t_state *state, t_ray **rays);
-void			put_pixel(t_img_data *img, t_ivector2d coords, t_color color);
+void			put_pixel(t_img_data *img, t_ivec2 coords, t_color color);
 
 // Check arguments //
 
@@ -135,7 +133,7 @@ int				exit_program(t_state *state, int status);
 
 // PRINT FOR DEBUGS
 void			print_scene(t_scene scene);
-void			print_vector3d(t_vector3d vec);
+void			print_vec3(t_vec3 vec);
 void			print_color(t_color color);
 
 #endif

@@ -7,15 +7,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static void	transform_mesh(t_mesh *mesh, t_vector3d pos, double scale)
+static void	transform_mesh(t_mesh *mesh, t_vec3 pos, double scale)
 {
 	int	i;
 
 	i = 0;
 	while (i < mesh->n_vertices)
 	{
-		mesh->vertices[i] = ft_scale_vector3d(scale, mesh->vertices[i]);
-		mesh->vertices[i] = ft_add_vectors3d(pos, mesh->vertices[i]);
+		mesh->vertices[i] = ft_scale_vec3(scale, mesh->vertices[i]);
+		mesh->vertices[i] = ft_add_vec3(pos, mesh->vertices[i]);
 		i++;
 	}
 }

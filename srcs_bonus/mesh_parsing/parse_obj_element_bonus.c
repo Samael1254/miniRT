@@ -6,9 +6,9 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-t_vector3d	parse_vertex(char *line, t_mesh *mesh, t_state *state)
+t_vec3	parse_vertex(char *line, t_mesh *mesh, t_state *state)
 {
-	t_vector3d	new_vertex;
+	t_vec3	new_vertex;
 	char		**line_data;
 
 	line_data = ft_split(line, ' ');
@@ -25,9 +25,9 @@ t_vector3d	parse_vertex(char *line, t_mesh *mesh, t_state *state)
 	return (new_vertex);
 }
 
-t_vector2d	parse_uv(char *line, t_mesh *mesh, t_state *state)
+t_vec2	parse_uv(char *line, t_mesh *mesh, t_state *state)
 {
-	t_vector2d	new_vertex;
+	t_vec2	new_vertex;
 	char		**line_data;
 
 	line_data = ft_split(line, ' ');

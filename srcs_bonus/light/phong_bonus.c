@@ -6,21 +6,21 @@
 #include <math.h>
 #include <stdbool.h>
 
-static t_vector3d	get_reflection_dir(t_vector3d light_dir, t_vector3d normal)
+static t_vec3	get_reflection_dir(t_vec3 light_dir, t_vec3 normal)
 {
 	double	incidence;
 
-	light_dir = ft_scale_vector3d(-1, light_dir);
-	incidence = ft_dot_vectors3d(light_dir, normal);
-	return (ft_sub_vectors3d(ft_scale_vector3d(2 * incidence, normal),
+	light_dir = ft_scale_vec3(-1, light_dir);
+	incidence = ft_dot_vec3(light_dir, normal);
+	return (ft_sub_vec3(ft_scale_vec3(2 * incidence, normal),
 			light_dir));
 }
 
-static t_vector3d	light_direction(t_ray ray, t_point_light light)
+static t_vec3	light_direction(t_ray ray, t_point_light light)
 {
-	t_vector3d	light_dir;
+	t_vec3	light_dir;
 
-	light_dir = ft_normalize_vector3d(ft_sub_vectors3d(light.pos, ray.origin));
+	light_dir = ft_normalize_vec3(ft_sub_vec3(light.pos, ray.origin));
 	return (light_dir);
 }
 
@@ -49,17 +49,17 @@ static t_color	diffuse_color(double incidence, t_material material,
 	return (scale_color(color, incidence));
 }
 
-static double	get_specular_term(t_vector3d light_dir, t_vector3d view_dir,
-		t_vector3d normal, t_material material)
+static double	get_specular_term(t_vec3 light_dir, t_vec3 view_dir,
+		t_vec3 normal, t_material material)
 {
 	double		specular;
-	t_vector3d	reflection_dir;
+	t_vec3	reflection_dir;
 	double		rv;
 
 	if (ft_equalf(material.specularity, 0))
 		return (0);
 	reflection_dir = get_reflection_dir(light_dir, normal);
-	rv = ft_dot_vectors3d(reflection_dir, view_dir);
+	rv = ft_dot_vec3(reflection_dir, view_dir);
 	rv = ft_clampf(rv, 0, rv);
 	specular = pow(rv, 100 * material.specularity);
 	specular *= material.specularity;
@@ -67,23 +67,23 @@ static double	get_specular_term(t_vector3d light_dir, t_vector3d view_dir,
 	return (specular);
 }
 
-// static double	get_specular_term(t_vector3d light_dir, t_vector3d view_dir,
-// 		t_vector3d normal, t_material material)
+// static double	get_specular_term(t_vec3 light_dir, t_vec3 view_dir,
+// 		t_vec3 normal, t_material material)
 // {
 // 	double		specular;
-// 	t_vector3d	h;
-// 	t_vector3d	lpv;
+// 	t_vec3	h;
+// 	t_vec3	lpv;
 //
 // 	if (ft_equalf(material.specularity, 0))
 // 		return (0);
-// 	lpv = ft_add_vectors3d(light_dir, view_dir);
-// 	h = ft_scale_vector3d(1 / ft_vector3d_norm(lpv), lpv);
-// 	specular = pow(ft_dot_vectors3d(normal, h), 500);
+// 	lpv = ft_add_vec3(light_dir, view_dir);
+// 	h = ft_scale_vec3(1 / ft_vec3_norm(lpv), lpv);
+// 	specular = pow(ft_dot_vec3(normal, h), 500);
 // 	return (specular);
 // }
 
-t_color	specular_color(t_intersection inter, t_vector3d light_dir,
-		t_vector3d view_dir, t_state *state)
+t_color	specular_color(t_intersection inter, t_vec3 light_dir,
+		t_vec3 view_dir, t_state *state)
 {
 	t_material	material;
 
@@ -92,7 +92,7 @@ t_color	specular_color(t_intersection inter, t_vector3d light_dir,
 				inter.normal, material)));
 }
 
-static double	get_dist_attenuation(t_vector3d point, t_vector3d light_pos)
+static double	get_dist_attenuation(t_vec3 point, t_vec3 light_pos)
 {
 	double			dist_attenuation;
 	double			distance;
@@ -106,7 +106,7 @@ static double	get_dist_attenuation(t_vector3d point, t_vector3d light_pos)
 	return (dist_attenuation);
 }
 
-t_color	shade_from_one_light(t_intersection inter, t_vector3d view_dir,
+t_color	shade_from_one_light(t_intersection inter, t_vec3 view_dir,
 		t_state *state, t_point_light light)
 {
 	t_color			color;
@@ -119,7 +119,7 @@ t_color	shade_from_one_light(t_intersection inter, t_vector3d view_dir,
 	if (ft_supf(ft_distance3d(light_ray.origin, light.pos),
 			ft_distance3d(light_ray.origin, light_inter.point)))
 		return (init_color(0, 0, 0));
-	color = diffuse_color(ft_dot_vectors3d(light_ray.direction, inter.normal),
+	color = diffuse_color(ft_dot_vec3(light_ray.direction, inter.normal),
 			state->mats_tab[inter.index_mat], inter);
 	color = add_colors(color, specular_color(inter, light_ray.direction,
 				view_dir, state));

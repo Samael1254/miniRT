@@ -29,21 +29,21 @@ static void	add_ambient_light(t_state *state, char **split)
 
 static void	add_camera(t_state *state, char **split)
 {
-	t_vector3d	dir;
+	t_vec3	dir;
 	double		fov_2;
 	bool		has_error;
 
 	dir = get_vector(split[2], &has_error);
 	state->scene.camera.pos = get_vector(split[1], &has_error);
 	state->scene.camera.dir = dir;
-	if (!is_vector3d_in_range(dir, -1, 1) || has_error == true)
+	if (!is_vec3_in_range(dir, -1, 1) || has_error == true)
 	{
 		ft_free_strtab(split);
 		error("parsing", "error on camera position or rotation", state);
 	}
-	state->scene.camera.x_axis = ft_cross_vectors3d(dir, ft_set_vector3d(0, 1,
+	state->scene.camera.x_axis = ft_cross_vec3(dir, ft_set_vec3(0, 1,
 				0));
-	state->scene.camera.y_axis = ft_cross_vectors3d(state->scene.camera.x_axis,
+	state->scene.camera.y_axis = ft_cross_vec3(state->scene.camera.x_axis,
 			dir);
 	fov_2 = ft_atod(split[3]) / 2;
 	if (fov_2 < 0 || fov_2 > 90)
@@ -58,7 +58,7 @@ static void	add_camera(t_state *state, char **split)
 
 void	add_light(t_state *state, char **split)
 {
-	t_vector3d	pos;
+	t_vec3	pos;
 	double		brightness;
 	t_color		color;
 	bool		has_error;

@@ -105,18 +105,18 @@ typedef struct vertex
 
 typedef struct s_triangle
 {
-	t_vector3d		vertices[3];
-	t_vector3d		normals[3];
-	t_vector2d		uvs[3];
+	t_vec3			vertices[3];
+	t_vec3			normals[3];
+	t_vec2			uvs[3];
 }					t_triangle;
 
 typedef struct s_mesh
 {
-	t_vector3d		*vertices;
+	t_vec3			*vertices;
 	int				n_vertices;
-	t_vector3d		*normals;
+	t_vec3			*normals;
 	int				n_normals;
-	t_vector2d		*uvs;
+	t_vec2			*uvs;
 	int				n_uvs;
 	t_vertex		**faces;
 	int				n_faces;
@@ -125,27 +125,27 @@ typedef struct s_mesh
 
 typedef struct s_cone
 {
-	t_vector3d		pos;
-	t_vector3d		axis;
+	t_vec3			pos;
+	t_vec3			axis;
 	double			slope;
 }					t_cone;
 
 typedef struct s_sphere
 {
-	t_vector3d		pos;
+	t_vec3			pos;
 	double			diameter;
 }					t_sphere;
 
 typedef struct s_plane
 {
-	t_vector3d		point;
-	t_vector3d		normal;
+	t_vec3			point;
+	t_vec3			normal;
 }					t_plane;
 
 typedef struct s_cylinder
 {
-	t_vector3d		pos;
-	t_vector3d		axis;
+	t_vec3			pos;
+	t_vec3			axis;
 	double			diameter;
 	double			height;
 }					t_cylinder;
@@ -158,17 +158,17 @@ typedef struct s_ambient_light
 
 typedef struct s_point_light
 {
-	t_vector3d		pos;
+	t_vec3			pos;
 	double			brightness;
 	t_color			color;
 }					t_point_light;
 
 typedef struct s_camera
 {
-	t_vector3d		pos;
-	t_vector3d		dir;
-	t_vector3d		x_axis;
-	t_vector3d		y_axis;
+	t_vec3			pos;
+	t_vec3			dir;
+	t_vec3			x_axis;
+	t_vec3			y_axis;
 	double			fov_2;
 	unsigned char	move_step;
 	unsigned char	rot_step;
@@ -199,17 +199,17 @@ typedef struct s_scene
 
 typedef struct s_ray
 {
-	t_vector3d		origin;
-	t_vector3d		direction;
+	t_vec3			origin;
+	t_vec3			direction;
 	t_color			color;
 }					t_ray;
 
 typedef struct s_intersection
 {
 	unsigned int	index_mat;
-	t_vector3d		point;
-	t_vector3d		normal;
-	t_vector2d		uv;
+	t_vec3			point;
+	t_vec3			normal;
+	t_vec2			uv;
 }					t_intersection;
 
 // State of the program

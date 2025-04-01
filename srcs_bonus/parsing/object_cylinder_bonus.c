@@ -19,7 +19,7 @@ static t_cylinder	*get_cylinder_data(t_state *state, char **sp, t_object *obj)
 	cy->pos = get_vector(sp[1], &has_error);
 	if (!has_error)
 		cy->axis = get_vector(sp[2], &has_error);
-	if (!is_vector3d_in_range(cy->axis, -1, 1) || has_error == true
+	if (!is_vec3_in_range(cy->axis, -1, 1) || has_error == true
 		|| !is_norm_vector_valid(cy->axis))
 	{
 		free(obj);

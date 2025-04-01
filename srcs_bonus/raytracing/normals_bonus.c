@@ -3,61 +3,61 @@
 #include "minirt_bonus.h"
 #include "minirt_defs_bonus.h"
 
-static t_vector3d	sphere_normal(t_sphere sphere, t_vector3d point)
+static t_vec3	sphere_normal(t_sphere sphere, t_vec3 point)
 {
-	return (ft_normalize_vector3d(ft_sub_vectors3d(point, sphere.pos)));
+	return (ft_normalize_vec3(ft_sub_vec3(point, sphere.pos)));
 }
 
-static t_vector3d	plane_normal(t_plane plane)
+static t_vec3	plane_normal(t_plane plane)
 {
 	return (plane.normal);
 }
 
-static t_vector3d	cone_normal(t_cone cone, t_vector3d point)
+static t_vec3	cone_normal(t_cone cone, t_vec3 point)
 {
-	t_vector3d	cp;
-	t_vector3d	tan;
+	t_vec3	cp;
+	t_vec3	tan;
 
-	cp = ft_sub_vectors3d(point, cone.pos);
-	tan = ft_cross_vectors3d(cone.axis, cp);
-	return (ft_normalize_vector3d(ft_cross_vectors3d(cp, tan)));
+	cp = ft_sub_vec3(point, cone.pos);
+	tan = ft_cross_vec3(cone.axis, cp);
+	return (ft_normalize_vec3(ft_cross_vec3(cp, tan)));
 }
 
-static t_vector3d	triangle_normal(t_triangle triangle, t_vector3d point)
+static t_vec3	triangle_normal(t_triangle triangle, t_vec3 point)
 {
-	t_vector3d	normal;
+	t_vec3	normal;
 
 	normal = interpolate_triangle_data3d(triangle.vertices, point,
 			triangle.normals);
 	return (normal);
 }
 
-static t_vector3d	cylinder_normal(t_cylinder cylinder, t_vector3d point)
+static t_vec3	cylinder_normal(t_cylinder cylinder, t_vec3 point)
 {
-	t_vector3d	ba;
-	t_vector3d	pa;
+	t_vec3	ba;
+	t_vec3	pa;
 	double		h;
 	double		radius;
-	t_vector3d	a;
+	t_vec3	a;
 
 	radius = cylinder.diameter / 2.0;
-	ba = ft_scale_vector3d(cylinder.height,
-			ft_normalize_vector3d(cylinder.axis));
-	a = ft_sub_vectors3d(cylinder.pos, ft_scale_vector3d(0.5, ba));
-	pa = ft_sub_vectors3d(point, a);
-	h = ft_dot_vectors3d(pa, ba) / ft_dot_vectors3d(ba, ba);
+	ba = ft_scale_vec3(cylinder.height,
+			ft_normalize_vec3(cylinder.axis));
+	a = ft_sub_vec3(cylinder.pos, ft_scale_vec3(0.5, ba));
+	pa = ft_sub_vec3(point, a);
+	h = ft_dot_vec3(pa, ba) / ft_dot_vec3(ba, ba);
 	if (ft_inff(h, 0))
-		return (ft_normalize_vector3d(ft_scale_vector3d(-1.0, ba)));
+		return (ft_normalize_vec3(ft_scale_vec3(-1.0, ba)));
 	if (ft_supf(h, 1))
-		return (ft_normalize_vector3d(ba));
-	return (ft_normalize_vector3d(ft_scale_vector3d(1.0 / radius,
-				ft_sub_vectors3d(pa, ft_scale_vector3d(h, ba)))));
+		return (ft_normalize_vec3(ba));
+	return (ft_normalize_vec3(ft_scale_vec3(1.0 / radius,
+				ft_sub_vec3(pa, ft_scale_vec3(h, ba)))));
 }
 
-t_vector3d	normal_at_point(t_object object, t_intersection inter,
-		t_vector3d ray_dir)
+t_vec3	normal_at_point(t_object object, t_intersection inter,
+		t_vec3 ray_dir)
 {
-	t_vector3d	normal;
+	t_vec3	normal;
 
 	if (object.type == SPHERE)
 		normal = sphere_normal(*(t_sphere *)object.object_r, inter.point);
@@ -70,8 +70,8 @@ t_vector3d	normal_at_point(t_object object, t_intersection inter,
 	else if (object.type == TRIANGLE)
 		normal = triangle_normal(*(t_triangle *)object.object_r, inter.point);
 	else
-		return (ft_init_vector3d(0));
-	if (ft_supf(ft_dot_vectors3d(normal, ray_dir), 0))
-		normal = ft_scale_vector3d(-1, normal);
+		return (ft_init_vec3(0));
+	if (ft_supf(ft_dot_vec3(normal, ray_dir), 0))
+		normal = ft_scale_vec3(-1, normal);
 	return (normal);
 }

@@ -3,9 +3,9 @@
 #include "minirt_defs_bonus.h"
 #include <math.h>
 
-static t_vector2d	sphere_mapping(t_vector3d normal)
+static t_vec2	sphere_mapping(t_vec3 normal)
 {
-	t_vector2d		uv;
+	t_vec2		uv;
 	const double	offset_x = 0;
 
 	uv.x = 0.5 + atan2(normal.z, -normal.x) / (M_PI * 2);
@@ -14,79 +14,79 @@ static t_vector2d	sphere_mapping(t_vector3d normal)
 	return (uv);
 }
 
-static t_vector2d	cylinder_mapping(t_cylinder cylinder, t_vector3d point,
-		t_vector3d normal)
+static t_vec2	cylinder_mapping(t_cylinder cylinder, t_vec3 point,
+		t_vec3 normal)
 {
-	t_vector2d	uv;
-	t_vector3d	relp;
-	t_vector3d	tangent;
-	t_vector3d	bitangent;
+	t_vec2	uv;
+	t_vec3	relp;
+	t_vec3	tangent;
+	t_vec3	bitangent;
 
-	tangent = ft_normalize_vector3d(ft_cross_vectors3d(get_reference_vector(cylinder.axis),
+	tangent = ft_normalize_vec3(ft_cross_vec3(get_ref_vec(cylinder.axis),
 				cylinder.axis));
-	bitangent = ft_normalize_vector3d(ft_cross_vectors3d(cylinder.axis,
+	bitangent = ft_normalize_vec3(ft_cross_vec3(cylinder.axis,
 				tangent));
-	relp = ft_sub_vectors3d(point, cylinder.pos);
-	uv.x = 0.5 + atan2(ft_dot_vectors3d(normal, bitangent),
-			ft_dot_vectors3d(normal, tangent)) / (2 * M_PI);
-	uv.y = -ft_dot_vectors3d(cylinder.axis, relp) / (M_PI * cylinder.diameter);
-	if (ft_are_vectors3d_col(normal, cylinder.axis))
+	relp = ft_sub_vec3(point, cylinder.pos);
+	uv.x = 0.5 + atan2(ft_dot_vec3(normal, bitangent),
+			ft_dot_vec3(normal, tangent)) / (2 * M_PI);
+	uv.y = -ft_dot_vec3(cylinder.axis, relp) / (M_PI * cylinder.diameter);
+	if (ft_are_vec3_col(normal, cylinder.axis))
 	{
-		uv.x = 0.5 + ft_dot_vectors3d(relp, tangent) / (M_PI
+		uv.x = 0.5 + ft_dot_vec3(relp, tangent) / (M_PI
 				* cylinder.diameter);
-		uv.y = 0.5 - ft_dot_vectors3d(relp, bitangent) / (M_PI
+		uv.y = 0.5 - ft_dot_vec3(relp, bitangent) / (M_PI
 				* cylinder.diameter);
 	}
 	return (clamp_uv(uv));
 }
 
-static t_vector2d	cone_mapping(t_cone cone, t_vector3d point,
-		t_vector3d normal)
+static t_vec2	cone_mapping(t_cone cone, t_vec3 point,
+		t_vec3 normal)
 {
-	t_vector2d	uv;
-	t_vector3d	relp;
-	t_vector3d	tangent;
-	t_vector3d	bitangent;
+	t_vec2	uv;
+	t_vec3	relp;
+	t_vec3	tangent;
+	t_vec3	bitangent;
 
-	tangent = ft_normalize_vector3d(ft_cross_vectors3d(get_reference_vector(cone.axis),
+	tangent = ft_normalize_vec3(ft_cross_vec3(get_ref_vec(cone.axis),
 				cone.axis));
-	bitangent = ft_normalize_vector3d(ft_cross_vectors3d(cone.axis, tangent));
-	relp = ft_sub_vectors3d(point, cone.pos);
-	uv.x = 0.5 + atan2(ft_dot_vectors3d(normal, bitangent),
-			ft_dot_vectors3d(normal, tangent)) / (2 * M_PI);
-	uv.y = -ft_dot_vectors3d(cone.axis, relp) / (4 * M_PI);
+	bitangent = ft_normalize_vec3(ft_cross_vec3(cone.axis, tangent));
+	relp = ft_sub_vec3(point, cone.pos);
+	uv.x = 0.5 + atan2(ft_dot_vec3(normal, bitangent),
+			ft_dot_vec3(normal, tangent)) / (2 * M_PI);
+	uv.y = -ft_dot_vec3(cone.axis, relp) / (4 * M_PI);
 	return (clamp_uv(uv));
 }
 
-static t_vector2d	plane_mapping(t_plane plane, t_vector3d point,
-		t_vector3d normal)
+static t_vec2	plane_mapping(t_plane plane, t_vec3 point,
+		t_vec3 normal)
 {
-	t_vector3d	r;
-	t_vector3d	relp;
-	t_vector2d	uv;
-	t_vector3d	tangent;
-	t_vector3d	bitangent;
+	t_vec3	r;
+	t_vec3	relp;
+	t_vec2	uv;
+	t_vec3	tangent;
+	t_vec3	bitangent;
 
-	r = get_reference_vector(normal);
-	tangent = ft_normalize_vector3d(ft_cross_vectors3d(r, normal));
-	bitangent = ft_normalize_vector3d(ft_cross_vectors3d(normal, tangent));
-	relp = ft_sub_vectors3d(point, plane.point);
-	uv.x = ft_dot_vectors3d(tangent, relp) / 32;
-	uv.y = -ft_dot_vectors3d(bitangent, relp) / 32;
+	r = get_ref_vec(normal);
+	tangent = ft_normalize_vec3(ft_cross_vec3(r, normal));
+	bitangent = ft_normalize_vec3(ft_cross_vec3(normal, tangent));
+	relp = ft_sub_vec3(point, plane.point);
+	uv.x = ft_dot_vec3(tangent, relp) / 32;
+	uv.y = -ft_dot_vec3(bitangent, relp) / 32;
 	return (clamp_uv(uv));
 }
 
-t_vector2d	triangle_mapping(t_triangle triangle, t_vector3d point)
+t_vec2	triangle_mapping(t_triangle triangle, t_vec3 point)
 {
-	t_vector2d	uv;
+	t_vec2	uv;
 
 	uv = interpolate_triangle_data2d(triangle.vertices, point, triangle.uvs);
 	return (uv);
 }
 
-t_vector2d	uv_at_point(t_object object, t_vector3d point, t_vector3d normal)
+t_vec2	uv_at_point(t_object object, t_vec3 point, t_vec3 normal)
 {
-	t_vector2d	uv;
+	t_vec2	uv;
 
 	if (object.type == SPHERE)
 		uv = sphere_mapping(normal);
@@ -99,6 +99,6 @@ t_vector2d	uv_at_point(t_object object, t_vector3d point, t_vector3d normal)
 	else if (object.type == TRIANGLE)
 		uv = triangle_mapping(*(t_triangle *)object.object_r, point);
 	else
-		return (ft_init_vector2d(0));
+		return (ft_init_vec2(0));
 	return (uv);
 }

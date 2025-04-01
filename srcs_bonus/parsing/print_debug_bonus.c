@@ -2,7 +2,7 @@
 #include "minirt_defs_bonus.h"
 #include <stdio.h>
 
-void	print_vector3d(t_vector3d vec)
+void	print_vec3(t_vec3 vec)
 {
 	printf("%.5f,%.5f,%.5f", vec.x, vec.y, vec.z);
 }
@@ -18,7 +18,7 @@ static void	print_sphere(t_object object)
 
 	sphere = *(t_sphere *)object.object_r;
 	printf("- sp ");
-	print_vector3d(sphere.pos);
+	print_vec3(sphere.pos);
 	printf(" %2.f ", sphere.diameter);
 	print_color(object.color);
 	printf("\n");
@@ -30,9 +30,9 @@ static void	print_plane(t_object object)
 
 	plane = *(t_plane *)object.object_r;
 	printf("- pl ");
-	print_vector3d(plane.point);
+	print_vec3(plane.point);
 	printf(" ");
-	print_vector3d(plane.normal);
+	print_vec3(plane.normal);
 	printf(" ");
 	print_color(object.color);
 	printf("\n");
@@ -44,7 +44,7 @@ static void	print_cylinder(t_object object)
 
 	cylinder = *(t_cylinder *)object.object_r;
 	printf("- cy ");
-	print_vector3d(cylinder.pos);
+	print_vec3(cylinder.pos);
 	printf(" %2.f ", cylinder.diameter);
 	printf("%2.f ", cylinder.height);
 	print_color(object.color);
@@ -54,7 +54,7 @@ static void	print_cylinder(t_object object)
 static void	print_point_light(t_point_light light)
 {
 	printf("- L ");
-	print_vector3d(light.pos);
+	print_vec3(light.pos);
 	printf(" %2.f ", light.brightness);
 	print_color(light.color);
 	printf("\n");
@@ -71,9 +71,9 @@ static void	print_ambiant_light(t_ambiant_light ambiant_light)
 static void	print_camera(t_camera camera)
 {
 	printf("- C ");
-	print_vector3d(camera.pos);
+	print_vec3(camera.pos);
 	printf(" ");
-	print_vector3d(camera.dir);
+	print_vec3(camera.dir);
 	printf(" %2.f", ft_rad_to_deg(camera.fov_2 * 2));
 	printf("\n");
 }

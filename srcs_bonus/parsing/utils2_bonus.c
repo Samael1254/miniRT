@@ -4,9 +4,9 @@
 #include "minirt_bonus.h"
 #include <stdbool.h>
 
-bool	is_norm_vector_valid(t_vector3d vec)
+bool	is_norm_vector_valid(t_vec3 vec)
 {
-	if (!ft_equalf(ft_vector3d_norm(vec), 1))
+	if (!ft_equalf(ft_vec3_norm(vec), 1))
 		return (false);
 	return (true);
 }
@@ -16,7 +16,7 @@ bool	is_norm_vector_valid(t_vector3d vec)
  *	Returns (0) if not
  *	Returns (1) if yes
  * */
-bool	is_vector3d_in_range(t_vector3d vec, double min, double max)
+bool	is_vec3_in_range(t_vec3 vec, double min, double max)
 {
 	if (vec.x < min || vec.x > max)
 		return (false);

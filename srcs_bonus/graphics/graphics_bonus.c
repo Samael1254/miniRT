@@ -20,7 +20,7 @@ static t_color	int_to_rgb(int colorint)
 	return (color);
 }
 
-void	put_pixel(t_img_data *img, t_ivector2d coords, t_color color)
+void	put_pixel(t_img_data *img, t_ivec2 coords, t_color color)
 {
 	int		offset;
 	char	*mem_pos;
@@ -37,11 +37,11 @@ void	put_pixel(t_img_data *img, t_ivector2d coords, t_color color)
 	*(unsigned int *)mem_pos = rgb_to_int(color);
 }
 
-t_color	get_pixel_color(t_img_data texture, t_vector2d uv)
+t_color	get_pixel_color(t_img_data texture, t_vec2 uv)
 {
 	unsigned int	color;
 	int				offset;
-	t_ivector2d		xy;
+	t_ivec2		xy;
 
 	xy.x = uv.x * texture.line_len / (texture.bp_pixel) * 8;
 	xy.y = uv.y * texture.height;

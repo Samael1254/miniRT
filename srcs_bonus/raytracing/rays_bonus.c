@@ -12,26 +12,26 @@ static double	vertical_fov_2(double horizontal_fov_2)
 	return (atan(((double)WIN_Y / (double)WIN_X) * tan(horizontal_fov_2)));
 }
 
-static t_ray	init_ray(t_camera camera, t_vector2d rotator)
+static t_ray	init_ray(t_camera camera, t_vec2 rotator)
 {
 	t_ray	ray;
 	double	m_rot_x[4][4];
 	double	m_rot_y[4][4];
 
-	ft_set_rotation_matrix4d(m_rot_y, rotator.y, camera.y_axis);
-	ray.direction = ft_4dto3d_vector(ft_matrix_vector_product4d(m_rot_y,
+	ft_set_rotation_mat4(m_rot_y, rotator.y, camera.y_axis);
+	ray.direction = ft_4dto3d_vector(ft_mat_vec_product4(m_rot_y,
 				ft_3dto4d_vector(camera.dir)));
-	camera.x_axis = ft_4dto3d_vector(ft_matrix_vector_product4d(m_rot_y,
+	camera.x_axis = ft_4dto3d_vector(ft_mat_vec_product4(m_rot_y,
 				ft_3dto4d_vector(camera.x_axis)));
-	ft_set_rotation_matrix4d(m_rot_x, rotator.x, camera.x_axis);
-	ray.direction = ft_4dto3d_vector(ft_matrix_vector_product4d(m_rot_x,
+	ft_set_rotation_mat4(m_rot_x, rotator.x, camera.x_axis);
+	ray.direction = ft_4dto3d_vector(ft_mat_vec_product4(m_rot_x,
 				ft_3dto4d_vector(ray.direction)));
 	ray.origin = camera.pos;
 	ray.color = init_color(0, 0, 0);
 	return (ray);
 }
 
-static void	trace_ray(t_vector2d rotator, t_ivector2d coords, t_state *state)
+static void	trace_ray(t_vec2 rotator, t_ivec2 coords, t_state *state)
 {
 	t_ray			ray;
 	t_intersection	inter;
@@ -44,9 +44,9 @@ static void	trace_ray(t_vector2d rotator, t_ivector2d coords, t_state *state)
 static void	*thread_shoot_rays(void *arg)
 {
 	t_thread_data	*data;
-	t_ivector2d		coords;
-	t_vector2d		delta;
-	t_vector2d		rotator;
+	t_ivec2		coords;
+	t_vec2		delta;
+	t_vec2		rotator;
 
 	data = (t_thread_data *)arg;
 	delta.y = 2 * data->state->scene.camera.fov_2 / WIN_X;

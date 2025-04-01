@@ -41,22 +41,22 @@ static int	display_help(t_state *state)
 
 static void	move_camera(t_state *state, t_camera *camera, enum e_keycode key)
 {
-	t_vector3d	translator;
-	t_vector3d	axis;
+	t_vec3	translator;
+	t_vec3	axis;
 	short		sign;
 
-	axis = ft_init_vector3d(0);
+	axis = ft_init_vec3(0);
 	sign = 1;
 	if (key == SCROLL_UP || key == SCROLL_DOWN)
 		axis = camera->dir;
 	else if (key == A_KEY || key == D_KEY)
-		axis = ft_cross_vectors3d(ft_set_vector3d(0, 1, 0), camera->dir);
+		axis = ft_cross_vec3(ft_set_vec3(0, 1, 0), camera->dir);
 	else if (key == W_KEY || key == S_KEY)
 		axis = camera->y_axis;
 	if (key == SCROLL_DOWN || key == D_KEY || key == S_KEY)
 		sign = -1;
-	translator = ft_scale_vector3d(sign * camera->move_step, axis);
-	camera->pos = ft_add_vectors3d(camera->pos, translator);
+	translator = ft_scale_vec3(sign * camera->move_step, axis);
+	camera->pos = ft_add_vec3(camera->pos, translator);
 	recreate_image(state);
 }
 
@@ -70,15 +70,15 @@ static void	rotate_camera(t_state *state, t_camera *camera,
 	if (keycode == D_KEY || keycode == S_KEY)
 		angle *= -1;
 	if (keycode == A_KEY || keycode == D_KEY)
-		ft_set_base_rotation_matrix4d(m_rot, angle, Y_AXIS);
+		ft_set_base_rotation_mat4(m_rot, angle, Y_AXIS);
 	else if (keycode == W_KEY || keycode == S_KEY)
-		ft_set_rotation_matrix4d(m_rot, angle, camera->x_axis);
-	camera->dir = ft_4dto3d_vector(ft_matrix_vector_product4d(m_rot,
+		ft_set_rotation_mat4(m_rot, angle, camera->x_axis);
+	camera->dir = ft_4dto3d_vector(ft_mat_vec_product4(m_rot,
 				ft_3dto4d_vector(camera->dir)));
 	if (keycode == A_KEY || keycode == D_KEY)
-		camera->x_axis = ft_4dto3d_vector(ft_matrix_vector_product4d(m_rot,
+		camera->x_axis = ft_4dto3d_vector(ft_mat_vec_product4(m_rot,
 					ft_3dto4d_vector(camera->x_axis)));
-	camera->y_axis = ft_4dto3d_vector(ft_matrix_vector_product4d(m_rot,
+	camera->y_axis = ft_4dto3d_vector(ft_mat_vec_product4(m_rot,
 				ft_3dto4d_vector(camera->y_axis)));
 	recreate_image(state);
 }
@@ -89,9 +89,11 @@ static int	key_pressed(enum e_keycode key, t_state *state)
 		exit_program(state, EXIT_SUCCESS);
 	if (key == ALT_KEY && state->hold_alt == 0)
 		state->hold_alt = 1;
-	if (state->hold_alt == 0 && (key == W_KEY || key == S_KEY || key == A_KEY || key == D_KEY))
+	if (state->hold_alt == 0 && (key == W_KEY || key == S_KEY || key == A_KEY
+			|| key == D_KEY))
 		move_camera(state, &state->scene.camera, key);
-	else if (state->hold_alt == 1 && (key == W_KEY || key == S_KEY || key == A_KEY || key == D_KEY))
+	else if (state->hold_alt == 1 && (key == W_KEY || key == S_KEY
+			|| key == A_KEY || key == D_KEY))
 		rotate_camera(state, &state->scene.camera, key);
 	if (key == UP_ARROW_KEY)
 		modify_step_size(state, '+');
@@ -108,8 +110,8 @@ static int	key_pressed(enum e_keycode key, t_state *state)
 
 static int	on_mouse_moov(enum e_keycode key, int x, int y, t_state *state)
 {
-	(void) x;
-	(void) y;
+	(void)x;
+	(void)y;
 	if (key == SCROLL_UP)
 		move_camera(state, &state->scene.camera, SCROLL_UP);
 	if (key == SCROLL_DOWN)

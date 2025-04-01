@@ -5,15 +5,15 @@
 // #include <math.h>
 // #include <stdbool.h>
 //
-// t_vector3d	light_direction(t_ray ray, t_point_light light)
+// t_vec3	light_direction(t_ray ray, t_point_light light)
 // {
-// 	t_vector3d	light_dir;
+// 	t_vec3	light_dir;
 //
-// 	light_dir = ft_normalize_vector3d(ft_sub_vectors3d(light.pos, ray.origin));
+// 	light_dir = ft_normalize_vec3(ft_sub_vec3(light.pos, ray.origin));
 // 	return (light_dir);
 // }
 //
-// static double	get_dist_attenuation(t_vector3d point, t_vector3d light_pos)
+// static double	get_dist_attenuation(t_vec3 point, t_vec3 light_pos)
 // {
 // 	double			dist_attenuation;
 // 	double			distance;
@@ -28,12 +28,12 @@
 // }
 //
 // static double	get_attenuation(t_intersection inter, bool in_shadow,
-// 		t_vector3d light_dir, t_scene scene)
+// 		t_vec3 light_dir, t_scene scene)
 // {
 // 	double	attenuation;
 // 	double	incidence;
 //
-// 	incidence = ft_dot_vectors3d(light_dir, inter.normal);
+// 	incidence = ft_dot_vec3(light_dir, inter.normal);
 // 	if (in_shadow || ft_inff(incidence, 0))
 // 		return (scene.a_light.brightness);
 // 	attenuation = incidence;
