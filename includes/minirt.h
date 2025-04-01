@@ -14,11 +14,11 @@ int				insert_in_struct(t_state *state, char **split);
 // Parsing
 
 // utils.c
-t_vector3d		get_vector(char *line_vector, bool *error);
+t_vec3		get_vector(char *line_vector, bool *error);
 t_color			get_color(char *line_color, bool *error);
-bool			is_vector3d_in_range(t_vector3d vec, double min, double max);
+bool			is_vec3_in_range(t_vec3 vec, double min, double max);
 bool			is_t_color_valid(t_color color, double min, double max);
-bool			is_norm_vector_valid(t_vector3d vec);
+bool			is_norm_vector_valid(t_vec3 vec);
 
 // utils2.c
 bool			ft_check_error_line(char **split, int len);
@@ -60,8 +60,8 @@ double			intersect_sphere(t_ray ray, t_sphere sphere);
 double			intersect_plane(t_ray ray, t_plane plane);
 double			intersect_cylinder(t_ray ray, t_cylinder cylinder);
 t_intersection	intersect_scene(t_ray ray, t_list *objects);
-t_vector3d		normal_at_point(t_object object, t_vector3d point,
-					t_vector3d ray_dir);
+t_vec3		normal_at_point(t_object object, t_vec3 point,
+					t_vec3 ray_dir);
 
 // Light //
 
@@ -95,6 +95,6 @@ int				exit_program(t_state *state, int status);
 
 // PRINT FOR DEBUGS
 void			print_scene(t_scene scene);
-void			print_vector3d(t_vector3d vec);
+void			print_vec3(t_vec3 vec);
 
 #endif

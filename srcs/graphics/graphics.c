@@ -8,7 +8,7 @@ static int	rgb_to_int(t_color color)
 	return (color.r << 16 | color.g << 8 | color.b << 0);
 }
 
-static void	put_pixel(t_img_data *img, t_ivector2d coords, t_color color)
+static void	put_pixel(t_img_data *img, t_ivec2 coords, t_color color)
 {
 	int		offset;
 	char	*mem_pos;
@@ -27,7 +27,7 @@ static void	put_pixel(t_img_data *img, t_ivector2d coords, t_color color)
 
 void	render_scene(t_state *state, t_ray **rays)
 {
-	t_ivector2d	coords;
+	t_ivec2	coords;
 
 	coords.y = 0;
 	while (coords.y < WIN_Y)
