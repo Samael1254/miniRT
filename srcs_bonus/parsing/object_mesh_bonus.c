@@ -35,7 +35,6 @@ t_object	*object_mesh(t_state *state, char **split)
 		error("malloc failed", "in object_mesh", state);
 	}
 	obj->object_r = parse_obj_file(split[1], state);
-	printf("CREATE MESH\n");
 	obj->type = MESH;
 	obj->index_mat = ft_atoi(split[4]);
 	transform_mesh(obj->object_r, get_vector(split[2], &has_error),

@@ -38,7 +38,7 @@ static double	triangle_distance(double d, t_ray ray, t_vector3d vectors[3],
 	if (ft_inff(params[0], 0) || ft_inff(params[1], 0) || ft_supf(params[0]
 			+ params[1], 1))
 		return (INFINITY);
-	return (ft_absf(d * ft_dot_vectors3d(ao, vectors[2])));
+	return (-d * ft_dot_vectors3d(ao, vectors[2]));
 }
 
 static double	intersect_triangle(t_ray ray, t_triangle triangle)
