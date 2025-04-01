@@ -43,11 +43,11 @@ BONUS_GRAPHICS := color_bonus.c graphics_bonus.c
 BONUS_ERRORS := errors_bonus.c check_arguments_bonus.c
 
 BONUS_RAYTRACING := raytracing_bonus.c intersections_bonus.c intersect_objects_bonus.c rays_bonus.c \
-				   normals_bonus.c
+				   normals_bonus.c intersect_objects_utils_bonus.c intersect_mesh_bonus.c object_normal_bonus.c
 
 BONUS_LIGHT := light_bonus.c phong_bonus.c
 
-BONUS_TEXTURING := uv_mapping_bonus.c normal_map_bonus.c mapping_utils_bonus.c
+BONUS_TEXTURING := uv_mapping_bonus.c normal_map_bonus.c mapping_utils_bonus.c object_mapping_bonus.c
 
 BONUS_MESH := init_mesh_bonus.c mesh_utils_bonus.c parse_obj_element_bonus.c parse_obj_file_bonus.c
 

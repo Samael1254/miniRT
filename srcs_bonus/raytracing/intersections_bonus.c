@@ -59,6 +59,14 @@ static double	intersect_object(t_ray ray, t_object **object)
 	return (INFINITY);
 }
 
+static void	update_distance_and_object(double *distance_min,
+		t_object **closest_object, double cur_distance, t_object *cur_object)
+{
+	*distance_min = cur_distance;
+	free_triangle_obj(*closest_object);
+	*closest_object = cur_object;
+}
+
 t_intersection	intersect_scene(t_ray ray, t_state *state)
 {
 	double		cur_distance;
@@ -78,11 +86,8 @@ t_intersection	intersect_scene(t_ray ray, t_state *state)
 			error("malloc failed", "in face_to_triangle", state);
 		if (ft_in_rangef(cur_distance, RAY_REACH_MIN, distance_min)
 			&& state->mats_tab[cur_object->index_mat].kd.a != 0)
-		{
-			distance_min = cur_distance;
-			free_triangle_obj(closest_object);
-			closest_object = cur_object;
-		}
+			update_distance_and_object(&distance_min, &closest_object,
+				cur_distance, cur_object);
 		else
 			free_triangle_obj(cur_object);
 		iter = iter->next;

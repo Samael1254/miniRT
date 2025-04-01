@@ -24,11 +24,10 @@ t_vec2	clamp_uv(t_vec2 uv)
 	return (uv);
 }
 
-static t_vec3	cartesian_to_barycentric3d(t_vec3 vertices[3],
-		t_vec3 point)
+static t_vec3	cartesian_to_barycentric3d(t_vec3 vertices[3], t_vec3 point)
 {
 	t_vec3	bary;
-	double		areas[3];
+	double	areas[3];
 	t_vec3	edges[2];
 	t_vec3	vectors[3];
 
@@ -46,8 +45,8 @@ static t_vec3	cartesian_to_barycentric3d(t_vec3 vertices[3],
 	return (bary);
 }
 
-t_vec3	interpolate_triangle_data3d(t_vec3 vertices[3],
-		t_vec3 point, t_vec3 data[3])
+t_vec3	interpolate_triangle_data3d(t_vec3 vertices[3], t_vec3 point,
+		t_vec3 data[3])
 {
 	t_vec3	bary;
 	t_vec3	lerp;
@@ -59,8 +58,8 @@ t_vec3	interpolate_triangle_data3d(t_vec3 vertices[3],
 	return (lerp);
 }
 
-t_vec2	interpolate_triangle_data2d(t_vec3 vertices[3],
-		t_vec3 point, t_vec2 data[3])
+t_vec2	interpolate_triangle_data2d(t_vec3 vertices[3], t_vec3 point,
+		t_vec2 data[3])
 {
 	t_vec3	bary;
 	t_vec2	lerp;
