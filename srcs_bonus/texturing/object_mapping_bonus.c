@@ -9,7 +9,7 @@ t_vec2	sphere_mapping(t_vec3 normal)
 	const double	offset_x = 0;
 
 	uv.x = 0.5 + atan2(normal.z, -normal.x) / (M_PI * 2);
-	uv.y = 0.5 + asin(-normal.y) / M_PI;
+	uv.y = 0.5 + asin(normal.y) / M_PI;
 	uv.x = fmod(uv.x + offset_x, 1.0f);
 	return (uv);
 }
@@ -66,7 +66,7 @@ t_vec2	plane_mapping(t_plane plane, t_vec3 point, t_vec3 normal)
 	bitangent = ft_normalize_vec3(ft_cross_vec3(normal, tangent));
 	relp = ft_sub_vec3(point, plane.point);
 	uv.x = ft_dot_vec3(tangent, relp) / 32;
-	uv.y = -ft_dot_vec3(bitangent, relp) / 32;
+	uv.y = ft_dot_vec3(bitangent, relp) / 32;
 	return (clamp_uv(uv));
 }
 
