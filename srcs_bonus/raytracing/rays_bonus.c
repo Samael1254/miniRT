@@ -44,9 +44,9 @@ static void	trace_ray(t_vec2 rotator, t_ivec2 coords, t_state *state)
 static void	*thread_shoot_rays(void *arg)
 {
 	t_thread_data	*data;
-	t_ivec2		coords;
-	t_vec2		delta;
-	t_vec2		rotator;
+	t_ivec2			coords;
+	t_vec2			delta;
+	t_vec2			rotator;
 
 	data = (t_thread_data *)arg;
 	delta.y = 2 * data->state->scene.camera.fov_2 / WIN_X;

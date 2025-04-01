@@ -94,12 +94,8 @@ t_vec3			blend_normal_map(t_vec2 uv, t_vec3 normal, t_material material);
 
 t_vec2			uv_at_point(t_object object, t_vec3 point, t_vec3 normal);
 
-t_vec3			get_ref_vec(t_vec3 normal);
-t_vec2			clamp_uv(t_vec2 uv);
 t_vec3			interpolate_triangle_data3d(t_vec3 vertices[3], t_vec3 point,
 					t_vec3 data[3]);
-t_vec2			interpolate_triangle_data2d(t_vec3 vertices[3], t_vec3 point,
-					t_vec2 data[3]);
 
 // Light //
 
