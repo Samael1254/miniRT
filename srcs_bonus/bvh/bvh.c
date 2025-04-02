@@ -1,7 +1,9 @@
 #include "ft_algebra.h"
+#include "ft_binary_tree.h"
 #include "minirt_defs_bonus.h"
 #include "minirt_bvh_bonus.h"
 #include <math.h>
+#include <stddef.h>
 
 t_vec3	triangle_center(t_vec3 vertices[3])
 {
@@ -38,4 +40,30 @@ t_aabb	create_aabb(t_mesh *mesh)
 		i++;
 	}
 	return (aabb);
+}
+
+static int	compare_aabb(void *a, void *b)
+{
+	t_aabb	*a_tmp;
+	t_aabb	*b_tmp;
+	float	center_a;
+	float	center_b;
+
+	a_tmp = (t_aabb *)a;
+	b_tmp = (t_aabb *)b;
+	center_a = (a_tmp->min.x + a_tmp->max.x) / 2;
+	center_b = (b_tmp->min.x + b_tmp->max.x) / 2;
+	if (center_a < center_b)
+		return (-1);
+	else if (center_a > center_b)
+		return (1);
+	return (0);
+}
+
+t_bntree	*create_bvh(t_aabb aabb)
+{
+	t_bntree	*bvh;
+
+	bvh = NULL;
+	ft_bntree_insert(bvh, &aabb, compare_aabb);
 }
