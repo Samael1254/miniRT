@@ -9,7 +9,7 @@
 t_vec3	parse_vertex(char *line, t_mesh *mesh, t_state *state)
 {
 	t_vec3	new_vertex;
-	char		**line_data;
+	char	**line_data;
 
 	line_data = ft_split(line, ' ');
 	if (ft_strtab_size(line_data) != 4)
@@ -28,7 +28,7 @@ t_vec3	parse_vertex(char *line, t_mesh *mesh, t_state *state)
 t_vec2	parse_uv(char *line, t_mesh *mesh, t_state *state)
 {
 	t_vec2	new_vertex;
-	char		**line_data;
+	char	**line_data;
 
 	line_data = ft_split(line, ' ');
 	if (ft_strtab_size(line_data) != 3)
