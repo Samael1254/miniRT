@@ -1,0 +1,7 @@
+C	5,45,80		0,0,-1	50
+A	0.3									255,255,255
+MT	materials/meshes.mrt
+L	0,30,50				1			200,200,255
+SKY	0,60,127		200,255,255
+
+mesh	meshes/hoplite.obj	10,0,0		20	1

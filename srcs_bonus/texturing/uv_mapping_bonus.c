@@ -17,5 +17,6 @@ t_vec2	uv_at_point(t_object object, t_vec3 point, t_vec3 normal)
 		uv = triangle_mapping(*(t_triangle *)object.object_r, point);
 	else
 		return (ft_init_vec2(0));
+	uv.y = 1 - uv.y;
 	return (uv);
 }
