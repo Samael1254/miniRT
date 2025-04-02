@@ -3,6 +3,8 @@
 #include "minirt_graphics_bonus.h"
 #include "minirt_intersections_bonus.h"
 #include "minirt_light_bonus.h"
+#include "minirt_errors_bonus.h"
+#include "minirt_raytracing_bonus.h"
 #include <math.h>
 #include <pthread.h>
 #include <stdio.h>
@@ -84,10 +86,17 @@ void	shoot_rays(t_state *state)
 		thread_data[i].start_y = i * (WIN_Y / THREAD_COUNT);
 		thread_data[i].end_y = (i + 1) * (WIN_Y / THREAD_COUNT);
 		thread_data[i].state = state;
-		pthread_create(&threads[i], NULL, thread_shoot_rays, &thread_data[i]);
+		if (pthread_create(&threads[i], NULL, thread_shoot_rays, &thread_data[i]) != 0)
+		{
+			while (i > 0)
+			{
+				pthread_cancel(threads[i]);
+				pthread_join(threads[i], NULL);
+				i--;
+			}
+			error("pthread_create", "crash", state);
+		}
 		i++;
 	}
-	i = 0;
-	while (i < THREAD_COUNT)
-		pthread_join(threads[i++], NULL);
+	ft_join_threads(state, threads);
 }
