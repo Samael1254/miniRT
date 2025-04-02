@@ -81,3 +81,5 @@ The following keybindings allow the user to interact with miniRT:
 - uv mapping inside a sphere is upside down
 - cylinder base disapears when in axis
 - abnormal deformation up and down the screen (fisheye)
+- Crash when texture or normal map missing in material
+- Crash when obj contains non-triangular faces
