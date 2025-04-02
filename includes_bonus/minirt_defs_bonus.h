@@ -63,6 +63,7 @@ enum				e_object
 	CONE,
 	MESH,
 	TRIANGLE,
+	AABB,
 };
 
 /* STRUCTS */
@@ -122,6 +123,12 @@ typedef struct s_mesh
 	int				n_faces;
 	t_triangle		triangle_hit;
 }					t_mesh;
+
+typedef struct s_aabb
+{
+	t_vec3			min;
+	t_vec3			max;
+}					t_aabb;
 
 typedef struct s_cone
 {
