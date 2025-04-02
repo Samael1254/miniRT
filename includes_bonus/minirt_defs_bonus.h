@@ -2,6 +2,7 @@
 # define MINIRT_DEFS_BONUS_H
 
 # include "ft_algebra.h"
+# include "ft_binary_tree.h"
 # include "ft_list.h"
 # include <stdint.h>
 # include <sys/time.h>
@@ -121,7 +122,7 @@ typedef struct s_mesh
 	int				n_uvs;
 	t_vertex		**faces;
 	int				n_faces;
-	t_triangle		triangle_hit;
+	t_bntree		bvh;
 }					t_mesh;
 
 typedef struct s_aabb
