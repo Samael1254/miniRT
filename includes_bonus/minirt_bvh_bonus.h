@@ -3,7 +3,7 @@
 
 # include "minirt_defs_bonus.h"
 
-t_aabb	create_aabb(t_mesh *mesh);
+t_aabb	create_aabb(t_mesh *mesh, t_vec3 offset);
 double	intersect_aabb(t_ray ray, t_aabb box);
 
 // to delete

@@ -1,8 +1,8 @@
 #include "ft_memory.h"
 #include "ft_strings.h"
 #include "get_next_line.h"
-#include "minirt_obj_parser.h"
 #include "minirt_bvh_bonus.h"
+#include "minirt_obj_parser.h"
 #include <fcntl.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -45,6 +45,5 @@ t_mesh	*parse_obj_file(char *filename, t_state *state)
 		free(line);
 	}
 	close(fd);
-	create_aabb(mesh);
 	return (mesh);
 }

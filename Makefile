@@ -31,7 +31,7 @@ SOURCES := $(addprefix $(SOURCES_DIR)base/, $(SRCS_MAIN)) \
 BONUS_MAIN := main_bonus.c exit_program_bonus.c events_bonus.c init_state_bonus.c \
 			  time_bonus.c events_utils_bonus.c
 
-BONUS_BVH := bvh.c print_aabb.c
+BONUS_BVH := bvh.c print_aabb.c intersect_aabb_bonus.c
 
 BONUS_PARSING := init_scene_bonus.c insert_in_struct_bonus.c utils_bonus.c utils2_bonus.c objects_list_bonus.c \
 				object_sphere_bonus.c object_plane_bonus.c object_cylinder_bonus.c utils_general_objects_bonus.c \

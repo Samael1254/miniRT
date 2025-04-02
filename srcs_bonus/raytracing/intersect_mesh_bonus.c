@@ -1,5 +1,6 @@
 #include "ft_math.h"
 #include "ft_memory.h"
+#include "minirt_bvh_bonus.h"
 #include "minirt_defs_bonus.h"
 #include "minirt_intersections_bonus.h"
 #include <math.h>
@@ -62,6 +63,8 @@ double	intersect_mesh(t_ray ray, t_mesh *mesh, t_object **triangle_obj)
 	t_triangle	*closest_tr;
 	int			i;
 
+	if (intersect_aabb(ray, mesh->bvh.box) == INFINITY)
+		return (INFINITY);
 	distance_min = INFINITY;
 	closest_tr = NULL;
 	i = 0;

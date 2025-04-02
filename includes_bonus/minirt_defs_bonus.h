@@ -98,6 +98,17 @@ typedef struct s_material
 	t_img_data		img_normal;
 }					t_material;
 
+typedef struct s_aabb
+{
+	t_vec3			min;
+	t_vec3			max;
+}					t_aabb;
+
+typedef struct s_bvh
+{
+	t_aabb			box;
+}					t_bvh;
+
 typedef struct vertex
 {
 	int				geo_id;
@@ -111,7 +122,6 @@ typedef struct s_triangle
 	t_vec3			normals[3];
 	t_vec2			uvs[3];
 }					t_triangle;
-
 typedef struct s_mesh
 {
 	t_vec3			*vertices;
@@ -122,14 +132,8 @@ typedef struct s_mesh
 	int				n_uvs;
 	t_vertex		**faces;
 	int				n_faces;
-	t_bntree		bvh;
+	t_bvh			bvh;
 }					t_mesh;
-
-typedef struct s_aabb
-{
-	t_vec3			min;
-	t_vec3			max;
-}					t_aabb;
 
 typedef struct s_cone
 {
