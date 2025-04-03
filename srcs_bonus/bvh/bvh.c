@@ -15,7 +15,7 @@ t_vec3	triangle_center(t_vec3 vertices[3])
 	return (ft_scale_vec3(1 / 3., center));
 }
 
-t_aabb	create_aabb(t_mesh *mesh, t_vec3 offset)
+t_aabb	create_aabb(t_mesh *mesh)
 {
 	int		i;
 	t_aabb	aabb;
@@ -39,8 +39,6 @@ t_aabb	create_aabb(t_mesh *mesh, t_vec3 offset)
 			aabb.max.z = mesh->vertices[i].z;
 		i++;
 	}
-	aabb.min = ft_add_vec3(aabb.min, offset);
-	aabb.max = ft_add_vec3(aabb.max, offset);
 	return (aabb);
 }
 

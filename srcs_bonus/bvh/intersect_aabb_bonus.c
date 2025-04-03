@@ -6,7 +6,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-static t_vec3	ft_inverse_vec3(t_vec3 v)
+t_vec3	ft_inverse_vec3(t_vec3 v)
 {
 	t_vec3	u;
 
@@ -20,7 +20,7 @@ static t_vec3	ft_inverse_vec3(t_vec3 v)
 	return (u);
 }
 
-static void	ft_vec3_to_array(t_vec3 v, double a[3])
+void	ft_vec3_to_array(t_vec3 v, double a[3])
 {
 	a[0] = v.x;
 	a[1] = v.y;
@@ -36,8 +36,25 @@ void	ft_swapf(double *a, double *b)
 	*b = temp;
 }
 
-static bool	aabb_roots(double tbox[2], const double dets[3],
-		const double omin[3], const double omax[3])
+t_ivec2	hit_box(bool hit, bool print)
+{
+	t_ivec2		ret;
+	static int	nhit;
+	static int	ntot;
+
+	if (!print)
+	{
+		ntot++;
+		if (hit)
+			nhit++;
+	}
+	ret.x = nhit;
+	ret.y = ntot;
+	return (ret);
+}
+
+bool	aabb_roots(double tbox[2], const double dets[3], const double omin[3],
+		const double omax[3])
 {
 	double	tplane[2];
 	int		i;
@@ -56,15 +73,10 @@ static bool	aabb_roots(double tbox[2], const double dets[3],
 		tplane[1] = omax[i] * dets[i];
 		if (ft_supf(tplane[0], tplane[1]))
 			ft_swapf(&tplane[0], &tplane[1]);
-		if (tplane[0] > tbox[0])
-			tbox[0] = tplane[0];
-		if (tplane[1] < tbox[1])
-			tbox[1] = tplane[1];
+		tbox[0] = fmax(tbox[0], tplane[0]);
+		tbox[1] = fmin(tbox[1], tplane[1]);
 		if (tbox[0] > tbox[1])
-		{
-			printf("DEHORS");
 			return (false);
-		}
 		i++;
 	}
 	return (true);
@@ -84,7 +96,54 @@ double	intersect_aabb(t_ray ray, t_aabb box)
 	tbox[0] = 0.0f;
 	tbox[1] = INFINITY;
 	if (!aabb_roots(tbox, dets, omin, omax))
+	{
+		hit_box(false, false);
 		return (INFINITY);
+	}
+	hit_box(true, false);
 	t = closest_root(tbox[0], tbox[1]);
 	return (t);
 }
+
+// double	intersect_aabb(t_ray r, t_aabb box)
+// {
+// 	double	tmin;
+// 	double	tmax;
+// 	double	tymin;
+// 	double	tymax;
+// 	double	tzmin;
+// 	double	tzmax;
+//
+// 	tmin = (box.min.x - r.origin.x) / r.direction.x;
+// 	tmax = (box.max.x - r.origin.x) / r.direction.x;
+// 	if (tmin > tmax)
+// 		ft_swapf(&tmin, &tmax);
+// 	tymin = (box.min.y - r.origin.y) / r.direction.y;
+// 	tymax = (box.max.y - r.origin.y) / r.direction.y;
+// 	if (tymin > tymax)
+// 		ft_swapf(&tymin, &tymax);
+// 	if ((tmin > tymax) || (tymin > tmax))
+// 	{
+// 		hit_box(false, false);
+// 		return (INFINITY);
+// 	}
+// 	if (tymin > tmin)
+// 		tmin = tymin;
+// 	if (tymax < tmax)
+// 		tmax = tymax;
+// 	tzmin = (box.min.z - r.origin.z) / r.direction.z;
+// 	tzmax = (box.max.z - r.origin.z) / r.direction.z;
+// 	if (tzmin > tzmax)
+// 		ft_swapf(&tzmin, &tzmax);
+// 	if ((tmin > tzmax) || (tzmin > tmax))
+// 	{
+// 		hit_box(false, false);
+// 		return (INFINITY);
+// 	}
+// 	if (tzmin > tmin)
+// 		tmin = tzmin;
+// 	if (tzmax < tmax)
+// 		tmax = tzmax;
+// 	hit_box(true, false);
+// 	return (tmin);
+// }
