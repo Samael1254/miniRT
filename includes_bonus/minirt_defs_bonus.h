@@ -17,6 +17,8 @@
 # define RAY_REACH_MAX 1000
 # define RAY_REACH_MIN 1e-4
 
+# define BVH_DEPTH 16
+
 /* ENUMS */
 
 // Event codes
@@ -104,12 +106,20 @@ typedef struct s_aabb
 	t_vec3			max;
 }					t_aabb;
 
+typedef struct s_bvh_tr
+{
+	unsigned int	id;
+	t_vec3			center;
+	unsigned int	vertices_id[3];
+}					t_bvh_tr;
+
 typedef struct s_bvh_elem
 {
 	t_aabb			box;
-	int				*tr_ids;
-	t_vec3			*tr_centers;
+	t_bvh_tr		*triangles;
 	t_vec3			*vertices;
+	unsigned int	n_triangles;
+	unsigned int	n_vertices;
 
 }					t_bvh_elem;
 

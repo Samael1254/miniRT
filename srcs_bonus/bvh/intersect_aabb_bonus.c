@@ -19,11 +19,21 @@ static t_vec3	ft_inverse_vec3(t_vec3 v)
 	return (u);
 }
 
-static void	ft_vec3_to_array(t_vec3 v, double a[3])
+void	ft_vec3_to_array(t_vec3 v, double a[3])
 {
 	a[0] = v.x;
 	a[1] = v.y;
 	a[2] = v.z;
+}
+
+t_vec3	ft_array_to_vec3(const double a[3])
+{
+	t_vec3	v;
+
+	v.x = a[0];
+	v.y = a[1];
+	v.z = a[2];
+	return (v);
 }
 
 static void	ft_swapf(double *a, double *b)
