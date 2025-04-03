@@ -104,9 +104,20 @@ typedef struct s_aabb
 	t_vec3			max;
 }					t_aabb;
 
+typedef struct s_bvh_elem
+{
+	t_aabb			box;
+	int				*tr_ids;
+	t_vec3			*tr_centers;
+	t_vec3			*vertices;
+
+}					t_bvh_elem;
+
 typedef struct s_bvh
 {
 	t_aabb			box;
+	unsigned int	depth;
+	t_bntree		*root;
 }					t_bvh;
 
 typedef struct vertex
@@ -122,6 +133,7 @@ typedef struct s_triangle
 	t_vec3			normals[3];
 	t_vec2			uvs[3];
 }					t_triangle;
+
 typedef struct s_mesh
 {
 	t_vec3			*vertices;
