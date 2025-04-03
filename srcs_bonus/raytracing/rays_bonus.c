@@ -90,9 +90,9 @@ void	shoot_rays(t_state *state)
 		{
 			while (i > 0)
 			{
+				i--;
 				pthread_cancel(threads[i]);
 				pthread_join(threads[i], NULL);
-				i--;
 			}
 			error("pthread_create", "crash", state);
 		}
