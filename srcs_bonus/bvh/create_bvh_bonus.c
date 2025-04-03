@@ -20,6 +20,7 @@ t_bvh_elem	*create_sub_elem(t_bvh_elem *parent_elem, t_aabb sub_box)
 	get_vertices_in_aabb(parent_elem, sub_elem);
 	if (!sub_elem->vertices)
 		return (free(sub_elem->triangles), free(sub_elem), NULL);
+	sub_elem->box = create_aabb(sub_elem->vertices, sub_elem->n_vertices);
 	return (sub_elem);
 }
 
@@ -66,8 +67,8 @@ t_bntree	*create_bvh_node(t_bvh_elem *parent_elem, unsigned int depth)
 	return (node);
 }
 
-t_bvh_elem	*init_bvh_elem(t_aabb box, t_vec3 *vertices, t_vertex **faces,
-		int n_faces)
+t_bvh_elem	*init_bvh_elem(t_vec3 *vertices, unsigned int n_vertices,
+		t_vertex **faces, int n_faces)
 {
 	t_bvh_elem	*data;
 	int			i;
@@ -75,7 +76,7 @@ t_bvh_elem	*init_bvh_elem(t_aabb box, t_vec3 *vertices, t_vertex **faces,
 	data = ft_calloc(1, sizeof(t_bvh_elem));
 	if (!data)
 		return (NULL);
-	data->box = box;
+	data->box = create_aabb(vertices, n_vertices);
 	data->n_triangles = n_faces;
 	data->vertices = vertices;
 	data->triangles = malloc(n_faces * sizeof(t_bvh_tr));
@@ -90,14 +91,15 @@ t_bvh_elem	*init_bvh_elem(t_aabb box, t_vec3 *vertices, t_vertex **faces,
 	return (data);
 }
 
-t_bvh	create_bvh(t_aabb aabb, t_mesh *mesh)
+t_bvh	create_bvh(t_mesh *mesh)
 {
 	t_bvh		bvh;
 	t_bvh_elem	*root_elem;
 
 	bvh.root = NULL;
 	bvh.depth = BVH_DEPTH;
-	root_elem = init_bvh_elem(aabb, mesh->vertices, mesh->faces, mesh->n_faces);
+	root_elem = init_bvh_elem(mesh->vertices, mesh->n_vertices, mesh->faces,
+			mesh->n_faces);
 	if (!root_elem)
 		return (bvh);
 	bvh.root = create_bvh_node(root_elem, 0);

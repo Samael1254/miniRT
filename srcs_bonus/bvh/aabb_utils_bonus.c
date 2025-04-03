@@ -1,10 +1,10 @@
 #include "ft_algebra.h"
 #include "ft_math.h"
-#include "minirt_defs_bonus.h"
 #include "minirt_bvh_bonus.h"
+#include "minirt_defs_bonus.h"
 #include <math.h>
-#include <stdlib.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 bool	is_point_in_aabb(t_vec3 point, t_aabb box)
 {
@@ -13,28 +13,28 @@ bool	is_point_in_aabb(t_vec3 point, t_aabb box)
 			box.max.z));
 }
 
-t_aabb	create_aabb(t_mesh *mesh)
+t_aabb	create_aabb(t_vec3 *vertices, unsigned int n_vertices)
 {
-	int		i;
-	t_aabb	aabb;
+	unsigned int	i;
+	t_aabb			aabb;
 
 	i = 0;
 	aabb.min = ft_init_vec3(INFINITY);
 	aabb.max = ft_init_vec3(-INFINITY);
-	while (i < mesh->n_vertices)
+	while (i < n_vertices)
 	{
-		if (aabb.min.x > mesh->vertices[i].x)
-			aabb.min.x = mesh->vertices[i].x;
-		if (aabb.min.y > mesh->vertices[i].y)
-			aabb.min.y = mesh->vertices[i].y;
-		if (aabb.min.z > mesh->vertices[i].z)
-			aabb.min.z = mesh->vertices[i].z;
-		if (aabb.max.x < mesh->vertices[i].x)
-			aabb.max.x = mesh->vertices[i].x;
-		if (aabb.max.y < mesh->vertices[i].y)
-			aabb.max.y = mesh->vertices[i].y;
-		if (aabb.max.z < mesh->vertices[i].z)
-			aabb.max.z = mesh->vertices[i].z;
+		if (aabb.min.x > vertices[i].x)
+			aabb.min.x = vertices[i].x;
+		if (aabb.min.y > vertices[i].y)
+			aabb.min.y = vertices[i].y;
+		if (aabb.min.z > vertices[i].z)
+			aabb.min.z = vertices[i].z;
+		if (aabb.max.x < vertices[i].x)
+			aabb.max.x = vertices[i].x;
+		if (aabb.max.y < vertices[i].y)
+			aabb.max.y = vertices[i].y;
+		if (aabb.max.z < vertices[i].z)
+			aabb.max.z = vertices[i].z;
 		i++;
 	}
 	return (aabb);
@@ -102,4 +102,3 @@ void	get_triangles_in_aabb(t_bvh_elem *parent_elem, t_bvh_elem *sub_elem)
 		i++;
 	}
 }
-

@@ -85,7 +85,7 @@ t_intersection	intersect_scene(t_ray ray, t_state *state)
 	{
 		cur_object = (t_object *)iter->data;
 		cur_distance = intersect_object(ray, &cur_object);
-		if (cur_distance == NAN)
+		if (isnan(cur_distance))
 			error("malloc failed", "in face_to_triangle", state);
 		if (ft_in_rangef(cur_distance, RAY_REACH_MIN, distance_min)
 			&& state->mats_tab[cur_object->index_mat].kd.a != 0)
