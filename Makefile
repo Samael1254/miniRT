@@ -42,7 +42,7 @@ BONUS_GRAPHICS := color_bonus.c graphics_bonus.c color_utils_bonus.c
 BONUS_ERRORS := errors_bonus.c check_arguments_bonus.c
 
 BONUS_RAYTRACING := raytracing_bonus.c intersections_bonus.c intersect_objects_bonus.c rays_bonus.c \
-				   normals_bonus.c intersect_objects_utils_bonus.c intersect_mesh_bonus.c object_normal_bonus.c \
+				   normals_bonus.c intersect_objects_utils_bonus.c intersect_bvh_bonus.c object_normal_bonus.c \
 				   ray_utils_bonus.c
 
 BONUS_LIGHT := light_bonus.c light_utils_bonus.c

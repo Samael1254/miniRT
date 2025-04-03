@@ -1,7 +1,7 @@
-#include <stdlib.h>
 #include "ft_memory.h"
-#include "minirt_defs_bonus.h"
 #include "minirt_bvh_bonus.h"
+#include "minirt_defs_bonus.h"
+#include <stdlib.h>
 
 static t_vec3	triangle_center(t_vec3 vertices[3])
 {
