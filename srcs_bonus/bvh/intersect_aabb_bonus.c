@@ -36,14 +36,14 @@ t_vec3	ft_array_to_vec3(const double a[3])
 	return (v);
 }
 
-static void	ft_swapf(double *a, double *b)
-{
-	double	temp;
-
-	temp = *a;
-	*a = *b;
-	*b = temp;
-}
+// static void	ft_swapf(double *a, double *b)
+// {
+// 	double	temp;
+//
+// 	temp = *a;
+// 	*a = *b;
+// 	*b = temp;
+// }
 
 t_ivec2	hit_box(bool hit, bool print)
 {
@@ -80,10 +80,8 @@ bool	aabb_roots(double tbox[2], const double dets[3], const double omin[3],
 		}
 		tplane[0] = omin[i] * dets[i];
 		tplane[1] = omax[i] * dets[i];
-		if (ft_supf(tplane[0], tplane[1]))
-			ft_swapf(&tplane[0], &tplane[1]);
-		tbox[0] = fmax(tbox[0], tplane[0]);
-		tbox[1] = fmin(tbox[1], tplane[1]);
+		tbox[0] = fmax(tbox[0], fmin(tplane[0], tplane[1]));
+		tbox[1] = fmin(tbox[1], fmax(tplane[0], tplane[1]));
 		if (ft_supf(tbox[0], tbox[1]))
 			return (false);
 		i++;

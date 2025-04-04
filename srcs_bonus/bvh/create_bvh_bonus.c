@@ -77,6 +77,7 @@ t_bvh_elem	*init_bvh_elem(t_vec3 *vertices, unsigned int n_vertices,
 	if (!data)
 		return (NULL);
 	data->box = create_aabb(vertices, n_vertices);
+	data->n_vertices = n_vertices;
 	data->n_triangles = n_faces;
 	data->vertices = vertices;
 	data->triangles = malloc(n_faces * sizeof(t_bvh_tr));
