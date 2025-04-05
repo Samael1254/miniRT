@@ -1,4 +1,5 @@
 #include "ft_algebra.h"
+#include "ft_math.h"
 #include "minirt_bvh_bonus.h"
 #include "minirt_defs_bonus.h"
 #include <math.h>
@@ -6,12 +7,18 @@
 
 bool	is_point_in_aabb(t_vec3 point, t_aabb box)
 {
-	if (point.x < box.min.x || point.x > box.max.x)
+	if (!ft_in_rangef(point.x, box.min.x, box.max.x))
 		return (false);
-	if (point.y < box.min.y || point.y > box.max.y)
+	if (!ft_in_rangef(point.y, box.min.y, box.max.y))
 		return (false);
-	if (point.z < box.min.z || point.z > box.max.z)
+	if (!ft_in_rangef(point.z, box.min.z, box.max.z))
 		return (false);
+	// if (point.x <= box.min.x || point.x >= box.max.x)
+	// 	return (false);
+	// if (point.y <= box.min.y || point.y >= box.max.y)
+	// 	return (false);
+	// if (point.z <= box.min.z || point.z >= box.max.z)
+	// 	return (false);
 	return (true);
 }
 

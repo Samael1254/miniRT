@@ -9,7 +9,7 @@
 
 /* MACROS */
 
-# define THREAD_COUNT 10
+# define THREAD_COUNT 20
 
 # define WIN_X 800
 # define WIN_Y 800
@@ -17,7 +17,7 @@
 # define RAY_REACH_MAX 1000
 # define RAY_REACH_MIN 1e-4
 
-# define BVH_DEPTH 1
+# define BVH_DEPTH 4
 
 /* ENUMS */
 

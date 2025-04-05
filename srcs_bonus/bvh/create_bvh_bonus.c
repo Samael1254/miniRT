@@ -21,6 +21,7 @@ static t_bvh_elem	*create_sub_elem(t_bvh_elem *parent_elem, t_aabb sub_box,
 	get_triangles_in_aabb(parent_elem, sub_elem);
 	if (!sub_elem->triangles)
 		return (free(sub_elem), NULL);
+	// (void)vertices;
 	sub_elem->box = create_aabb(vertices, sub_elem);
 	return (sub_elem);
 }
@@ -53,7 +54,7 @@ static t_bntree	*create_bvh_node(t_bvh_elem *parent_elem, unsigned int depth,
 	node = ft_bntree_create_node(parent_elem);
 	if (!node)
 		return (free_bvh_elem(parent_elem), NULL);
-	printf("depth: %u\n", depth);
+	// printf("depth: %u\n", depth);
 	if (depth == BVH_DEPTH)
 		return (node);
 	split_aabb(parent_elem->box, sub_boxes);
