@@ -1,5 +1,4 @@
 #include "ft_algebra.h"
-#include "ft_math.h"
 #include "minirt_bvh_bonus.h"
 #include "minirt_defs_bonus.h"
 #include <math.h>
@@ -7,18 +6,12 @@
 
 bool	is_point_in_aabb(t_vec3 point, t_aabb box)
 {
-	if (!ft_in_rangef(point.x, box.min.x, box.max.x))
+	if (point.x < box.min.x || point.x > box.max.x)
 		return (false);
-	if (!ft_in_rangef(point.y, box.min.y, box.max.y))
+	if (point.y < box.min.y || point.y > box.max.y)
 		return (false);
-	if (!ft_in_rangef(point.z, box.min.z, box.max.z))
+	if (point.z < box.min.z || point.z > box.max.z)
 		return (false);
-	// if (point.x <= box.min.x || point.x >= box.max.x)
-	// 	return (false);
-	// if (point.y <= box.min.y || point.y >= box.max.y)
-	// 	return (false);
-	// if (point.z <= box.min.z || point.z >= box.max.z)
-	// 	return (false);
 	return (true);
 }
 
@@ -28,6 +21,7 @@ t_aabb	create_aabb(const t_vec3 *vertices, t_bvh_elem *sub_elem)
 	unsigned int	j;
 	t_aabb			aabb;
 	t_vec3			vertex;
+	const double	epsilon = 0;
 
 	i = 0;
 	aabb.min = ft_init_vec3(INFINITY);
@@ -38,17 +32,41 @@ t_aabb	create_aabb(const t_vec3 *vertices, t_bvh_elem *sub_elem)
 		while (j < 3)
 		{
 			vertex = vertices[sub_elem->triangles[i].vertices_id[j++]];
-			aabb.min.x = fmin(aabb.min.x, vertex.x);
-			aabb.min.y = fmin(aabb.min.y, vertex.y);
-			aabb.min.z = fmin(aabb.min.z, vertex.z);
-			aabb.max.x = fmax(aabb.max.x, vertex.x);
-			aabb.max.y = fmax(aabb.max.y, vertex.y);
-			aabb.max.z = fmax(aabb.max.z, vertex.z);
+			if (aabb.min.x > vertex.x)
+				aabb.min.x = vertex.x - epsilon;
+			if (aabb.min.y > vertex.y)
+				aabb.min.y = vertex.y - epsilon;
+			if (aabb.min.z > vertex.z)
+				aabb.min.z = vertex.z - epsilon;
+			if (aabb.max.x < vertex.x)
+				aabb.max.x = vertex.x + epsilon;
+			if (aabb.max.y < vertex.y)
+				aabb.max.y = vertex.y + epsilon;
+			if (aabb.max.z < vertex.z)
+				aabb.max.z = vertex.z + epsilon;
 		}
 		i++;
 	}
 	return (aabb);
 }
+
+// int	compare_aabb(void *a, void *b)
+// {
+// 	t_aabb	*a_tmp;
+// 	t_aabb	*b_tmp;
+// 	float	center_a;
+// 	float	center_b;
+//
+// 	a_tmp = (t_aabb *)a;
+// 	b_tmp = (t_aabb *)b;
+// 	center_a = (a_tmp->min.x + a_tmp->max.x) / 2;
+// 	center_b = (b_tmp->min.x + b_tmp->max.x) / 2;
+// 	if (center_a < center_b)
+// 		return (-1);
+// 	else if (center_a > center_b)
+// 		return (1);
+// 	return (0);
+// }
 
 void	split_aabb(t_aabb box, t_aabb new[2])
 {

@@ -21,8 +21,8 @@ static t_bvh_elem	*create_sub_elem(t_bvh_elem *parent_elem, t_aabb sub_box,
 	get_triangles_in_aabb(parent_elem, sub_elem);
 	if (!sub_elem->triangles)
 		return (free(sub_elem), NULL);
-	// (void)vertices;
-	sub_elem->box = create_aabb(vertices, sub_elem);
+	(void)vertices;
+	// sub_elem->box = create_aabb(vertices, sub_elem);
 	return (sub_elem);
 }
 

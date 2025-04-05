@@ -17,7 +17,7 @@
 # define RAY_REACH_MAX 1000
 # define RAY_REACH_MIN 1e-4
 
-# define BVH_DEPTH 4
+# define BVH_DEPTH 8
 
 /* ENUMS */
 
