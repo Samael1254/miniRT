@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:21:56 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/04 10:23:14 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/04/05 13:59:43 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@
 
 t_bvh		create_bvh(t_mesh *mesh);
 
-t_ivec2		hit_box(bool hit, bool print);
-t_aabb		create_aabb(t_vec3 *vertices, unsigned int n_vertices);
+t_aabb		create_aabb(const t_vec3 *vertices, t_bvh_elem *sub_elem);
 double		intersect_aabb(t_ray ray, t_aabb box);
 
 void		ft_vec3_to_array(t_vec3 v, double a[3]);

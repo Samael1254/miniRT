@@ -40,6 +40,7 @@ static void	material_handling(t_state *state, int fd)
 	char	**tmp_split;
 
 	i = 1;
+	tmp_split = NULL;
 	while (1)
 	{
 		line = get_next_line(fd);

@@ -41,7 +41,9 @@ t_object	*object_mesh(t_state *state, char **split)
 	obj->index_mat = ft_atoi(split[4]);
 	transform_mesh(obj->object_r, get_vector(split[2], &has_error),
 		ft_atod(split[3]));
-	if (obj->index_mat > state->len_mats_tab || has_error)
+	((t_mesh *)obj->object_r)->bvh = create_bvh((t_mesh *)obj->object_r);
+	if (obj->index_mat > state->len_mats_tab || has_error
+		|| !((t_mesh *)obj->object_r)->bvh.root)
 	{
 		free_mesh((t_mesh *)obj->object_r);
 		free(obj);
@@ -49,7 +51,6 @@ t_object	*object_mesh(t_state *state, char **split)
 		error("wrong material index", "mesh", state);
 		return (NULL);
 	}
-	((t_mesh *)obj->object_r)->bvh = create_bvh((t_mesh *)obj->object_r);
 	// ((t_mesh *)obj->object_r)->bvh.box = create_aabb((t_mesh *)obj->object_r);
 	// print_aabb(((t_mesh *)obj->object_r)->bvh.box);
 	return (obj);

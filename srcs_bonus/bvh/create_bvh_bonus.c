@@ -1,12 +1,16 @@
+#include "ft_algebra.h"
 #include "ft_binary_tree.h"
 #include "ft_memory.h"
 #include "minirt_bvh_bonus.h"
 #include "minirt_defs_bonus.h"
+#include <math.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdio.h>
 #include <stdlib.h>
 
-t_bvh_elem	*create_sub_elem(t_bvh_elem *parent_elem, t_aabb sub_box)
+static t_bvh_elem	*create_sub_elem(t_bvh_elem *parent_elem, t_aabb sub_box,
+		const t_vec3 *vertices)
 {
 	t_bvh_elem	*sub_elem;
 
@@ -17,22 +21,19 @@ t_bvh_elem	*create_sub_elem(t_bvh_elem *parent_elem, t_aabb sub_box)
 	get_triangles_in_aabb(parent_elem, sub_elem);
 	if (!sub_elem->triangles)
 		return (free(sub_elem), NULL);
-	get_vertices_in_aabb(parent_elem, sub_elem);
-	if (!sub_elem->vertices)
-		return (free(sub_elem->triangles), free(sub_elem), NULL);
-	sub_elem->box = create_aabb(sub_elem->vertices, sub_elem->n_vertices);
+	sub_elem->box = create_aabb(vertices, sub_elem);
 	return (sub_elem);
 }
 
-bool	create_sub_elems(t_bvh_elem *sub_elems[2], t_aabb sub_boxes[2],
-		t_bvh_elem *parent_elem)
+static bool	create_sub_elems(t_bvh_elem *sub_elems[2], t_aabb sub_boxes[2],
+		t_bvh_elem *parent_elem, const t_vec3 *vertices)
 {
 	int	i;
 
 	i = 0;
 	while (i < 2)
 	{
-		sub_elems[i] = create_sub_elem(parent_elem, sub_boxes[i]);
+		sub_elems[i] = create_sub_elem(parent_elem, sub_boxes[i], vertices);
 		if (!sub_elems[i++])
 		{
 			free_bvh_elem(sub_elems[0]);
@@ -42,7 +43,8 @@ bool	create_sub_elems(t_bvh_elem *sub_elems[2], t_aabb sub_boxes[2],
 	return (true);
 }
 
-t_bntree	*create_bvh_node(t_bvh_elem *parent_elem, unsigned int depth)
+static t_bntree	*create_bvh_node(t_bvh_elem *parent_elem, unsigned int depth,
+		const t_vec3 *vertices)
 {
 	t_bntree	*node;
 	t_aabb		sub_boxes[2];
@@ -51,24 +53,31 @@ t_bntree	*create_bvh_node(t_bvh_elem *parent_elem, unsigned int depth)
 	node = ft_bntree_create_node(parent_elem);
 	if (!node)
 		return (free_bvh_elem(parent_elem), NULL);
+	printf("depth: %u\n", depth);
 	if (depth == BVH_DEPTH)
 		return (node);
 	split_aabb(parent_elem->box, sub_boxes);
-	if (!create_sub_elems(sub_elems, sub_boxes, parent_elem))
+	if (!create_sub_elems(sub_elems, sub_boxes, parent_elem, vertices))
 		return (NULL);
-	node->left = create_bvh_node(sub_elems[0], depth + 1);
-	if (!node->left)
-		return (free_node(node), NULL);
-	node->right = create_bvh_node(sub_elems[1], depth + 1);
-	if (!node->right)
-		return (free_node(node), free_node(node->left), NULL);
+	if (!isinf(sub_elems[0]->box.min.x))
+	{
+		node->left = create_bvh_node(sub_elems[0], depth + 1, vertices);
+		if (!node->left)
+			return (free_node(node), NULL);
+	}
+	if (!isinf(sub_elems[1]->box.min.x))
+	{
+		node->right = create_bvh_node(sub_elems[1], depth + 1, vertices);
+		if (!node->right)
+			return (free_node(node->left), free_node(node), NULL);
+	}
 	free(parent_elem->triangles);
-	free(parent_elem->vertices);
+	parent_elem->triangles = NULL;
 	return (node);
 }
 
-t_bvh_elem	*init_bvh_elem(t_vec3 *vertices, unsigned int n_vertices,
-		t_vertex **faces, int n_faces)
+static t_bvh_elem	*init_bvh_elem(t_vec3 *vertices, t_vertex **faces,
+		int n_faces)
 {
 	t_bvh_elem	*data;
 	int			i;
@@ -76,10 +85,7 @@ t_bvh_elem	*init_bvh_elem(t_vec3 *vertices, unsigned int n_vertices,
 	data = ft_calloc(1, sizeof(t_bvh_elem));
 	if (!data)
 		return (NULL);
-	data->box = create_aabb(vertices, n_vertices);
-	data->n_vertices = n_vertices;
 	data->n_triangles = n_faces;
-	data->vertices = vertices;
 	data->triangles = malloc(n_faces * sizeof(t_bvh_tr));
 	if (!data->triangles)
 		return (free(data), NULL);
@@ -89,6 +95,7 @@ t_bvh_elem	*init_bvh_elem(t_vec3 *vertices, unsigned int n_vertices,
 		data->triangles[i] = get_bvh_triangle(vertices, faces[i], i);
 		i++;
 	}
+	data->box = create_aabb(vertices, data);
 	return (data);
 }
 
@@ -98,11 +105,9 @@ t_bvh	create_bvh(t_mesh *mesh)
 	t_bvh_elem	*root_elem;
 
 	bvh.root = NULL;
-	bvh.depth = BVH_DEPTH;
-	root_elem = init_bvh_elem(mesh->vertices, mesh->n_vertices, mesh->faces,
-			mesh->n_faces);
+	root_elem = init_bvh_elem(mesh->vertices, mesh->faces, mesh->n_faces);
 	if (!root_elem)
 		return (bvh);
-	bvh.root = create_bvh_node(root_elem, 0);
+	bvh.root = create_bvh_node(root_elem, 0, mesh->vertices);
 	return (bvh);
 }

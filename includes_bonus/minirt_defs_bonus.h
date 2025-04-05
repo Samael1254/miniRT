@@ -9,7 +9,7 @@
 
 /* MACROS */
 
-# define THREAD_COUNT 1
+# define THREAD_COUNT 10
 
 # define WIN_X 800
 # define WIN_Y 800
@@ -17,7 +17,7 @@
 # define RAY_REACH_MAX 1000
 # define RAY_REACH_MIN 1e-4
 
-# define BVH_DEPTH 16
+# define BVH_DEPTH 1
 
 /* ENUMS */
 
@@ -117,16 +117,13 @@ typedef struct s_bvh_elem
 {
 	t_aabb			box;
 	t_bvh_tr		*triangles;
-	t_vec3			*vertices;
 	unsigned int	n_triangles;
-	unsigned int	n_vertices;
 
 }					t_bvh_elem;
 
 typedef struct s_bvh
 {
 	t_aabb			box;
-	unsigned int	depth;
 	t_bntree		*root;
 }					t_bvh;
 

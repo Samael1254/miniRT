@@ -45,23 +45,6 @@ t_vec3	ft_array_to_vec3(const double a[3])
 // 	*b = temp;
 // }
 
-t_ivec2	hit_box(bool hit, bool print)
-{
-	t_ivec2		ret;
-	static int	nhit;
-	static int	ntot;
-
-	if (!print)
-	{
-		ntot++;
-		if (hit)
-			nhit++;
-	}
-	ret.x = nhit;
-	ret.y = ntot;
-	return (ret);
-}
-
 bool	aabb_roots(double tbox[2], const double dets[3], const double omin[3],
 		const double omax[3])
 {
@@ -103,11 +86,7 @@ double	intersect_aabb(t_ray ray, t_aabb box)
 	tbox[0] = 0.0f;
 	tbox[1] = INFINITY;
 	if (!aabb_roots(tbox, dets, omin, omax))
-	{
-		hit_box(false, false); // test to delete
 		return (INFINITY);
-	}
-	hit_box(true, false); // test to delete
 	t = closest_root(tbox[0], tbox[1]);
 	return (t);
 }

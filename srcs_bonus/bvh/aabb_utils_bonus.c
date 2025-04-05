@@ -15,50 +15,33 @@ bool	is_point_in_aabb(t_vec3 point, t_aabb box)
 	return (true);
 }
 
-t_aabb	create_aabb(t_vec3 *vertices, unsigned int n_vertices)
+t_aabb	create_aabb(const t_vec3 *vertices, t_bvh_elem *sub_elem)
 {
 	unsigned int	i;
+	unsigned int	j;
 	t_aabb			aabb;
+	t_vec3			vertex;
 
 	i = 0;
 	aabb.min = ft_init_vec3(INFINITY);
 	aabb.max = ft_init_vec3(-INFINITY);
-	while (i < n_vertices)
+	while (i < sub_elem->n_triangles)
 	{
-		if (aabb.min.x > vertices[i].x)
-			aabb.min.x = vertices[i].x;
-		if (aabb.min.y > vertices[i].y)
-			aabb.min.y = vertices[i].y;
-		if (aabb.min.z > vertices[i].z)
-			aabb.min.z = vertices[i].z;
-		if (aabb.max.x < vertices[i].x)
-			aabb.max.x = vertices[i].x;
-		if (aabb.max.y < vertices[i].y)
-			aabb.max.y = vertices[i].y;
-		if (aabb.max.z < vertices[i].z)
-			aabb.max.z = vertices[i].z;
+		j = 0;
+		while (j < 3)
+		{
+			vertex = vertices[sub_elem->triangles[i].vertices_id[j++]];
+			aabb.min.x = fmin(aabb.min.x, vertex.x);
+			aabb.min.y = fmin(aabb.min.y, vertex.y);
+			aabb.min.z = fmin(aabb.min.z, vertex.z);
+			aabb.max.x = fmax(aabb.max.x, vertex.x);
+			aabb.max.y = fmax(aabb.max.y, vertex.y);
+			aabb.max.z = fmax(aabb.max.z, vertex.z);
+		}
 		i++;
 	}
 	return (aabb);
 }
-
-// int	compare_aabb(void *a, void *b)
-// {
-// 	t_aabb	*a_tmp;
-// 	t_aabb	*b_tmp;
-// 	float	center_a;
-// 	float	center_b;
-//
-// 	a_tmp = (t_aabb *)a;
-// 	b_tmp = (t_aabb *)b;
-// 	center_a = (a_tmp->min.x + a_tmp->max.x) / 2;
-// 	center_b = (b_tmp->min.x + b_tmp->max.x) / 2;
-// 	if (center_a < center_b)
-// 		return (-1);
-// 	else if (center_a > center_b)
-// 		return (1);
-// 	return (0);
-// }
 
 void	split_aabb(t_aabb box, t_aabb new[2])
 {

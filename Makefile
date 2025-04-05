@@ -78,7 +78,7 @@ endif
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I./includes -I./includes_bonus -I./libs/libft/includes -I./libs/mlx #-g
+CFLAGS = -Wall -Wextra -Werror -I./includes -I./includes_bonus -I./libs/libft/includes -I./libs/mlx -fsanitize=undefined -g
 
 LIBFT = ./libs/libft/lib/libft.a
 
