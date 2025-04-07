@@ -21,7 +21,7 @@ t_aabb	create_aabb(const t_vec3 *vertices, t_bvh_elem *sub_elem)
 	unsigned int	j;
 	t_aabb			aabb;
 	t_vec3			vertex;
-	const double	epsilon = 0;
+	const double	epsilon = 1e-4;
 
 	i = 0;
 	aabb.min = ft_init_vec3(INFINITY);
@@ -32,53 +32,30 @@ t_aabb	create_aabb(const t_vec3 *vertices, t_bvh_elem *sub_elem)
 		while (j < 3)
 		{
 			vertex = vertices[sub_elem->triangles[i].vertices_id[j++]];
-			if (aabb.min.x > vertex.x)
-				aabb.min.x = vertex.x - epsilon;
-			if (aabb.min.y > vertex.y)
-				aabb.min.y = vertex.y - epsilon;
-			if (aabb.min.z > vertex.z)
-				aabb.min.z = vertex.z - epsilon;
-			if (aabb.max.x < vertex.x)
-				aabb.max.x = vertex.x + epsilon;
-			if (aabb.max.y < vertex.y)
-				aabb.max.y = vertex.y + epsilon;
-			if (aabb.max.z < vertex.z)
-				aabb.max.z = vertex.z + epsilon;
+			aabb.min.x = fmin(aabb.min.x, vertex.x);
+			aabb.min.y = fmin(aabb.min.y, vertex.y);
+			aabb.min.z = fmin(aabb.min.z, vertex.z);
+			aabb.max.x = fmax(aabb.max.x, vertex.x);
+			aabb.max.y = fmax(aabb.max.y, vertex.y);
+			aabb.max.z = fmax(aabb.max.z, vertex.z);
 		}
 		i++;
 	}
+	aabb.min = ft_sub_vec3(aabb.min, ft_init_vec3(epsilon));
+	aabb.max = ft_add_vec3(aabb.max, ft_init_vec3(epsilon));
 	return (aabb);
 }
 
-// int	compare_aabb(void *a, void *b)
-// {
-// 	t_aabb	*a_tmp;
-// 	t_aabb	*b_tmp;
-// 	float	center_a;
-// 	float	center_b;
-//
-// 	a_tmp = (t_aabb *)a;
-// 	b_tmp = (t_aabb *)b;
-// 	center_a = (a_tmp->min.x + a_tmp->max.x) / 2;
-// 	center_b = (b_tmp->min.x + b_tmp->max.x) / 2;
-// 	if (center_a < center_b)
-// 		return (-1);
-// 	else if (center_a > center_b)
-// 		return (1);
-// 	return (0);
-// }
-
 void	split_aabb(t_aabb box, t_aabb new[2])
 {
-	t_axis	axis;
-	t_vec3	size;
-	double	new_pos;
-	double	min[3];
-	double	max[3];
+	t_axis			axis;
+	t_vec3			size;
+	double			new_pos;
+	double			min[3];
+	double			max[3];
+	const double	epsilon = 1e-4;
 
-	size.x = box.max.x - box.min.x;
-	size.y = box.max.y - box.min.y;
-	size.z = box.max.z - box.min.z;
+	size = ft_sub_vec3(box.max, box.min);
 	axis = X_AXIS;
 	if (size.y > size.x && size.y > size.z)
 		axis = Y_AXIS;
@@ -87,8 +64,8 @@ void	split_aabb(t_aabb box, t_aabb new[2])
 	ft_vec3_to_array(box.min, min);
 	ft_vec3_to_array(box.max, max);
 	new_pos = (max[axis] + min[axis]) / 2;
-	min[axis] = new_pos;
-	max[axis] = new_pos;
+	min[axis] = new_pos - epsilon;
+	max[axis] = new_pos + epsilon;
 	new[0].min = box.min;
 	new[0].max = ft_array_to_vec3(max);
 	new[1].min = ft_array_to_vec3(min);

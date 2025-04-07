@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:21:56 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/05 13:59:43 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:55:09 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,13 @@ void		split_aabb(t_aabb box, t_aabb new[2]);
 void		free_bvh_elem(t_bvh_elem *elem);
 void		free_node(t_bntree *node);
 
+bool		triangle_aabb_overlap(unsigned int vertices_id[3], t_aabb box,
+				const t_vec3 *vertices);
+
 // bvh_triangle_bonus.c
 t_bvh_tr	get_bvh_triangle(const t_vec3 *vertices, t_vertex *face, int index);
-void		get_triangles_in_aabb(t_bvh_elem *parent_elem,
-				t_bvh_elem *sub_elem);
+void		get_triangles_in_aabb(t_bvh_elem *parent_elem, t_bvh_elem *sub_elem,
+				const t_vec3 *vertices);
 void		get_vertices_in_aabb(t_bvh_elem *parent_elem, t_bvh_elem *sub_elem);
 
 // to delete
