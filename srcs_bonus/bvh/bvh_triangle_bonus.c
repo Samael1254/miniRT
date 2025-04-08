@@ -6,6 +6,7 @@
 static t_vec3	triangle_center(t_vec3 vertices[3])
 {
 	t_vec3	center;
+
 	center.x = (vertices[0].x + vertices[1].x + vertices[2].x);
 	center.y = (vertices[0].y + vertices[1].y + vertices[2].y);
 	center.z = (vertices[0].z + vertices[1].z + vertices[2].z);
@@ -38,7 +39,8 @@ static unsigned int	count_triangles_in_aabb(t_bvh_tr *triangles,
 
 	i = 0;
 	count = 0;
-	while (i < n_triangles) {
+	while (i < n_triangles)
+	{
 		if (is_point_in_aabb(triangles[i++].centroid, box))
 			count++;
 	}
@@ -50,7 +52,7 @@ void	get_triangles_in_aabb(t_bvh_elem *parent_elem, t_bvh_elem *sub_elem,
 {
 	unsigned int	i;
 	unsigned int	j;
-	
+
 	(void)vertices;
 	sub_elem->n_triangles = count_triangles_in_aabb(parent_elem->triangles,
 			parent_elem->n_triangles, sub_elem->box);
@@ -61,8 +63,7 @@ void	get_triangles_in_aabb(t_bvh_elem *parent_elem, t_bvh_elem *sub_elem,
 	j = 0;
 	while (i < parent_elem->n_triangles)
 	{
-		if (is_point_in_aabb(parent_elem->triangles[i].centroid,
-				sub_elem->box))
+		if (is_point_in_aabb(parent_elem->triangles[i].centroid, sub_elem->box))
 			sub_elem->triangles[j++] = parent_elem->triangles[i];
 		i++;
 	}

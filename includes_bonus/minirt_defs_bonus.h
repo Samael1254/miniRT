@@ -11,13 +11,13 @@
 
 # define THREAD_COUNT 20
 
+# define BVH_DEPTH 1
+
 # define WIN_X 800
 # define WIN_Y 800
 
 # define RAY_REACH_MAX 1000
 # define RAY_REACH_MIN 1e-4
-
-# define BVH_DEPTH 1
 
 /* ENUMS */
 
@@ -232,7 +232,6 @@ typedef struct s_ray
 {
 	t_vec3			origin;
 	t_vec3			direction;
-	t_color			color;
 }					t_ray;
 
 typedef struct s_intersection

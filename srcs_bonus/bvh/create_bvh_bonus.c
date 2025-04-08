@@ -54,7 +54,10 @@ static t_bntree	*create_bvh_node(t_bvh_elem *parent_elem, unsigned int depth,
 	if (!node)
 		return (free_bvh_elem(parent_elem), NULL);
 	if (depth == BVH_DEPTH)
+	{
+		// printf("n_triangles : %u\n", parent_elem->n_triangles);
 		return (node);
+	}
 	split_aabb(parent_elem->box, sub_boxes);
 	if (!create_sub_elems(sub_elems, sub_boxes, parent_elem, vertices))
 		return (NULL);

@@ -86,3 +86,4 @@ The following keybindings allow the user to interact with miniRT:
 - abnormal deformation up and down the screen (fisheye)
 - Crash when texture or normal map missing in material
 - Crash when obj contains non-triangular faces
+- Change content of help

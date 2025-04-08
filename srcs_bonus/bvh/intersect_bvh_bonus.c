@@ -31,7 +31,8 @@ static t_triangle	*face_to_triangle(t_mesh mesh, t_vertex *face)
 	return (triangle);
 }
 
-static t_object	*object_triangle(t_bvh_tr triangle, unsigned int index_mat, t_mesh *mesh)
+static t_object	*object_triangle(t_bvh_tr triangle, unsigned int index_mat,
+		t_mesh *mesh)
 {
 	t_object	*obj;
 
@@ -65,14 +66,12 @@ static double	intersect_triangles(t_ray ray, t_bvh_elem *elem, t_mesh *mesh,
 			closest_tr = cur_tr;
 		}
 	}
-	// if (distance_min != INFINITY)
-	// 	printf("distance_min = %f\n", distance_min);
 	if (i > 0 && distance_min < INFINITY)
 	{
-		// if (distance_min < 60)
-		// 	*triangle_obj = object_triangle(closest_tr, 8, mesh);
-		// else
-		*triangle_obj = object_triangle(closest_tr, (*triangle_obj)->index_mat, mesh);
+		if (distance_min < 60)
+			printf("distance min: %f\n", distance_min);
+		*triangle_obj = object_triangle(closest_tr, (*triangle_obj)->index_mat,
+				mesh);
 		if (!*triangle_obj)
 			return (NAN);
 	}
@@ -97,10 +96,6 @@ static double	intersect_node(t_ray ray, t_bntree *node, t_mesh *mesh,
 		distance_right = intersect_node(ray, node->right, mesh, triangle_obj);
 	if (node->left)
 		distance_left = intersect_node(ray, node->left, mesh, triangle_obj);
-	// if (distance_left != INFINITY)
-	// 	printf("distance_left = %f\n", distance_left);
-	// if (distance_right != INFINITY)
-	// 	printf("distance_right = %f\n", distance_right);
 	return (fmin(distance_left, distance_right));
 }
 

@@ -73,7 +73,7 @@ double	intersect_cylinder(t_ray ray, t_cylinder cylinder)
 	return (INFINITY);
 }
 
-double	intersect_triangle(t_ray ray, t_bvh_tr triangle, t_vec3 *vertices)
+double	intersect_triangle(t_ray ray, t_bvh_tr triangle, const t_vec3 *vertices)
 {
 	t_vec3	tr_vertices[3];
 	t_vec3	vectors[3];

@@ -1,9 +1,9 @@
 #include "ft_algebra.h"
 #include "minirt_defs_bonus.h"
+#include "minirt_errors_bonus.h"
 #include "minirt_graphics_bonus.h"
 #include "minirt_intersections_bonus.h"
 #include "minirt_light_bonus.h"
-#include "minirt_errors_bonus.h"
 #include "minirt_raytracing_bonus.h"
 #include <math.h>
 #include <pthread.h>
@@ -31,7 +31,6 @@ static t_ray	init_ray(t_camera camera, t_vec2 rotator)
 	ray.direction = ft_4dto3d_vector(ft_mat_vec_product4(m_rot_x,
 				ft_3dto4d_vector(ray.direction)));
 	ray.origin = camera.pos;
-	ray.color = init_color(0, 0, 0);
 	return (ray);
 }
 
@@ -42,9 +41,6 @@ static void	trace_ray(t_vec2 rotator, t_ivec2 coords, t_state *state)
 
 	ray = init_ray(state->scene.camera, rotator);
 	inter = intersect_scene(ray, state);
-	printf("%d\n", inter.index_mat);
-	// if (inter.index_mat == 8)
-	// 	printf("HAAAAAAAAAAAAA\n");
 	put_pixel(&state->img_data, coords, phong_illumination(state, inter, ray));
 }
 
@@ -89,7 +85,8 @@ void	shoot_rays(t_state *state)
 		thread_data[i].start_y = i * (WIN_Y / THREAD_COUNT);
 		thread_data[i].end_y = (i + 1) * (WIN_Y / THREAD_COUNT);
 		thread_data[i].state = state;
-		if (pthread_create(&threads[i], NULL, thread_shoot_rays, &thread_data[i]) != 0)
+		if (pthread_create(&threads[i], NULL, thread_shoot_rays,
+				&thread_data[i]) != 0)
 		{
 			while (i > 0)
 			{

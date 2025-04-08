@@ -47,8 +47,6 @@ t_color	phong_illumination(t_state *state, t_intersection inter, t_ray ray)
 	t_color	color;
 	t_list	*iter;
 
-	if (inter.index_mat == 8)
-		return (init_color(255, 0, 0));
 	if (inter.point.x == INFINITY)
 		return (get_sky_color(state->scene.sky, ray));
 	color = ambiant_color(state->scene.a_light,
