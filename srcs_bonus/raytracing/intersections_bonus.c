@@ -40,6 +40,11 @@ static t_intersection	make_intersection(t_ray ray, t_object *object,
 	inter.normal = blend_normal_map(inter.uv, inter.normal,
 			state->mats_tab[inter.index_mat]);
 	free_triangle_obj(object);
+	if (distance_min < 60)
+	{
+		// printf("distance_min = %f\n", distance_min);
+		inter.index_mat = 8;
+	}
 	return (inter);
 }
 

@@ -42,6 +42,9 @@ static void	trace_ray(t_vec2 rotator, t_ivec2 coords, t_state *state)
 
 	ray = init_ray(state->scene.camera, rotator);
 	inter = intersect_scene(ray, state);
+	printf("%d\n", inter.index_mat);
+	// if (inter.index_mat == 8)
+	// 	printf("HAAAAAAAAAAAAA\n");
 	put_pixel(&state->img_data, coords, phong_illumination(state, inter, ray));
 }
 

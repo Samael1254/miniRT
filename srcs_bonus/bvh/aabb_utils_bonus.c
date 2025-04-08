@@ -6,11 +6,13 @@
 
 bool	is_point_in_aabb(t_vec3 point, t_aabb box)
 {
-	if (point.x < box.min.x || point.x > box.max.x)
+	const double	epsilon = 0;
+	
+	if (point.x < box.min.x - epsilon|| point.x > box.max.x+ epsilon)
 		return (false);
-	if (point.y < box.min.y || point.y > box.max.y)
+	if (point.y < box.min.y - epsilon|| point.y > box.max.y+ epsilon)
 		return (false);
-	if (point.z < box.min.z || point.z > box.max.z)
+	if (point.z < box.min.z- epsilon || point.z > box.max.z+ epsilon)
 		return (false);
 	return (true);
 }
@@ -21,7 +23,7 @@ t_aabb	create_aabb(const t_vec3 *vertices, t_bvh_elem *sub_elem)
 	unsigned int	j;
 	t_aabb			aabb;
 	t_vec3			vertex;
-	const double	epsilon = 1e-4;
+	const double	epsilon = 1e-5;
 
 	i = 0;
 	aabb.min = ft_init_vec3(INFINITY);
@@ -53,7 +55,7 @@ void	split_aabb(t_aabb box, t_aabb new[2])
 	double			new_pos;
 	double			min[3];
 	double			max[3];
-	// const double	epsilon = 1e-2;
+	// const double	epsilon = 1e-5;
 	const double	epsilon = 0;
 
 	size = ft_sub_vec3(box.max, box.min);

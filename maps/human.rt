@@ -2,6 +2,6 @@ C	0,30,80		0,0,-1	50
 A	0.3									255,255,255
 MT	materials/spec_grad.mrt
 L	5,20,30				1			200,200,255
-SKY	0,60,127		200,255,255
+SKY	0,255,0		0,255,0
 
 mesh	meshes/human.obj	0,0,0		10	7
