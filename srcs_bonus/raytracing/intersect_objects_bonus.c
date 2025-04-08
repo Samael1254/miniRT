@@ -73,20 +73,20 @@ double	intersect_cylinder(t_ray ray, t_cylinder cylinder)
 	return (INFINITY);
 }
 
-double	intersect_triangle(t_ray ray, t_triangle triangle)
+double	intersect_triangle(t_ray ray, t_bvh_tr triangle, t_vec3 *vertices)
 {
-	t_vec3	vertices[3];
+	t_vec3	tr_vertices[3];
 	t_vec3	vectors[3];
 	double	d;
 
-	vertices[0] = triangle.vertices[0];
-	vertices[1] = triangle.vertices[1];
-	vertices[2] = triangle.vertices[2];
-	vectors[0] = ft_sub_vec3(vertices[1], vertices[0]);
-	vectors[1] = ft_sub_vec3(vertices[2], vertices[0]);
+	tr_vertices[0] = vertices[triangle.vertices_id[0]];
+	tr_vertices[1] = vertices[triangle.vertices_id[1]];
+	tr_vertices[2] = vertices[triangle.vertices_id[2]];
+	vectors[0] = ft_sub_vec3(tr_vertices[1], tr_vertices[0]);
+	vectors[1] = ft_sub_vec3(tr_vertices[2], tr_vertices[0]);
 	vectors[2] = ft_cross_vec3(vectors[0], vectors[1]);
 	d = ft_dot_vec3(ray.direction, vectors[2]);
 	if (ft_equalf(d, 0))
 		return (INFINITY);
-	return (triangle_distance(d, ray, vectors, vertices[0]));
+	return (triangle_distance(d, ray, vectors, tr_vertices[0]));
 }

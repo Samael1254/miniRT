@@ -4,7 +4,7 @@
 # include "ft_algebra.h"
 # include "ft_binary_tree.h"
 # include "ft_list.h"
-# include <stdint.h>
+# include <stdbool.h>
 # include <sys/time.h>
 
 /* MACROS */
@@ -17,7 +17,7 @@
 # define RAY_REACH_MAX 1000
 # define RAY_REACH_MIN 1e-4
 
-# define BVH_DEPTH 1
+# define BVH_DEPTH 4
 
 /* ENUMS */
 
@@ -109,8 +109,8 @@ typedef struct s_aabb
 typedef struct s_bvh_tr
 {
 	unsigned int	id;
-	t_vec3			center;
 	unsigned int	vertices_id[3];
+	t_vec3			centroid;
 }					t_bvh_tr;
 
 typedef struct s_bvh_elem

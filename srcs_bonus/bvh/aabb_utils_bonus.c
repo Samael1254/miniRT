@@ -53,7 +53,8 @@ void	split_aabb(t_aabb box, t_aabb new[2])
 	double			new_pos;
 	double			min[3];
 	double			max[3];
-	const double	epsilon = 1e-4;
+	// const double	epsilon = 1e-2;
+	const double	epsilon = 0;
 
 	size = ft_sub_vec3(box.max, box.min);
 	axis = X_AXIS;
@@ -63,7 +64,7 @@ void	split_aabb(t_aabb box, t_aabb new[2])
 		axis = Z_AXIS;
 	ft_vec3_to_array(box.min, min);
 	ft_vec3_to_array(box.max, max);
-	new_pos = (max[axis] + min[axis]) / 2;
+	new_pos = (max[axis] + min[axis]) * 0.5;
 	min[axis] = new_pos - epsilon;
 	max[axis] = new_pos + epsilon;
 	new[0].min = box.min;

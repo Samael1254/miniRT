@@ -54,13 +54,13 @@ bool	aabb_roots(double tbox[2], const double dets[3], const double omin[3],
 	i = 0;
 	while (i < 3)
 	{
-		if (isinf(dets[i]))
-		{
-			if (ft_supf(omin[i], 0) || ft_inff(omax[i], 0))
-				return (false);
-			i++;
-			continue ;
-		}
+		// if (isinf(dets[i]))
+		// {
+		// 	if (ft_supf(omin[i], 0) || ft_inff(omax[i], 0))
+		// 		return (false);
+		// 	i++;
+		// 	continue ;
+		// }
 		tplane[0] = omin[i] * dets[i];
 		tplane[1] = omax[i] * dets[i];
 		tbox[0] = fmax(tbox[0], fmin(tplane[0], tplane[1]));
@@ -87,6 +87,6 @@ double	intersect_aabb(t_ray ray, t_aabb box)
 	tbox[1] = INFINITY;
 	if (!aabb_roots(tbox, dets, omin, omax))
 		return (INFINITY);
-	t = closest_root(tbox[0], tbox[1]);
+	t = fabs(closest_root(tbox[0], tbox[1]));
 	return (t);
 }

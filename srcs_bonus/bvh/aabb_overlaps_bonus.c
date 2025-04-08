@@ -64,7 +64,7 @@ bool	test3(t_vec3 r_vertices[3], t_vec3 edges[3], t_vec3 extent,
 	i = -1;
 	while (++i < 9)
 	{
-		if (ft_vec3_norm(axes[i]) < 1e-8)
+		if (ft_vec3_norm(axes[i]) < 1e-5)
 			continue ;
 		radius = ft_dot_vec3(extent, ft_abs_vec3(axes[i]));
 		j = -1;
@@ -149,13 +149,12 @@ bool	triangle_aabb_overlap(const unsigned int vertices_id[3], t_aabb box,
 	unit[0] = ft_set_vec3(1, 0, 0);
 	unit[1] = ft_set_vec3(0, 1, 0);
 	unit[2] = ft_set_vec3(0, 0, 1);
-	// if (!test3(r_vertices, edges, extent, unit))
-	// 	return (false);
+	if (!test3(r_vertices, edges, extent, unit))
+		return (false);
 	if (!aabb_aabb_overlap(box, create_triangle_aabb(t_vertices)))
 		return (false);
-	// if (!plane_aabb_overlap(ft_normalize_vec3(ft_cross_vec3(edges[0],
-	// 				edges[1])), t_vertices[0], box))
-	// return (false);
-	(void)extent;
+	if (!plane_aabb_overlap(ft_normalize_vec3(ft_cross_vec3(edges[0],
+					edges[1])), t_vertices[0], box))
+		return (false);
 	return (true);
 }

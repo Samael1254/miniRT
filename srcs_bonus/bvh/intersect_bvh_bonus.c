@@ -31,7 +31,7 @@ static t_triangle	*face_to_triangle(t_mesh mesh, t_vertex *face)
 	return (triangle);
 }
 
-static t_object	*object_triangle(t_triangle *triangle, unsigned int index_mat)
+static t_object	*object_triangle(t_bvh_tr triangle, unsigned int index_mat, t_mesh *mesh)
 {
 	t_object	*obj;
 
@@ -39,23 +39,9 @@ static t_object	*object_triangle(t_triangle *triangle, unsigned int index_mat)
 	if (!obj)
 		return (NULL);
 	obj->type = TRIANGLE;
-	obj->object_r = triangle;
+	obj->object_r = face_to_triangle(*mesh, mesh->faces[triangle.id]);
 	obj->index_mat = index_mat;
 	return (obj);
-}
-
-static void	check_new_triangle(double *distance_min, t_triangle **closest_tr,
-		double cur_distance, t_triangle *cur_tr)
-{
-	if (ft_in_rangef(cur_distance, RAY_REACH_MIN, *distance_min))
-	{
-		*distance_min = cur_distance;
-		if (*closest_tr)
-			free(*closest_tr);
-		*closest_tr = cur_tr;
-	}
-	else
-		free(cur_tr);
 }
 
 static double	intersect_triangles(t_ray ray, t_bvh_elem *elem, t_mesh *mesh,
@@ -63,24 +49,25 @@ static double	intersect_triangles(t_ray ray, t_bvh_elem *elem, t_mesh *mesh,
 {
 	double			cur_distance;
 	double			distance_min;
-	t_triangle		*cur_tr;
-	t_triangle		*closest_tr;
+	t_bvh_tr		cur_tr;
+	t_bvh_tr		closest_tr;
 	unsigned int	i;
 
 	distance_min = INFINITY;
-	closest_tr = NULL;
 	i = 0;
 	while (i < elem->n_triangles)
 	{
-		cur_tr = face_to_triangle(*mesh, mesh->faces[elem->triangles[i++].id]);
-		if (!cur_tr)
-			return (NAN);
-		cur_distance = intersect_triangle(ray, *cur_tr);
-		check_new_triangle(&distance_min, &closest_tr, cur_distance, cur_tr);
+		cur_tr = elem->triangles[i++];
+		cur_distance = intersect_triangle(ray, cur_tr, mesh->vertices);
+		if (ft_in_rangef(cur_distance, RAY_REACH_MIN, distance_min))
+		{
+			distance_min = cur_distance;
+			closest_tr = cur_tr;
+		}
 	}
-	if (i > 0)
+	if (i > 0 && distance_min < INFINITY)
 	{
-		*triangle_obj = object_triangle(closest_tr, (*triangle_obj)->index_mat);
+		*triangle_obj = object_triangle(closest_tr, (*triangle_obj)->index_mat, mesh);
 		if (!*triangle_obj)
 			return (NAN);
 	}
