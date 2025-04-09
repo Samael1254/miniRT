@@ -77,11 +77,9 @@ static double	intersect_node(t_ray ray, t_bntree *node, t_mesh *mesh,
 	t_bvh_tr	triangle_right;
 	t_bvh_elem	*elem;
 
-	elem = (t_bvh_elem *)node->data;
 	if (intersect_aabb(ray, elem->box) == INFINITY)
-		return (INFINITY);
-	distance_left = INFINITY;
-	distance_right = INFINITY;
+		return INFINITY;
+
 	if (elem->triangles)
 		return (intersect_triangles(ray, elem, mesh->vertices, triangle_r));
 	if (node->left)
