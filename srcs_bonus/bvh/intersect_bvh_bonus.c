@@ -76,52 +76,55 @@ static double	intersect_triangles(t_ray ray, t_bvh_elem *elem, t_mesh *mesh,
 	return (distance_min);
 }
 
-static double	intersect_node(t_ray ray, t_bntree *node, t_mesh *mesh,
-		t_object **triangle_obj)
+static double intersect_node(t_ray ray, t_bntree *node, t_mesh *mesh, t_object **triangle_obj)
 {
-	double		distance_left;
-	double		distance_right;
-	t_object	*triangle_left;
-	t_object	*triangle_right;
-	t_bvh_elem	*elem;
+	t_bvh_elem *elem = (t_bvh_elem *)node->data;
 
-	elem = (t_bvh_elem *)node->data;
 	if (intersect_aabb(ray, elem->box) == INFINITY)
-		return (INFINITY);
-	distance_left = INFINITY;
-	distance_right = INFINITY;
+		return INFINITY;
+
 	if (elem->triangles)
-		return (intersect_triangles(ray, elem, mesh, triangle_obj));
-	triangle_left = malloc(sizeof(t_object));
-	if (!triangle_left)
-		return (NAN);
-	triangle_left->type = TRIANGLE;
-	triangle_left->index_mat = (*triangle_obj)->index_mat;
-	triangle_left->object_r = NULL;
-	triangle_right = malloc(sizeof(t_object));
-	if (!triangle_right)
-		return (free(triangle_left), NAN);
-	triangle_right->type = TRIANGLE;
-	triangle_right->index_mat = (*triangle_obj)->index_mat;
-	triangle_left->object_r = NULL;
-	if (node->left)
-		distance_left = intersect_node(ray, node->left, mesh, &triangle_left);
-	if (node->right)
-		distance_right = intersect_node(ray, node->right, mesh,
-				&triangle_right);
-	if (distance_left < distance_right)
-	{
-		// free_triangle_obj(triangle_right);
-		*triangle_obj = triangle_left;
-		return (distance_left);
+		return intersect_triangles(ray, elem, mesh, triangle_obj);
+
+	double distance_left = INFINITY;
+	double distance_right = INFINITY;
+	t_object *left_obj = NULL;
+	t_object *right_obj = NULL;
+
+	if (node->left) {
+		left_obj = malloc(sizeof(t_object));
+		if (!left_obj)
+			return NAN;
+		left_obj->type = TRIANGLE;
+		left_obj->index_mat = (*triangle_obj)->index_mat;
+		left_obj->object_r = NULL;
+		distance_left = intersect_node(ray, node->left, mesh, &left_obj);
 	}
-	else
-	{
-		// free_triangle_obj(triangle_left);
-		*triangle_obj = triangle_right;
-		return (distance_right);
+
+	if (node->right) {
+		right_obj = malloc(sizeof(t_object));
+		if (!right_obj) {
+			if (left_obj)
+				free(left_obj);
+			return NAN;
+		}
+		right_obj->type = TRIANGLE;
+		right_obj->index_mat = (*triangle_obj)->index_mat;
+		right_obj->object_r = NULL;
+		distance_right = intersect_node(ray, node->right, mesh, &right_obj);
 	}
-	return (fmin(distance_left, distance_right));
+
+	if (distance_left < distance_right) {
+		if (right_obj)
+			free(right_obj);
+		*triangle_obj = left_obj;
+		return distance_left;
+	} else {
+		if (left_obj)
+			free(left_obj);
+		*triangle_obj = right_obj;
+		return distance_right;
+	}
 }
 
 double	intersect_mesh(t_ray ray, t_mesh *mesh, t_object **triangle_obj)
