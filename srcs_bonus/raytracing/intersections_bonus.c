@@ -39,6 +39,10 @@ static t_intersection	make_intersection(t_ray ray, t_object *object,
 	inter.uv = uv_at_point(*object, inter.point, inter.normal);
 	inter.normal = blend_normal_map(inter.uv, inter.normal,
 			state->mats_tab[inter.index_mat]);
+	if (distance_min < 60)
+	{
+		// printf("distance min: %f\n", distance_min);
+	}
 	free_triangle_obj(object);
 	return (inter);
 }
@@ -78,6 +82,7 @@ t_intersection	intersect_scene(t_ray ray, t_state *state)
 	t_object	*closest_object;
 	t_list		*iter;
 
+	printf("%d, %d\n", ray.coords.x, ray.coords.y);
 	distance_min = INFINITY;
 	closest_object = NULL;
 	iter = state->scene.objects;

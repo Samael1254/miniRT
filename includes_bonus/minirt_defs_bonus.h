@@ -232,6 +232,7 @@ typedef struct s_ray
 {
 	t_vec3			origin;
 	t_vec3			direction;
+	t_ivec2			coords;
 }					t_ray;
 
 typedef struct s_intersection

@@ -68,8 +68,6 @@ static double	intersect_triangles(t_ray ray, t_bvh_elem *elem, t_mesh *mesh,
 	}
 	if (i > 0 && distance_min < INFINITY)
 	{
-		if (distance_min < 60)
-			printf("distance min: %f\n", distance_min);
 		*triangle_obj = object_triangle(closest_tr, (*triangle_obj)->index_mat,
 				mesh);
 		if (!*triangle_obj)
