@@ -53,7 +53,7 @@ static t_bntree	*create_bvh_node(t_bvh_elem *parent_elem, unsigned int depth,
 	node = ft_bntree_create_node(parent_elem);
 	if (!node)
 		return (free_bvh_elem(parent_elem), NULL);
-	if (depth == BVH_DEPTH)
+	if (depth == BVH_DEPTH || parent_elem->n_triangles <= BVH_MIN_TRIANGLES)
 	{
 		// printf("n_triangles : %u\n", parent_elem->n_triangles);
 		return (node);
@@ -100,6 +100,22 @@ static t_bvh_elem	*init_bvh_elem(t_vec3 *vertices, t_vertex **faces,
 	data->box = create_aabb(vertices, data);
 	return (data);
 }
+
+// void	print_tree(t_bntree *root, int depth, void (*print_data)(void *))
+// {
+// 	if (!root)
+// 	{
+// 		for (int i = depth; i <= BVH_DEPTH; i++)
+// 			printf("\n");
+// 		return ;
+// 	}
+// 	print_tree(root->right, depth + 1, print_data);
+// 	for (int i = 0; i < depth; ++i)
+// 		printf("    "); // 4 spaces per level
+// 	printf("%d", depth);
+// 	printf("\n");
+// 	print_tree(root->left, depth + 1, print_data);
+// }
 
 t_bvh	create_bvh(t_mesh *mesh)
 {

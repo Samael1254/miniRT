@@ -11,7 +11,8 @@
 
 # define THREAD_COUNT 20
 
-# define BVH_DEPTH 1
+# define BVH_DEPTH 8
+# define BVH_MIN_TRIANGLES 5
 
 # define WIN_X 800
 # define WIN_Y 800

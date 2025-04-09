@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:21:56 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/07 15:55:09 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/04/09 13:34:05 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int			compare_aabb(void *a, void *b);
 void		split_aabb(t_aabb box, t_aabb new[2]);
 
 // bvh_free_bonus.c
-void		free_bvh_elem(t_bvh_elem *elem);
+void		free_triangle_obj(t_object *object);
+void		free_bvh_elem(void *data);
 void		free_node(t_bntree *node);
 
 bool		triangle_aabb_overlap(unsigned int vertices_id[3], t_aabb box,

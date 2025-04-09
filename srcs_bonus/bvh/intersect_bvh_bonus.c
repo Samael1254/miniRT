@@ -81,6 +81,8 @@ static double	intersect_node(t_ray ray, t_bntree *node, t_mesh *mesh,
 {
 	double		distance_left;
 	double		distance_right;
+	t_object	*triangle_left;
+	t_object	*triangle_right;
 	t_bvh_elem	*elem;
 
 	elem = (t_bvh_elem *)node->data;
@@ -90,10 +92,35 @@ static double	intersect_node(t_ray ray, t_bntree *node, t_mesh *mesh,
 	distance_right = INFINITY;
 	if (elem->triangles)
 		return (intersect_triangles(ray, elem, mesh, triangle_obj));
-	if (node->right)
-		distance_right = intersect_node(ray, node->right, mesh, triangle_obj);
+	triangle_left = malloc(sizeof(t_object));
+	if (!triangle_left)
+		return (NAN);
+	triangle_left->type = TRIANGLE;
+	triangle_left->index_mat = (*triangle_obj)->index_mat;
+	triangle_left->object_r = NULL;
+	triangle_right = malloc(sizeof(t_object));
+	if (!triangle_right)
+		return (free(triangle_left), NAN);
+	triangle_right->type = TRIANGLE;
+	triangle_right->index_mat = (*triangle_obj)->index_mat;
+	triangle_left->object_r = NULL;
 	if (node->left)
-		distance_left = intersect_node(ray, node->left, mesh, triangle_obj);
+		distance_left = intersect_node(ray, node->left, mesh, &triangle_left);
+	if (node->right)
+		distance_right = intersect_node(ray, node->right, mesh,
+				&triangle_right);
+	if (distance_left < distance_right)
+	{
+		// free_triangle_obj(triangle_right);
+		*triangle_obj = triangle_left;
+		return (distance_left);
+	}
+	else
+	{
+		// free_triangle_obj(triangle_left);
+		*triangle_obj = triangle_right;
+		return (distance_right);
+	}
 	return (fmin(distance_left, distance_right));
 }
 

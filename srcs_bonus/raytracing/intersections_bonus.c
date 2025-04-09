@@ -1,5 +1,6 @@
 #include "ft_algebra.h"
 #include "ft_math.h"
+#include "minirt_bvh_bonus.h"
 #include "minirt_defs_bonus.h"
 #include "minirt_errors_bonus.h"
 #include "minirt_intersections_bonus.h"
@@ -9,15 +10,6 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-static void	free_triangle_obj(t_object *object)
-{
-	if (object && object->type == TRIANGLE)
-	{
-		free(object->object_r);
-		free(object);
-	}
-}
 
 static t_intersection	make_intersection(t_ray ray, t_object *object,
 		double distance_min, t_state *state)
@@ -39,10 +31,6 @@ static t_intersection	make_intersection(t_ray ray, t_object *object,
 	inter.uv = uv_at_point(*object, inter.point, inter.normal);
 	inter.normal = blend_normal_map(inter.uv, inter.normal,
 			state->mats_tab[inter.index_mat]);
-	if (distance_min < 60)
-	{
-		// printf("distance min: %f\n", distance_min);
-	}
 	free_triangle_obj(object);
 	return (inter);
 }
@@ -82,7 +70,6 @@ t_intersection	intersect_scene(t_ray ray, t_state *state)
 	t_object	*closest_object;
 	t_list		*iter;
 
-	printf("%d, %d\n", ray.coords.x, ray.coords.y);
 	distance_min = INFINITY;
 	closest_object = NULL;
 	iter = state->scene.objects;

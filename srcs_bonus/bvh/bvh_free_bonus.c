@@ -1,10 +1,22 @@
-# include <stdlib.h>
-# include "minirt_defs_bonus.h"
+#include "minirt_defs_bonus.h"
+#include <stdlib.h>
 
-void	free_bvh_elem(t_bvh_elem *elem)
+void	free_triangle_obj(t_object *object)
 {
-	if (!elem)
+	if (object && object->type == TRIANGLE)
+	{
+		free(object->object_r);
+		free(object);
+	}
+}
+
+void	free_bvh_elem(void *data)
+{
+	t_bvh_elem	*elem;
+
+	if (!data)
 		return ;
+	elem = (t_bvh_elem *)data;
 	if (elem->triangles)
 		free(elem->triangles);
 	free(elem);
