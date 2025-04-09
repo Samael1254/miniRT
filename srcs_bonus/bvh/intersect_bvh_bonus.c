@@ -1,9 +1,11 @@
+#include "ft_algebra.h"
 #include "ft_binary_tree.h"
 #include "ft_math.h"
 #include "ft_memory.h"
 #include "minirt_bvh_bonus.h"
 #include "minirt_defs_bonus.h"
 #include "minirt_intersections_bonus.h"
+#include <limits.h>
 #include <math.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -80,10 +82,12 @@ static double	intersect_node(t_ray ray, t_bntree *node, t_mesh *mesh,
 	elem = (t_bvh_elem *)node->data;
 	if (intersect_aabb(ray, elem->box) == INFINITY)
 		return (INFINITY);
-	distance_left = INFINITY;
-	distance_right = INFINITY;
 	if (elem->triangles)
 		return (intersect_triangles(ray, elem, mesh->vertices, triangle_r));
+	distance_left = INFINITY;
+	distance_right = INFINITY;
+	triangle_left.id = -1;
+	triangle_right.id = -1;
 	if (node->left)
 		distance_left = intersect_node(ray, node->left, mesh, &triangle_left);
 	if (node->right)
@@ -101,9 +105,14 @@ double	intersect_mesh(t_ray ray, t_mesh *mesh, t_object **triangle_obj)
 	t_bvh_tr	triangle;
 	double		distance;
 
+	triangle.id = UINT_MAX;
 	distance = intersect_node(ray, mesh->bvh.root, mesh, &triangle);
-	*triangle_obj = object_triangle(triangle, (*triangle_obj)->index_mat, mesh);
-	if (!*triangle_obj)
-		return (NAN);
+	if (triangle.id != UINT_MAX)
+	{
+		*triangle_obj = object_triangle(triangle, (*triangle_obj)->index_mat,
+				mesh);
+		if (!*triangle_obj)
+			return (NAN);
+	}
 	return (distance);
 }

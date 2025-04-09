@@ -36,10 +36,7 @@ void	free_mesh(t_mesh *mesh)
 	if (mesh->faces)
 		free(mesh->faces);
 	if (mesh->bvh.root)
-	{
-		printf("free bvh");
 		ft_bntree_clear(mesh->bvh.root, free_bvh_elem);
-	}
 	free(mesh);
 }
 
