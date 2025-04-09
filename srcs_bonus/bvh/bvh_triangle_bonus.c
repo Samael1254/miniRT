@@ -47,13 +47,11 @@ static unsigned int	count_triangles_in_aabb(t_bvh_tr *triangles,
 	return (count);
 }
 
-void	get_triangles_in_aabb(t_bvh_elem *parent_elem, t_bvh_elem *sub_elem,
-		const t_vec3 *vertices)
+void	get_triangles_in_aabb(t_bvh_elem *parent_elem, t_bvh_elem *sub_elem)
 {
 	unsigned int	i;
 	unsigned int	j;
 
-	(void)vertices;
 	sub_elem->n_triangles = count_triangles_in_aabb(parent_elem->triangles,
 			parent_elem->n_triangles, sub_elem->box);
 	sub_elem->triangles = malloc(sub_elem->n_triangles * sizeof(t_bvh_tr));

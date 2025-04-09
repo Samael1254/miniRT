@@ -4,7 +4,6 @@
 #include "minirt_defs_bonus.h"
 #include "minirt_errors_bonus.h"
 #include <stdbool.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 bool	is_element(char *line, const char *elem)

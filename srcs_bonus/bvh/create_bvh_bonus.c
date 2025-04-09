@@ -18,9 +18,14 @@ static t_bvh_elem	*create_sub_elem(t_bvh_elem *parent_elem, t_aabb sub_box,
 	if (!sub_elem)
 		return (NULL);
 	sub_elem->box = sub_box;
-	get_triangles_in_aabb(parent_elem, sub_elem, vertices);
+	get_triangles_in_aabb(parent_elem, sub_elem);
 	if (!sub_elem->triangles)
 		return (free(sub_elem), NULL);
+	if (sub_elem->n_triangles == 0)
+	{
+		free(sub_elem->triangles);
+		sub_elem->triangles = NULL;
+	}
 	sub_elem->box = create_aabb(vertices, sub_elem);
 	return (sub_elem);
 }
@@ -61,13 +66,13 @@ static t_bntree	*create_bvh_node(t_bvh_elem *parent_elem, unsigned int depth,
 	split_aabb(parent_elem->box, sub_boxes);
 	if (!create_sub_elems(sub_elems, sub_boxes, parent_elem, vertices))
 		return (NULL);
-	if (!isinf(sub_elems[0]->box.min.x))
+	if (!isinf(sub_elems[0]->box.min.x) && sub_elems[0]->n_triangles > 0)
 	{
 		node->left = create_bvh_node(sub_elems[0], depth + 1, vertices);
 		if (!node->left)
 			return (free_node(node), NULL);
 	}
-	if (!isinf(sub_elems[1]->box.min.x))
+	if (!isinf(sub_elems[1]->box.min.x) && sub_elems[1]->n_triangles > 0)
 	{
 		node->right = create_bvh_node(sub_elems[1], depth + 1, vertices);
 		if (!node->right)
