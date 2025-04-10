@@ -7,12 +7,12 @@
 bool	is_point_in_aabb(t_vec3 point, t_aabb box)
 {
 	const double	epsilon = 0;
-	
-	if (point.x < box.min.x - epsilon|| point.x > box.max.x+ epsilon)
+
+	if (point.x < box.min.x - epsilon || point.x > box.max.x + epsilon)
 		return (false);
-	if (point.y < box.min.y - epsilon|| point.y > box.max.y+ epsilon)
+	if (point.y < box.min.y - epsilon || point.y > box.max.y + epsilon)
 		return (false);
-	if (point.z < box.min.z- epsilon || point.z > box.max.z+ epsilon)
+	if (point.z < box.min.z - epsilon || point.z > box.max.z + epsilon)
 		return (false);
 	return (true);
 }
@@ -23,7 +23,6 @@ t_aabb	create_aabb(const t_vec3 *vertices, t_bvh_elem *sub_elem)
 	unsigned int	j;
 	t_aabb			aabb;
 	t_vec3			vertex;
-	const double	epsilon = 1e-5;
 
 	i = 0;
 	aabb.min = ft_init_vec3(INFINITY);
@@ -43,20 +42,16 @@ t_aabb	create_aabb(const t_vec3 *vertices, t_bvh_elem *sub_elem)
 		}
 		i++;
 	}
-	aabb.min = ft_sub_vec3(aabb.min, ft_init_vec3(epsilon));
-	aabb.max = ft_add_vec3(aabb.max, ft_init_vec3(epsilon));
 	return (aabb);
 }
 
 void	split_aabb(t_aabb box, t_aabb new[2])
 {
-	t_axis			axis;
-	t_vec3			size;
-	double			new_pos;
-	double			min[3];
-	double			max[3];
-	// const double	epsilon = 1e-5;
-	const double	epsilon = 0;
+	t_axis	axis;
+	t_vec3	size;
+	double	new_pos;
+	double	min[3];
+	double	max[3];
 
 	size = ft_sub_vec3(box.max, box.min);
 	axis = X_AXIS;
@@ -67,8 +62,8 @@ void	split_aabb(t_aabb box, t_aabb new[2])
 	ft_vec3_to_array(box.min, min);
 	ft_vec3_to_array(box.max, max);
 	new_pos = (max[axis] + min[axis]) * 0.5;
-	min[axis] = new_pos - epsilon;
-	max[axis] = new_pos + epsilon;
+	min[axis] = new_pos;
+	max[axis] = new_pos;
 	new[0].min = box.min;
 	new[0].max = ft_array_to_vec3(max);
 	new[1].min = ft_array_to_vec3(min);

@@ -32,7 +32,7 @@ BONUS_MAIN := main_bonus.c exit_program_bonus.c events_bonus.c init_state_bonus.
 			  time_bonus.c events_utils_bonus.c
 
 BONUS_BVH := aabb_utils_bonus.c create_bvh_bonus.c bvh_free_bonus.c bvh_triangle_bonus.c print_aabb.c \
-			 intersect_aabb_bonus.c aabb_overlaps_bonus.c aabb_overlaps_tests1_bonus.c
+			 intersect_aabb_bonus.c
 
 BONUS_PARSING := init_scene_bonus.c insert_in_struct_bonus.c utils_bonus.c utils2_bonus.c objects_list_bonus.c \
 				object_sphere_bonus.c object_plane_bonus.c object_cylinder_bonus.c utils_general_objects_bonus.c \
