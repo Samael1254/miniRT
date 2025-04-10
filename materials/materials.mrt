@@ -26,3 +26,4 @@ mt	255,255,255		255,255,255		255,255,255		1				0				0				materials/textures/chec
 mt	255,255,255		255,255,255		255,255,255		1				0				0				materials/textures/tiger_rock_texture.xpm	materials/normal_maps/tiger_rock_normal.xpm
 mt	255,255,255		255,255,255		255,255,255		1				0				0				materials/textures/stone_brick_texture.xpm	materials/normal_maps/stone_brick_normal.xpm
 mt	255,255,255		255,255,255		255,255,255		1				0				0				materials/textures/wall_metal_texture.xpm	materials/normal_maps/wall_metal_normal.xpm
+mt	255,255,255		255,255,255		255,255,255		1				1				0

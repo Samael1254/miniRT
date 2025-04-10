@@ -1,4 +1,5 @@
 #include "ft_conversion.h"
+#include "ft_math.h"
 #include "ft_memory.h"
 #include "ft_strings.h"
 #include "get_next_line.h"
@@ -23,8 +24,8 @@ static void	insert_data_in_mat(t_state *state, char **line_mat, int i)
 	mat.kd = get_color(line_mat[M_KD], &has_error);
 	mat.ks = get_color(line_mat[M_KS], &has_error);
 	mat.ka = get_color(line_mat[M_KA], &has_error);
-	mat.specularity = ft_atod(line_mat[M_SPEC]);
-	mat.reflectance = ft_atod(line_mat[M_REFL]);
+	mat.specularity = ft_clampf(ft_atod(line_mat[M_SPEC]), 0, 1);
+	mat.reflectance = ft_clampf(ft_atod(line_mat[M_REFL]), 0, 1);
 	mat.img_texture.img = NULL;
 	mat.img_normal.img = NULL;
 	if (tab_len == 9)

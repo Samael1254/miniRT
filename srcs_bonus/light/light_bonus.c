@@ -81,6 +81,14 @@ t_color	reflected_ray(t_ray ray, t_intersection inter, t_state *state)
 	return (phong_illumination(state, new_inter, reflected_ray));
 }
 
+// t_color	refracted_ray(t_ray ray, t_intersection inter, t_state *state)
+// {
+// 	t_ray			refracted_ray;
+// 	t_intersection	new_inter;
+//
+// 	refracted_ray.origin = inter.point;
+// }
+
 t_color	phong_illumination(t_state *state, t_intersection inter, t_ray ray)
 {
 	t_color		color;

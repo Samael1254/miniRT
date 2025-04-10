@@ -1,3 +1,4 @@
+#include "ft_algebra.h"
 #include "ft_math.h"
 #include "minirt_defs_bonus.h"
 #include "minirt_light_bonus.h"
@@ -24,6 +25,10 @@ double	get_dist_attenuation(t_vec3 point, t_vec3 light_pos)
 	dist_attenuation = ft_clampf(dist_attenuation, 0, 1);
 	return (dist_attenuation);
 }
+
+// t_vec3	get_refraction_dir(t_vec3 dir, t_vec3 normal)
+// {
+// }
 
 t_vec3	get_reflection_dir(t_vec3 light_dir, t_vec3 normal)
 {
