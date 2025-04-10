@@ -5,7 +5,7 @@
 #include "minirt_bvh_bonus.h"
 #include "minirt_defs_bonus.h"
 #include "minirt_errors_bonus.h"
-#include "minirt_obj_parser.h"
+#include "minirt_obj_parser_bonus.h"
 #include "minirt_parsing_bonus.h"
 #include <stdlib.h>
 

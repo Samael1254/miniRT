@@ -2,7 +2,7 @@
 #include "ft_strings.h"
 #include "get_next_line.h"
 #include "minirt_bvh_bonus.h"
-#include "minirt_obj_parser.h"
+#include "minirt_obj_parser_bonus.h"
 #include <fcntl.h>
 #include <stdbool.h>
 #include <stdlib.h>

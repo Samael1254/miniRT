@@ -1,7 +1,7 @@
 #include "ft_memory.h"
 #include "get_next_line.h"
 #include "minirt_errors_bonus.h"
-#include "minirt_obj_parser.h"
+#include "minirt_obj_parser_bonus.h"
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>

@@ -1,5 +1,5 @@
 #include "ft_list.h"
-#include "minirt_obj_parser.h"
+#include "minirt_obj_parser_bonus.h"
 #include "mlx.h"
 #include <stdlib.h>
 

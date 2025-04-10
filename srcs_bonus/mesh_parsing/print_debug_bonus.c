@@ -1,5 +1,5 @@
 #include "ft_algebra.h"
-#include "minirt_obj_parser.h"
+#include "minirt_obj_parser_bonus.h"
 #include <stdio.h>
 
 static void	print_vertex(t_vec3 vertex, const char *type)
