@@ -9,6 +9,7 @@ A basic multithreaded raytracer for 42 school project miniRT
 - Several primitive shapes, from the outside as well as inside : plane, sphere, cylinder, cone
 - Mesh loading from .obj file and rendering
 - Mesh are rendered with a Bounding Volume Hierarchy (BVH) to boost performance
+- Light simulation : reflection, refraction
 - Basic shading : hard shadows, incidence and distance attenuation
 - Texturing and normal mapping available for all shapes and meshes
 - A background sky with a gradient of two colors
@@ -73,6 +74,7 @@ The following keybindings allow the user to interact with miniRT:
 - Refraction
 - Wave lenght refraction (prisms)
 - Bloom
+- Hitable lights (small sphere with a brighter color towards the center)
 
 #### MATERIALS
 - Transparent textures
@@ -84,6 +86,5 @@ The following keybindings allow the user to interact with miniRT:
 - uv mapping inside a sphere is upside down
 - cylinder base disapears when in axis
 - abnormal deformation up and down the screen (fisheye)
-- Crash when texture or normal map missing in material
 - Crash when obj contains non-triangular faces
 - Change content of help
