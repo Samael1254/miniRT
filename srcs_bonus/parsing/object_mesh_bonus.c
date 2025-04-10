@@ -51,7 +51,5 @@ t_object	*object_mesh(t_state *state, char **split)
 		error("wrong material index", "mesh", state);
 		return (NULL);
 	}
-	// ((t_mesh *)obj->object_r)->bvh.box = create_aabb((t_mesh *)obj->object_r);
-	// print_aabb(((t_mesh *)obj->object_r)->bvh.box);
 	return (obj);
 }

@@ -56,31 +56,6 @@ static void	add_camera(t_state *state, char **split)
 	state->scene.camera.rot_step = 15;
 }
 
-void	add_light(t_state *state, char **split)
-{
-	t_vec3	pos;
-	double	brightness;
-	t_color	color;
-	bool	has_error;
-
-	pos = get_vector(split[1], &has_error);
-	brightness = ft_atod(split[2]);
-	if (brightness < 0 || brightness > 1 || has_error == true)
-	{
-		ft_free_strtab(split);
-		error("wrong parameter value", "light brightness not in [0-1]", state);
-	}
-	color = get_color(split[3], &has_error);
-	if (has_error == true)
-	{
-		ft_free_strtab(split);
-		error("parsing", "error of ambiant light colors", state);
-	}
-	state->scene.p_light.pos = pos;
-	state->scene.p_light.brightness = brightness;
-	state->scene.p_light.color = color;
-}
-
 static void	add_sky(t_state *state, char **split)
 {
 	bool	has_error;

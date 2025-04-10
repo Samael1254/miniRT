@@ -124,7 +124,6 @@ typedef struct s_bvh_elem
 
 typedef struct s_bvh
 {
-	t_aabb			box;
 	t_bntree		*root;
 }					t_bvh;
 
@@ -223,7 +222,6 @@ typedef struct s_scene
 {
 	t_ambiant_light	a_light;
 	t_camera		camera;
-	t_point_light	p_light;
 	t_sky			sky;
 	t_list			*lights;
 	t_list			*objects;
@@ -233,7 +231,6 @@ typedef struct s_ray
 {
 	t_vec3			origin;
 	t_vec3			direction;
-	t_ivec2			coords;
 }					t_ray;
 
 typedef struct s_intersection

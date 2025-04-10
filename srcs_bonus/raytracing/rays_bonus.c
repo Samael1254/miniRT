@@ -40,7 +40,6 @@ static void	trace_ray(t_vec2 rotator, t_ivec2 coords, t_state *state)
 	t_intersection	inter;
 
 	ray = init_ray(state->scene.camera, rotator);
-	ray.coords = coords;
 	inter = intersect_scene(ray, state);
 	put_pixel(&state->img_data, coords, phong_illumination(state, inter, ray));
 }
