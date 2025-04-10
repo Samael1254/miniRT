@@ -7,7 +7,9 @@
 #include "minirt_errors_bonus.h"
 #include "minirt_parsing_bonus.h"
 #include <fcntl.h>
+#include <math.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -27,7 +29,7 @@ static void	insert_data_in_mat(t_state *state, char **line_mat, int i)
 	mat.specularity = ft_clampf(ft_atod(line_mat[M_SPEC]), 0, 1);
 	mat.reflectance = ft_clampf(ft_atod(line_mat[M_REFL]), 0, 1);
 	mat.transparency = ft_clampf(ft_atod(line_mat[M_TRANS]), 0, 1);
-	mat.refraction = ft_clampf(ft_atod(line_mat[M_REFR]), 0, 1);
+	mat.refraction = ft_clampf(ft_atod(line_mat[M_REFR]), 1, INFINITY);
 	mat.img_texture.img = NULL;
 	mat.img_normal.img = NULL;
 	if (tab_len == 10)

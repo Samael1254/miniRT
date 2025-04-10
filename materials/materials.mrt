@@ -27,3 +27,4 @@ mt	255,255,255		255,255,255		255,255,255		1				0				0				1			materials/textures/
 mt	255,255,255		255,255,255		255,255,255		1				0				0				1			materials/textures/stone_brick_texture.xpm	materials/normal_maps/stone_brick_normal.xpm
 mt	255,255,255		255,255,255		255,255,255		1				0				0				1			materials/textures/wall_metal_texture.xpm	materials/normal_maps/wall_metal_normal.xpm
 mt	255,255,255		255,255,255		255,255,255		1				1				0				1
+mt	255,0,255		255,255,255		255,0,255		1				0				1				1.5

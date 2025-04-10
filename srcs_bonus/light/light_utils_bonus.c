@@ -26,10 +26,6 @@ double	get_dist_attenuation(t_vec3 point, t_vec3 light_pos)
 	return (dist_attenuation);
 }
 
-// t_vec3	get_refraction_dir(t_vec3 dir, t_vec3 normal)
-// {
-// }
-
 t_vec3	get_reflection_dir(t_vec3 light_dir, t_vec3 normal)
 {
 	double	incidence;
@@ -37,6 +33,24 @@ t_vec3	get_reflection_dir(t_vec3 light_dir, t_vec3 normal)
 	light_dir = ft_scale_vec3(-1, light_dir);
 	incidence = ft_dot_vec3(light_dir, normal);
 	return (ft_sub_vec3(ft_scale_vec3(2 * incidence, normal), light_dir));
+}
+
+t_vec3	get_refraction_dir(t_vec3 dir, t_vec3 normal, double refraction)
+{
+	t_vec3	refraction_dir;
+	double	cos1;
+	double	cos2;
+	double	index_ratio;
+
+	cos1 = ft_dot_vec3(normal, dir);
+	index_ratio = 1 / refraction;
+	cos2 = 1 - pow(index_ratio, 2) * (1 - pow(cos1, 2));
+	if (cos2 < 0)
+		return (get_reflection_dir(dir, normal));
+	cos2 = sqrt(cos2);
+	refraction_dir = ft_add_vec3(ft_scale_vec3(index_ratio, dir),
+			ft_scale_vec3(-index_ratio * cos1 - cos2, normal));
+	return (refraction_dir);
 }
 
 double	get_specular_term(t_vec3 light_dir, t_vec3 view_dir, t_vec3 normal,

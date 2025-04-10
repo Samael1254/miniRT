@@ -7,6 +7,7 @@
 #include "minirt_light_bonus.h"
 #include <math.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 static t_color	specular_color(t_intersection inter, t_vec3 light_dir,
 		t_vec3 view_dir, t_state *state)
@@ -81,13 +82,17 @@ t_color	reflected_ray(t_ray ray, t_intersection inter, t_state *state)
 	return (phong_illumination(state, new_inter, reflected_ray));
 }
 
-// t_color	refracted_ray(t_ray ray, t_intersection inter, t_state *state)
-// {
-// 	t_ray			refracted_ray;
-// 	t_intersection	new_inter;
-//
-// 	refracted_ray.origin = inter.point;
-// }
+t_color	refracted_ray(t_ray ray, t_intersection inter, t_state *state)
+{
+	t_ray			refracted_ray;
+	t_intersection	new_inter;
+
+	refracted_ray.origin = inter.point;
+	refracted_ray.direction = get_refraction_dir(ray.direction, inter.normal,
+			state->mats_tab[inter.index_mat].refraction);
+	new_inter = intersect_scene(refracted_ray, state);
+	return (phong_illumination(state, new_inter, refracted_ray));
+}
 
 t_color	phong_illumination(t_state *state, t_intersection inter, t_ray ray)
 {
@@ -98,6 +103,8 @@ t_color	phong_illumination(t_state *state, t_intersection inter, t_ray ray)
 	if (inter.point.x == INFINITY)
 		return (get_sky_color(state->scene.sky, ray));
 	mat = state->mats_tab[inter.index_mat];
+	if (mat.transparency > 0)
+		return (refracted_ray(ray, inter, state));
 	color = ambiant_color(state->scene.a_light, mat, inter);
 	iter = state->scene.lights;
 	while (iter)
