@@ -3,7 +3,6 @@
 #include "ft_memory.h"
 #include "minirt_bvh_bonus.h"
 #include "minirt_defs_bonus.h"
-#include <math.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -56,23 +55,19 @@ static t_bntree	*create_bvh_node(t_bvh_elem *parent_elem, unsigned int depth,
 	t_bvh_elem	*sub_elems[2];
 
 	node = ft_bntree_create_node(parent_elem);
-	split_aabb(parent_elem->box, sub_boxes);
-	if (!node || !create_sub_elems(sub_elems, sub_boxes, parent_elem, vertices))
+	if (!node)
 		return (free_bvh_elem(parent_elem), NULL);
 	if (depth == BVH_DEPTH || parent_elem->n_triangles <= BVH_MIN_TRIANGLES)
 		return (node);
-	if (!isinf(sub_elems[0]->box.min.x))
-	{
-		node->left = create_bvh_node(sub_elems[0], depth + 1, vertices);
-		if (!node->left)
-			return (free_node(node), NULL);
-	}
-	if (!isinf(sub_elems[1]->box.min.x))
-	{
-		node->right = create_bvh_node(sub_elems[1], depth + 1, vertices);
-		if (!node->right)
-			return (free_node(node->left), free_node(node), NULL);
-	}
+	split_aabb(parent_elem->box, sub_boxes);
+	if (!create_sub_elems(sub_elems, sub_boxes, parent_elem, vertices))
+		return (free_bvh_elem(parent_elem), NULL);
+	node->left = create_bvh_node(sub_elems[0], depth + 1, vertices);
+	if (!node->left)
+		return (free_node(node), NULL);
+	node->right = create_bvh_node(sub_elems[1], depth + 1, vertices);
+	if (!node->right)
+		return (free_node(node->left), free_node(node), NULL);
 	free(parent_elem->triangles);
 	parent_elem->triangles = NULL;
 	return (node);

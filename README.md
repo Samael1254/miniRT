@@ -7,12 +7,13 @@ A basic multithreaded raytracer for 42 school project miniRT
 
 - Colored diffuse, ambiant and specular lighting from multiple light sources
 - Several primitive shapes, from the outside as well as inside : plane, sphere, cylinder, cone
-- Mesh rendering from .obj files
+- Mesh loading from .obj file and rendering
+- Mesh are rendered with a Bounding Volume Hierarchy (BVH) to boost performance
 - Basic shading : hard shadows, incidence and distance attenuation
 - Texturing and normal mapping available for all shapes and meshes
 - A background sky with a gradient of two colors
-- Camera with modifiable parameters (position, orientation, field of view)
 - The user can move and rotate the camera around in real time to get different views of the scene
+- Modifiable camera parameters (field of view, movement and rotation speed)
 - Scenes configured in the dedicated .rt file format (see documentation.rt for more details)
 - Materials in .mrt files, able to load textures and normal maps from .xpm image files (see documentation.mrt for more details)
 - Comes with a few pre-made scenes, meshes, textures and materials to select from
@@ -38,11 +39,11 @@ The following keybindings allow the user to interact with miniRT:
 #### PARSING
 - Change warnings to errors in the end
 
+#### BUGS
+- Cone cap disappears when in front
+
 
 ### TODO BONUS
-
-#### SCENES
-- Add scenes to show off all the features
 
 #### MISC
 - check angle of cone in parsing
@@ -50,8 +51,8 @@ The following keybindings allow the user to interact with miniRT:
 
 ### TODO ULTIMATE
 
-#### SHAPES
-- Box intersection
+#### SCENES
+- Add scenes to show off all the features
 
 #### PARSING
 - Set the texture scaling in the .mrt file
@@ -62,7 +63,6 @@ The following keybindings allow the user to interact with miniRT:
 - Depth of field
 
 #### Optimisation
-- BVH
 - Others
 
 #### LIGHT
