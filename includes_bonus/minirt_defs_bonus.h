@@ -65,6 +65,7 @@ enum				e_mat_param
 	M_SPEC,
 	M_REFL,
 	M_TRANS,
+	M_REFR,
 	M_TX,
 	M_NM
 };
@@ -114,6 +115,8 @@ typedef struct s_material
 	t_color			ka;
 	double			specularity;
 	double			reflectance;
+	double			transparency;
+	double			refraction;
 	t_img_data		img_texture;
 	t_img_data		img_normal;
 }					t_material;

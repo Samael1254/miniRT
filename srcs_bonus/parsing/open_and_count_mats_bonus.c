@@ -18,7 +18,7 @@ static void	insert_data_in_mat(t_state *state, char **line_mat, int i)
 	bool		has_error;
 
 	tab_len = ft_strtab_size(line_mat);
-	if (tab_len != 7 && tab_len != 9)
+	if (tab_len != 8 && tab_len != 10)
 		return (ft_free_strtab(line_mat), error(".mrt",
 				"Enter 7 or 9 parameters in line", state));
 	mat.kd = get_color(line_mat[M_KD], &has_error);
@@ -26,9 +26,11 @@ static void	insert_data_in_mat(t_state *state, char **line_mat, int i)
 	mat.ka = get_color(line_mat[M_KA], &has_error);
 	mat.specularity = ft_clampf(ft_atod(line_mat[M_SPEC]), 0, 1);
 	mat.reflectance = ft_clampf(ft_atod(line_mat[M_REFL]), 0, 1);
+	mat.transparency = ft_clampf(ft_atod(line_mat[M_TRANS]), 0, 1);
+	mat.refraction = ft_clampf(ft_atod(line_mat[M_REFR]), 0, 1);
 	mat.img_texture.img = NULL;
 	mat.img_normal.img = NULL;
-	if (tab_len == 9)
+	if (tab_len == 10)
 	{
 		if (!get_texture_map_img(state, line_mat[M_TX], &mat))
 			return (ft_free_strtab(line_mat), error("unable to load", "texture",

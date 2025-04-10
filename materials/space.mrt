@@ -1,6 +1,5 @@
-#mt	kd				ks				ka				specularity		reflectance		transparency	texture							normal_map
+#mt	kd				ks				ka				specularity		reflectance		transparency	refraction	texture							normal_map
 mt	255,255,255	255,255,255	255,255,255				1				0				0
-mt	170,170,170	255,255,255	170,170,170				0				0				0				0								materials/normal_maps/ceres_nm.xpm
-mt	255,255,255		255,255,255	255,255,255			0.8				0				0				materials/textures/earth2.xpm	materials/normal_maps/earth_nm.xpm
-mt	255,255,255	255,255,255	255,255,0				0				0				0				materials/textures/sky.xpm		0
-mt	0,0,255		255,255,255	0,0,255	1
+mt	170,170,170	255,255,255	170,170,170				0				0				0				1			0								materials/normal_maps/ceres_nm.xpm
+mt	255,255,255		255,255,255	255,255,255			0.8				0				0				1			materials/textures/earth2.xpm	materials/normal_maps/earth_nm.xpm
+mt	255,255,255	255,255,255	255,255,0				0				0				0				1			materials/textures/sky.xpm		0
