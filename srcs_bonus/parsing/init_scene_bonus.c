@@ -15,7 +15,8 @@ static void	append_to_idlist(t_state *state, char **split, int *i)
 	int	j;
 
 	j = 0;
-	while (j < ID_LIST_SIZE && state->id_list[j] && !ft_strncmp(split[0], "L", 1))
+	while (j < ID_LIST_SIZE && state->id_list[j] && !ft_strncmp(split[0], "L",
+			1))
 	{
 		if (!ft_strncmp(state->id_list[j], "L", 1))
 			return ;

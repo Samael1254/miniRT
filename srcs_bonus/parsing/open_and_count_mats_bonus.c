@@ -18,7 +18,8 @@ static void	insert_data_in_mat(t_state *state, char **line_mat, int i)
 
 	tab_len = ft_strtab_size(line_mat);
 	if (tab_len != 5 && tab_len != 7)
-		error(".mrt", "Enter 5 or 7 elements in line", state);
+		return (ft_free_strtab(line_mat), error(".mrt",
+				"Enter 5 or 7 parameters in line", state));
 	mat.kd = get_color(line_mat[1], &has_error);
 	mat.ks = get_color(line_mat[2], &has_error);
 	mat.ka = get_color(line_mat[3], &has_error);

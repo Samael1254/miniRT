@@ -32,10 +32,8 @@ t_object	*object_mesh(t_state *state, char **split)
 	check_line(state, split + 1, 4);
 	obj = ft_calloc(1, sizeof(t_object));
 	if (!obj)
-	{
-		ft_free_strtab(split);
-		error("malloc failed", "in object_mesh", state);
-	}
+		return (ft_free_strtab(split), error("malloc failed", "in object_mesh",
+				state), NULL);
 	obj->object_r = parse_obj_file(split[1], state);
 	obj->type = MESH;
 	obj->index_mat = ft_atoi(split[4]);
@@ -48,8 +46,7 @@ t_object	*object_mesh(t_state *state, char **split)
 		free_mesh((t_mesh *)obj->object_r);
 		free(obj);
 		ft_free_strtab(split);
-		error("wrong material index", "mesh", state);
-		return (NULL);
+		return (error("parsing failure", "mesh", state), NULL);
 	}
 	return (obj);
 }

@@ -1,6 +1,5 @@
 #include "ft_strings.h"
 #include "minirt_defs_bonus.h"
-#include "minirt_errors_bonus.h"
 #include "mlx.h"
 #include <fcntl.h>
 #include <stddef.h>
