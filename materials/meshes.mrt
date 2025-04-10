@@ -2,3 +2,5 @@
 mt	0,255,0			255,255,255		0,255,0			0.2
 mt	255,255,255		255,255,255		255,255,255		1				materials/textures/house.xpm	0
 mt	255,255,255		255,255,255		255,255,255		1
+mt	255,255,255		255,255,255		255,255,255		0.2				materials/textures/bull_texture.xpm	materials/normal_maps/bull_nm.xpm
+mt	255,255,255		255,255,255		255,255,255		1				materials/textures/marble_bust_texture.xpm	materials/normal_maps/marble_bust_nm.xpm
