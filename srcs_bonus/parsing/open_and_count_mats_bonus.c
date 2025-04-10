@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static void	insert_color_in_mat(t_state *state, char **line_mat, int i)
+static void	insert_data_in_mat(t_state *state, char **line_mat, int i)
 {
 	int			tab_len;
 	t_material	mat;
@@ -27,8 +27,12 @@ static void	insert_color_in_mat(t_state *state, char **line_mat, int i)
 	mat.img_normal.img = NULL;
 	if (tab_len == 7)
 	{
-		get_texture_map_img(state, line_mat[5], &mat);
-		get_normal_map_img(state, line_mat[6], &mat);
+		if (!get_texture_map_img(state, line_mat[5], &mat))
+			return (ft_free_strtab(line_mat), error("unable to load", "texture",
+					state));
+		if (!get_normal_map_img(state, line_mat[6], &mat))
+			return (ft_free_strtab(line_mat), error("unable to load",
+					"normal map", state));
 	}
 	state->mats_tab[i] = mat;
 }
@@ -51,7 +55,7 @@ static void	material_handling(t_state *state, int fd)
 		if (!tmp_split)
 			error("malloc", "material_handling", state);
 		if (tmp_split[0] && !ft_strncmp(tmp_split[0], "mt", 2))
-			insert_color_in_mat(state, tmp_split, i++);
+			insert_data_in_mat(state, tmp_split, i++);
 		ft_free_strtab(tmp_split);
 	}
 }
