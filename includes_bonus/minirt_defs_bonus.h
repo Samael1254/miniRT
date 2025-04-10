@@ -21,6 +21,7 @@
 
 # define RAY_REACH_MAX 1000
 # define RAY_REACH_MIN 1e-4
+# define BOUNCE_MAX 3
 
 /* ENUMS */
 
@@ -53,6 +54,19 @@ enum				e_keycode
 	RIGHT_ARROW_KEY = 65363,
 	ALT_KEY = 65513,
 	H_KEY = 0x0068,
+};
+
+enum				e_mat_param
+{
+	M_ID,
+	M_KD,
+	M_KS,
+	M_KA,
+	M_SPEC,
+	M_REFL,
+	M_TRANS,
+	M_TX,
+	M_NM
 };
 
 enum				e_light
@@ -99,6 +113,7 @@ typedef struct s_material
 	t_color			ks;
 	t_color			ka;
 	double			specularity;
+	double			reflectance;
 	t_img_data		img_texture;
 	t_img_data		img_normal;
 }					t_material;
@@ -238,6 +253,7 @@ typedef struct s_ray
 typedef struct s_intersection
 {
 	unsigned int	index_mat;
+	unsigned int	bounces;
 	t_vec3			point;
 	t_vec3			normal;
 	t_vec2			uv;

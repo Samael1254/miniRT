@@ -16,6 +16,7 @@ static t_intersection	make_intersection(t_ray ray, t_object *object,
 {
 	t_intersection	inter;
 
+	inter.bounces = 0;
 	if (!ft_in_rangef(distance_min, RAY_REACH_MIN, RAY_REACH_MAX))
 	{
 		inter.index_mat = 0;

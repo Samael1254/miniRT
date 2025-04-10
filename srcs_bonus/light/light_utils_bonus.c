@@ -1,11 +1,9 @@
 #include "ft_math.h"
 #include "minirt_defs_bonus.h"
-#include "minirt_graphics_bonus.h"
-#include "minirt_intersections_bonus.h"
 #include "minirt_light_bonus.h"
 #include <math.h>
 
-static t_vec3	light_direction(t_ray ray, t_point_light light)
+t_vec3	get_light_direction(t_ray ray, t_point_light light)
 {
 	t_vec3	light_dir;
 
@@ -13,21 +11,31 @@ static t_vec3	light_direction(t_ray ray, t_point_light light)
 	return (light_dir);
 }
 
-static t_color	diffuse_color(double incidence, t_material material,
-		t_intersection inter)
+double	get_dist_attenuation(t_vec3 point, t_vec3 light_pos)
 {
-	t_color	color;
+	double			dist_attenuation;
+	double			distance;
+	const double	a = 0.0008;
+	const double	b = 0;
+	const double	c = 0;
 
-	color = material.kd;
-	if (material.img_texture.img)
-		color = absorb_colors(color, get_pixel_color(material.img_texture,
-					inter.uv));
-	incidence = ft_clampf(incidence, 0, 1);
-	return (scale_color(color, incidence));
+	distance = ft_distance3d(point, light_pos);
+	dist_attenuation = 1 / (a * distance * distance + b * distance + c);
+	dist_attenuation = ft_clampf(dist_attenuation, 0, 1);
+	return (dist_attenuation);
 }
 
-static double	get_specular_term(t_vec3 light_dir, t_vec3 view_dir,
-		t_vec3 normal, t_material material)
+t_vec3	get_reflection_dir(t_vec3 light_dir, t_vec3 normal)
+{
+	double	incidence;
+
+	light_dir = ft_scale_vec3(-1, light_dir);
+	incidence = ft_dot_vec3(light_dir, normal);
+	return (ft_sub_vec3(ft_scale_vec3(2 * incidence, normal), light_dir));
+}
+
+double	get_specular_term(t_vec3 light_dir, t_vec3 view_dir, t_vec3 normal,
+		t_material material)
 {
 	double	specular;
 	t_vec3	reflection_dir;
@@ -41,36 +49,4 @@ static double	get_specular_term(t_vec3 light_dir, t_vec3 view_dir,
 	specular = pow(rv, 100 * material.specularity);
 	specular *= material.specularity;
 	return (specular);
-}
-
-static t_color	specular_color(t_intersection inter, t_vec3 light_dir,
-		t_vec3 view_dir, t_state *state)
-{
-	t_material	material;
-
-	material = state->mats_tab[inter.index_mat];
-	return (scale_color(material.ks, get_specular_term(light_dir, view_dir,
-				inter.normal, material)));
-}
-
-t_color	shade_from_one_light(t_intersection inter, t_vec3 view_dir,
-		t_state *state, t_point_light light)
-{
-	t_color			color;
-	t_ray			light_ray;
-	t_intersection	light_inter;
-
-	light_ray.origin = inter.point;
-	light_ray.direction = light_direction(light_ray, light);
-	light_inter = intersect_scene(light_ray, state);
-	if (ft_supf(ft_distance3d(light_ray.origin, light.pos),
-			ft_distance3d(light_ray.origin, light_inter.point)))
-		return (init_color(0, 0, 0));
-	color = diffuse_color(ft_dot_vec3(light_ray.direction, inter.normal),
-			state->mats_tab[inter.index_mat], inter);
-	color = add_colors(color, specular_color(inter, light_ray.direction,
-				view_dir, state));
-	color = absorb_colors(color, scale_color(light.color, light.brightness
-				* get_dist_attenuation(inter.point, light.pos)));
-	return (color);
 }

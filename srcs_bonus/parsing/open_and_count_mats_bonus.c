@@ -17,21 +17,22 @@ static void	insert_data_in_mat(t_state *state, char **line_mat, int i)
 	bool		has_error;
 
 	tab_len = ft_strtab_size(line_mat);
-	if (tab_len != 5 && tab_len != 7)
+	if (tab_len != 7 && tab_len != 9)
 		return (ft_free_strtab(line_mat), error(".mrt",
-				"Enter 5 or 7 parameters in line", state));
-	mat.kd = get_color(line_mat[1], &has_error);
-	mat.ks = get_color(line_mat[2], &has_error);
-	mat.ka = get_color(line_mat[3], &has_error);
-	mat.specularity = ft_atod(line_mat[4]);
+				"Enter 7 or 9 parameters in line", state));
+	mat.kd = get_color(line_mat[M_KD], &has_error);
+	mat.ks = get_color(line_mat[M_KS], &has_error);
+	mat.ka = get_color(line_mat[M_KA], &has_error);
+	mat.specularity = ft_atod(line_mat[M_SPEC]);
+	mat.reflectance = ft_atod(line_mat[M_REFL]);
 	mat.img_texture.img = NULL;
 	mat.img_normal.img = NULL;
-	if (tab_len == 7)
+	if (tab_len == 9)
 	{
-		if (!get_texture_map_img(state, line_mat[5], &mat))
+		if (!get_texture_map_img(state, line_mat[M_TX], &mat))
 			return (ft_free_strtab(line_mat), error("unable to load", "texture",
 					state));
-		if (!get_normal_map_img(state, line_mat[6], &mat))
+		if (!get_normal_map_img(state, line_mat[M_NM], &mat))
 			return (ft_free_strtab(line_mat), error("unable to load",
 					"normal map", state));
 	}
