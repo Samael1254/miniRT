@@ -25,12 +25,14 @@ static void	init_mlx(t_state *state)
 
 static void	initialize_state(t_state *state)
 {
+	int	i;
+
+	i = 0;
 	state->display = NULL;
 	state->scene.lights = NULL;
 	state->scene.objects = NULL;
-	state->id_list[0] = NULL;
-	state->id_list[1] = NULL;
-	state->id_list[2] = NULL;
+	while (i < ID_LIST_SIZE)
+		state->id_list[i++] = NULL;
 	state->len_mats_tab = 0;
 	state->mats_tab = NULL;
 	state->hold_alt = 0;
