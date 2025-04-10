@@ -11,6 +11,8 @@
 
 # define THREAD_COUNT 20
 
+# define ID_LIST_SIZE 4
+
 # define BVH_DEPTH 8
 # define BVH_MIN_TRIANGLES 5
 
@@ -248,7 +250,7 @@ typedef struct s_state
 	void			*win;
 	t_img_data		img_data;
 	t_scene			scene;
-	char			*id_list[4];
+	char			*id_list[ID_LIST_SIZE];
 	t_material		*mats_tab;
 	unsigned int	len_mats_tab;
 	struct timeval	start_time;

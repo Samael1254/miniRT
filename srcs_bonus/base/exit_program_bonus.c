@@ -58,7 +58,7 @@ int	exit_program(t_state *state, int status)
 	if (state)
 	{
 		i = 0;
-		while (i < 4)
+		while (i < ID_LIST_SIZE)
 		{
 			if (state->id_list[i])
 				free(state->id_list[i]);

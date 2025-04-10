@@ -15,13 +15,13 @@ static void	append_to_idlist(t_state *state, char **split, int *i)
 	int	j;
 
 	j = 0;
-	while (j < 4 && state->id_list[j] && !ft_strncmp(split[0], "L", 1))
+	while (j < ID_LIST_SIZE && state->id_list[j] && !ft_strncmp(split[0], "L", 1))
 	{
 		if (!ft_strncmp(state->id_list[j], "L", 1))
 			return ;
 		j++;
 	}
-	if (*i >= 4)
+	if (*i >= ID_LIST_SIZE)
 	{
 		ft_free_strtab(split);
 		error("parsing", "need one A, one C, one SKY and at least one L!",
