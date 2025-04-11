@@ -9,7 +9,7 @@
 
 /* MACROS */
 
-# define THREAD_COUNT 20
+# define THREAD_COUNT 10
 
 # define ID_LIST_SIZE 4
 
@@ -22,6 +22,8 @@
 # define RAY_REACH_MAX 1000
 # define RAY_REACH_MIN 1e-4
 # define BOUNCE_MAX 10
+
+# define AIR_REFRACTION 1.000293
 
 /* ENUMS */
 
@@ -251,6 +253,7 @@ typedef struct s_ray
 {
 	t_vec3			origin;
 	t_vec3			direction;
+	double			refraction;
 }					t_ray;
 
 typedef struct s_intersection

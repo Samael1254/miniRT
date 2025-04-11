@@ -35,7 +35,7 @@ t_vec3	get_reflection_dir(t_vec3 light_dir, t_vec3 normal)
 	return (ft_sub_vec3(ft_scale_vec3(2 * incidence, normal), light_dir));
 }
 
-t_vec3	get_refraction_dir(t_vec3 dir, t_vec3 normal, double refraction)
+t_vec3	get_refraction_dir(t_vec3 dir, t_vec3 normal, double n1, double n2)
 {
 	t_vec3	refraction_dir;
 	double	cos1;
@@ -43,7 +43,7 @@ t_vec3	get_refraction_dir(t_vec3 dir, t_vec3 normal, double refraction)
 	double	index_ratio;
 
 	cos1 = ft_dot_vec3(normal, dir);
-	index_ratio = 1 / refraction;
+	index_ratio = n1 / n2;
 	cos2 = 1 - pow(index_ratio, 2) * (1 - pow(cos1, 2));
 	if (cos2 < 0)
 		return (get_reflection_dir(dir, normal));

@@ -7,7 +7,6 @@
 #include "minirt_light_bonus.h"
 #include <math.h>
 #include <stdbool.h>
-#include <stdio.h>
 
 static t_color	specular_color(t_intersection inter, t_vec3 light_dir,
 		t_vec3 view_dir, t_state *state)
@@ -66,32 +65,6 @@ static t_color	shade_from_one_light(t_intersection inter, t_vec3 view_dir,
 	color = absorb_colors(color, scale_color(light.color, light.brightness
 				* get_dist_attenuation(inter.point, light.pos)));
 	return (color);
-}
-
-t_color	reflected_ray(t_ray ray, t_intersection inter, t_state *state)
-{
-	t_ray			reflected_ray;
-	t_intersection	new_inter;
-
-	if (inter.bounces >= BOUNCE_MAX)
-		return (init_color(255, 255, 255));
-	reflected_ray.origin = inter.point;
-	reflected_ray.direction = get_reflection_dir(ray.direction, inter.normal);
-	new_inter = intersect_scene(reflected_ray, state);
-	new_inter.bounces = inter.bounces + 1;
-	return (phong_illumination(state, new_inter, reflected_ray));
-}
-
-t_color	refracted_ray(t_ray ray, t_intersection inter, t_state *state)
-{
-	t_ray			refracted_ray;
-	t_intersection	new_inter;
-
-	refracted_ray.origin = inter.point;
-	refracted_ray.direction = get_refraction_dir(ray.direction, inter.normal,
-			state->mats_tab[inter.index_mat].refraction);
-	new_inter = intersect_scene(refracted_ray, state);
-	return (phong_illumination(state, new_inter, refracted_ray));
 }
 
 t_color	phong_illumination(t_state *state, t_intersection inter, t_ray ray)

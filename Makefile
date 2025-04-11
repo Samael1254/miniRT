@@ -46,7 +46,7 @@ BONUS_RAYTRACING := raytracing_bonus.c intersections_bonus.c intersect_objects_b
 				   normals_bonus.c intersect_objects_utils_bonus.c intersect_bvh_bonus.c object_normal_bonus.c \
 				   ray_utils_bonus.c
 
-BONUS_LIGHT := light_bonus.c light_utils_bonus.c
+BONUS_LIGHT := light_bonus.c light_utils_bonus.c recursive_light_bonus.c
 
 BONUS_TEXTURING := uv_mapping_bonus.c normal_map_bonus.c mapping_utils_bonus.c object_mapping_bonus.c
 

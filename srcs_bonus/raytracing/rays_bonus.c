@@ -7,8 +7,6 @@
 #include "minirt_raytracing_bonus.h"
 #include <math.h>
 #include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
 
 static double	vertical_fov_2(double horizontal_fov_2)
@@ -31,6 +29,7 @@ static t_ray	init_ray(t_camera camera, t_vec2 rotator)
 	ray.direction = ft_4dto3d_vector(ft_mat_vec_product4(m_rot_x,
 				ft_3dto4d_vector(ray.direction)));
 	ray.origin = camera.pos;
+	ray.refraction = AIR_REFRACTION;
 	return (ray);
 }
 
