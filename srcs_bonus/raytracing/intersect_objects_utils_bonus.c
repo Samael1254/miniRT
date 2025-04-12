@@ -15,7 +15,7 @@ double	closest_root(double root1, double root2)
 			return (INFINITY);
 		return (root2);
 	}
-	return (ft_minf(root1, root2));
+	return (root1);
 }
 
 double	triangle_distance(double d, t_ray ray, t_vec3 vectors[3], t_vec3 a)
@@ -73,21 +73,29 @@ double	cylinder_delta(t_ray ray, t_cylinder cylinder, double params[5],
 	return (sqrt(h));
 }
 
-double	cylinder_params(t_ray ray, t_cylinder cylinder, double params[3])
+double	intersect_cap(t_ray ray, t_cylinder cylinder, bool top)
 {
-	t_vec3	u;
-	t_vec3	v;
-	double	delta;
+	t_vec3	center;
+	t_vec3	normal;
+	double	denom;
+	double	t;
+	t_vec3	hit;
 
-	u = ft_cross_vec3(cylinder.axis, ft_sub_vec3(ray.origin,
-				ft_sub_vec3(cylinder.pos, ft_scale_vec3(cylinder.height / 2,
-						cylinder.axis))));
-	v = ft_cross_vec3(cylinder.axis, ray.direction);
-	params[0] = ft_vec3_square_norm(v);
-	params[1] = pow(ft_dot_vec3(u, v), 2);
-	params[2] = ft_vec3_square_norm(u) - pow(cylinder.diameter / 2, 2);
-	delta = pow(params[1], 2) - params[0] * params[2];
-	if (ft_inff(delta, 0))
+	normal = ft_normalize_vec3(cylinder.axis);
+	if (top)
+		center = ft_add_vec3(cylinder.pos,
+				ft_scale_vec3(cylinder.height / 2, normal));
+	else
+		center = ft_sub_vec3(cylinder.pos,
+				ft_scale_vec3(cylinder.height / 2, normal));
+	denom = ft_dot_vec3(normal, ray.direction);
+	if (fabs(denom) < 1e-6)
 		return (INFINITY);
-	return (sqrt(delta));
+	t = ft_dot_vec3(ft_sub_vec3(center, ray.origin), normal) / denom;
+	if (t < 0)
+		return (INFINITY);
+	hit = ft_add_vec3(ray.origin, ft_scale_vec3(t, ray.direction));
+	if (ft_vec3_norm(ft_sub_vec3(hit, center)) <= cylinder.diameter / 2.0)
+		return (t);
+	return (INFINITY);
 }

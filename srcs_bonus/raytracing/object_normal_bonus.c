@@ -46,9 +46,9 @@ t_vec3	cylinder_normal(t_cylinder cylinder, t_vec3 point)
 	pa = ft_sub_vec3(point, a);
 	h = ft_dot_vec3(pa, ba) / ft_dot_vec3(ba, ba);
 	if (ft_inff(h, 0))
-		return (ft_normalize_vec3(ft_scale_vec3(-1.0, ba)));
+		return (ft_normalize_vec3(ft_scale_vec3(1.0, ba)));
 	if (ft_supf(h, 1))
 		return (ft_normalize_vec3(ba));
-	return (ft_normalize_vec3(ft_scale_vec3(1.0 / radius, ft_sub_vec3(pa,
+	return ((ft_scale_vec3(1.0 / radius, ft_sub_vec3(pa,
 					ft_scale_vec3(h, ba)))));
 }
