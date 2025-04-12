@@ -24,7 +24,7 @@ double			triangle_distance(double d, t_ray ray, t_vec3 vectors[3],
 double			cone_delta(double params[3], t_vec3 co, t_ray ray, t_cone cone);
 double			cylinder_delta(t_ray ray, t_cylinder cylinder, double params[5],
 					t_vec3 vectors[3]);
-double			cylinder_params(t_ray ray, t_cylinder cylinder,
-					double params[3]);
+double			intersect_cap(t_ray ray, t_cylinder cylinder, bool top);
+double			intersect_cylinder_body(t_ray ray, t_cylinder cylinder);
 
 #endif
