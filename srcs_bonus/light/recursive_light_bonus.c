@@ -57,12 +57,13 @@ t_color	refract_reflect_rays(t_color color, t_ray ray, t_intersection inter,
 
 	if (mat.transparency > 0)
 	{
-		// color = refracted_ray(ray, inter, state);
-		// (void)f;
 		f = fresnel_reflectance(ray.refraction, mat.refraction, ray.direction,
 				inter.normal);
-		color = add_colors(scale_color(refracted_ray(ray, inter, state), 1 - f),
-				scale_color(reflected_ray(ray, inter, state, 1), f));
+		color = lerp_colors(reflected_ray(ray, inter, state, 1),
+				refracted_ray(ray, inter, state), f);
+		if (mat.transparency < 1)
+			color = lerp_colors(absorb_colors(mat.kd, color), color,
+					mat.transparency);
 	}
 	else if (mat.reflectance > 0)
 		color = add_colors(scale_color(reflected_ray(ray, inter, state, -1),

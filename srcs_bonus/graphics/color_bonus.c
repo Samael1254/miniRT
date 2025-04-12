@@ -30,3 +30,13 @@ t_color	add_colors(t_color color1, t_color color2)
 	sum.b = ft_min(color1.b + color2.b, 255);
 	return (sum);
 }
+
+t_color	lerp_colors(t_color color1, t_color color2, double lambda)
+{
+	t_color	lerp;
+
+	color1 = scale_color(color1, lambda);
+	color2 = scale_color(color2, 1 - lambda);
+	lerp = add_colors(color1, color2);
+	return (lerp);
+}

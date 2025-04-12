@@ -6,7 +6,7 @@
 // color_bonus.c
 t_color	scale_color(t_color color, double lambda);
 t_color	add_colors(t_color color1, t_color color2);
-t_color	add_colors(t_color color1, t_color color2);
+t_color	lerp_colors(t_color color1, t_color color2, double lambda);
 t_color	absorb_colors(t_color color1, t_color color2);
 
 // color_utils_bonus.c

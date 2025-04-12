@@ -3,4 +3,4 @@ mt	255,127,0		255,255,255		255,0,255		0.2				0.5				0				1
 mt	255,255,255		255,255,255		255,255,255		1				0				0				1			materials/textures/hoplite.xpm				0
 mt	255,255,255		102,73,51		255,255,255		1				0.3				0				1			materials/textures/bull_texture.xpm			materials/normal_maps/bull_nm.xpm
 mt	255,255,255		255,255,255		255,255,255		1				0				0				1			materials/textures/marble_bust_texture.xpm	materials/normal_maps/marble_bust_nm.xpm
-mt	255,0,255		255,255,255		255,0,255		1				0				1				1.5
+mt	0,0,255			255,255,255		255,0,255		1				0				0.3				1.5
