@@ -66,7 +66,7 @@ t_color	refract_reflect_rays(t_color color, t_ray ray, t_intersection inter,
 					mat.transparency);
 	}
 	else if (mat.reflectance > 0)
-		color = add_colors(scale_color(reflected_ray(ray, inter, state, -1),
-					mat.reflectance), scale_color(color, 1 - mat.reflectance));
+		color = lerp_colors(absorb_colors(reflected_ray(ray, inter, state, -1),
+					mat.ks), color, mat.reflectance);
 	return (color);
 }
