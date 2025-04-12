@@ -57,10 +57,29 @@ The following keybindings allow the user to interact with miniRT:
 
 #### PARSING
 - Set the texture scaling in the .mrt file
-- Set the texture repetition in the .mrt file
 
 #### GRAPHICS
 - Anti aliasing
+
+#### Optimisation
+- Others
+
+#### LIGHT
+- Hitable lights (small sphere with a brighter color towards the center)
+
+#### BUGS
+- uv mapping inside a sphere is upside down
+- cylinder base disapears when in axis
+- abnormal deformation up and down the screen (fisheye)
+- Change content of help
+
+
+### TODO AFTER
+
+#### PARSING
+- Set the texture scaling in the .mrt file
+
+#### GRAPHICS
 - Depth of field
 
 #### Optimisation
@@ -71,20 +90,10 @@ The following keybindings allow the user to interact with miniRT:
 - Global illumination
 - Soft shadows
 - Directional light
-- Refraction
 - Wave lenght refraction (prisms)
 - Bloom
-- Hitable lights (small sphere with a brighter color towards the center)
 
 #### MATERIALS
 - Transparent textures
 - Non-repetitive textures
-- Transparent materials
 - Emissive materials
-
-#### BUGS
-- uv mapping inside a sphere is upside down
-- cylinder base disapears when in axis
-- abnormal deformation up and down the screen (fisheye)
-- Crash when obj contains non-triangular faces
-- Change content of help
