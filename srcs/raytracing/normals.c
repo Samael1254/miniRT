@@ -16,8 +16,8 @@ static t_vec3	cylinder_normal(t_cylinder cylinder, t_vec3 point)
 {
 	t_vec3	ba;
 	t_vec3	pa;
-	double		h;
-	double		radius;
+	double	h;
+	double	radius;
 	t_vec3	a;
 
 	radius = cylinder.diameter / 2.0;

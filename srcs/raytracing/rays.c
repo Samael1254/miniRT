@@ -29,7 +29,7 @@ void	init_rays(t_camera camera, t_ray **rays)
 	t_vec2	rotator;
 	t_ivec2	coords;
 	t_vec2	angle_deltas;
-	double		v_fov_2;
+	double	v_fov_2;
 
 	v_fov_2 = vertical_fov_2(camera.fov_2);
 	coords.y = 0;
@@ -53,7 +53,7 @@ void	init_rays(t_camera camera, t_ray **rays)
 
 void	shoot_rays(t_ray **rays, t_state *state)
 {
-	t_ivec2		coords;
+	t_ivec2			coords;
 	t_intersection	inter;
 
 	coords.y = 0;

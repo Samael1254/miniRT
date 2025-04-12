@@ -7,7 +7,6 @@
 #include "minirt_errors_bonus.h"
 #include "minirt_parsing_bonus.h"
 #include <fcntl.h>
-#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,19 +22,11 @@ static void	insert_data_in_mat(t_state *state, char **line_mat, int i)
 	if (tab_len != 8 && tab_len != 10)
 		return (ft_free_strtab(line_mat), error(".mrt",
 				"Enter 7 or 9 parameters in line", state));
-	mat.kd = get_color(line_mat[M_KD], &has_error);
-	mat.ks = get_color(line_mat[M_KS], &has_error);
-	mat.ka = get_color(line_mat[M_KA], &has_error);
-	mat.specularity = ft_clampf(ft_atod(line_mat[M_SPEC]), 0, 1);
-	mat.reflectance = ft_clampf(ft_atod(line_mat[M_REFL]), 0, 1);
-	mat.transparency = ft_clampf(ft_atod(line_mat[M_TRANS]), 0, 1);
-	mat.refraction = ft_clampf(ft_atod(line_mat[M_REFR]), 1, INFINITY);
-	mat.img_texture.img = NULL;
-	mat.img_normal.img = NULL;
+	init_mat(&mat, line_mat, &has_error);
 	if (tab_len == 10)
 	{
 		if (!get_texture_map_img(state, line_mat[M_TX], &mat))
-			return (ft_free_strtab(line_mat), error("unable to load", "texture",
+			return (ft_free_strtab(line_mat), error("load error", "texture",
 					state));
 		if (!get_normal_map_img(state, line_mat[M_NM], &mat))
 			return (ft_free_strtab(line_mat), error("unable to load",

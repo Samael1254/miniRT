@@ -14,9 +14,9 @@ static double	closest_root(double root1, double root2)
 double	intersect_sphere(t_ray ray, t_sphere sphere)
 {
 	t_vec3	co;
-	double		b;
-	double		c;
-	double		delta;
+	double	b;
+	double	c;
+	double	delta;
 
 	co = ft_sub_vec3(ray.origin, sphere.pos);
 	b = ft_dot_vec3(ray.direction, co);
@@ -66,10 +66,10 @@ static double	cylinder_delta(t_ray ray, t_cylinder cylinder, double params[5],
 double	intersect_cylinder(t_ray ray, t_cylinder cylinder)
 {
 	t_vec3	vectors[3];
-	double		params[5];
-	double		t;
-	double		y;
-	double		delta;
+	double	params[5];
+	double	t;
+	double	y;
+	double	delta;
 
 	delta = cylinder_delta(ray, cylinder, params, vectors);
 	if (delta == INFINITY)

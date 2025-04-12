@@ -15,7 +15,7 @@
 t_vec3	get_vector(char *line_vector, bool *error)
 {
 	t_vec3	vector;
-	char		**split_vector;
+	char	**split_vector;
 
 	split_vector = ft_split(line_vector, ',');
 	if (!ft_check_split_data(split_vector))

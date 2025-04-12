@@ -41,13 +41,11 @@ The following keybindings allow the user to interact with miniRT:
 - Change warnings to errors in the end
 
 #### BUGS
-- Cone cap disappears when in front
 
 
 ### TODO BONUS
 
 #### MISC
-- check angle of cone in parsing
 
 
 ### TODO ULTIMATE
