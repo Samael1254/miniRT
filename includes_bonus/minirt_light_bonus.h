@@ -3,8 +3,8 @@
 
 # include "minirt_defs_bonus.h"
 
-t_color	reflected_ray(t_ray ray, t_intersection inter, t_state *state);
-t_color	refracted_ray(t_ray ray, t_intersection inter, t_state *state);
+t_color	refract_reflect_rays(t_color color, t_ray ray, t_intersection inter,
+			t_state *state);
 
 // light_bonus.c
 

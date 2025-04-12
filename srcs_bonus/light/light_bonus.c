@@ -76,8 +76,6 @@ t_color	phong_illumination(t_state *state, t_intersection inter, t_ray ray)
 	if (inter.point.x == INFINITY)
 		return (get_sky_color(state->scene.sky, ray));
 	mat = state->mats_tab[inter.index_mat];
-	if (mat.transparency > 0)
-		return (refracted_ray(ray, inter, state));
 	color = ambiant_color(state->scene.a_light, mat, inter);
 	iter = state->scene.lights;
 	while (iter)
@@ -86,8 +84,6 @@ t_color	phong_illumination(t_state *state, t_intersection inter, t_ray ray)
 					state, *(t_point_light *)iter->data));
 		iter = iter->next;
 	}
-	if (mat.reflectance > 0)
-		color = add_colors(scale_color(reflected_ray(ray, inter, state),
-					mat.reflectance), scale_color(color, 1 - mat.reflectance));
+	color = refract_reflect_rays(color, ray, inter, state);
 	return (color);
 }

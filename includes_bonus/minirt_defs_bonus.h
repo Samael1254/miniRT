@@ -21,7 +21,7 @@
 
 # define RAY_REACH_MAX 1000
 # define RAY_REACH_MIN 1e-4
-# define BOUNCE_MAX 10
+# define BOUNCE_MAX 2
 
 # define AIR_REFRACTION 1.000293
 

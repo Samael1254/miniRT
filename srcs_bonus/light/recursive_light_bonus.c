@@ -1,24 +1,37 @@
+#include "ft_algebra.h"
 #include "minirt_defs_bonus.h"
 #include "minirt_graphics_bonus.h"
 #include "minirt_intersections_bonus.h"
 #include "minirt_light_bonus.h"
+#include <math.h>
 #include <stdbool.h>
 
-t_color	reflected_ray(t_ray ray, t_intersection inter, t_state *state)
+static t_color	reflected_ray(t_ray ray, t_intersection inter, t_state *state,
+		int bounce_max)
 {
 	t_ray			reflected_ray;
 	t_intersection	new_inter;
 
-	if (inter.bounces >= BOUNCE_MAX)
+	if (bounce_max == -1)
+		bounce_max = BOUNCE_MAX;
+	if (inter.bounces >= (unsigned int)bounce_max)
 		return (init_color(255, 255, 255));
 	reflected_ray.origin = inter.point;
 	reflected_ray.direction = get_reflection_dir(ray.direction, inter.normal);
+	reflected_ray.refraction = ray.refraction;
 	new_inter = intersect_scene(reflected_ray, state);
 	new_inter.bounces = inter.bounces + 1;
 	return (phong_illumination(state, new_inter, reflected_ray));
 }
+double	fresnel_reflectance(double n1, double n2, t_vec3 dir, t_vec3 normal)
+{
+	const double	r0 = pow((n1 - n2) / (n1 + n2), 2);
+	const double	cos1 = -ft_dot_vec3(normal, dir);
 
-t_color	refracted_ray(t_ray ray, t_intersection inter, t_state *state)
+	return (r0 + (1 - r0) * pow(1 - cos1, 5));
+}
+
+static t_color	refracted_ray(t_ray ray, t_intersection inter, t_state *state)
 {
 	t_ray			refracted_ray;
 	t_intersection	new_inter;
@@ -34,4 +47,25 @@ t_color	refracted_ray(t_ray ray, t_intersection inter, t_state *state)
 		refracted_ray.refraction = mat.refraction;
 	new_inter = intersect_scene(refracted_ray, state);
 	return (phong_illumination(state, new_inter, refracted_ray));
+}
+
+t_color	refract_reflect_rays(t_color color, t_ray ray, t_intersection inter,
+		t_state *state)
+{
+	double				f;
+	const t_material	mat = state->mats_tab[inter.index_mat];
+
+	if (mat.transparency > 0)
+	{
+		// color = refracted_ray(ray, inter, state);
+		// (void)f;
+		f = fresnel_reflectance(ray.refraction, mat.refraction, ray.direction,
+				inter.normal);
+		color = add_colors(scale_color(refracted_ray(ray, inter, state), 1 - f),
+				scale_color(reflected_ray(ray, inter, state, 1), f));
+	}
+	else if (mat.reflectance > 0)
+		color = add_colors(scale_color(reflected_ray(ray, inter, state, -1),
+					mat.reflectance), scale_color(color, 1 - mat.reflectance));
+	return (color);
 }
