@@ -31,8 +31,8 @@ static void	add_camera(t_state *state, char **split)
 {
 	t_vec3	pos;
 	t_vec3	dir;
-	double		fov_2;
-	bool		has_error;
+	double	fov_2;
+	bool	has_error;
 
 	pos = get_vector(split[1], &has_error);
 	dir = get_vector(split[2], &has_error);
@@ -59,9 +59,9 @@ static void	add_camera(t_state *state, char **split)
 static void	add_light(t_state *state, char **split)
 {
 	t_vec3	pos;
-	double		brightness;
-	t_color		color;
-	bool		has_error;
+	double	brightness;
+	t_color	color;
+	bool	has_error;
 
 	pos = get_vector(split[1], &has_error);
 	brightness = ft_atod(split[2]);
