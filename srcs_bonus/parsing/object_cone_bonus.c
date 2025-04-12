@@ -11,6 +11,7 @@ static t_cone	*get_cone_data(t_state *state, char **split, t_object *obj)
 {
 	t_cone	*cone;
 	bool	has_error;
+	double	slope;
 
 	cone = ft_calloc(1, sizeof(t_cone));
 	if (!cone)
@@ -19,16 +20,17 @@ static t_cone	*get_cone_data(t_state *state, char **split, t_object *obj)
 		ft_free_strtab(split);
 		error(NULL, "as malloc failed", state);
 	}
+	slope = ft_atod(split[3]);
 	cone->pos = get_vector(split[1], &has_error);
 	cone->axis = get_vector(split[2], &has_error);
-	cone->slope = ft_deg_to_rad(ft_atod(split[3]));
-	if (has_error == true)
+	if (has_error == true || slope < 1 || slope > 179)
 	{
 		free(cone);
 		free(obj);
 		ft_free_strtab(split);
-		error("cone", "cone color isn't valid", state);
+		error("cone", "slope or color isn't valid", state);
 	}
+	cone->slope = ft_deg_to_rad(slope);
 	return (cone);
 }
 
