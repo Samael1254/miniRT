@@ -1,5 +1,5 @@
-#ifndef OBJ_PARSER_H
-# define OBJ_PARSER_H
+#ifndef MINIRT_OBJ_PARSER_BONUS_H
+# define MINIRT_OBJ_PARSER_BONUS_H
 
 # include "minirt_defs_bonus.h"
 # include <stdbool.h>

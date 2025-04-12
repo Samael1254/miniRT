@@ -5,7 +5,7 @@
 # include "minirt_defs_bonus.h"
 
 // check_arguments_bonus.c
-void	check_arguments(int argc, char **argv);
+void			check_arguments(int argc, char **argv);
 
 // errors_bonus.c
 unsigned int	warnings_number(bool add);

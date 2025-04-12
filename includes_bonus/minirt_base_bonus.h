@@ -1,5 +1,5 @@
-#ifndef MINIRT_BASE_BONUS
-# define MINIRT_BASE_BONUS
+#ifndef MINIRT_BASE_BONUS_H
+# define MINIRT_BASE_BONUS_H
 
 # include "minirt_defs_bonus.h"
 
