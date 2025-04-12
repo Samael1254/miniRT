@@ -1,9 +1,26 @@
 #include "ft_strings.h"
 #include "minirt_defs_bonus.h"
+#include "minirt_parsing_bonus.h"
 #include "mlx.h"
+#include "ft_math.h"
+#include <math.h>
+#include "ft_conversion.h"
 #include <fcntl.h>
 #include <stddef.h>
 #include <stdio.h>
+
+void	init_mat(t_material *mat, char **line_mat, bool *has_error)
+{
+	mat->kd = get_color(line_mat[M_KD], has_error);
+	mat->ks = get_color(line_mat[M_KS], has_error);
+	mat->ka = get_color(line_mat[M_KA], has_error);
+	mat->specularity = ft_clampf(ft_atod(line_mat[M_SPEC]), 0, 1);
+	mat->reflectance = ft_clampf(ft_atod(line_mat[M_REFL]), 0, 1);
+	mat->transparency = ft_clampf(ft_atod(line_mat[M_TRANS]), 0, 1);
+	mat->refraction = ft_clampf(ft_atod(line_mat[M_REFR]), 1, INFINITY);
+	mat->img_texture.img = NULL;
+	mat->img_normal.img = NULL;
+}
 
 bool	get_normal_map_img(t_state *state, char *filename, t_material *mat)
 {

@@ -50,6 +50,7 @@ t_vec3		get_vector(char *line_vector, bool *error);
 void		ambiant_light_checker(t_state *state, char **split);
 
 // utils_mat.c
+void		init_mat(t_material *mat, char **line_mat, bool *has_error);
 bool		get_texture_map_img(t_state *state, char *filename,
 				t_material *mat);
 bool		get_normal_map_img(t_state *state, char *filename, t_material *mat);

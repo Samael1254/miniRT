@@ -23,6 +23,7 @@ static t_color	reflected_ray(t_ray ray, t_intersection inter, t_state *state,
 	new_inter.bounces = inter.bounces + 1;
 	return (phong_illumination(state, new_inter, reflected_ray));
 }
+
 double	fresnel_reflectance(double n1, double n2, t_vec3 dir, t_vec3 normal)
 {
 	const double	r0 = pow((n1 - n2) / (n1 + n2), 2);
