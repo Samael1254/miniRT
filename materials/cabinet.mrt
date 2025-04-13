@@ -1,0 +1,6 @@
+#mt	kd				ks				ka				specularity		reflectance		transparency	refraction	texture							normal_map
+mt	255,255,255		255,255,255		255,255,255		1				0				0				1
+mt	255,255,255		255,255,255		255,255,255		1				0				0				1			materials/textures/horse.xpm	materials/normal_maps/horse.xpm
+mt	255,255,255		255,255,255		255,255,255		1				0.2				0				1			materials/textures/console.xpm	materials/normal_maps/console.xpm
+mt	255,255,255		255,255,255		255,255,255		0.5				0				0				1			materials/textures/wood.xpm		materials/normal_maps/wood2.xpm
+mt	255,0,255		255,255,255		255,0,255		0.5				0				1				1.5
