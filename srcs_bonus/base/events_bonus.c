@@ -94,7 +94,7 @@ static void	toggle_fps(t_state *state)
 
 static void	change_post_processing(t_state *state)
 {
-	state->post_process = (state->post_process + 1) % 8;
+	state->post_process = (state->post_process + 1) % 9;
 	recreate_image(state);
 }
 

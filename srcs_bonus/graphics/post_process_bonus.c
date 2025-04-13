@@ -15,6 +15,16 @@ static t_color	vignette(t_color color, t_ivec2 coords)
 	return (scale_color(color, vignette_scale));
 }
 
+static t_color	negative(t_color color)
+{
+	t_color	neg;
+
+	neg.r = 255 - color.r;
+	neg.g = 255 - color.g;
+	neg.b = 255 - color.b;
+	return (neg);
+}
+
 static t_color	gamma_correction(t_color color)
 {
 	const double	gamma_inv = 1 / 1.3;
@@ -119,5 +129,7 @@ t_color	post_process(t_color color, t_ivec2 coords, const t_state *state)
 		processed_color = saturation_boost(processed_color);
 	else if (state->post_process == PP_POSTER)
 		processed_color = posterization(processed_color);
+	else if (state->post_process == PP_NEGATIVE)
+		processed_color = negative(processed_color);
 	return (processed_color);
 }

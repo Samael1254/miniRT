@@ -16,6 +16,7 @@ A basic multithreaded raytracer for 42 school project miniRT
 - The user can move and rotate the camera around in real time to get different views of the scene
 - Modifiable camera parameters (field of view, movement and rotation speed)
 - Toggle FPS counter
+- Post-processing filters
 - Scenes configured in the dedicated .rt file format (see documentation.rt for more details)
 - Materials in .mrt files, able to load textures and normal maps from .xpm image files (see documentation.mrt for more details)
 - Comes with a few pre-made scenes, meshes, textures and materials to select from

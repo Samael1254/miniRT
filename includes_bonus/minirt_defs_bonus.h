@@ -63,11 +63,12 @@ enum					e_keycode
 enum					e_post_process
 {
 	PP_NONE,
-	PP_POSTER,
+	PP_NEGATIVE,
 	PP_GAMMA,
 	PP_VIGNETTE,
 	PP_SEPIA,
 	PP_GRAY,
+	PP_POSTER,
 	PP_SCANLINES,
 	PP_SATURATION,
 };
