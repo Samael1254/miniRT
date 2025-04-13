@@ -84,7 +84,7 @@ static void	check_directory(t_state *state, char *filename)
 		if (errno == EISDIR)
 			error("wrong filename", "given name is a directory", state);
 		else if (errno == EACCES)
-			error("wrong filename", "cannot access file due to permission", state);
+			error("wrong filename", "can't access due to permission", state);
 		error("wrong filename", "cannot open file", state);
 	}
 	close(fd);

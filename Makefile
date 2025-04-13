@@ -18,7 +18,7 @@ SRCS_GRAPHICS := color.c graphics.c
 
 SRCS_ERRORS := errors.c check_arguments.c
 
-SRCS_RAYTRACING := raytracing.c intersections.c intersect_objects.c rays.c light.c \
+SRCS_RAYTRACING := raytracing.c intersections.c intersect_objects.c intersect_objects_utils.c rays.c light.c \
 				   normals.c
 
 SOURCES := $(addprefix $(SOURCES_DIR)base/, $(SRCS_MAIN)) \
