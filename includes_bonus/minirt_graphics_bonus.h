@@ -11,7 +11,7 @@ t_color	absorb_colors(t_color color1, t_color color2);
 
 // color_utils_bonus.c
 t_color	init_color(unsigned char r, unsigned char g, unsigned char b);
-t_color	get_sky_color(t_sky sky, t_ray ray);
+t_color	get_sky_color(t_state *state, t_ray ray);
 
 // graphics_bonus.c
 void	put_pixel(t_img_data *img, t_ivec2 coords, t_color color);

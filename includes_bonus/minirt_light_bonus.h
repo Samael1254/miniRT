@@ -5,6 +5,7 @@
 
 t_color	refract_reflect_rays(t_color color, t_ray ray, t_intersection inter,
 			t_state *state);
+t_color	trace_point_light(t_point_light light, t_ray ray);
 
 // light_bonus.c
 

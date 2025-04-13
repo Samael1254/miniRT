@@ -45,7 +45,21 @@ static t_color	diffuse_color(double incidence, t_material material,
 	return (scale_color(color, incidence));
 }
 
-static t_color	shade_from_one_light(t_intersection inter, t_vec3 view_dir,
+t_color	trace_point_light(t_point_light light, t_ray ray)
+{
+	t_color	color;
+	double	angle;
+	t_vec3	light_dir;
+
+	light_dir = ft_sub_vec3(light.pos, ray.origin);
+	angle = ft_dot_vec3(ft_normalize_vec3(light_dir), ray.direction);
+	if (angle < 0)
+		return (init_color(0, 0, 0));
+	color = scale_color(light.color, pow(angle, 10 * ft_vec3_norm(light_dir)));
+	return (color);
+}
+
+static t_color	shade_from_one_light(t_intersection inter, t_ray ray,
 		t_state *state, t_point_light light)
 {
 	t_color			color;
@@ -72,9 +86,10 @@ static t_color	shade_from_one_light(t_intersection inter, t_vec3 view_dir,
 	color = diffuse_color(ft_dot_vec3(light_ray.direction, inter.normal),
 			state->mats_tab[inter.index_mat], inter);
 	color = add_colors(color, specular_color(inter, light_ray.direction,
-				view_dir, state));
+				ray.direction, state));
 	color = absorb_colors(color, scale_color(light.color, light.brightness
 				* get_dist_attenuation(inter.point, light.pos)));
+	color = add_colors(color, trace_point_light(light, ray));
 	return (color);
 }
 
@@ -85,14 +100,14 @@ t_color	phong_illumination(t_state *state, t_intersection inter, t_ray ray)
 	t_material	mat;
 
 	if (inter.point.x == INFINITY)
-		return (get_sky_color(state->scene.sky, ray));
+		return (get_sky_color(state, ray));
 	mat = state->mats_tab[inter.index_mat];
 	color = ambiant_color(state->scene.a_light, mat, inter);
 	iter = state->scene.lights;
 	while (iter)
 	{
-		color = add_colors(color, shade_from_one_light(inter, ray.direction,
-					state, *(t_point_light *)iter->data));
+		color = add_colors(color, shade_from_one_light(inter, ray, state,
+					*(t_point_light *)iter->data));
 		iter = iter->next;
 	}
 	color = refract_reflect_rays(color, ray, inter, state);
