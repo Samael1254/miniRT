@@ -16,11 +16,16 @@ int	main(int argc, char **argv)
 	check_arguments(argc, argv);
 	init_state(&state, argv[1]);
 	ray_tracing(&state);
-	fps_str = get_fps_string(get_time_diff(get_time(&state), state.start_time));
-	mlx_string_put(state.display, state.win, WIN_Y - 10 - 6
-		* ft_strlen(fps_str), 20, 0xFFFFFF, fps_str);
-	free(fps_str);
-	printf("Frame render time: %ld ms\n", get_time_diff(get_time(&state),
+	state.end_time = get_time(&state);
+	if (state.toggle_fps)
+	{
+		fps_str = get_fps_string(get_time_diff(state.end_time,
+					state.start_time));
+		mlx_string_put(state.display, state.win, WIN_Y - 10 - 6
+			* ft_strlen(fps_str), 20, 0xFFFFFF, fps_str);
+		free(fps_str);
+	}
+	printf("Frame render time: %ld ms\n", get_time_diff(state.end_time,
 			state.start_time));
 	info(NULL, "done, press ESC to close, H for help");
 	loop_events(&state);

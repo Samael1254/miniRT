@@ -9,7 +9,7 @@
 
 /* MACROS */
 
-# define THREAD_COUNT 10
+# define THREAD_COUNT 20
 
 # define ID_LIST_SIZE 4
 
@@ -50,6 +50,7 @@ enum				e_keycode
 	J_KEY = 0x06a,
 	K_KEY = 0x06b,
 	L_KEY = 0x06c,
+	F_KEY = 0x066,
 	UP_ARROW_KEY = 65362,
 	DOWN_ARROW_KEY = 65364,
 	LEFT_ARROW_KEY = 65361,
@@ -276,8 +277,10 @@ typedef struct s_state
 	t_material		*mats_tab;
 	unsigned int	len_mats_tab;
 	struct timeval	start_time;
+	struct timeval	end_time;
 	unsigned char	hold_alt;
-	bool			visible_lights;
+	bool			toggle_lights;
+	bool			toggle_fps;
 }					t_state;
 
 typedef struct s_thread_data

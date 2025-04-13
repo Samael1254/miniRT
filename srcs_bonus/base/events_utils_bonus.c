@@ -60,6 +60,21 @@ void	modify_rot_step_size(t_state *state, char sign)
 	}
 }
 
+void	reload_image(t_state *state)
+{
+	char	*fps_str;
+
+	mlx_clear_window(state->display, state->win);
+	mlx_put_image_to_window(state->display, state->win, state->img_data.img, 0,
+		0);
+	if (!state->toggle_fps)
+		return ;
+	fps_str = get_fps_string(get_time_diff(state->end_time, state->start_time));
+	mlx_string_put(state->display, state->win, WIN_Y - 10 - 6
+		* ft_strlen(fps_str), 20, 0xFFFFFF, fps_str);
+	free(fps_str);
+}
+
 void	recreate_image(t_state *state)
 {
 	void	*tmp;
@@ -79,7 +94,10 @@ void	recreate_image(t_state *state)
 	mlx_destroy_image(state->display, tmp);
 	mlx_put_image_to_window(state->display, state->win, state->img_data.img, 0,
 		0);
-	fps_str = get_fps_string(get_time_diff(get_time(state), state->start_time));
+	state->end_time = get_time(state);
+	if (!state->toggle_fps)
+		return ;
+	fps_str = get_fps_string(get_time_diff(state->end_time, state->start_time));
 	mlx_string_put(state->display, state->win, WIN_Y - 10 - 6
 		* ft_strlen(fps_str), 20, 0xFFFFFF, fps_str);
 	free(fps_str);

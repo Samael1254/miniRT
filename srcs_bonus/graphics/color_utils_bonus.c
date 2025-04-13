@@ -20,7 +20,7 @@ t_color	get_sky_color(t_state *state, t_ray ray)
 
 	sky_color = lerp_colors(state->scene.sky.top, state->scene.sky.bottom,
 			(ray.direction.y + 1) / 2);
-	if (!state->visible_lights)
+	if (!state->toggle_lights)
 		return (sky_color);
 	iter = state->scene.lights;
 	while (iter)

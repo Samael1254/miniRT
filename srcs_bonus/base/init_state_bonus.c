@@ -36,7 +36,8 @@ static void	initialize_state(t_state *state)
 	state->len_mats_tab = 0;
 	state->mats_tab = NULL;
 	state->hold_alt = 0;
-	state->visible_lights = true;
+	state->toggle_lights = true;
+	state->toggle_fps = false;
 }
 
 void	init_state(t_state *state, char *filename)

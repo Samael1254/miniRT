@@ -15,6 +15,7 @@ A basic multithreaded raytracer for 42 school project miniRT
 - A background sky with a gradient of two colors
 - The user can move and rotate the camera around in real time to get different views of the scene
 - Modifiable camera parameters (field of view, movement and rotation speed)
+- Toggle FPS counter
 - Scenes configured in the dedicated .rt file format (see documentation.rt for more details)
 - Materials in .mrt files, able to load textures and normal maps from .xpm image files (see documentation.mrt for more details)
 - Comes with a few pre-made scenes, meshes, textures and materials to select from
@@ -53,9 +54,6 @@ The following keybindings allow the user to interact with miniRT:
 #### SCENES
 - Add scenes to show off all the features
 
-#### UI
-- Add a fps counter
-
 #### PARSING
 - Set the texture scaling in the .mrt file
 
@@ -70,7 +68,12 @@ The following keybindings allow the user to interact with miniRT:
 
 #### BUGS
 - uv mapping inside a sphere is upside down
+- lights appear through plane-like surfaces
+- lights don't appear in front of reflective materials
+- lights don't appear through transparent materials
 - abnormal deformation up and down the screen (fisheye)
+
+#### MISC
 - Change content of help
 
 

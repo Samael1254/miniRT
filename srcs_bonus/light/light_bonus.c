@@ -55,7 +55,8 @@ t_color	trace_point_light(t_point_light light, t_ray ray)
 	angle = ft_dot_vec3(ft_normalize_vec3(light_dir), ray.direction);
 	if (angle < 0)
 		return (init_color(0, 0, 0));
-	color = scale_color(light.color, pow(angle, 10 * ft_vec3_norm(light_dir)));
+	color = scale_color(light.color, pow(angle, 1 * pow(ft_vec3_norm(light_dir),
+					2)));
 	return (color);
 }
 
@@ -89,7 +90,7 @@ static t_color	shade_from_one_light(t_intersection inter, t_ray ray,
 				ray.direction, state));
 	color = absorb_colors(color, scale_color(light.color, light.brightness
 				* get_dist_attenuation(inter.point, light.pos)));
-	if (state->visible_lights)
+	if (state->toggle_lights)
 		color = add_colors(color, trace_point_light(light, ray));
 	return (color);
 }

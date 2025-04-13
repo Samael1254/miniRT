@@ -1,4 +1,5 @@
 #include "ft_algebra.h"
+#include "ft_strings.h"
 #include "minirt_base_bonus.h"
 #include "minirt_defs_bonus.h"
 #include "mlx.h"
@@ -64,13 +65,22 @@ static void	rotate_camera(t_state *state, t_camera *camera,
 	recreate_image(state);
 }
 
-static void	change_light_visibility(t_state *state)
+static void	toggle_lights(t_state *state)
 {
-	if (state->visible_lights)
-		state->visible_lights = false;
+	if (state->toggle_lights)
+		state->toggle_lights = false;
 	else
-		state->visible_lights = true;
+		state->toggle_lights = true;
 	recreate_image(state);
+}
+
+static void	toggle_fps(t_state *state)
+{
+	if (state->toggle_fps)
+		state->toggle_fps = false;
+	else
+		state->toggle_fps = true;
+	reload_image(state);
 }
 
 static int	key_pressed(enum e_keycode key, t_state *state)
@@ -94,7 +104,9 @@ static int	key_pressed(enum e_keycode key, t_state *state)
 	if (key == LEFT_ARROW_KEY)
 		modify_rot_step_size(state, '-');
 	if (key == L_KEY)
-		change_light_visibility(state);
+		toggle_lights(state);
+	if (key == F_KEY)
+		toggle_fps(state);
 	if (key == H_KEY)
 		display_help(state);
 	return (1);

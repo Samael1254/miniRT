@@ -14,6 +14,7 @@ void			loop_events(t_state *state);
 void			modify_step_size(t_state *state, char sign);
 void			modify_rot_step_size(t_state *state, char sign);
 void			recreate_image(t_state *state);
+void			reload_image(t_state *state);
 int				on_mouse_moov(enum e_keycode key, int x, int y, t_state *state);
 int				end_hold_alt_hook(int button, t_state *state);
 

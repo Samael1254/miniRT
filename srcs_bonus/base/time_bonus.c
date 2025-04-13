@@ -30,7 +30,7 @@ char	*get_fps_string(long time)
 	double	fps;
 
 	fps = 1000 / time;
-	str = ft_calloc(10, sizeof(char));
+	str = ft_calloc(16, sizeof(char));
 	sprintf(str, "%.2f FPS", fps);
 	return (str);
 }
