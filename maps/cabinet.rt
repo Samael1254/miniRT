@@ -1,0 +1,9 @@
+C    0,20,30        0,0,-1    50
+A    0.3                                    255,255,255
+MT    materials/cabinet.mrt
+L    0,25,20                0.7            255,255,255
+SKY    100,99,82        100,99,82
+
+mesh	meshes/horse.obj	0,14,0		40	2
+mesh	meshes/console.obj	0,0,3		15	3
+pl		0,0,-30				0,0,1			4
