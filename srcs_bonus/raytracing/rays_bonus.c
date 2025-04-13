@@ -37,10 +37,13 @@ static void	trace_ray(t_vec2 rotator, t_ivec2 coords, t_state *state)
 {
 	t_ray			ray;
 	t_intersection	inter;
+	t_color			color;
 
 	ray = init_ray(state->scene.camera, rotator);
 	inter = intersect_scene(ray, state);
-	put_pixel(&state->img_data, coords, phong_illumination(state, inter, ray));
+	color = phong_illumination(state, inter, ray);
+	color = post_process(color, coords, state);
+	put_pixel(&state->img_data, coords, color);
 }
 
 static void	*thread_shoot_rays(void *arg)

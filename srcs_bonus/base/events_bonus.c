@@ -92,6 +92,12 @@ static void	toggle_fps(t_state *state)
 	reload_image(state);
 }
 
+static void	change_post_processing(t_state *state)
+{
+	state->post_process = (state->post_process + 1) % 8;
+	recreate_image(state);
+}
+
 static int	key_pressed(enum e_keycode key, t_state *state)
 {
 	if (key == ESC_KEY)
@@ -118,6 +124,8 @@ static int	key_pressed(enum e_keycode key, t_state *state)
 		toggle_fps(state);
 	if (key == H_KEY)
 		toggle_help(state);
+	if (key == P_KEY)
+		change_post_processing(state);
 	return (1);
 }
 

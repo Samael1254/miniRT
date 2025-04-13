@@ -2,7 +2,6 @@
 #include "minirt_errors_bonus.h"
 #include "minirt_raytracing_bonus.h"
 #include "mlx.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 void	ray_tracing(t_state *state)

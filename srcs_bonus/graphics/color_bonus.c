@@ -4,10 +4,14 @@
 t_color	scale_color(t_color color, double lambda)
 {
 	t_color	lit_color;
+	int		convert;
 
-	lit_color.r = (unsigned char)(color.r * lambda);
-	lit_color.g = (unsigned char)(color.g * lambda);
-	lit_color.b = (unsigned char)(color.b * lambda);
+	convert = ft_clamp(color.r * lambda, 0, 255);
+	lit_color.r = convert;
+	convert = ft_clamp(color.g * lambda, 0, 255);
+	lit_color.g = convert;
+	convert = ft_clamp(color.b * lambda, 0, 255);
+	lit_color.b = convert;
 	return (lit_color);
 }
 

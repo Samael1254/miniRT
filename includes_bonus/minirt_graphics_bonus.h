@@ -3,6 +3,8 @@
 
 # include "minirt_defs_bonus.h"
 
+t_color	post_process(t_color color, t_ivec2 coords, const t_state *state);
+
 // color_bonus.c
 t_color	scale_color(t_color color, double lambda);
 t_color	add_colors(t_color color1, t_color color2);
