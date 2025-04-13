@@ -93,20 +93,25 @@ static t_color	shade_from_one_light(t_intersection inter, t_ray ray,
 	t_ray			light_ray;
 	t_intersection	light_inter;
 	t_material		mat;
+	double			max_dist;
+	double			travel_dist;
 
 	light_ray.origin = inter.point;
 	light_ray.direction = get_light_direction(light_ray, light);
 	light_inter = intersect_scene(light_ray, state);
 	mat = state->mats_tab[light_inter.index_mat];
-	(void)mat;
-	// while (light_inter.point.x != INFINITY && mat.transparency > 0)
-	// {
-	// 	light.color = absorb_colors(light.color, scale_color(mat.kd,
-	// 				mat.transparency));
-	// 	light_ray.origin = light_inter.point;
-	// 	light_ray.direction = get_light_direction(light_ray, light);
-	// 	light_inter = intersect_scene(light_ray, state);
-	// }
+	max_dist = ft_distance3d(light_ray.origin, light.pos);
+	while (light_inter.point.x != INFINITY && mat.transparency > 0)
+	{
+		travel_dist = ft_distance3d(inter.point, light_inter.point);
+		if (travel_dist > max_dist)
+			break ;
+		light.color = absorb_colors(light.color, scale_color(mat.kd,
+					mat.transparency));
+		light_ray.origin = light_inter.point;
+		light_inter = intersect_scene(light_ray, state);
+		mat = state->mats_tab[light_inter.index_mat];
+	}
 	if (ft_supf(ft_distance3d(light_ray.origin, light.pos),
 			ft_distance3d(light_ray.origin, light_inter.point)))
 		return (init_color(0, 0, 0));
@@ -116,8 +121,6 @@ static t_color	shade_from_one_light(t_intersection inter, t_ray ray,
 				ray.direction, state));
 	color = absorb_colors(color, scale_color(light.color, light.brightness
 				* get_dist_attenuation(inter.point, light.pos)));
-	// if (state->toggle_lights)
-	// 	color = add_colors(color, trace_point_light(light, ray));
 	return (color);
 }
 
@@ -127,6 +130,8 @@ static t_color	shade_point_light(t_intersection inter, t_ray ray,
 	t_ray			light_ray;
 	t_intersection	light_inter;
 	t_material		mat;
+	double			max_dist;
+	double			travel_dist;
 
 	if (!state->toggle_lights)
 		return (init_color(0, 0, 0));
@@ -134,15 +139,18 @@ static t_color	shade_point_light(t_intersection inter, t_ray ray,
 	light_ray.direction = get_light_direction(light_ray, light);
 	light_inter = intersect_scene(light_ray, state);
 	mat = state->mats_tab[light_inter.index_mat];
-	(void)mat;
-	// while (light_inter.point.x != INFINITY && mat.transparency > 0)
-	// {
-	// 	light.color = absorb_colors(light.color, scale_color(mat.kd,
-	// 				mat.transparency));
-	// 	light_ray.origin = light_inter.point;
-	// 	light_ray.direction = get_light_direction(light_ray, light);
-	// 	light_inter = intersect_scene(light_ray, state);
-	// }
+	max_dist = ft_distance3d(light_ray.origin, light.pos);
+	while (light_inter.point.x != INFINITY && mat.transparency > 0)
+	{
+		travel_dist = ft_distance3d(inter.point, light_inter.point);
+		if (travel_dist > max_dist)
+			break ;
+		light.color = absorb_colors(light.color, scale_color(mat.kd,
+					mat.transparency));
+		light_ray.origin = light_inter.point;
+		light_inter = intersect_scene(light_ray, state);
+		mat = state->mats_tab[light_inter.index_mat];
+	}
 	if (ft_supf(ft_distance3d(light_ray.origin, light.pos),
 			ft_distance3d(light_ray.origin, light_inter.point)))
 		return (init_color(0, 0, 0));

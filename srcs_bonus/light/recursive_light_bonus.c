@@ -11,12 +11,13 @@ static t_color	reflected_ray(t_ray ray, t_intersection inter, t_state *state,
 {
 	t_ray			reflected_ray;
 	t_intersection	new_inter;
+	t_material		mat;
 
 	if (bounce_max == -1)
 		bounce_max = BOUNCE_MAX;
+	mat = state->mats_tab[inter.index_mat];
 	if (inter.bounces >= (unsigned int)bounce_max)
-		return (scale_color(state->mats_tab[inter.index_mat].kd, 1
-				- state->mats_tab[inter.index_mat].reflectance));
+		return (scale_color(mat.kd, 1 - mat.reflectance));
 	reflected_ray.origin = inter.point;
 	reflected_ray.direction = get_reflection_dir(ray.direction, inter.normal);
 	reflected_ray.refraction = ray.refraction;
