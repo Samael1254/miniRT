@@ -67,7 +67,7 @@ void	display_fps(t_state *state)
 	if (!state->toggle_fps)
 		return ;
 	fps_str = get_fps_string(get_time_diff(state->end_time, state->start_time));
-	mlx_string_put(state->display, state->win, WIN_Y - 10 - 6
+	mlx_string_put(state->display, state->win, WIN_X - 10 - 6
 		* ft_strlen(fps_str), 20, 0xFFFFFF, fps_str);
 	free(fps_str);
 }

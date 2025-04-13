@@ -17,8 +17,8 @@ static double	get_dist_attenuation(t_vec3 point, t_vec3 light_pos)
 {
 	double			dist_attenuation;
 	double			distance;
-	const double	a = 0.0001;
-	const double	b = 0.1;
+	const double	a = 0.0008;
+	const double	b = 0;
 	const double	c = 0;
 
 	distance = ft_distance3d(point, light_pos);

@@ -6,7 +6,6 @@
 #include "minirt_parsing_bonus.h"
 #include <errno.h>
 #include <fcntl.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -84,6 +83,8 @@ static void	check_directory(t_state *state, char *filename)
 	{
 		if (errno == EISDIR)
 			error("wrong filename", "given name is a directory", state);
+		else if (errno == EACCES)
+			error("wrong filename", "can't access due to permission", state);
 		error("wrong filename", "cannot open file", state);
 	}
 	close(fd);

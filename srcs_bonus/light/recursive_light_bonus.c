@@ -15,7 +15,8 @@ static t_color	reflected_ray(t_ray ray, t_intersection inter, t_state *state,
 	if (bounce_max == -1)
 		bounce_max = BOUNCE_MAX;
 	if (inter.bounces >= (unsigned int)bounce_max)
-		return (init_color(255, 255, 255));
+		return (scale_color(state->mats_tab[inter.index_mat].kd, 1
+				- state->mats_tab[inter.index_mat].reflectance));
 	reflected_ray.origin = inter.point;
 	reflected_ray.direction = get_reflection_dir(ray.direction, inter.normal);
 	reflected_ray.refraction = ray.refraction;

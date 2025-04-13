@@ -14,7 +14,7 @@ int				insert_in_struct(t_state *state, char **split);
 // Parsing
 
 // utils.c
-t_vec3		get_vector(char *line_vector, bool *error);
+t_vec3			get_vector(char *line_vector, bool *error);
 t_color			get_color(char *line_color, bool *error);
 bool			is_vec3_in_range(t_vec3 vec, double min, double max);
 bool			is_t_color_valid(t_color color, double min, double max);
@@ -59,8 +59,12 @@ void			shoot_rays(t_ray **rays, t_state *state);
 double			intersect_sphere(t_ray ray, t_sphere sphere);
 double			intersect_plane(t_ray ray, t_plane plane);
 double			intersect_cylinder(t_ray ray, t_cylinder cylinder);
+double			intersect_cylinder_body(t_ray ray, t_cylinder cylinder);
+double			cylinder_delta(t_ray ray, t_cylinder cylinder, double params[5],
+					t_vec3 vectors[3]);
+double			intersect_cap(t_ray ray, t_cylinder cylinder, bool top);
 t_intersection	intersect_scene(t_ray ray, t_list *objects);
-t_vec3		normal_at_point(t_object object, t_vec3 point,
+t_vec3			normal_at_point(t_object object, t_vec3 point,
 					t_vec3 ray_dir);
 
 // Light //
