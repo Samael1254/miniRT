@@ -277,6 +277,7 @@ typedef struct s_state
 	unsigned int	len_mats_tab;
 	struct timeval	start_time;
 	unsigned char	hold_alt;
+	bool			visible_lights;
 }					t_state;
 
 typedef struct s_thread_data

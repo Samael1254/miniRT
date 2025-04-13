@@ -89,7 +89,8 @@ static t_color	shade_from_one_light(t_intersection inter, t_ray ray,
 				ray.direction, state));
 	color = absorb_colors(color, scale_color(light.color, light.brightness
 				* get_dist_attenuation(inter.point, light.pos)));
-	color = add_colors(color, trace_point_light(light, ray));
+	if (state->visible_lights)
+		color = add_colors(color, trace_point_light(light, ray));
 	return (color);
 }
 

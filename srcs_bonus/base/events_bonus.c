@@ -64,6 +64,15 @@ static void	rotate_camera(t_state *state, t_camera *camera,
 	recreate_image(state);
 }
 
+static void	change_light_visibility(t_state *state)
+{
+	if (state->visible_lights)
+		state->visible_lights = false;
+	else
+		state->visible_lights = true;
+	recreate_image(state);
+}
+
 static int	key_pressed(enum e_keycode key, t_state *state)
 {
 	if (key == ESC_KEY)
@@ -84,6 +93,8 @@ static int	key_pressed(enum e_keycode key, t_state *state)
 		modify_rot_step_size(state, '+');
 	if (key == LEFT_ARROW_KEY)
 		modify_rot_step_size(state, '-');
+	if (key == L_KEY)
+		change_light_visibility(state);
 	if (key == H_KEY)
 		display_help(state);
 	return (1);

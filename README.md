@@ -53,6 +53,9 @@ The following keybindings allow the user to interact with miniRT:
 #### SCENES
 - Add scenes to show off all the features
 
+#### UI
+- Add a fps counter
+
 #### PARSING
 - Set the texture scaling in the .mrt file
 
