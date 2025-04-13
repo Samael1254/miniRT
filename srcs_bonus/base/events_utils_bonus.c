@@ -1,9 +1,12 @@
+#include "ft_strings.h"
 #include "minirt_base_bonus.h"
 #include "minirt_defs_bonus.h"
 #include "minirt_errors_bonus.h"
 #include "minirt_raytracing_bonus.h"
 #include "mlx.h"
+#include <bits/types/struct_timeval.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 void	modify_step_size(t_state *state, char sign)
 {
@@ -60,7 +63,9 @@ void	modify_rot_step_size(t_state *state, char sign)
 void	recreate_image(t_state *state)
 {
 	void	*tmp;
+	char	*fps_str;
 
+	state->start_time = get_time(state);
 	tmp = state->img_data.img;
 	state->img_data.img = mlx_new_image(state->display, WIN_X, WIN_Y);
 	if (!state->img_data.img)
@@ -74,6 +79,10 @@ void	recreate_image(t_state *state)
 	mlx_destroy_image(state->display, tmp);
 	mlx_put_image_to_window(state->display, state->win, state->img_data.img, 0,
 		0);
+	fps_str = get_fps_string(get_time_diff(get_time(state), state->start_time));
+	mlx_string_put(state->display, state->win, WIN_Y - 10 - 6
+		* ft_strlen(fps_str), 20, 0xFFFFFF, fps_str);
+	free(fps_str);
 }
 
 int	on_mouse_moov(enum e_keycode key, int x, int y, t_state *state)

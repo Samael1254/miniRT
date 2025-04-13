@@ -29,5 +29,6 @@ void			init_state(t_state *state, char *filename);
 
 long			get_time_diff(struct timeval time, struct timeval start_time);
 struct timeval	get_time(t_state *state);
+char			*get_fps_string(long time);
 
 #endif // !MINIRT_BASE_BONUS
