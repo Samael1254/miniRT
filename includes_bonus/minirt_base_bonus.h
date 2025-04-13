@@ -17,6 +17,7 @@ void			recreate_image(t_state *state);
 void			reload_image(t_state *state);
 int				on_mouse_moov(enum e_keycode key, int x, int y, t_state *state);
 int				end_hold_alt_hook(int button, t_state *state);
+void			display_help(t_state *state);
 
 // exit_program_utils.c
 

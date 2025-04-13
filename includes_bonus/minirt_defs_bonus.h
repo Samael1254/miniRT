@@ -281,6 +281,7 @@ typedef struct s_state
 	unsigned char	hold_alt;
 	bool			toggle_lights;
 	bool			toggle_fps;
+	bool			toggle_help;
 }					t_state;
 
 typedef struct s_thread_data

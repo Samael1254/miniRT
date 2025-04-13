@@ -1,12 +1,13 @@
 #include "ft_algebra.h"
-#include "ft_strings.h"
 #include "minirt_base_bonus.h"
 #include "minirt_defs_bonus.h"
 #include "mlx.h"
 #include <stdlib.h>
 
-static int	display_help(t_state *state)
+void	display_help(t_state *state)
 {
+	if (!state->toggle_help)
+		return ;
 	mlx_string_put(state->display, state->win, 20, 20, 0xFFFFFF, "-- HELP --");
 	mlx_string_put(state->display, state->win, 20, 40, 0xFFFFFF,
 		"Move: WASDQE");
@@ -18,7 +19,6 @@ static int	display_help(t_state *state)
 		"Change rotation speed: LEFT/RIGHT");
 	mlx_string_put(state->display, state->win, 20, 100, 0xFFFFFF,
 		"Exit program: ESC");
-	return (0);
 }
 
 void	move_camera(t_state *state, t_camera *camera, enum e_keycode key)
@@ -74,6 +74,15 @@ static void	toggle_lights(t_state *state)
 	recreate_image(state);
 }
 
+static void	toggle_help(t_state *state)
+{
+	if (state->toggle_help)
+		state->toggle_help = false;
+	else
+		state->toggle_help = true;
+	reload_image(state);
+}
+
 static void	toggle_fps(t_state *state)
 {
 	if (state->toggle_fps)
@@ -108,7 +117,7 @@ static int	key_pressed(enum e_keycode key, t_state *state)
 	if (key == F_KEY)
 		toggle_fps(state);
 	if (key == H_KEY)
-		display_help(state);
+		toggle_help(state);
 	return (1);
 }
 

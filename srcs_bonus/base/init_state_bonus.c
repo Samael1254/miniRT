@@ -38,6 +38,7 @@ static void	initialize_state(t_state *state)
 	state->hold_alt = 0;
 	state->toggle_lights = true;
 	state->toggle_fps = false;
+	state->toggle_help = false;
 }
 
 void	init_state(t_state *state, char *filename)

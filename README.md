@@ -30,8 +30,10 @@ The following keybindings allow the user to interact with miniRT:
 - Exit program : Escape
 - Move horizontally : WASD
 - Rotate horizontally : JL
-- Move up/down : QE
+- Rotate : hold alt+movement key
 - Rotate up/down : IK
+- Toggle FPS counter : F
+- Toggle lights visibility : L
 - Change movement speed : Up/Down arrows
 - Change rotation speed : Left/Right arrows
 
@@ -87,6 +89,10 @@ The following keybindings allow the user to interact with miniRT:
 
 #### Optimisation
 - Others
+
+#### CAMERA MOVEMENT
+- Better movements
+- Partial rendering when moving
 
 #### LIGHT
 - Add a light structure (similar to objects) and a list of lights to the scene
