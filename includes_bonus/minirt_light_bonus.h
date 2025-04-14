@@ -19,10 +19,10 @@ t_color	phong_illumination(t_state *state, t_intersection inter, t_ray ray);
 
 // shade_from_one_light_utils_bonus.c
 t_color	specular_color(t_intersection inter, t_vec3 light_dir, t_vec3 view_dir,
-		t_state *state);
+			t_state *state);
 t_color	ambiant_color(t_ambiant_light a_light, t_material material,
-		t_intersection inter);
+			t_intersection inter);
 t_color	diffuse_color(double incidence, t_material material,
-		t_intersection inter);
+			t_intersection inter);
 
 #endif // !MINIRT_LIGHT_BONUS_H
