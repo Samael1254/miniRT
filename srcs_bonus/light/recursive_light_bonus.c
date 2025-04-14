@@ -40,6 +40,8 @@ static t_color	refracted_ray(t_ray ray, t_intersection inter, t_state *state)
 	t_intersection	new_inter;
 	t_material		mat;
 
+	if (inter.bounces >= BOUNCE_MAX)
+		return (scale_color(mat.kd, 1 - mat.transparency));
 	mat = state->mats_tab[inter.index_mat];
 	refracted_ray.origin = inter.point;
 	refracted_ray.direction = get_refraction_dir(ray.direction, inter.normal,
@@ -49,6 +51,7 @@ static t_color	refracted_ray(t_ray ray, t_intersection inter, t_state *state)
 	else
 		refracted_ray.refraction = mat.refraction;
 	new_inter = intersect_scene(refracted_ray, state);
+	new_inter.bounces = inter.bounces + 1;
 	return (phong_illumination(state, new_inter, refracted_ray));
 }
 

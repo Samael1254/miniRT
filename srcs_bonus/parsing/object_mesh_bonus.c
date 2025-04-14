@@ -20,8 +20,8 @@ static void	transform_mesh(t_mesh *mesh, t_vec3 pos, t_vec3 rot, double scale)
 	rot.z = ft_deg_to_rad(rot.z);
 	while (i < mesh->n_vertices)
 	{
-		mesh->vertices[i] = ft_4dto3d_vector(ft_rotate_vec4(ft_3dto4d_vector(mesh->vertices[i]),
-					rot));
+		mesh->vertices[i] = ft_4dto3d_vector(ft_rotate_vec4(
+					ft_3dto4d_vector(mesh->vertices[i]), rot));
 		mesh->vertices[i] = ft_scale_vec3(scale, mesh->vertices[i]);
 		mesh->vertices[i] = ft_add_vec3(pos, mesh->vertices[i]);
 		i++;
@@ -29,8 +29,8 @@ static void	transform_mesh(t_mesh *mesh, t_vec3 pos, t_vec3 rot, double scale)
 	i = 0;
 	while (i < mesh->n_normals)
 	{
-		mesh->normals[i] = ft_4dto3d_vector(ft_rotate_vec4(ft_3dto4d_vector(mesh->normals[i]),
-					rot));
+		mesh->normals[i] = ft_4dto3d_vector(ft_rotate_vec4(
+					ft_3dto4d_vector(mesh->normals[i]), rot));
 		i++;
 	}
 }
