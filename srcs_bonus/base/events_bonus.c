@@ -4,44 +4,6 @@
 #include "mlx.h"
 #include <stdlib.h>
 
-void	display_help(t_state *state)
-{
-	if (!state->toggle_help)
-		return ;
-	mlx_string_put(state->display, state->win, 20, 20, 0xFFFFFF, "-- HELP --");
-	mlx_string_put(state->display, state->win, 20, 40, 0xFFFFFF,
-		"Move: WASDQE");
-	mlx_string_put(state->display, state->win, 20, 55, 0xFFFFFF,
-		"Rotate: JLIK");
-	mlx_string_put(state->display, state->win, 20, 70, 0xFFFFFF,
-		"Change movement speed: UP/DOWN");
-	mlx_string_put(state->display, state->win, 20, 85, 0xFFFFFF,
-		"Change rotation speed: LEFT/RIGHT");
-	mlx_string_put(state->display, state->win, 20, 100, 0xFFFFFF,
-		"Exit program: ESC");
-}
-
-void	move_camera(t_state *state, t_camera *camera, enum e_keycode key)
-{
-	t_vec3	translator;
-	t_vec3	axis;
-	short	sign;
-
-	axis = ft_init_vec3(0);
-	sign = 1;
-	if (key == SCROLL_UP || key == SCROLL_DOWN)
-		axis = camera->dir;
-	else if (key == A_KEY || key == D_KEY)
-		axis = ft_cross_vec3(ft_set_vec3(0, 1, 0), camera->dir);
-	else if (key == W_KEY || key == S_KEY)
-		axis = camera->y_axis;
-	if (key == SCROLL_DOWN || key == D_KEY || key == S_KEY)
-		sign = -1;
-	translator = ft_scale_vec3(sign * camera->move_step, axis);
-	camera->pos = ft_add_vec3(camera->pos, translator);
-	recreate_image(state);
-}
-
 static void	rotate_camera(t_state *state, t_camera *camera,
 		enum e_keycode keycode)
 {
@@ -65,46 +27,20 @@ static void	rotate_camera(t_state *state, t_camera *camera,
 	recreate_image(state);
 }
 
-static void	toggle_lights(t_state *state)
+static void	key_pressed_utils(enum e_keycode key, t_state *state)
 {
-	if (state->toggle_lights)
-		state->toggle_lights = false;
-	else
-		state->toggle_lights = true;
-	recreate_image(state);
-}
-
-static void	toggle_aa(t_state *state)
-{
-	if (state->toggle_aa)
-		state->toggle_aa = false;
-	else
-		state->toggle_aa = true;
-	recreate_image(state);
-}
-
-static void	toggle_help(t_state *state)
-{
-	if (state->toggle_help)
-		state->toggle_help = false;
-	else
-		state->toggle_help = true;
-	reload_image(state);
-}
-
-static void	toggle_fps(t_state *state)
-{
-	if (state->toggle_fps)
-		state->toggle_fps = false;
-	else
-		state->toggle_fps = true;
-	reload_image(state);
-}
-
-static void	change_post_processing(t_state *state)
-{
-	state->post_process = (state->post_process + 1) % 9;
-	recreate_image(state);
+	if (key == LEFT_ARROW_KEY)
+		modify_rot_step_size(state, '-');
+	if (key == L_KEY)
+		toggle_lights(state);
+	if (key == F_KEY)
+		toggle_fps(state);
+	if (key == H_KEY)
+		toggle_help(state);
+	if (key == K_KEY)
+		toggle_aa(state);
+	if (key == P_KEY)
+		change_post_processing(state);
 }
 
 static int	key_pressed(enum e_keycode key, t_state *state)
@@ -125,18 +61,7 @@ static int	key_pressed(enum e_keycode key, t_state *state)
 		modify_step_size(state, '-');
 	if (key == RIGHT_ARROW_KEY)
 		modify_rot_step_size(state, '+');
-	if (key == LEFT_ARROW_KEY)
-		modify_rot_step_size(state, '-');
-	if (key == L_KEY)
-		toggle_lights(state);
-	if (key == F_KEY)
-		toggle_fps(state);
-	if (key == H_KEY)
-		toggle_help(state);
-	if (key == K_KEY)
-		toggle_aa(state);
-	if (key == P_KEY)
-		change_post_processing(state);
+	key_pressed_utils(key, state);
 	return (1);
 }
 

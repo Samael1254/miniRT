@@ -36,7 +36,7 @@ static void	initialize_state(t_state *state)
 	state->len_mats_tab = 0;
 	state->mats_tab = NULL;
 	state->hold_alt = 0;
-	state->toggle_lights = true;
+	state->toggle_lights = false;
 	state->toggle_fps = false;
 	state->toggle_help = false;
 	state->toggle_aa = false;

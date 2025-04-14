@@ -29,7 +29,7 @@ SOURCES := $(addprefix $(SOURCES_DIR)base/, $(SRCS_MAIN)) \
 
 
 BONUS_MAIN := main_bonus.c exit_program_bonus.c events_bonus.c init_state_bonus.c \
-			  time_bonus.c events_utils_bonus.c
+			  time_bonus.c events_utils_bonus.c events_utils_execution_bonus.c events_utils_toggle_bonus.c
 
 BONUS_BVH := aabb_utils_bonus.c create_bvh_bonus.c bvh_free_bonus.c bvh_triangle_bonus.c print_aabb.c \
 			 intersect_aabb_bonus.c
@@ -46,7 +46,7 @@ BONUS_RAYTRACING := raytracing_bonus.c intersections_bonus.c intersect_objects_b
 				   normals_bonus.c intersect_objects_utils_bonus.c intersect_bvh_bonus.c object_normal_bonus.c \
 				   ray_utils_bonus.c intersect_objects_utils2_bonus.c
 
-BONUS_LIGHT := light_bonus.c light_utils_bonus.c recursive_light_bonus.c
+BONUS_LIGHT := light_bonus.c light_utils_bonus.c light_utils2_bonus.c recursive_light_bonus.c shade_from_one_light_utils_bonus.c
 
 BONUS_TEXTURING := uv_mapping_bonus.c normal_map_bonus.c mapping_utils_bonus.c object_mapping_bonus.c
 

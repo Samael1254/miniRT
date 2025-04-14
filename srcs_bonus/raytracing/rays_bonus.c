@@ -1,9 +1,6 @@
 #include "ft_algebra.h"
 #include "minirt_defs_bonus.h"
 #include "minirt_errors_bonus.h"
-#include "minirt_graphics_bonus.h"
-#include "minirt_intersections_bonus.h"
-#include "minirt_light_bonus.h"
 #include "minirt_raytracing_bonus.h"
 #include <math.h>
 #include <pthread.h>
@@ -14,89 +11,18 @@ static double	vertical_fov_2(double horizontal_fov_2)
 	return (atan(((double)WIN_Y / (double)WIN_X) * tan(horizontal_fov_2)));
 }
 
-static t_ray	init_ray(t_camera camera, t_vec2 rotator)
+static void	thread_shoot_rays_utils(t_state *state, t_ivec2 *coords,
+		t_vec2 *delta, t_vec2 *rotator)
 {
-	t_ray	ray;
-	double	m_rot_x[4][4];
-	double	m_rot_y[4][4];
-
-	ft_set_rotation_mat4(m_rot_y, rotator.y, camera.y_axis);
-	ray.direction = ft_4dto3d_vector(ft_mat_vec_product4(m_rot_y,
-				ft_3dto4d_vector(camera.dir)));
-	camera.x_axis = ft_4dto3d_vector(ft_mat_vec_product4(m_rot_y,
-				ft_3dto4d_vector(camera.x_axis)));
-	ft_set_rotation_mat4(m_rot_x, rotator.x, camera.x_axis);
-	ray.direction = ft_4dto3d_vector(ft_mat_vec_product4(m_rot_x,
-				ft_3dto4d_vector(ray.direction)));
-	ray.origin = camera.pos;
-	ray.refraction = AIR_REFRACTION;
-	return (ray);
-}
-
-static t_color	trace_ray(t_vec2 rotator, t_ivec2 coords, t_state *state)
-{
-	t_ray			ray;
-	t_intersection	inter;
-	t_color			color;
-
-	ray = init_ray(state->scene.camera, rotator);
-	inter = intersect_scene(ray, state);
-	color = phong_illumination(state, inter, ray);
-	color = post_process(color, coords, state);
-	if (!state->toggle_aa)
-		put_pixel(&state->img_data, coords, color);
-	return (color);
-}
-
-static t_color	average_colors(t_color colors[AA_LEVEL * AA_LEVEL])
-{
-	int		i;
-	int		sum_r;
-	int		sum_g;
-	int		sum_b;
-	t_color	color;
-
-	i = 0;
-	sum_r = 0;
-	sum_g = 0;
-	sum_b = 0;
-	while (i < AA_LEVEL * AA_LEVEL)
+	while (coords->x < WIN_X)
 	{
-		sum_r += colors[i].r;
-		sum_g += colors[i].g;
-		sum_b += colors[i].b;
-		i++;
+		if (state->toggle_aa)
+			supersampling(*rotator, *coords, *delta, state);
+		else
+			trace_ray(*rotator, *coords, state);
+		rotator->y -= delta->y;
+		coords->x++;
 	}
-	color.r = sum_r / (AA_LEVEL * AA_LEVEL);
-	color.g = sum_g / (AA_LEVEL * AA_LEVEL);
-	color.b = sum_b / (AA_LEVEL * AA_LEVEL);
-	return (color);
-}
-
-static void	supersampling(t_vec2 rotator, t_ivec2 coords, t_vec2 delta,
-		t_state *state)
-{
-	t_ivec2	sub_coords;
-	t_vec2	offset;
-	t_vec2	sub_rotator;
-	t_color	colors[AA_LEVEL * AA_LEVEL];
-
-	sub_coords.x = 0;
-	while (sub_coords.x < AA_LEVEL)
-	{
-		sub_coords.y = 0;
-		while (sub_coords.y < AA_LEVEL)
-		{
-			offset.x = (sub_coords.x + 0.5) / AA_LEVEL;
-			offset.y = (sub_coords.y + 0.5) / AA_LEVEL;
-			sub_rotator.x = rotator.x + delta.x * (offset.x - 0.5);
-			sub_rotator.y = rotator.y + delta.y * (offset.y - 0.5);
-			colors[2 * sub_coords.x + sub_coords.y++] = trace_ray(sub_rotator,
-					coords, state);
-		}
-		sub_coords.x++;
-	}
-	put_pixel(&state->img_data, coords, average_colors(colors));
 }
 
 static void	*thread_shoot_rays(void *arg)
@@ -116,15 +42,7 @@ static void	*thread_shoot_rays(void *arg)
 	{
 		rotator.y = data->state->scene.camera.fov_2;
 		coords.x = 0;
-		while (coords.x < WIN_X)
-		{
-			if (data->state->toggle_aa)
-				supersampling(rotator, coords, delta, data->state);
-			else
-				trace_ray(rotator, coords, data->state);
-			rotator.y -= delta.y;
-			coords.x++;
-		}
+		thread_shoot_rays_utils(data->state, &coords, &delta, &rotator);
 		rotator.x -= delta.x;
 		coords.y++;
 	}

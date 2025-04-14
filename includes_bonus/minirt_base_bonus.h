@@ -19,6 +19,14 @@ int				on_mouse_moov(enum e_keycode key, int x, int y, t_state *state);
 int				end_hold_alt_hook(int button, t_state *state);
 void			display_help(t_state *state);
 
+// events_utils_toggle_bonus.c
+void	toggle_lights(t_state *state);
+void	toggle_aa(t_state *state);
+void	toggle_help(t_state *state);
+void	toggle_fps(t_state *state);
+void	change_post_processing(t_state *state);
+
+
 // exit_program_utils.c
 
 int				exit_program(t_state *state, int status);
