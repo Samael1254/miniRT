@@ -19,4 +19,15 @@ t_color	get_sky_color(t_state *state, t_ray ray);
 void	put_pixel(t_img_data *img, t_ivec2 coords, t_color color);
 t_color	get_pixel_color(t_img_data texture, t_vec2 uv);
 
+// post_process_utils2_bonus.c
+t_color	vignette(t_color color, t_ivec2 coords);
+t_color	sepia_tone(t_color color);
+
+// post_process_utils_bonus.c
+t_color	vignette(t_color color, t_ivec2 coords);
+t_color	negative(t_color color);
+t_color	gamma_correction(t_color color);
+t_vec3	ldr_to_hdr_color(t_color ldr);
+t_color	hdr_to_ldr_color(t_vec3 hdr);
+
 #endif // !MINIRT_GRAPHICS_BONUS_H

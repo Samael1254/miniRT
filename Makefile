@@ -38,7 +38,7 @@ BONUS_PARSING := init_scene_bonus.c insert_in_struct_bonus.c utils_bonus.c utils
 				object_sphere_bonus.c object_plane_bonus.c object_cylinder_bonus.c utils_general_objects_bonus.c \
 				create_lights_bonus.c open_and_count_mats_bonus.c object_cone_bonus.c utils_mat.c object_mesh_bonus.c
 
-BONUS_GRAPHICS := color_bonus.c graphics_bonus.c color_utils_bonus.c post_process_bonus.c
+BONUS_GRAPHICS := color_bonus.c graphics_bonus.c color_utils_bonus.c post_process_bonus.c post_process_utils_bonus.c post_process_utils2_bonus.c
 
 BONUS_ERRORS := errors_bonus.c check_arguments_bonus.c
 
