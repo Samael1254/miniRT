@@ -1,9 +1,9 @@
 #include "minirt_defs_bonus.h"
 #include "minirt_errors_bonus.h"
 #include "minirt_graphics_bonus.h"
-#include "minirt_raytracing_bonus.h"
-#include "minirt_light_bonus.h"
 #include "minirt_intersections_bonus.h"
+#include "minirt_light_bonus.h"
+#include "minirt_raytracing_bonus.h"
 #include <pthread.h>
 
 static t_color	average_colors(t_color *colors)

@@ -7,6 +7,7 @@
 #include "minirt_errors_bonus.h"
 #include "minirt_obj_parser_bonus.h"
 #include "minirt_parsing_bonus.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 static void	transform_mesh(t_mesh *mesh, t_vec3 pos, t_vec3 rot, double scale)
@@ -37,11 +38,19 @@ static void	transform_mesh(t_mesh *mesh, t_vec3 pos, t_vec3 rot, double scale)
 void	mesh_params(t_state *state, t_object *obj, char **split,
 		bool *has_error)
 {
+	t_vec3	pos;
+	t_vec3	rot;
+
 	obj->object_r = parse_obj_file(split[1], state);
 	obj->type = MESH;
 	obj->index_mat = ft_atoi(split[5]);
-	transform_mesh(obj->object_r, get_vector(split[2], has_error),
-		get_vector(split[3], has_error), ft_atod(split[4]));
+	pos = get_vector(split[2], has_error);
+	if (*has_error)
+		return ;
+	rot = get_vector(split[3], has_error);
+	if (*has_error)
+		return ;
+	transform_mesh(obj->object_r, pos, rot, ft_atod(split[4]));
 	((t_mesh *)obj->object_r)->bvh = create_bvh((t_mesh *)obj->object_r);
 }
 

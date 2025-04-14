@@ -45,7 +45,7 @@ static t_color	refracted_ray(t_ray ray, t_intersection inter, t_state *state)
 	refracted_ray.direction = get_refraction_dir(ray.direction, inter.normal,
 			ray.refraction, mat.refraction);
 	if (ray.refraction == mat.refraction)
-		ray.refraction = AIR_REFRACTION;
+		refracted_ray.refraction = AIR_REFRACTION;
 	else
 		refracted_ray.refraction = mat.refraction;
 	new_inter = intersect_scene(refracted_ray, state);

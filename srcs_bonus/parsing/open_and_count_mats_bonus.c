@@ -1,5 +1,3 @@
-#include "ft_conversion.h"
-#include "ft_math.h"
 #include "ft_memory.h"
 #include "ft_strings.h"
 #include "get_next_line.h"

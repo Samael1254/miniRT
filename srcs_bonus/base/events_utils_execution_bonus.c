@@ -10,20 +10,22 @@ void	display_help(t_state *state)
 	mlx_string_put(state->display, state->win, 20, 40, 0xFFFFFF,
 		"Move: WASD");
 	mlx_string_put(state->display, state->win, 20, 55, 0xFFFFFF,
-		"Rotate: ALT + WASD");
+		"Zoom: Mouse wheel");
 	mlx_string_put(state->display, state->win, 20, 70, 0xFFFFFF,
-		"Change movement speed: UP/DOWN");
+		"Rotate: ALT + WASD");
 	mlx_string_put(state->display, state->win, 20, 85, 0xFFFFFF,
-		"Change rotation speed: LEFT/RIGHT");
+		"Change movement speed: UP/DOWN");
 	mlx_string_put(state->display, state->win, 20, 100, 0xFFFFFF,
-		"Show source light(s): L");
+		"Change rotation speed: LEFT/RIGHT");
 	mlx_string_put(state->display, state->win, 20, 115, 0xFFFFFF,
-		"Change post-process: P");
+		"Show source light(s): L");
 	mlx_string_put(state->display, state->win, 20, 130, 0xFFFFFF,
-		"Anti-aliasing: K");
+		"Change post-process: P");
 	mlx_string_put(state->display, state->win, 20, 145, 0xFFFFFF,
-		"Show FPS: F");
+		"Anti-aliasing: K");
 	mlx_string_put(state->display, state->win, 20, 160, 0xFFFFFF,
+		"Show FPS: F");
+	mlx_string_put(state->display, state->win, 20, 175, 0xFFFFFF,
 		"Exit program: ESC");
 }
 
