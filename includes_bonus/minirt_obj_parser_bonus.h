@@ -12,9 +12,9 @@ void		mesh_error(char const *type, char const *msg, t_state *state,
 				t_mesh *mesh);
 
 t_mesh		*parse_obj_file(char *filename, t_state *state);
-t_vertex	*parse_face(char *line, t_mesh *mesh, t_state *state);
-t_vec2		parse_uv(char *line, t_mesh *mesh, t_state *state);
-t_vec3		parse_vertex(char *line, t_mesh *mesh, t_state *state);
+t_vertex	*parse_face(char *line);
+t_vec2		parse_uv(char *line);
+t_vec3		parse_vertex(char *line);
 
 void		print_mesh(t_mesh *mesh);
 

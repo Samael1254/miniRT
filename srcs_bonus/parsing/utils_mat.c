@@ -1,11 +1,11 @@
+#include "ft_conversion.h"
+#include "ft_math.h"
 #include "ft_strings.h"
 #include "minirt_defs_bonus.h"
 #include "minirt_parsing_bonus.h"
 #include "mlx.h"
-#include "ft_math.h"
-#include <math.h>
-#include "ft_conversion.h"
 #include <fcntl.h>
+#include <math.h>
 #include <stddef.h>
 #include <stdio.h>
 

@@ -1,23 +1,40 @@
 #include "ft_memory.h"
 #include "ft_strings.h"
 #include "get_next_line.h"
-#include "minirt_bvh_bonus.h"
 #include "minirt_obj_parser_bonus.h"
 #include <fcntl.h>
+#include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-static void	parse_line(char *line, int count[4], t_mesh *mesh, t_state *state)
+static bool	parse_line(char *line, int count[4], t_mesh *mesh)
 {
 	if (is_element(line, "v"))
-		mesh->vertices[count[0]++] = parse_vertex(line, mesh, state);
+	{
+		mesh->vertices[count[0]] = parse_vertex(line);
+		if (mesh->vertices[count[0]++].x == INFINITY)
+			return (false);
+	}
 	else if (is_element(line, "vn"))
-		mesh->normals[count[1]++] = parse_vertex(line, mesh, state);
+	{
+		mesh->normals[count[1]] = parse_vertex(line);
+		if (mesh->normals[count[1]++].x == INFINITY)
+			return (false);
+	}
 	else if (is_element(line, "vt"))
-		mesh->uvs[count[2]++] = parse_uv(line, mesh, state);
+	{
+		mesh->uvs[count[2]] = parse_uv(line);
+		if (mesh->uvs[count[2]++].x == INFINITY)
+			return (false);
+	}
 	else if (is_element(line, "f"))
-		mesh->faces[count[3]++] = parse_face(line, mesh, state);
+	{
+		mesh->faces[count[3]] = parse_face(line);
+		if (!mesh->faces[count[3]++])
+			return (false);
+	}
+	return (true);
 }
 
 t_mesh	*parse_obj_file(char *filename, t_state *state)
@@ -41,7 +58,8 @@ t_mesh	*parse_obj_file(char *filename, t_state *state)
 		newline = ft_strchr(line, '\n');
 		if (newline)
 			*newline = '\0';
-		parse_line(line, count, mesh, state);
+		if (!parse_line(line, count, mesh))
+			return (free(line), free_mesh(mesh), NULL);
 		free(line);
 	}
 	close(fd);

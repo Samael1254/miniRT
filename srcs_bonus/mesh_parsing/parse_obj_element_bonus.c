@@ -1,12 +1,14 @@
 #include "ft_algebra.h"
 #include "ft_conversion.h"
 #include "ft_strings.h"
+#include "minirt_errors_bonus.h"
 #include "minirt_obj_parser_bonus.h"
 #include <fcntl.h>
+#include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
 
-t_vec3	parse_vertex(char *line, t_mesh *mesh, t_state *state)
+t_vec3	parse_vertex(char *line)
 {
 	t_vec3	new_vertex;
 	char	**line_data;
@@ -15,8 +17,9 @@ t_vec3	parse_vertex(char *line, t_mesh *mesh, t_state *state)
 	if (ft_strtab_size(line_data) != 4)
 	{
 		ft_free_strtab(line_data);
-		mesh_error("mesh parsing",
-			"wrong number of vertex parameters (must be 3)", state, mesh);
+		warning("mesh parsing",
+			"wrong number of vertex parameters (must be 3)");
+		return (ft_init_vec3(INFINITY));
 	}
 	new_vertex.x = ft_atod(line_data[1]);
 	new_vertex.y = ft_atod(line_data[2]);
@@ -25,7 +28,7 @@ t_vec3	parse_vertex(char *line, t_mesh *mesh, t_state *state)
 	return (new_vertex);
 }
 
-t_vec2	parse_uv(char *line, t_mesh *mesh, t_state *state)
+t_vec2	parse_uv(char *line)
 {
 	t_vec2	new_vertex;
 	char	**line_data;
@@ -34,8 +37,9 @@ t_vec2	parse_uv(char *line, t_mesh *mesh, t_state *state)
 	if (ft_strtab_size(line_data) != 3)
 	{
 		ft_free_strtab(line_data);
-		mesh_error("mesh parsing", "wrong number of uv parameters (must be 2)",
-			state, mesh);
+		warning("mesh parsing",
+			"wrong number of vertex parameters (must be 3)");
+		return (ft_init_vec2(INFINITY));
 	}
 	new_vertex.x = ft_atod(line_data[1]);
 	new_vertex.y = ft_atod(line_data[2]);
@@ -70,7 +74,7 @@ static t_vertex	parse_face_vertex(char *vertex_data)
 	return (new_vertex);
 }
 
-t_vertex	*parse_face(char *line, t_mesh *mesh, t_state *state)
+t_vertex	*parse_face(char *line)
 {
 	t_vertex	*new_face;
 	char		**line_data;
@@ -78,17 +82,12 @@ t_vertex	*parse_face(char *line, t_mesh *mesh, t_state *state)
 
 	line_data = ft_split(line, ' ');
 	if (ft_strtab_size(line_data) != 4)
-	{
-		ft_free_strtab(line_data);
-		mesh_error("face", "this parser only handles triangle faces", state,
-			mesh);
-	}
+		return (ft_free_strtab(line_data), warning("mesh parsing",
+				"wrong number of vertex parameters (must be 3)"), NULL);
 	new_face = malloc(3 * sizeof(t_vertex));
 	if (!new_face)
-	{
-		ft_free_strtab(line_data);
-		mesh_error("malloc failed", "parse_face", state, mesh);
-	}
+		return (ft_free_strtab(line_data), warning("malloc failed",
+				"parse_face"), NULL);
 	i = 0;
 	while (i < 3)
 	{

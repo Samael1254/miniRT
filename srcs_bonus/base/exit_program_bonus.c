@@ -9,7 +9,7 @@ static void	free_materials(t_state *state)
 	t_material		material;
 
 	i = 0;
-	while (i < state->len_mats_tab)
+	while (i < state->len_mats_tab + 1)
 	{
 		material = state->mats_tab[i++];
 		if (material.img_texture.img)

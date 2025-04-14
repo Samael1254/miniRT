@@ -42,6 +42,9 @@ void	free_mesh(t_mesh *mesh)
 void	mesh_error(char const *type, char const *msg, t_state *state,
 		t_mesh *mesh)
 {
+	(void)type;
+	(void)msg;
+	(void)state;
 	free_mesh(mesh);
 	error(type, msg, state);
 }
