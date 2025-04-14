@@ -33,7 +33,7 @@ static t_ray	init_ray(t_camera camera, t_vec2 rotator)
 	return (ray);
 }
 
-static void	trace_ray(t_vec2 rotator, t_ivec2 coords, t_state *state)
+static t_color	trace_ray(t_vec2 rotator, t_ivec2 coords, t_state *state)
 {
 	t_ray			ray;
 	t_intersection	inter;
@@ -43,7 +43,60 @@ static void	trace_ray(t_vec2 rotator, t_ivec2 coords, t_state *state)
 	inter = intersect_scene(ray, state);
 	color = phong_illumination(state, inter, ray);
 	color = post_process(color, coords, state);
-	put_pixel(&state->img_data, coords, color);
+	if (!state->toggle_aa)
+		put_pixel(&state->img_data, coords, color);
+	return (color);
+}
+
+static t_color	average_colors(t_color colors[AA_LEVEL * AA_LEVEL])
+{
+	int		i;
+	int		sum_r;
+	int		sum_g;
+	int		sum_b;
+	t_color	color;
+
+	i = 0;
+	sum_r = 0;
+	sum_g = 0;
+	sum_b = 0;
+	while (i < AA_LEVEL * AA_LEVEL)
+	{
+		sum_r += colors[i].r;
+		sum_g += colors[i].g;
+		sum_b += colors[i].b;
+		i++;
+	}
+	color.r = sum_r / (AA_LEVEL * AA_LEVEL);
+	color.g = sum_g / (AA_LEVEL * AA_LEVEL);
+	color.b = sum_b / (AA_LEVEL * AA_LEVEL);
+	return (color);
+}
+
+static void	supersampling(t_vec2 rotator, t_ivec2 coords, t_vec2 delta,
+		t_state *state)
+{
+	t_ivec2	sub_coords;
+	t_vec2	offset;
+	t_vec2	sub_rotator;
+	t_color	colors[AA_LEVEL * AA_LEVEL];
+
+	sub_coords.x = 0;
+	while (sub_coords.x < AA_LEVEL)
+	{
+		sub_coords.y = 0;
+		while (sub_coords.y < AA_LEVEL)
+		{
+			offset.x = (sub_coords.x + 0.5) / AA_LEVEL;
+			offset.y = (sub_coords.y + 0.5) / AA_LEVEL;
+			sub_rotator.x = rotator.x + delta.x * (offset.x - 0.5);
+			sub_rotator.y = rotator.y + delta.y * (offset.y - 0.5);
+			colors[2 * sub_coords.x + sub_coords.y++] = trace_ray(sub_rotator,
+					coords, state);
+		}
+		sub_coords.x++;
+	}
+	put_pixel(&state->img_data, coords, average_colors(colors));
 }
 
 static void	*thread_shoot_rays(void *arg)
@@ -65,7 +118,10 @@ static void	*thread_shoot_rays(void *arg)
 		coords.x = 0;
 		while (coords.x < WIN_X)
 		{
-			trace_ray(rotator, coords, data->state);
+			if (data->state->toggle_aa)
+				supersampling(rotator, coords, delta, data->state);
+			else
+				trace_ray(rotator, coords, data->state);
 			rotator.y -= delta.y;
 			coords.x++;
 		}

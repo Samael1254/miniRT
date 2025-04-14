@@ -39,6 +39,7 @@ static void	initialize_state(t_state *state)
 	state->toggle_lights = true;
 	state->toggle_fps = false;
 	state->toggle_help = false;
+	state->toggle_aa = false;
 	state->post_process = PP_NONE;
 }
 

@@ -19,6 +19,8 @@
 # define WIN_X 800
 # define WIN_Y 800
 
+# define AA_LEVEL 2
+
 # define RAY_REACH_MAX 1000
 # define RAY_REACH_MIN 1e-4
 # define BOUNCE_MAX 10
@@ -296,6 +298,7 @@ typedef struct s_state
 	bool				toggle_lights;
 	bool				toggle_fps;
 	bool				toggle_help;
+	bool				toggle_aa;
 	enum e_post_process	post_process;
 }						t_state;
 

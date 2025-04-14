@@ -7,6 +7,7 @@
 #include <bits/types/struct_timeval.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 void	modify_step_size(t_state *state, char sign)
 {
@@ -87,6 +88,7 @@ void	recreate_image(t_state *state)
 {
 	void	*tmp;
 
+	info(NULL, "LOADING...");
 	state->start_time = get_time(state);
 	tmp = state->img_data.img;
 	state->img_data.img = mlx_new_image(state->display, WIN_X, WIN_Y);
@@ -101,6 +103,7 @@ void	recreate_image(t_state *state)
 	mlx_destroy_image(state->display, tmp);
 	mlx_put_image_to_window(state->display, state->win, state->img_data.img, 0,
 		0);
+	write(1, "\e[1A\e[2K", 8);
 	state->end_time = get_time(state);
 	display_fps(state);
 	display_help(state);

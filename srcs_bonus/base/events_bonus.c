@@ -74,6 +74,15 @@ static void	toggle_lights(t_state *state)
 	recreate_image(state);
 }
 
+static void	toggle_aa(t_state *state)
+{
+	if (state->toggle_aa)
+		state->toggle_aa = false;
+	else
+		state->toggle_aa = true;
+	recreate_image(state);
+}
+
 static void	toggle_help(t_state *state)
 {
 	if (state->toggle_help)
@@ -124,6 +133,8 @@ static int	key_pressed(enum e_keycode key, t_state *state)
 		toggle_fps(state);
 	if (key == H_KEY)
 		toggle_help(state);
+	if (key == K_KEY)
+		toggle_aa(state);
 	if (key == P_KEY)
 		change_post_processing(state);
 	return (1);
