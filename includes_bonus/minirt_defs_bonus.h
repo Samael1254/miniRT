@@ -17,7 +17,7 @@
 # define BVH_MIN_TRIANGLES 5
 
 # define WIN_X 800
-# define WIN_Y 800
+# define WIN_Y 600
 
 # define AA_LEVEL 2
 

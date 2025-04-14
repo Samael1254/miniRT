@@ -59,17 +59,19 @@ t_color	refract_reflect_rays(t_color color, t_ray ray, t_intersection inter,
 		t_state *state)
 {
 	double				f;
+	t_color				diffuse;
 	const t_material	mat = state->mats_tab[inter.index_mat];
 
 	if (mat.transparency > 0)
 	{
+		diffuse = color;
 		f = fresnel_reflectance(ray.refraction, mat.refraction, ray.direction,
 				inter.normal);
 		color = lerp_colors(reflected_ray(ray, inter, state, 1),
 				refracted_ray(ray, inter, state), f);
 		if (mat.transparency < 1)
-			color = lerp_colors(absorb_colors(mat.kd, color), color,
-					mat.transparency);
+			color = lerp_colors(absorb_colors(diffuse, color), color, 1
+					- mat.transparency);
 	}
 	else if (mat.reflectance > 0)
 		color = lerp_colors(absorb_colors(reflected_ray(ray, inter, state, -1),

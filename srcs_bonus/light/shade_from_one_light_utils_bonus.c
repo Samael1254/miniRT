@@ -22,8 +22,7 @@ t_color	ambiant_color(t_ambiant_light a_light, t_material material,
 	if (material.img_texture.img)
 		color = absorb_colors(color, get_pixel_color(material.img_texture,
 					inter.uv));
-	else
-		color = absorb_colors(color, a_light.color);
+	color = absorb_colors(color, a_light.color);
 	return (scale_color(color, a_light.brightness));
 }
 
