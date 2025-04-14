@@ -6,4 +6,4 @@ SKY	100,99,82		100,99,82
 
 pl	0,0,0	0,1,0	1
 
-mesh	meshes/bull.obj	0,0,0		100	3
+mesh	meshes/bull.obj	0,0,0	0,0,0		100	3

@@ -4,4 +4,4 @@ MT	materials/specularity.mrt
 L	-5,10,30				1			200,200,255
 SKY	0,255,0		0,255,0
 
-mesh	meshes/human_smooth.obj	0,0,0		10	7
+mesh	meshes/human_smooth.obj	0,0,0	0,30,0		10	7

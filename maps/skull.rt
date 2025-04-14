@@ -9,4 +9,4 @@ SKY   255,0,0        0,255,0
 
 pl    0,0,0    0,1,0    1
 #sp	0,35,70					20			5
-mesh	meshes/skull.obj	0,30,0		0.2	6
+mesh	meshes/skull.obj	0,30,0	0,0,0		0.2	6

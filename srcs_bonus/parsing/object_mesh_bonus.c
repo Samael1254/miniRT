@@ -9,17 +9,40 @@
 #include "minirt_parsing_bonus.h"
 #include <stdlib.h>
 
-static void	transform_mesh(t_mesh *mesh, t_vec3 pos, double scale)
+static void	transform_mesh(t_mesh *mesh, t_vec3 pos, t_vec3 rot, double scale)
 {
 	int	i;
 
 	i = 0;
+	rot.x = ft_deg_to_rad(rot.x);
+	rot.y = ft_deg_to_rad(rot.y);
+	rot.z = ft_deg_to_rad(rot.z);
 	while (i < mesh->n_vertices)
 	{
+		mesh->vertices[i] = ft_4dto3d_vector(ft_rotate_vec4(ft_3dto4d_vector(mesh->vertices[i]),
+					rot));
 		mesh->vertices[i] = ft_scale_vec3(scale, mesh->vertices[i]);
 		mesh->vertices[i] = ft_add_vec3(pos, mesh->vertices[i]);
 		i++;
 	}
+	i = 0;
+	while (i < mesh->n_normals)
+	{
+		mesh->normals[i] = ft_4dto3d_vector(ft_rotate_vec4(ft_3dto4d_vector(mesh->normals[i]),
+					rot));
+		i++;
+	}
+}
+
+void	mesh_params(t_state *state, t_object *obj, char **split,
+		bool *has_error)
+{
+	obj->object_r = parse_obj_file(split[1], state);
+	obj->type = MESH;
+	obj->index_mat = ft_atoi(split[5]);
+	transform_mesh(obj->object_r, get_vector(split[2], has_error),
+		get_vector(split[3], has_error), ft_atod(split[4]));
+	((t_mesh *)obj->object_r)->bvh = create_bvh((t_mesh *)obj->object_r);
 }
 
 t_object	*object_mesh(t_state *state, char **split)
@@ -27,19 +50,14 @@ t_object	*object_mesh(t_state *state, char **split)
 	t_object	*obj;
 	bool		has_error;
 
-	if (!ft_check_error_line(split, 5))
-		error("wrong object definition", "mesh needs 4 parameters", state);
-	check_line(state, split + 1, 4);
+	if (!ft_check_error_line(split, 6))
+		error("wrong object definition", "mesh needs 5 parameters", state);
+	check_line(state, split + 1, 5);
 	obj = ft_calloc(1, sizeof(t_object));
 	if (!obj)
 		return (ft_free_strtab(split), error("malloc failed", "in object_mesh",
 				state), NULL);
-	obj->object_r = parse_obj_file(split[1], state);
-	obj->type = MESH;
-	obj->index_mat = ft_atoi(split[4]);
-	transform_mesh(obj->object_r, get_vector(split[2], &has_error),
-		ft_atod(split[3]));
-	((t_mesh *)obj->object_r)->bvh = create_bvh((t_mesh *)obj->object_r);
+	mesh_params(state, obj, split, &has_error);
 	if (obj->index_mat > state->len_mats_tab || has_error
 		|| !((t_mesh *)obj->object_r)->bvh.root)
 	{
