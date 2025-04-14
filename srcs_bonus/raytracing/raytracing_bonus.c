@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raytracing_bonus.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/14 17:21:30 by macuesta          #+#    #+#             */
+/*   Updated: 2025/04/14 17:21:30 by macuesta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt_defs_bonus.h"
 #include "minirt_errors_bonus.h"
 #include "minirt_raytracing_bonus.h"
