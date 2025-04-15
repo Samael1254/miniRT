@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raytracing.c                                       :+:      :+:    :+:   */
+/*   raytracing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,56 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_memory.h"
-#include "minirt.h"
 #include "minirt_defs.h"
-#include <stdio.h>
+#include "minirt_errors.h"
+#include "minirt_raytracing.h"
+#include "mlx.h"
 #include <stdlib.h>
-
-static void	free_rays(t_ray **rays)
-{
-	int	i;
-
-	i = 0;
-	while (i < WIN_Y)
-		free(rays[i++]);
-	free(rays);
-}
-
-static t_ray	**alloc_rays(void)
-{
-	t_ray	**rays;
-	int		i;
-
-	rays = ft_calloc(WIN_Y, sizeof(t_ray *));
-	if (!rays)
-		return (NULL);
-	i = 0;
-	while (i < WIN_Y)
-	{
-		rays[i] = ft_calloc(WIN_X, sizeof(t_ray));
-		if (!rays[i])
-		{
-			while (i > 0)
-				free(rays[--i]);
-			free(rays);
-		}
-		i++;
-	}
-	return (rays);
-}
 
 void	ray_tracing(t_state *state)
 {
-	t_ray	**rays;
-
-	rays = alloc_rays();
 	info(NULL, "ray tracing...");
-	init_rays(state->scene.camera, rays);
-	shoot_rays(rays, state);
-	info(NULL, "rendering...");
-	render_scene(state, rays);
-	free_rays(rays);
-	info(NULL, "done, press ESC to close");
-	printf("%u warnings raised\n", warnings_number(false));
+	shoot_rays(state);
+	mlx_put_image_to_window(state->display, state->win, state->img_data.img, 0,
+		0);
 }

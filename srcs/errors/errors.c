@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 17:21:30 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:30 by macuesta         ###   ########.fr       */
+/*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
+/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_strings.h"
-#include "minirt.h"
+#include "minirt_base.h"
 #include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -44,8 +44,9 @@ void	info(char const *type, char const *msg)
 	write(2, "\e[34;1mInfo: \e[0m", 17);
 	if (type)
 	{
+		write(2, "\e[1m", 4);
 		write(2, type, ft_strlen(type));
-		write(2, ": ", 2);
+		write(2, ": \e[0m", 6);
 	}
 	write(2, msg, ft_strlen(msg));
 	write(2, "\n", 1);

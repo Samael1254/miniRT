@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   object_sphere.c                                    :+:      :+:    :+:   */
+/*   object_sphere.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 17:21:30 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:30 by macuesta         ###   ########.fr       */
+/*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
+/*   Updated: 2025/04/15 13:32:14 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_conversion.h"
 #include "ft_memory.h"
 #include "ft_strings.h"
-#include "minirt.h"
+#include "minirt_defs.h"
+#include "minirt_errors.h"
+#include "minirt_parsing.h"
+#include <stdbool.h>
 #include <stdlib.h>
 
 static t_sphere	*get_sphere_data(t_state *state, char **split, t_object *obj)
@@ -26,7 +29,7 @@ static t_sphere	*get_sphere_data(t_state *state, char **split, t_object *obj)
 	{
 		free(obj);
 		ft_free_strtab(split);
-		error(NULL, "as malloc failed", state);
+		error("malloc failed", "in get_sphere_data", state);
 	}
 	sp->pos = get_vector(split[1], &has_error);
 	sp->diameter = ft_atod(split[2]);
@@ -35,7 +38,7 @@ static t_sphere	*get_sphere_data(t_state *state, char **split, t_object *obj)
 		free(sp);
 		free(obj);
 		ft_free_strtab(split);
-		error("sphere", "sphere color isn't valid", state);
+		error("sphere", "sphere position isn't valid", state);
 	}
 	return (sp);
 }
@@ -43,7 +46,6 @@ static t_sphere	*get_sphere_data(t_state *state, char **split, t_object *obj)
 t_object	*object_sphere(t_state *state, char **split)
 {
 	t_object	*obj;
-	bool		has_error;
 
 	if (!ft_check_error_line(split, 4))
 		error("wrong object definition", "sphere needs 4 parameters", state);
@@ -52,17 +54,17 @@ t_object	*object_sphere(t_state *state, char **split)
 	if (!obj)
 	{
 		ft_free_strtab(split);
-		error(NULL, "as malloc failed", state);
+		error("malloc failed", "in object_sphere", state);
 	}
 	obj->object_r = get_sphere_data(state, split, obj);
 	obj->type = SPHERE;
-	obj->color = get_color(split[3], &has_error);
-	if (has_error == true)
+	obj->index_mat = ft_atoi(split[3]) - 1;
+	if (obj->index_mat > state->len_mats_tab)
 	{
 		free(obj->object_r);
 		free(obj);
 		ft_free_strtab(split);
-		error(NULL, "malloc failed or vector data invalid", state);
+		error("wrong material index", "sphere", state);
 	}
 	return (obj);
 }

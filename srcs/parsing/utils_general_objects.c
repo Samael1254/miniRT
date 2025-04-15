@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_general_objects.c                            :+:      :+:    :+:   */
+/*   utils_general_objects.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 17:21:30 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:30 by macuesta         ###   ########.fr       */
+/*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
+/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
-#include "ft_strings.h"
 #include "ft_chars.h"
+#include "ft_strings.h"
+#include "minirt_defs.h"
+#include "minirt_errors.h"
 
 void	ambiant_light_checker(t_state *state, char **split)
 {

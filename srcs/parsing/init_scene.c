@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_scene.c                                       :+:      :+:    :+:   */
+/*   init_scene.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 17:21:30 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:30 by macuesta         ###   ########.fr       */
+/*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
+/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_chars.h"
 #include "ft_strings.h"
 #include "get_next_line.h"
-#include "minirt.h"
+#include "minirt_defs.h"
+#include "minirt_errors.h"
+#include "minirt_parsing.h"
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>
@@ -21,10 +23,21 @@
 
 static void	append_to_idlist(t_state *state, char **split, int *i)
 {
-	if (*i >= 3)
+	int	j;
+
+	j = 0;
+	while (j < ID_LIST_SIZE && state->id_list[j] && !ft_strncmp(split[0], "L",
+			1))
+	{
+		if (!ft_strncmp(state->id_list[j], "L", 1))
+			return ;
+		j++;
+	}
+	if (*i >= ID_LIST_SIZE)
 	{
 		ft_free_strtab(split);
-		error("parsing", "you must have only one A, one C, one L!", state);
+		error("parsing", "need one A, one C, one SKY and at least one L!",
+			state);
 	}
 	state->id_list[*i] = ft_strdup(split[0]);
 	if (!state->id_list[*i])
@@ -45,7 +58,9 @@ static int	get_data_line(t_state *state, char *line, int *i)
 	free(line);
 	if (!split)
 		error("split", "an error as occured", state);
-	if (!ft_strncmp(split[0], "#", 1))
+	if (!*split)
+		return (ft_free_strtab(split), 0);
+	if (split[0][0] == '#')
 		return (ft_free_strtab(split), 0);
 	if (insert_in_struct(state, split) == 2)
 		append_to_idlist(state, split, i);
@@ -57,14 +72,12 @@ static bool	check_line_chars(char *line)
 {
 	int	i;
 
-	i = 0;
-	while (line[i] && !(line[i] == ' ' || line[i] == '\t'))
-		i++;
+	if (line[0] == '#')
+		return (true);
+	i = ft_strcspn(line, " \t");
 	while (line[i] && line[i] != '\n')
 	{
-		if (!ft_isdigit(line[i]) && line[i] != '+' && line[i] != '-'
-			&& line[i] != '.' && line[i] != ',' && line[i] != ' '
-			&& line[i] != '\t')
+		if (!ft_isalnum(line[i]) && !ft_isincharset(line[i], "/+-_., \t"))
 			break ;
 		i++;
 	}
@@ -96,7 +109,7 @@ void	init_scene(t_state *state, char *filename)
 	int		i;
 
 	check_directory(state, filename);
-	fd = open(filename, O_RDONLY);
+	fd = open_and_count_mats(state, filename);
 	if (fd == -1)
 		error("wrong filename", "cannot open file", state);
 	i = 0;
@@ -112,7 +125,7 @@ void	init_scene(t_state *state, char *filename)
 			error("get_data_line", "an error as occured", state);
 		line = get_next_line(fd);
 	}
-	if (i != 3)
-		error("parsing", "one or more major elements missing: A, C, or L",
+	if (i != 4)
+		error("parsing", "one or more major elements missing: A, C, SKY, or L",
 			state);
 }

@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   insert_in_struct.c                                 :+:      :+:    :+:   */
+/*   insert_in_struct.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 17:21:30 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:30 by macuesta         ###   ########.fr       */
+/*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
+/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_algebra.h"
 #include "ft_conversion.h"
 #include "ft_strings.h"
-#include "minirt.h"
+#include "minirt_defs.h"
+#include "minirt_errors.h"
+#include "minirt_parsing.h"
 #include <stdbool.h>
 
 static void	add_ambient_light(t_state *state, char **split)
@@ -41,24 +43,20 @@ static void	add_ambient_light(t_state *state, char **split)
 
 static void	add_camera(t_state *state, char **split)
 {
-	t_vec3	pos;
 	t_vec3	dir;
 	double	fov_2;
 	bool	has_error;
 
-	pos = get_vector(split[1], &has_error);
 	dir = get_vector(split[2], &has_error);
+	state->scene.camera.pos = get_vector(split[1], &has_error);
+	state->scene.camera.dir = dir;
 	if (!is_vec3_in_range(dir, -1, 1) || has_error == true)
 	{
 		ft_free_strtab(split);
 		error("parsing", "error on camera position or rotation", state);
 	}
-	state->scene.camera.pos = pos;
-	state->scene.camera.dir = dir;
-	state->scene.camera.x_axis = ft_cross_vec3(dir, ft_set_vec3(0, 1,
-				0));
-	state->scene.camera.y_axis = ft_cross_vec3(state->scene.camera.x_axis,
-			dir);
+	state->scene.camera.x_axis = ft_cross_vec3(dir, ft_set_vec3(0, 1, 0));
+	state->scene.camera.y_axis = ft_cross_vec3(state->scene.camera.x_axis, dir);
 	fov_2 = ft_atod(split[3]) / 2;
 	if (fov_2 < 0 || fov_2 > 90)
 	{
@@ -66,54 +64,47 @@ static void	add_camera(t_state *state, char **split)
 		error("parsing", "error of the camera fov", state);
 	}
 	state->scene.camera.fov_2 = ft_deg_to_rad(fov_2);
+	state->scene.camera.move_step = 5;
+	state->scene.camera.rot_step = 15;
 }
 
-static void	add_light(t_state *state, char **split)
+static void	add_sky(t_state *state, char **split)
 {
-	t_vec3	pos;
-	double	brightness;
-	t_color	color;
 	bool	has_error;
 
-	pos = get_vector(split[1], &has_error);
-	brightness = ft_atod(split[2]);
-	if (brightness < 0 || brightness > 1 || has_error == true)
-	{
-		ft_free_strtab(split);
-		error("wrong parameter value", "light brightness not in [0-1]", state);
-	}
-	color = get_color(split[3], &has_error);
+	state->scene.sky.bottom = get_color(split[2], &has_error);
+	state->scene.sky.top = get_color(split[1], &has_error);
 	if (has_error == true)
 	{
 		ft_free_strtab(split);
-		error("parsing", "error of ambiant light colors", state);
+		error("wrong parameter value", "sky must be valid colors.", state);
 	}
-	state->scene.p_light.pos = pos;
-	state->scene.p_light.brightness = brightness;
-	state->scene.p_light.color = color;
 }
 
 int	insert_in_struct(t_state *state, char **split)
 {
-	if (!*split)
-		return (-1);
 	if (!ft_strncmp(split[0], "A", ft_strlen(split[0])))
 		return (add_ambient_light(state, split), 2);
 	else if (!ft_strncmp(split[0], "C", ft_strlen(split[0])))
 		return (add_camera(state, split), 2);
 	else if (!ft_strncmp(split[0], "L", ft_strlen(split[0])))
-		return (add_light(state, split), 2);
+		return (add_lights_to_list(state, split), 2);
+	else if (!ft_strncmp(split[0], "SKY", ft_strlen(split[0])))
+		return (add_sky(state, split), 2);
 	else if (!ft_strncmp(split[0], "sp", ft_strlen(split[0])))
 		add_object_to_list(state, split);
 	else if (!ft_strncmp(split[0], "pl", ft_strlen(split[0])))
 		add_object_to_list(state, split);
 	else if (!ft_strncmp(split[0], "cy", ft_strlen(split[0])))
 		add_object_to_list(state, split);
-	else if (ft_strcmp(split[0], "\n"))
+	else if (!ft_strncmp(split[0], "co", ft_strlen(split[0])))
+		add_object_to_list(state, split);
+	else if (!ft_strncmp(split[0], "mesh", ft_strlen(split[0])))
+		add_object_to_list(state, split);
+	else if (ft_strcmp(split[0], "\n") && ft_strncmp(split[0], "MT", 2))
 	{
 		split[0][ft_strlen(split[0])] = '\0';
-		warning("no such object type", split[0]);
-		return (1);
+		return (warning("no such object type", split[0]), 1);
 	}
 	return (0);
 }

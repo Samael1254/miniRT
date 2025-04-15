@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rays.c                                             :+:      :+:    :+:   */
+/*   rays.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,74 +11,80 @@
 /* ************************************************************************** */
 
 #include "ft_algebra.h"
-#include "minirt.h"
 #include "minirt_defs.h"
+#include "minirt_errors.h"
+#include "minirt_raytracing.h"
 #include <math.h>
+#include <pthread.h>
+#include <unistd.h>
 
 static double	vertical_fov_2(double horizontal_fov_2)
 {
 	return (atan(((double)WIN_Y / (double)WIN_X) * tan(horizontal_fov_2)));
 }
 
-static t_ray	init_ray(t_camera camera, t_vec2 rotator)
+static void	thread_shoot_rays_utils(t_state *state, t_ivec2 *coords,
+		t_vec2 *delta, t_vec2 *rotator)
 {
-	t_ray	ray;
-	double	m_rot_x[4][4];
-	double	m_rot_y[4][4];
-
-	ft_set_rotation_mat4(m_rot_x, rotator.x, camera.x_axis);
-	ft_set_rotation_mat4(m_rot_y, rotator.y, camera.y_axis);
-	ray.direction = ft_4dto3d_vector(ft_mat_vec_product4(m_rot_y,
-				ft_mat_vec_product4(m_rot_x,
-					ft_3dto4d_vector(camera.dir))));
-	ray.origin = camera.pos;
-	ray.color = init_color(0, 0, 0);
-	return (ray);
-}
-
-void	init_rays(t_camera camera, t_ray **rays)
-{
-	t_vec2	rotator;
-	t_ivec2	coords;
-	t_vec2	angle_deltas;
-	double	v_fov_2;
-
-	v_fov_2 = vertical_fov_2(camera.fov_2);
-	coords.y = 0;
-	rotator.x = v_fov_2;
-	angle_deltas.y = 2 * camera.fov_2 / WIN_X;
-	angle_deltas.x = 2 * v_fov_2 / WIN_Y;
-	while (coords.y < WIN_Y)
+	while (coords->x < WIN_X)
 	{
-		coords.x = 0;
-		rotator.y = camera.fov_2;
-		while (coords.x < WIN_X)
-		{
-			rays[coords.y][coords.x] = init_ray(camera, rotator);
-			rotator.y -= angle_deltas.y;
-			coords.x++;
-		}
-		rotator.x -= angle_deltas.x;
-		coords.y++;
+		if (state->toggle_aa)
+			supersampling(*rotator, *coords, *delta, state);
+		else
+			trace_ray(*rotator, *coords, state);
+		rotator->y -= delta->y;
+		coords->x++;
 	}
 }
 
-void	shoot_rays(t_ray **rays, t_state *state)
+static void	*thread_shoot_rays(void *arg)
 {
+	t_thread_data	*data;
 	t_ivec2			coords;
-	t_intersection	inter;
+	t_vec2			delta;
+	t_vec2			rotator;
 
-	coords.y = 0;
-	while (coords.y < WIN_Y)
+	data = (t_thread_data *)arg;
+	delta.y = 2 * data->state->scene.camera.fov_2 / WIN_X;
+	delta.x = 2 * vertical_fov_2(data->state->scene.camera.fov_2) / WIN_Y;
+	coords.y = data->start_y;
+	rotator.x = vertical_fov_2(data->state->scene.camera.fov_2) - delta.x
+		* data->start_y;
+	while (coords.y < data->end_y)
 	{
+		rotator.y = data->state->scene.camera.fov_2;
 		coords.x = 0;
-		while (coords.x < WIN_X)
-		{
-			inter = intersect_scene(rays[coords.y][coords.x],
-					state->scene.objects);
-			rays[coords.y][coords.x].color = shade_ray(inter, &state->scene);
-			coords.x++;
-		}
+		thread_shoot_rays_utils(data->state, &coords, &delta, &rotator);
+		rotator.x -= delta.x;
 		coords.y++;
 	}
+	return (NULL);
+}
+
+void	shoot_rays(t_state *state)
+{
+	pthread_t		threads[THREAD_COUNT];
+	t_thread_data	thread_data[THREAD_COUNT];
+	int				i;
+
+	i = 0;
+	while (i < THREAD_COUNT)
+	{
+		thread_data[i].start_y = i * (WIN_Y / THREAD_COUNT);
+		thread_data[i].end_y = (i + 1) * (WIN_Y / THREAD_COUNT);
+		thread_data[i].state = state;
+		if (pthread_create(&threads[i], NULL, thread_shoot_rays,
+				&thread_data[i]) != 0)
+		{
+			while (i > 0)
+			{
+				i--;
+				pthread_cancel(threads[i]);
+				pthread_join(threads[i], NULL);
+			}
+			error("pthread_create", "crash", state);
+		}
+		i++;
+	}
+	ft_join_threads(state, threads);
 }

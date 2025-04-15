@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 17:21:30 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:30 by macuesta         ###   ########.fr       */
+/*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
+/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_algebra.h"
 #include "ft_conversion.h"
 #include "ft_strings.h"
-#include "minirt.h"
-#include "ft_strings.h"
+#include "minirt_parsing.h"
 #include <stdbool.h>
-#include <math.h>
 
 /*
  * Return a t_vec3 containing the vector RGB based on the line
  * with this format `XXX,XXX,XXX`
- * Takes in parameter a pointer on bool in order to catch an error 
+ * Takes in parameter a pointer on bool in order to catch an error
  * on the split malloc
  * Error: returns -1,-1,-1 if an error occured
  * */
@@ -45,69 +44,44 @@ t_vec3	get_vector(char *line_vector, bool *error)
 	return (vector);
 }
 
+static unsigned char	get_transparency(char *line, bool *error)
+{
+	if (!line || !*line)
+		return (100);
+	if (*line == '1')
+	{
+		if (line[1] != '\0')
+			*error = true;
+		return (100);
+	}
+	else if (*line == '0')
+		return (ft_atod(line) * 100);
+	else
+		*error = true;
+	return (100);
+}
+
 t_color	get_color(char *line_color, bool *error)
 {
 	t_color	color;
-	char	**split_color;
-	int		r;
-	int		g;
-	int		b;
+	char	**split;
 
-	split_color = ft_split(line_color, ',');
-	if (!split_color || ft_strtab_size(split_color) < 3)
+	split = ft_split(line_color, ',');
+	*error = false;
+	if (!split || ft_strtab_size(split) < 3 || ft_strtab_size(split) > 4)
 	{
-		if (split_color)
-			ft_free_strtab(split_color);
+		if (split)
+			ft_free_strtab(split);
 		*error = true;
-		return ((t_color){0, 0, 0});
+		return ((t_color){0, 0, 0, 0});
 	}
-	r = ft_atoi(split_color[0]);
-	g = ft_atoi(split_color[1]);
-	b = ft_atoi(split_color[2]);
-	ft_free_strtab(split_color);
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		*error = true;
+	color.r = ft_atoi(split[0]);
+	color.g = ft_atoi(split[1]);
+	color.b = ft_atoi(split[2]);
+	if (ft_strtab_size(split) == 4)
+		color.a = get_transparency(split[3], error);
 	else
-		*error = false;
-	color = (t_color){(unsigned char)r, (unsigned char)g, (unsigned char)b};
+		color.a = 100;
+	ft_free_strtab(split);
 	return (color);
-}
-
-/*
- *	Check if a vector is in the range min and max (excluded)
- *	Returns (0) if not
- *	Returns (1) if yes
- * */
-bool	is_vec3_in_range(t_vec3 vec, double min, double max)
-{
-	if (vec.x < min || vec.x > max)
-		return (false);
-	if (vec.y < min || vec.y > max)
-		return (false);
-	if (vec.z < min || vec.z > max)
-		return (false);
-	return (true);
-}
-
-/*
- *	Check if a vector is in the range min and max (excluded)
- *	Returns (0) if not
- *	Returns (1) if yes
- * */
-bool	is_t_color_valid(t_color color, double min, double max)
-{
-	if (color.r < min || color.r > max)
-		return (false);
-	if (color.g < min || color.g > max)
-		return (false);
-	if (color.b < min || color.b > max)
-		return (false);
-	return (true);
-}
-
-bool	is_norm_vector_valid(t_vec3 vec)
-{
-	if (pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.z, 2) != 1)
-		return (false);
-	return (true);
 }

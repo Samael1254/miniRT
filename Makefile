@@ -1,84 +1,51 @@
 NAME = miniRT
 
-SOURCES_DIR = srcs/
-BONUS_DIR = srcs_bonus/
+SRCS_DIR = srcs/
 BUILD_DIR = build/
 HEADERS_DIR = includes/
-BONUS_HEADERS_DIR = includes_bonus/
 
 HEADERS = minirt.h minirt_defs.h
 HEADERS := $(addprefix $(HEADERS_DIR), $(HEADERS))
 
-SRCS_MAIN := main.c exit_program.c events.c init_state.c
+SRCS_MAIN := main.c exit_program.c events.c init_state.c \
+			  time.c events_utils.c events_utils_execution.c events_utils_toggle.c
+
+SRCS_BVH := aabb_utils.c create_bvh.c bvh_free.c bvh_triangle.c print_aabb.c \
+			 intersect_aabb.c
 
 SRCS_PARSING := init_scene.c insert_in_struct.c utils.c utils2.c objects_list.c \
-				object_sphere.c object_plane.c object_cylinder.c utils_general_objects.c
+				object_sphere.c object_plane.c object_cylinder.c utils_general_objects.c \
+				create_lights.c open_and_count_mats.c object_cone.c utils_mat.c object_mesh.c
 
-SRCS_GRAPHICS := color.c graphics.c
+SRCS_GRAPHICS := color.c graphics.c color_utils.c post_process.c post_process_utils.c post_process_utils2.c
 
 SRCS_ERRORS := errors.c check_arguments.c
 
-SRCS_RAYTRACING := raytracing.c intersections.c intersect_objects.c intersect_objects_utils.c rays.c light.c \
-				   normals.c
+SRCS_RAYTRACING := raytracing.c intersections.c intersect_objects.c rays.c \
+				   normals.c intersect_objects_utils.c intersect_bvh.c object_normal.c \
+				   ray_utils.c intersect_objects_utils2.c
 
-SOURCES := $(addprefix $(SOURCES_DIR)base/, $(SRCS_MAIN)) \
-           $(addprefix $(SOURCES_DIR)parsing/, $(SRCS_PARSING)) \
-           $(addprefix $(SOURCES_DIR)graphics/, $(SRCS_GRAPHICS)) \
-           $(addprefix $(SOURCES_DIR)errors/, $(SRCS_ERRORS)) \
-           $(addprefix $(SOURCES_DIR)raytracing/, $(SRCS_RAYTRACING)) \
+SRCS_LIGHT := light.c light_utils.c light_utils2.c recursive_light.c shade_from_one_light_utils.c
 
+SRCS_TEXTURING := uv_mapping.c normal_map.c mapping_utils.c object_mapping.c
 
-BONUS_MAIN := main_bonus.c exit_program_bonus.c events_bonus.c init_state_bonus.c \
-			  time_bonus.c events_utils_bonus.c events_utils_execution_bonus.c events_utils_toggle_bonus.c
+SRCS_MESH := init_mesh.c mesh_utils.c parse_obj_element.c parse_obj_file.c
 
-BONUS_BVH := aabb_utils_bonus.c create_bvh_bonus.c bvh_free_bonus.c bvh_triangle_bonus.c print_aabb.c \
-			 intersect_aabb_bonus.c
+SRCS := $(addprefix $(SRCS_DIR)base/, $(SRCS_MAIN)) \
+           $(addprefix $(SRCS_DIR)bvh/, $(SRCS_BVH)) \
+           $(addprefix $(SRCS_DIR)parsing/, $(SRCS_PARSING)) \
+           $(addprefix $(SRCS_DIR)graphics/, $(SRCS_GRAPHICS)) \
+           $(addprefix $(SRCS_DIR)errors/, $(SRCS_ERRORS)) \
+           $(addprefix $(SRCS_DIR)raytracing/, $(SRCS_RAYTRACING)) \
+           $(addprefix $(SRCS_DIR)light/, $(SRCS_LIGHT)) \
+           $(addprefix $(SRCS_DIR)texturing/, $(SRCS_TEXTURING)) \
+           $(addprefix $(SRCS_DIR)mesh_parsing/, $(SRCS_MESH)) \
 
-BONUS_PARSING := init_scene_bonus.c insert_in_struct_bonus.c utils_bonus.c utils2_bonus.c objects_list_bonus.c \
-				object_sphere_bonus.c object_plane_bonus.c object_cylinder_bonus.c utils_general_objects_bonus.c \
-				create_lights_bonus.c open_and_count_mats_bonus.c object_cone_bonus.c utils_mat.c object_mesh_bonus.c
-
-BONUS_GRAPHICS := color_bonus.c graphics_bonus.c color_utils_bonus.c post_process_bonus.c post_process_utils_bonus.c post_process_utils2_bonus.c
-
-BONUS_ERRORS := errors_bonus.c check_arguments_bonus.c
-
-BONUS_RAYTRACING := raytracing_bonus.c intersections_bonus.c intersect_objects_bonus.c rays_bonus.c \
-				   normals_bonus.c intersect_objects_utils_bonus.c intersect_bvh_bonus.c object_normal_bonus.c \
-				   ray_utils_bonus.c intersect_objects_utils2_bonus.c
-
-BONUS_LIGHT := light_bonus.c light_utils_bonus.c light_utils2_bonus.c recursive_light_bonus.c shade_from_one_light_utils_bonus.c
-
-BONUS_TEXTURING := uv_mapping_bonus.c normal_map_bonus.c mapping_utils_bonus.c object_mapping_bonus.c
-
-BONUS_MESH := init_mesh_bonus.c mesh_utils_bonus.c parse_obj_element_bonus.c parse_obj_file_bonus.c
-
-BONUS := $(addprefix $(BONUS_DIR)base/, $(BONUS_MAIN)) \
-           $(addprefix $(BONUS_DIR)bvh/, $(BONUS_BVH)) \
-           $(addprefix $(BONUS_DIR)parsing/, $(BONUS_PARSING)) \
-           $(addprefix $(BONUS_DIR)graphics/, $(BONUS_GRAPHICS)) \
-           $(addprefix $(BONUS_DIR)errors/, $(BONUS_ERRORS)) \
-           $(addprefix $(BONUS_DIR)raytracing/, $(BONUS_RAYTRACING)) \
-           $(addprefix $(BONUS_DIR)light/, $(BONUS_LIGHT)) \
-           $(addprefix $(BONUS_DIR)texturing/, $(BONUS_TEXTURING)) \
-           $(addprefix $(BONUS_DIR)mesh_parsing/, $(BONUS_MESH)) \
-
-MANDATORY_OBJS := $(addprefix $(BUILD_DIR)mandatory/, $(notdir $(SOURCES:.c=.o)))
-
-BONUS_OBJS := $(addprefix $(BUILD_DIR)bonus/, $(notdir $(BONUS:.c=.o)))
-
-MODE ?= mandatory
-
-ifeq ($(MODE), mandatory)
-	OBJS = $(MANDATORY_OBJS)
-else ifeq ($(MODE), bonus)
-	OBJS = $(BONUS_OBJS)
-else
-	$(error Invalid MODE. Use 'mandatory' or 'bonus'.)
-endif
+OBJS := $(addprefix $(BUILD_DIR), $(notdir $(SRCS:.c=.o)))
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I./includes -I./includes_bonus -I./libs/libft/includes -I./libs/mlx #-fsanitize=undefined -g
+CFLAGS = -Wall -Wextra -Werror -I./includes -I./libs/libft/includes -I./libs/mlx #-fsanitize=undefined -g
 
 LIBFT = ./libs/libft/lib/libft.a
 
@@ -86,28 +53,12 @@ MLX = ./libs/mlx/libmlx.a
 
 LIBFLAGS := -lft -Llibs/libft/lib -lmlx -Llibs/mlx -lX11 -lXext -lm
 
-$(NAME): $(LIBFT) $(MLX) $(OBJS) $(HEADERS)
-	@ echo " \033[33mCompiling miniRT $(MODE)\033[m"
-	@ if [ "$(MODE)" = "mandatory" ]; then \
-		rm -f $(BONUS_OBJS); \
-		rm -rf $(BUILD_DIR)bonus; \
-	fi
+$(NAME): $(LIBFT) $(MLX) $(OBJS) #$(HEADERS)
+	@ echo " \033[33mCompiling miniRT\033[m"
 	@ $(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFLAGS)
-	@ echo " \033[1;32m MiniRT \033[4m$(MODE)\033[0;1;32m binary compiled\033[m"
+	@ echo " \033[1;32m MiniRT\033[0;1;32m binary compiled\033[m"
 
-bonus: $(LIBFT) $(MLX) $(BONUS_OBJS)
-	@ rm -f $(MANDATORY_OBJS)
-	@ rm -rf $(BUILD_DIR)mandatory
-	@if ! $(MAKE) -s -n MODE=bonus | grep -q .; then \
-		echo "make: 'miniRT' (bonus) is up to date."; \
-	fi
-	@ $(MAKE) -s MODE=bonus
-
-$(BUILD_DIR)mandatory/%.o: $(SOURCES_DIR)*/%.c
-	@ mkdir -p $(BUILD_DIR)mandatory
-	@ $(CC) $(CFLAGS) -c $< -o $@
-
-$(BUILD_DIR)bonus/%.o: $(BONUS_DIR)*/%.c
+$(BUILD_DIR)%.o: $(SRCS_DIR)*/%.c
 	@ mkdir -p $(BUILD_DIR)bonus
 	@ $(CC) $(CFLAGS) -c $< -o $@
 
@@ -132,16 +83,11 @@ fclean_libft:
 
 libft: fclean_libft $(LIBFT)
 
-check_norm:
-	@ echo " \033[33mChecking norm\033[m"
-	@ echo " \033[33m... norminette\033[m"
-	@ norminette src > /dev/null 2>&1 && tput cuu1 && tput el && echo " \033[32m norminette valid\033[m" || (tput cuu1 && tput el && echo " \033[31m norminette check failed\033[m"; true)
-
 all: $(NAME)
 
 clean:
 	@ echo " \033[33mCleaning\033[m"
-	@ rm -f $(BONUS_OBJS) $(MANDATORY_OBJS)
+	@ rm -f $(OBJS)
 	@ rm -rf $(BUILD_DIR)mandatory
 	@ rm -rf $(BUILD_DIR)bonus
 	@ rm -rf $(BUILD_DIR)
@@ -151,6 +97,6 @@ fclean: clean
 	@ rm -f $(NAME)
 	@ echo " \033[32m MiniRT binary cleaned\033[m"
 
-re: fclean $(LIBFT) all
+re: fclean all
 
-.PHONY: clean fclean re all libft fclean_libft check_norm bonus
+.PHONY: clean fclean re all libft fclean_libft

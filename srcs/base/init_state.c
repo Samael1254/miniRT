@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_state.c                                       :+:      :+:    :+:   */
+/*   init_state.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "minirt_base.h"
 #include "minirt_defs.h"
+#include "minirt_errors.h"
+#include "minirt_parsing.h"
 #include "mlx.h"
 #include <stddef.h>
 
@@ -35,18 +37,30 @@ static void	init_mlx(t_state *state)
 
 static void	initialize_state(t_state *state)
 {
+	int	i;
+
+	i = 0;
 	state->display = NULL;
+	state->scene.lights = NULL;
 	state->scene.objects = NULL;
-	state->id_list[0] = NULL;
-	state->id_list[1] = NULL;
-	state->id_list[2] = NULL;
+	while (i < ID_LIST_SIZE)
+		state->id_list[i++] = NULL;
+	state->len_mats_tab = 0;
+	state->mats_tab = NULL;
+	state->hold_alt = 0;
+	state->toggle_lights = false;
+	state->toggle_fps = false;
+	state->toggle_help = false;
+	state->toggle_aa = false;
+	state->post_process = PP_NONE;
 }
 
 void	init_state(t_state *state, char *filename)
 {
+	info("Starting minirt bonus version with following scene", filename);
+	info(NULL, "initialization...");
 	initialize_state(state);
-	info(NULL, "initialize scene...");
-	init_scene(state, filename);
-	info(NULL, "initialize mlx...");
 	init_mlx(state);
+	init_scene(state, filename);
+	state->start_time = get_time(state);
 }
