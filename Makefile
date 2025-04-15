@@ -4,7 +4,10 @@ SRCS_DIR = srcs/
 BUILD_DIR = build/
 HEADERS_DIR = includes/
 
-HEADERS = minirt.h minirt_defs.h
+HEADERS = minirt_defs.h minirt_base.h minirt_graphics.h minirt_light.h minirt_normals.h \
+		  minirt_parsing.h minirt_bvh.h minirt_errors.h minirt_intersections.h minirt_mapping.h \
+		  minirt_obj_parser.h minirt_raytracing.h
+
 HEADERS := $(addprefix $(HEADERS_DIR), $(HEADERS))
 
 SRCS_MAIN := main.c exit_program.c events.c init_state.c \
@@ -53,7 +56,7 @@ MLX = ./libs/mlx/libmlx.a
 
 LIBFLAGS := -lft -Llibs/libft/lib -lmlx -Llibs/mlx -lX11 -lXext -lm
 
-$(NAME): $(LIBFT) $(MLX) $(OBJS) #$(HEADERS)
+$(NAME): $(LIBFT) $(MLX) $(OBJS) $(HEADERS)
 	@ echo " \033[33mCompiling miniRT\033[m"
 	@ $(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFLAGS)
 	@ echo " \033[1;32m MiniRT\033[0;1;32m binary compiled\033[m"
