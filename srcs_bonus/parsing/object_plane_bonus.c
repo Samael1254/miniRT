@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:32:13 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_plane	*get_plane_data(t_state *state, char **split, t_object *obj)
 	{
 		free(obj);
 		ft_free_strtab(split);
-		error(NULL, "malloc failed", state);
+		error("malloc failed", "in get_plane_data", state);
 	}
 	pl->point = get_vector(split[1], &has_error);
 	if (!has_error)
@@ -56,17 +56,17 @@ t_object	*object_plane(t_state *state, char **split)
 	if (!obj)
 	{
 		ft_free_strtab(split);
-		error(NULL, "malloc failed", state);
+		error("malloc failed", "in object_plane", state);
 	}
 	obj->object_r = get_plane_data(state, split, obj);
 	obj->type = PLANE;
-	obj->index_mat = ft_atoi(split[3]);
+	obj->index_mat = ft_atoi(split[3]) - 1;
 	if (obj->index_mat > state->len_mats_tab)
 	{
 		free(obj->object_r);
 		free(obj);
 		ft_free_strtab(split);
-		error(NULL, "malloc failed or vector data invalid", state);
+		error("wrong material index", "plane", state);
 	}
 	return (obj);
 }

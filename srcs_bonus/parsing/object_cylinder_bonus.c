@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:32:27 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_cylinder	*get_cylinder_data(t_state *state, char **sp, t_object *obj)
 	{
 		free(obj);
 		ft_free_strtab(sp);
-		error(NULL, "malloc failed", state);
+		error("malloc failed", "in get_cylinder_data", state);
 	}
 	cy->pos = get_vector(sp[1], &has_error);
 	if (!has_error)
@@ -58,17 +58,17 @@ t_object	*object_cylinder(t_state *state, char **split)
 	if (!obj)
 	{
 		ft_free_strtab(split);
-		error(NULL, "malloc failed", state);
+		error("malloc failed", "in object_cylinder", state);
 	}
 	obj->object_r = get_cylinder_data(state, split, obj);
 	obj->type = CYLINDER;
-	obj->index_mat = ft_atoi(split[5]);
+	obj->index_mat = ft_atoi(split[5]) - 1;
 	if (obj->index_mat > state->len_mats_tab)
 	{
 		free(obj->object_r);
 		free(obj);
 		ft_free_strtab(split);
-		error(NULL, "malloc failed", state);
+		error("wrong material index", "cylinder", state);
 	}
 	return (obj);
 }

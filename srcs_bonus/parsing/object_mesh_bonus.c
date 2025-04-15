@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:30:40 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:31:37 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static void	transform_mesh(t_mesh *mesh, t_vec3 pos, t_vec3 rot, double scale)
 	rot.z = ft_deg_to_rad(rot.z);
 	while (i < mesh->n_vertices)
 	{
-		mesh->vertices[i] = ft_4dto3d_vector(ft_rotate_vec4(
-					ft_3dto4d_vector(mesh->vertices[i]), rot));
+		mesh->vertices[i] = ft_4dto3d_vector(ft_rotate_vec4(ft_3dto4d_vector(mesh->vertices[i]),
+					rot));
 		mesh->vertices[i] = ft_scale_vec3(scale, mesh->vertices[i]);
 		mesh->vertices[i] = ft_add_vec3(pos, mesh->vertices[i]);
 		i++;
@@ -40,8 +40,8 @@ static void	transform_mesh(t_mesh *mesh, t_vec3 pos, t_vec3 rot, double scale)
 	i = 0;
 	while (i < mesh->n_normals)
 	{
-		mesh->normals[i] = ft_4dto3d_vector(ft_rotate_vec4(
-					ft_3dto4d_vector(mesh->normals[i]), rot));
+		mesh->normals[i] = ft_4dto3d_vector(ft_rotate_vec4(ft_3dto4d_vector(mesh->normals[i]),
+					rot));
 		i++;
 	}
 }
@@ -59,7 +59,7 @@ void	mesh_params(t_state *state, t_object *obj, char **split,
 		return ;
 	}
 	obj->type = MESH;
-	obj->index_mat = ft_atoi(split[5]);
+	obj->index_mat = ft_atoi(split[5]) - 1;
 	pos = get_vector(split[2], has_error);
 	if (*has_error)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:22:59 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	free_materials(t_state *state)
 	t_material		material;
 
 	i = 0;
-	while (i < state->len_mats_tab + 1)
+	while (i < state->len_mats_tab)
 	{
 		material = state->mats_tab[i++];
 		if (material.img_texture.img)

@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:30 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:30 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:31:44 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "ft_memory.h"
 #include "ft_strings.h"
 #include "minirt.h"
-#include "ft_chars.h"
 #include <stdlib.h>
 
 static t_cylinder	*get_cylinder_data(t_state *state, char **sp, t_object *obj)

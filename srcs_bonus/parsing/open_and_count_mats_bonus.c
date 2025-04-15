@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:27:37 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	material_handling(t_state *state, int fd)
 	char	*line;
 	char	**tmp_split;
 
-	i = 1;
+	i = 0;
 	tmp_split = NULL;
 	while (1)
 	{
@@ -127,7 +127,7 @@ int	open_and_count_mats(t_state *state, char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd <= 0)
-		error("wrong filename", "cannot open file", state);
+		error("cannot open file", filename, state);
 	nb_mt_found = 0;
 	while (1)
 	{
@@ -143,7 +143,7 @@ int	open_and_count_mats(t_state *state, char *filename)
 		else
 			free(line);
 	}
-	if (close(fd) == -1 && nb_mt_found != 1)
+	if (close(fd) == -1 || nb_mt_found != 1)
 		error("materials", "need one and only one MT line", state);
 	return (open(filename, O_RDONLY));
 }
