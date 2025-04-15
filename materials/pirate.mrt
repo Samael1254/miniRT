@@ -1,3 +1,4 @@
 #mt	kd				ks				ka				specularity		reflectance		transparency	refraction	texture										normal_map
 mt	255,255,255		255,255,255		255,255,255		1				0.5				0.1				1.1			materials/textures/water.xpm				0
 mt	255,255,255		255,255,255		255,127,0		0.2				0				0				1			materials/textures/pirate.xpm				0
+mt	255,255,0		255,255,255		255,255,0		0.2				0				0				1
