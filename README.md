@@ -131,6 +131,8 @@ The following keybindings allow the user to interact with miniRT:
 ##### Parsing
 - Set the texture scaling in the .mrt file
 - Choose screen size (in .rt file or in command line)
+- L->l for lights since there can be several
+- Remove the obligation for vectors to be normalized
 
 ##### User interaction
 - Show maps to select from if miniRT is launched without any map

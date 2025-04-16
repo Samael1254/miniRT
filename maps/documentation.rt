@@ -2,11 +2,11 @@
 
 # INTRODUCTION
 
-# A scene is made from elements defining all its characteristics, like objects, materials, textures, lights...
+# A scene is made from elements defining all its characteristics, like objects, materials file, camera, lights...
 # Every element is defined by an identifier (first word of the line) which can be one or more letters. Elements in capital letters are necessary and unique.
 # Then follow the parameters specific to the element, separated by spaces or tabs. Parameter fields are specified within brackets []. Optional parameter fields are specified within parentheses ().
 # Lines can be commented by putting a # in the beginning. They will not be evaluated by the program.
-# An invalid line will trigger an error in the miniRT program and the file will not be executed. Such errors can be : missing identifier, number out of range, vector not normalized, not enough or too many parametres, invalid type of parameter...
+# An invalid line will trigger an error in the miniRT program and the scene will not be rendered. Such errors can be : missing identifier, number out of range, not enough or too many parameters, invalid type of parameter...
 # The rest of this document is an explanation of the definition of every available element currently.
 
 
@@ -15,13 +15,14 @@
 # Camera
 # The camera from which the scene will be viewed
 # C [position] [direction] [fov]
-# - position : x,y,z : float coordinates of the position point
-# - direction : x,y,z : float coordinates of the direction vector (must be normalized)
+# - position : x,y,z : float coordinates of the camera position
+# - direction : x,y,z : float coordinates of the direction vector
 # - fov : integer value of the field of view (in range [0-180])
 
-# Sky color
-# Defines the color gradient of the background
-# SC [up color] [down color]
+# Sky
+# Defines the color gradient of the background sky
+# SKY [up color] [down color]
+# - up/down color : r,g,b : integer values of the red, green and blue components (in range [0-255])
 
 # Material file
 # Defines the .mrt material file to be loaded for all objects in the scene
@@ -30,16 +31,16 @@
 # LIGHTS
 
 # Ambiant light
-# Constant light ligthing the whole scene equally
+# Constant light for the whole scene
 # A [brightness] [color]
-# - brightness : float value
+# - brightness : float value (in range [0-1])
 # - color : r,g,b : integer values of the red, green and blue components of the light color (in range [0-255])
 
 # Point light
 # A light emitting from a single point in all directions
-# lp [position] [brightness] [color]
-# - position : x,y,z : float coordinates of the position point
-# - brightness : float value
+# L [position] [brightness] [color]
+# - position : x,y,z : float coordinates of the light
+# - brightness : float value (in range [0-1])
 # - color : r,g,b : integer values of the red, green and blue components of the light color (in range [0-255])
 
 
@@ -47,18 +48,34 @@
 
 # Sphere
 # sp [position] [diameter] [material]
+# - position : x,y,z : float coordinates of the sphere center
+# - diameter : positive float value of the sphere diameter
+# - material : index of the material in the included .mrt file, starting from 1
 
 # Plane
 # pl [point] [normal] [material]
+# - point : x,y,z : float coordinates of any point on the plane
+# - normal : x,y,z : coordinates of the normal vector of the plane
+# - material : index of the material in the included .mrt file, starting from 1
 
 # Cylinder
 # cy [position] [axis] [diameter] [height] [material]
+# - position : x,y,z : float coordinates of the cylinder center
+# - axis : x,y,z : coordinates of the axis vector of the cylinder
+# - diameter : positive float value of the cylinder diameter
+# - material : index of the material in the included .mrt file, starting from 1
 
 # Cone
 # co [position] [axis] [slope] [material]
-
-# Triangle
-# tr [vertex1] [vertex2] [vertex3] [material]
+# - position : x,y,z : float coordinates of the cone center
+# - axis : x,y,z : coordinates of the axis vector of the cone
+# - slope : float value of the cone slope angle in degress (in range [0-180])
+# - material : index of the material in the included .mrt file, starting from 1
 
 # Mesh
-# obj [filename] [material]
+# mesh [filename] [position] [rotation] [scale] [material]
+# - filename : path to the .obj file (from the project root)
+# - position : x,y,z : float coordinates of the mesh origin
+# - rotation : x,y,z : float angles from the original mesh orientation in degrees (in range [0,360])
+# - scale : float value of the mesh scale
+# - material : index of the material in the included .mrt file, starting from 1

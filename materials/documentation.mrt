@@ -1,0 +1,28 @@
+# This is the documentation of the .mrt material file format.
+
+# INTRODUCTION
+
+# A .mrt material file lists materials that will be used in a .rt scene
+# It also defines textures and normal maps to be used in the materials
+# Materials are defined by the "mt" identifier, followed by parameters  separated by spaces or tabs. Parameter fields are specified within brackets []. Optional parameter fields are specified within parentheses ().
+# Lines can be commented by putting a # in the beginning. They will not be evaluated by the program.
+# An invalid line will trigger an error in the miniRT program and the scene including the .mrt file will not be rendered.
+# The rest of this document is an explanation of how to define a material
+
+# Material
+# A material defining the visual appearance of any object it is applied to.
+# mt [kd] [ks] [ka] [specularity] ([texture] [normal map])
+# - kd : r,g,b : diffuse color (in range [0-255])
+# - ks : r,g,b : specular color (in range [0-255])
+# - ka : r,g,b : ambiant color (in range [0-255])
+# - specularity : how much the material shines (in range [0-1])
+# - reflectance : how much the material reflects the light. If set to 0, it will no reflect any light. If set to 1, it will be a perfect reflection of the environment around. If in-between, the material will blend between the material color and the reflected light
+# - transparency : how much the material lets the light pass through. If set to 0, it will no let any light through. If set to 1, it will be completely transparent. If in-between, the material will blend between the material color and the light going through it
+# - refraction : refractive index of the material, describing how much light going through it is deviated (only releveant if the material is transparent). For no refraction with the air, put 1.00029 (air refractive index). The higher this is, the more the material will deviate light
+# - texture : filepath of the texture (in .xpm format) of the material (merges with the colors given above). 0 means no texture. Defaults to 0, but if a normal map is specified a texture must be specified (and vice versa)
+# - normal map : filepath of the normal map (in .xpm format) of the material. 0 means no normal map. Defaults to 0, but if a texture is specified a normal map must be specified (and vice versa)
+
+#mt	kd				ks				ka				specularity		reflectance		transparency	refraction	texture										normal_map
+mt	255,255,255		255,255,255		255,255,255		0.1				0				0				1			materials/textures/bricks.xpm				materials/normal_maps/bricks.xpm
+mt	255,0,0			255,0,0			255,0,0			1				0.8				0				1
+mt	255,255,255		255,255,255		255,255,255		0.1				0				0				1			0											materials/normal_maps/ceres_nm.xpm
