@@ -146,9 +146,14 @@ The following keybindings allow the user to interact with miniRT:
 ##### Optimisation
 - Post-processing is unnecessarily slow
 
-## ⭕ Known bugs
+## ⭕ Known issues
 - uv mapping inside an object is upside down
 - lights appear through plane-like surfaces
 - deformation up and down the screen (fisheye)
 - Strong ambiant lighting with weak point lights creates weird shadows
 - Light halos and shadow rays are not refracted through transparent materials
+
+## 🫂 Acknowledgements
+Made in the context of a project in 42 school.
+
+Graphics library: [minilibx](https://github.com/42Paris/minilibx-linux)
