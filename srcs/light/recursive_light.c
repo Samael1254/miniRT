@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   recursive_light.c                            :+:      :+:    :+:   */
+/*   recursive_light.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/04/15 21:00:05 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ static t_color	refracted_ray(t_ray ray, t_intersection inter, t_state *state)
 	t_intersection	new_inter;
 	t_material		mat;
 
+	mat = state->mats_tab[inter.index_mat];
 	if (inter.bounces >= BOUNCE_MAX)
 		return (scale_color(mat.kd, 1 - mat.transparency));
-	mat = state->mats_tab[inter.index_mat];
 	refracted_ray.origin = inter.point;
 	refracted_ray.direction = get_refraction_dir(ray.direction, inter.normal,
 			ray.refraction, mat.refraction);
