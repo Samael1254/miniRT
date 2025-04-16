@@ -79,10 +79,11 @@ This project comes with a few pre-made scenes, meshes, textures and materials to
 
 #### Post-processing
 - Apply post-processing filters to your scene using the `P` key (see keybindings below), and give a stylish look to your scenes.
-
-<img src="./preview/neg.png" width="265" height="420" />
-<img src="./preview/sepia.png" width="265" height="420" />
-<img src="./preview/poster.png" width="265" height="420" />
+<div align="center">
+	<img src="./preview/neg.png" width="265" height="420" />
+	<img src="./preview/sepia.png" width="265" height="420" />
+	<img src="./preview/poster.png" width="265" height="420" />
+</div>
 <p align="center">Negative, sepia and poster filters</p>
 
 #### User Interaction
