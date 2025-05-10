@@ -1,0 +1,9 @@
+[submodule "libs/new_libft"]
+	path = libs/new_libft
+	url = git@github.com:Samael1254/new_libft.git
+[submodule "libft"]
+	path = libs/libft
+	url = git@github.com:Samael1254/new_libft.git
+[submodule "libs/minilibx-linux"]
+	path = libs/mlx
+	url = https://github.com/42paris/minilibx-linux.git

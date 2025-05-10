@@ -74,7 +74,7 @@ $(LIBFT):
 
 $(MLX):
 	@ echo " \033[33mCompiling MiniLibX\033[m"
-	@ cd libs/mlx && $(MAKE) -s -j
+	@ cd libs/mlx && $(MAKE) -s
 	@ echo " \033[34m MiniLibX compiled\033[m"
 
 fclean_libft:
