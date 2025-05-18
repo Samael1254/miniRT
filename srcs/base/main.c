@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                       :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/05/18 15:24:44 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_strings.h"
 #include "minirt_base.h"
 #include "minirt_defs.h"
 #include "minirt_errors.h"
@@ -21,9 +22,15 @@
 int	main(int argc, char **argv)
 {
 	t_state	state;
+	char	*scene_name;
 
 	check_arguments(argc, argv);
-	init_state(&state, argv[1]);
+	if (argc > 1)
+		scene_name = ft_strdup(argv[1]);
+	else
+		scene_name = select_scene();
+	init_state(&state, scene_name);
+	free(scene_name);
 	ray_tracing(&state);
 	state.end_time = get_time(&state);
 	printf("Frame render time: %ld ms\n", get_time_diff(state.end_time,

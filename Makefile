@@ -11,7 +11,8 @@ HEADERS = minirt_defs.h minirt_base.h minirt_graphics.h minirt_light.h minirt_no
 HEADERS := $(addprefix $(HEADERS_DIR), $(HEADERS))
 
 SRCS_MAIN := main.c exit_program.c events.c init_state.c \
-			  time.c events_utils.c events_utils_execution.c events_utils_toggle.c
+			 time.c events_utils.c events_utils_execution.c events_utils_toggle.c \
+			 select_scene.c
 
 SRCS_BVH := aabb_utils.c create_bvh.c bvh_free.c bvh_triangle.c print_aabb.c \
 			 intersect_aabb.c

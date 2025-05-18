@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt_base.h                                :+:      :+:    :+:   */
+/*   minirt_base.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:05 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:05 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/05/18 14:07:55 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ void			init_state(t_state *state, char *filename);
 long			get_time_diff(struct timeval time, struct timeval start_time);
 struct timeval	get_time(t_state *state);
 char			*get_fps_string(long time);
+
+char			*select_scene(void);
 
 #endif // !MINIRT_BASE_BONUS

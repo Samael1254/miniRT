@@ -140,7 +140,6 @@ The following keybindings allow the user to interact with miniRT:
 - Remove the obligation for vectors to be normalized
 
 ##### User interaction
-- Show maps to select from if miniRT is launched without any map
 - Display filter name in the terminal when pressing P
 
 ##### Camera movement
