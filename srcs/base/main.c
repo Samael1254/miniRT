@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/05/18 15:24:44 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/05/18 19:21:06 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@ int	main(int argc, char **argv)
 	init_state(&state, scene_name);
 	free(scene_name);
 	ray_tracing(&state);
-	state.end_time = get_time(&state);
-	printf("Frame render time: %ld ms\n", get_time_diff(state.end_time,
-			state.start_time));
-	info(NULL, "done, press ESC to close, H for help");
 	loop_events(&state);
 	warning("unusal exit", "program should be closed with ESC or cross");
 	exit_program(&state, EXIT_FAILURE);

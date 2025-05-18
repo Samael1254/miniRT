@@ -136,10 +136,10 @@ The following keybindings allow the user to interact with miniRT:
 ##### Parsing
 - Set the texture scaling in the .mrt file
 - Choose screen size (in .rt file or in command line)
-- L->l for lights since there can be several
 
 ##### User interaction
 - Display filter name in the terminal when pressing P
+- Display initialization time
 
 ##### Camera movement
 - Better movements

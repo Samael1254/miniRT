@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   events.c                                     :+:      :+:    :+:   */
+/*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/05/18 19:04:54 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_algebra.h"
 #include "minirt_base.h"
 #include "minirt_defs.h"
+#include "minirt_raytracing.h"
 #include "mlx.h"
 #include <stdlib.h>
 
@@ -83,5 +84,6 @@ void	loop_events(t_state *state)
 	mlx_hook(state->win, 3, 1L << 1, end_hold_alt_hook, state);
 	mlx_hook(state->win, 4, 1L << 2, on_mouse_moov, state);
 	mlx_hook(state->win, ON_CLIENTMSG, 0L, exit_program, state);
+	mlx_loop_hook(state->display, render_loop, state);
 	mlx_loop(state->display);
 }

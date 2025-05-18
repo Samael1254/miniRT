@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:08 by macuesta          #+#    #+#             */
-/*   Updated: 2025/05/18 16:16:08 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/05/18 19:14:06 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define WIN_Y 600
 
 # define AA_LEVEL 2
+
+# define PARTIAL_RENDER 16
 
 # define RAY_REACH_MAX 1000
 # define RAY_REACH_MIN 1e-4
@@ -301,6 +303,8 @@ typedef struct s_state
 	void				*win;
 	t_img_data			img_data;
 	t_img_data			processed_img;
+	int					redraw_column;
+	bool				rendering;
 	t_scene				scene;
 	char				*id_list[ID_LIST_SIZE];
 	t_material			*mats_tab;
@@ -319,6 +323,7 @@ typedef struct s_thread_data
 {
 	int					start_y;
 	int					end_y;
+	int					render_index;
 	t_state				*state;
 }						t_thread_data;
 

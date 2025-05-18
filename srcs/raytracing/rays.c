@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rays.c                                       :+:      :+:    :+:   */
+/*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:30 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:30 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:32:52 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,6 @@
 static double	vertical_fov_2(double horizontal_fov_2)
 {
 	return (atan(((double)WIN_Y / (double)WIN_X) * tan(horizontal_fov_2)));
-}
-
-static void	thread_shoot_rays_utils(t_state *state, t_ivec2 *coords,
-		t_vec2 *delta, t_vec2 *rotator)
-{
-	while (coords->x < WIN_X)
-	{
-		if (state->toggle_aa)
-			supersampling(*rotator, *coords, *delta, state);
-		else
-			trace_ray(*rotator, *coords, state);
-		rotator->y -= delta->y;
-		coords->x++;
-	}
 }
 
 static void	*thread_shoot_rays(void *arg)
@@ -52,16 +38,24 @@ static void	*thread_shoot_rays(void *arg)
 		* data->start_y;
 	while (coords.y < data->end_y)
 	{
-		rotator.y = data->state->scene.camera.fov_2;
-		coords.x = 0;
-		thread_shoot_rays_utils(data->state, &coords, &delta, &rotator);
+		coords.x = data->render_index;
+		rotator.y = data->state->scene.camera.fov_2 - coords.x * delta.y;
+		while (coords.x < WIN_X)
+		{
+			if (data->state->toggle_aa)
+				supersampling(rotator, coords, delta, data->state);
+			else
+				trace_ray(rotator, coords, data->state);
+			rotator.y -= delta.y * PARTIAL_RENDER;
+			coords.x += PARTIAL_RENDER;
+		}
 		rotator.x -= delta.x;
 		coords.y++;
 	}
 	return (NULL);
 }
 
-void	shoot_rays(t_state *state)
+void	shoot_rays(t_state *state, int render_index)
 {
 	pthread_t		threads[THREAD_COUNT];
 	t_thread_data	thread_data[THREAD_COUNT];
@@ -72,6 +66,7 @@ void	shoot_rays(t_state *state)
 	{
 		thread_data[i].start_y = i * (WIN_Y / THREAD_COUNT);
 		thread_data[i].end_y = (i + 1) * (WIN_Y / THREAD_COUNT);
+		thread_data[i].render_index = render_index;
 		thread_data[i].state = state;
 		if (pthread_create(&threads[i], NULL, thread_shoot_rays,
 				&thread_data[i]) != 0)

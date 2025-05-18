@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/05/18 16:39:29 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/05/18 19:10:22 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "minirt_defs.h"
 #include "minirt_errors.h"
 #include "minirt_graphics.h"
-#include "minirt_raytracing.h"
 #include "mlx.h"
 #include <bits/types/struct_timeval.h>
 #include <stdlib.h>
@@ -43,7 +42,6 @@ void	reload_image(t_state *state)
 		img_to_reload = state->img_data.img;
 	else
 		img_to_reload = state->processed_img.img;
-	mlx_clear_window(state->display, state->win);
 	mlx_put_image_to_window(state->display, state->win, img_to_reload, 0, 0);
 	display_fps(state);
 	display_help(state);
@@ -51,11 +49,9 @@ void	reload_image(t_state *state)
 
 void	recreate_image(t_state *state)
 {
-	void	*tmp;
-
 	info(NULL, "LOADING...");
 	state->start_time = get_time(state);
-	tmp = state->img_data.img;
+	mlx_destroy_image(state->display, state->img_data.img);
 	state->img_data.img = mlx_new_image(state->display, WIN_X, WIN_Y);
 	if (!state->img_data.img)
 		error("init_mlx", "failed to create img", state);
@@ -64,13 +60,11 @@ void	recreate_image(t_state *state)
 			&state->img_data.endian);
 	if (!state->img_data.addr)
 		error("init_mlx", "failed to retrieve addr", state);
-	shoot_rays(state);
-	mlx_destroy_image(state->display, tmp);
+	state->redraw_column = 0;
+	state->rendering = true;
 	write(1, "\e[1A\e[2K", 8);
-	state->end_time = get_time(state);
 	if (state->post_process != PP_NONE)
 		post_process(state);
-	reload_image(state);
 }
 
 int	on_mouse_moov(enum e_keycode key, int x, int y, t_state *state)
