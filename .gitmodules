@@ -7,3 +7,6 @@
 [submodule "libs/minilibx-linux"]
 	path = libs/mlx
 	url = https://github.com/42paris/minilibx-linux.git
+[submodule "libs/obj_parser"]
+	path = libs/obj_parser
+	url = git@github.com:Samael1254/obj_parser.git

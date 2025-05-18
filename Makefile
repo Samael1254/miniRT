@@ -48,15 +48,17 @@ OBJS := $(addprefix $(BUILD_DIR), $(notdir $(SRCS:.c=.o)))
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I./includes -I./libs/libft/includes -I./libs/mlx #-fsanitize=undefined -g
+CFLAGS = -Wall -Wextra -Werror -I./includes -I./libs/libft/includes -I./libs/mlx -I./libs/obj_parser/include/ #-fsanitize=undefined -g
 
 LIBFT = ./libs/libft/lib/libft.a
 
 MLX = ./libs/mlx/libmlx.a
 
-LIBFLAGS := -lft -Llibs/libft/lib -lmlx -Llibs/mlx -lX11 -lXext -lm
+OBJ_PARSER = ./libs/obj_parser/lib/libobjParser.a
 
-$(NAME): $(LIBFT) $(MLX) $(OBJS) $(HEADERS)
+LIBFLAGS := -lft -Llibs/libft/lib -lmlx -Llibs/mlx -lobjParser -Llibs/obj_parser/lib -lX11 -lXext -lm
+
+$(NAME): $(LIBFT) $(MLX) $(OBJ_PARSER) $(OBJS) $(HEADERS)
 	@ echo " \033[33mCompiling miniRT\033[m"
 	@ $(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFLAGS)
 	@ echo " \033[1;32m MiniRT\033[0;1;32m binary compiled\033[m"
@@ -77,14 +79,20 @@ $(MLX):
 	@ cd libs/mlx && $(MAKE) -s
 	@ echo " \033[34m MiniLibX compiled\033[m"
 
-fclean_libft:
+$(OBJ_PARSER):
+	@ cd libs/obj_parser && $(MAKE) -s
+
+clean_libs:
 	@ echo " \033[33mCleaning Libft\033[m"
 	@ cd libs/libft && $(MAKE) -s fclean
 	@ tput cuu1 && tput el
 	@ tput cuu1 && tput el
 	@ echo " \033[34m Libft cleaned\033[m"
+	@ echo " \033[33mCleaning MiniLibX\033[m"
+	@ cd libs/mlx && $(MAKE) -s clean
+	@ cd libs/obj_parser && $(MAKE) -s fclean
 
-libft: fclean_libft $(LIBFT)
+libs: clean_libs $(LIBFT) $(MLX) $(OBJ_PARSER)
 
 all: $(NAME)
 
@@ -100,4 +108,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: clean fclean re all libft fclean_libft
+.PHONY: clean fclean re all libft fclean_libft clean_libs
