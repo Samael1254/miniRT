@@ -143,7 +143,6 @@ The following keybindings allow the user to interact with miniRT:
 
 ##### Camera movement
 - Better movements
-- Partial rendering when moving
 - Change field of view in real time
 
 ##### Optimisation

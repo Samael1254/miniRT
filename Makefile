@@ -47,9 +47,11 @@ SRCS := $(addprefix $(SRCS_DIR)base/, $(SRCS_MAIN)) \
 
 OBJS := $(addprefix $(BUILD_DIR), $(notdir $(SRCS:.c=.o)))
 
+DEPS = $(OBJS:.o=.d)
+
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I./includes -I./libs/libft/includes -I./libs/mlx -I./libs/obj_parser/include/ #-fsanitize=undefined -g
+CFLAGS = -Wall -Wextra -Werror -I./includes -I./libs/libft/includes -I./libs/mlx -I./libs/obj_parser/include/ -MMD -MP#-fsanitize=undefined -g
 
 LIBFT = ./libs/libft/lib/libft.a
 
@@ -99,7 +101,7 @@ all: $(NAME)
 
 clean:
 	@ echo " \033[33mCleaning\033[m"
-	@ rm -f $(OBJS)
+	@ rm -f $(OBJS) $(DEPS)
 	@ rm -rf $(BUILD_DIR)
 	@ echo " \033[32m MiniRT build files cleaned\033[m"
 
@@ -110,3 +112,5 @@ fclean: clean
 re: fclean all
 
 .PHONY: clean fclean re all libft fclean_libft clean_libs
+
+-include $(DEP)
