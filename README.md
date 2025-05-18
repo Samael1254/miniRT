@@ -137,7 +137,6 @@ The following keybindings allow the user to interact with miniRT:
 - Set the texture scaling in the .mrt file
 - Choose screen size (in .rt file or in command line)
 - L->l for lights since there can be several
-- Remove the obligation for vectors to be normalized
 
 ##### User interaction
 - Display filter name in the terminal when pressing P
@@ -147,11 +146,7 @@ The following keybindings allow the user to interact with miniRT:
 - Partial rendering when moving
 - Change field of view in real time
 
-##### Materials
-- Transparent textures
-
 ##### Optimisation
-- Post-processing is unnecessarily slow
 
 ## ⭕ Known issues
 - uv mapping inside an object is upside down
