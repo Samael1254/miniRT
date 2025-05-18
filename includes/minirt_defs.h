@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt_defs.h                                :+:      :+:    :+:   */
+/*   minirt_defs.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:08 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:08 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/05/18 16:16:08 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,6 +300,7 @@ typedef struct s_state
 	void				*display;
 	void				*win;
 	t_img_data			img_data;
+	t_img_data			processed_img;
 	t_scene				scene;
 	char				*id_list[ID_LIST_SIZE];
 	t_material			*mats_tab;

@@ -21,7 +21,7 @@ SRCS_PARSING := init_scene.c insert_in_struct.c utils.c utils2.c objects_list.c 
 				object_sphere.c object_plane.c object_cylinder.c utils_general_objects.c \
 				create_lights.c open_and_count_mats.c object_cone.c utils_mat.c object_mesh.c
 
-SRCS_GRAPHICS := color.c graphics.c color_utils.c post_process.c post_process_utils.c post_process_utils2.c
+SRCS_GRAPHICS := color.c graphics.c color_utils.c post_process.c post_process_utils.c post_process_filters.c
 
 SRCS_ERRORS := errors.c check_arguments.c
 

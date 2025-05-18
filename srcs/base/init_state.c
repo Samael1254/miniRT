@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_state.c                                 :+:      :+:    :+:   */
+/*   init_state.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/05/18 16:26:03 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	init_mlx(t_state *state)
 	state->win = mlx_new_window(state->display, WIN_X, WIN_Y, "miniRT");
 	if (!state->win)
 		error("init_mlx", "failed to create window", state);
+	state->processed_img.img = NULL;
 	state->img_data.img = mlx_new_image(state->display, WIN_X, WIN_Y);
 	if (!state->img_data.img)
 		error("init_mlx", "failed to create img", state);

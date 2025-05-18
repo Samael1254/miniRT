@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   events_utils.c                               :+:      :+:    :+:   */
+/*   events_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/05/18 16:39:29 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "minirt_base.h"
 #include "minirt_defs.h"
 #include "minirt_errors.h"
+#include "minirt_graphics.h"
 #include "minirt_raytracing.h"
 #include "mlx.h"
 #include <bits/types/struct_timeval.h>
@@ -36,9 +37,14 @@ void	display_fps(t_state *state)
 
 void	reload_image(t_state *state)
 {
+	void	*img_to_reload;
+
+	if (state->post_process == PP_NONE)
+		img_to_reload = state->img_data.img;
+	else
+		img_to_reload = state->processed_img.img;
 	mlx_clear_window(state->display, state->win);
-	mlx_put_image_to_window(state->display, state->win, state->img_data.img, 0,
-		0);
+	mlx_put_image_to_window(state->display, state->win, img_to_reload, 0, 0);
 	display_fps(state);
 	display_help(state);
 }
@@ -60,12 +66,11 @@ void	recreate_image(t_state *state)
 		error("init_mlx", "failed to retrieve addr", state);
 	shoot_rays(state);
 	mlx_destroy_image(state->display, tmp);
-	mlx_put_image_to_window(state->display, state->win, state->img_data.img, 0,
-		0);
 	write(1, "\e[1A\e[2K", 8);
 	state->end_time = get_time(state);
-	display_fps(state);
-	display_help(state);
+	if (state->post_process != PP_NONE)
+		post_process(state);
+	reload_image(state);
 }
 
 int	on_mouse_moov(enum e_keycode key, int x, int y, t_state *state)

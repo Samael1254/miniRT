@@ -48,6 +48,6 @@ t_vec3	blend_normal_map(t_vec2 uv, t_vec3 normal, t_material material)
 
 	if (!material.img_normal.img)
 		return (normal);
-	normal_tx = color_to_normal(get_pixel_color(material.img_normal, uv));
+	normal_tx = color_to_normal(get_uv_color(material.img_normal, uv));
 	return (tangent_to_world(normal_tx, normal));
 }

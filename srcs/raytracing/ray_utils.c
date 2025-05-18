@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_utils.c                                  :+:      :+:    :+:   */
+/*   ray_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:30 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:30 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/05/18 15:54:31 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_color	trace_ray(t_vec2 rotator, t_ivec2 coords, t_state *state)
 	ray = init_ray(state->scene.camera, rotator);
 	inter = intersect_scene(ray, state);
 	color = phong_illumination(state, inter, ray);
-	color = post_process(color, coords, state);
+	// color = post_process(color, coords, state);
 	if (!state->toggle_aa)
 		put_pixel(&state->img_data, coords, color);
 	return (color);

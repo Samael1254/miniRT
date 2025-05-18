@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   graphics.c                                   :+:      :+:    :+:   */
+/*   graphics.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/05/18 16:08:35 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,17 @@ void	put_pixel(t_img_data *img, t_ivec2 coords, t_color color)
 	*(unsigned int *)mem_pos = rgb_to_int(color);
 }
 
-t_color	get_pixel_color(t_img_data texture, t_vec2 uv)
+t_color	get_pixel_color(t_img_data texture, t_ivec2 coords)
+{
+	unsigned int	color;
+	int				offset;
+
+	offset = coords.y * texture.line_len + coords.x * (texture.bp_pixel) / 8;
+	color = *(unsigned int *)(texture.addr + offset);
+	return (int_to_rgb(color));
+}
+
+t_color	get_uv_color(t_img_data texture, t_vec2 uv)
 {
 	unsigned int	color;
 	int				offset;

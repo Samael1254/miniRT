@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_program.c                               :+:      :+:    :+:   */
+/*   exit_program.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/15 13:22:59 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/05/18 16:27:30 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,14 @@ static void	free_mlx(t_state *state)
 {
 	if (!state->display)
 		return ;
-	if (state->win && state->img_data.img)
-		mlx_destroy_image(state->display, state->img_data.img);
 	if (state->win)
+	{
+		if (state->img_data.img)
+			mlx_destroy_image(state->display, state->img_data.img);
+		if (state->processed_img.img)
+			mlx_destroy_image(state->display, state->processed_img.img);
 		mlx_destroy_window(state->display, state->win);
+	}
 	mlx_destroy_display(state->display);
 	free(state->display);
 }
