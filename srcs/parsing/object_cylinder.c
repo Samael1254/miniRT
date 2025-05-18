@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   object_cylinder.c                            :+:      :+:    :+:   */
+/*   object_cylinder.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/15 13:32:27 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/05/18 16:55:20 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ static t_cylinder	*get_cylinder_data(t_state *state, char **sp, t_object *obj)
 	cy->pos = get_vector(sp[1], &has_error);
 	if (!has_error)
 		cy->axis = get_vector(sp[2], &has_error);
-	if (!is_vec3_in_range(cy->axis, -1, 1) || has_error == true
-		|| !is_norm_vector_valid(cy->axis))
+	if (!is_vec3_in_range(cy->axis, -1, 1) || has_error == true)
 	{
 		free(obj);
 		free(cy);

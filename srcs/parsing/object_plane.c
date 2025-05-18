@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   object_plane.c                               :+:      :+:    :+:   */
+/*   object_plane.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/15 13:32:13 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/05/18 16:55:07 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ static t_plane	*get_plane_data(t_state *state, char **split, t_object *obj)
 	pl->point = get_vector(split[1], &has_error);
 	if (!has_error)
 		pl->normal = get_vector(split[2], &has_error);
-	if (!is_vec3_in_range(pl->normal, -1, 1) || has_error == true
-		|| !is_norm_vector_valid(pl->normal))
+	if (!is_vec3_in_range(pl->normal, -1, 1) || has_error == true)
 	{
 		free(obj);
 		free(pl);

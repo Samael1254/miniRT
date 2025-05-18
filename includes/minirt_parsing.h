@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt_parsing.h                             :+:      :+:    :+:   */
+/*   minirt_parsing.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/05/18 16:55:32 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int			open_and_count_mats(t_state *state, char *filename);
 void		check_line(t_state *state, char **split, int split_len);
 bool		is_vec3_in_range(t_vec3 vec, double min, double max);
 bool		ft_check_error_line(char **split, int len);
-bool		is_norm_vector_valid(t_vec3 vec);
 bool		ft_check_split_data(char **split);
 
 // utils.c

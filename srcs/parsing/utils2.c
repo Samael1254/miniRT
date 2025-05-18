@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                     :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/05/18 16:55:43 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_chars.h"
-#include "ft_math.h"
 #include "ft_strings.h"
 #include "minirt_defs.h"
 #include "minirt_errors.h"
 #include <stdbool.h>
-
-bool	is_norm_vector_valid(t_vec3 vec)
-{
-	if (!ft_equalf(ft_vec3_norm(vec), 1))
-		return (false);
-	return (true);
-}
 
 /*
  *	Check if a vector is in the range min and max (excluded)
