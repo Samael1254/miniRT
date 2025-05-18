@@ -62,7 +62,7 @@ $(NAME): $(LIBFT) $(MLX) $(OBJS) $(HEADERS)
 	@ echo " \033[1;32m MiniRT\033[0;1;32m binary compiled\033[m"
 
 $(BUILD_DIR)%.o: $(SRCS_DIR)*/%.c
-	@ mkdir -p $(BUILD_DIR)bonus
+	@ mkdir -p $(BUILD_DIR)
 	@ $(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):
@@ -91,8 +91,6 @@ all: $(NAME)
 clean:
 	@ echo " \033[33mCleaning\033[m"
 	@ rm -f $(OBJS)
-	@ rm -rf $(BUILD_DIR)mandatory
-	@ rm -rf $(BUILD_DIR)bonus
 	@ rm -rf $(BUILD_DIR)
 	@ echo " \033[32m MiniRT build files cleaned\033[m"
 
