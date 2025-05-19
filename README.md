@@ -47,7 +47,7 @@ This project comes with a few pre-made scenes, meshes, textures and materials to
 
 #### Mesh rendering
 ![A statue mesh loaded from a .obj file](./preview/bust.png "Bust")
-- Load and render meshes in the **.obj** format (standalone loader also available at https://github.com/Samael1254/obj_parser).
+- Load and render meshes in the **.obj** format (standalone loader also available [here](https://github.com/Samael1254/obj_parser)).
 - Meshes can be scaled, moved and rotated in the scene configuration file.
 - They are rendered using a **Bounding Volume Hierarchy** (BVH) to boost performance.
 - They can also be lit with smooth shading, making low poly meshes look like smooth surfaces.
@@ -161,3 +161,5 @@ The following keybindings allow the user to interact with miniRT:
 Made in the context of a project in 42 school.
 
 Graphics library: [minilibx](https://github.com/42Paris/minilibx-linux)
+Personnal functions library: [new_libft](https://github.com/Samael1254/new_libft)
+OBj file loader: [obj_parser](https://github.com/Samael1254/obj_parser)
