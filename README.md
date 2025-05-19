@@ -50,8 +50,9 @@ This project comes with a few pre-made scenes, meshes, textures and materials to
 - Load and render meshes in the **.obj** format (standalone loader also available at https://github.com/Samael1254/obj_parser).
 - Meshes can be scaled, moved and rotated in the scene configuration file.
 - They are rendered using a **Bounding Volume Hierarchy** (BVH) to boost performance.
+- They can also be lit with smooth shading, making low poly meshes look like smooth surfaces.
 
-- ⚠️ Please note that only triangulated meshes can be loaded by miniRT.
+- ⚠️ Please note that only triangulated meshes can be loaded by miniRT so far.
 
 ![A statue mesh loaded from a .obj file](./preview/horse.png "Bust")
 <p align="center">Textures, normal maps and other material properties can be applied to meshes like any other object</p>
@@ -140,9 +141,10 @@ The following keybindings allow the user to interact with miniRT:
 ##### User interaction
 - Display filter name in the terminal when pressing P
 - Display initialization time
+- Lower movements steps
 
 ##### Camera movement
-- Better movements
+- Drag and drop for rotations
 - Change field of view in real time
 
 ##### Optimisation
@@ -153,6 +155,7 @@ The following keybindings allow the user to interact with miniRT:
 - deformation up and down the screen (fisheye)
 - Strong ambiant lighting with weak point lights creates weird shadows
 - Light halos and shadow rays are not refracted through transparent materials
+- Movements are discontinuous when post processing is activated
 
 ## 🫂 Acknowledgements
 Made in the context of a project in 42 school.
