@@ -161,5 +161,7 @@ The following keybindings allow the user to interact with miniRT:
 Made in the context of a project in 42 school.
 
 Graphics library: [minilibx](https://github.com/42Paris/minilibx-linux)
+
 Personnal functions library: [new_libft](https://github.com/Samael1254/new_libft)
+
 OBj file loader: [obj_parser](https://github.com/Samael1254/obj_parser)
