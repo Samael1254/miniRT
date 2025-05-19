@@ -1,6 +1,6 @@
 # miniRT
 
-A basic raytracer for 42 school project **miniRT**.
+A basic raytracer for 42 school project **miniRT** made by [0xAttra](https://github.com/0xAttra) and [Samael1254](https://github.com/Samael1254)
 
 ![Minirt title picture](./preview/minirt.png "Title")
 
