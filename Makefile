@@ -51,7 +51,7 @@ DEPS = $(OBJS:.o=.d)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I./includes -I./libs/libft/includes -I./libs/mlx -I./libs/obj_parser/include/ -MMD -MP#-fsanitize=undefined -g
+CFLAGS = -Wall -Wextra -Werror -I./includes -I./libs/libft/includes -I./libs/mlx -I./libs/obj_parser/include/ -MMD -MP -O3
 
 LIBFT = ./libs/libft/lib/libft.a
 
