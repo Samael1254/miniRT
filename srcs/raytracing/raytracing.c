@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:30 by macuesta          #+#    #+#             */
-/*   Updated: 2025/05/18 19:23:49 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 22:47:00 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ void	ray_tracing(t_state *state)
 	info(NULL, "ray tracing...");
 	state->redraw_column = 0;
 	state->rendering = true;
-	info(NULL, "done, press ESC to close, H for help");
+	info(NULL, "press ESC to close, H for help");
 	state->end_time = get_time(state);
 }

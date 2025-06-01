@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/05/18 19:21:06 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 22:51:28 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include "minirt_errors.h"
 #include "minirt_raytracing.h"
 #include <bits/types/struct_timeval.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 int	main(int argc, char **argv)

@@ -131,6 +131,8 @@ static void	mlx_write_img_to_bmp(int fd, t_img_data img_data)
 			write_le_color(fd, get_pixel_color(img_data, coords));
 			coords.x++;
 		}
+		for (int i = 0; (WIN_X * 3 + i) % 4 != 0; i++)
+			write(fd, "\0", 1);
 		coords.y++;
 	}
 }
