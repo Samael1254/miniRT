@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 13:16:56 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 21:10:58 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	key_released(int button, t_state *state)
 {
 	if (button == ALT_KEY && state->keys_state.hold_alt)
 		state->keys_state.hold_alt = false;
-	if (button == MAJ_KEY && state->keys_state.hold_maj)
-		state->keys_state.hold_maj = false;
+	if (button == MAJ_KEY && state->keys_state.hold_shift)
+		state->keys_state.hold_shift = false;
 	return (0);
 }

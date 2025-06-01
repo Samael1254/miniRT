@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:09 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 12:22:50 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 14:04:46 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINIRT_GRAPHICS_BONUS_H
 
 # include "minirt_defs.h"
+
+void	save_image(t_state *state);
 
 // color.c
 t_color	scale_color(t_color color, double lambda);

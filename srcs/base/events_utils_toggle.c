@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 13:41:50 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 21:10:50 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	toggle_fps(t_state *state)
 
 void	change_post_processing(t_state *state)
 {
-	if (!state->keys_state.hold_maj)
+	if (!state->keys_state.hold_shift)
 		state->post_process = (state->post_process + 1) % NB_FILTERS;
 	else
 		state->post_process = (state->post_process - 1 + NB_FILTERS)

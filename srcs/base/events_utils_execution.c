@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 13:03:40 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 21:06:50 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ void	display_help(t_state *state)
 	mlx_string_put(state->display, state->win, 20, 115, 0xFFFFFF,
 		"Show source light(s): L");
 	mlx_string_put(state->display, state->win, 20, 130, 0xFFFFFF,
-		"Change post-process: P");
+		"Change post-process: P (Shift-P to go backwards)");
 	mlx_string_put(state->display, state->win, 20, 145, 0xFFFFFF,
 		"Anti-aliasing: K");
 	mlx_string_put(state->display, state->win, 20, 160, 0xFFFFFF,
 		"Show FPS: F");
 	mlx_string_put(state->display, state->win, 20, 175, 0xFFFFFF,
+		"Save image: SPACE");
+	mlx_string_put(state->display, state->win, 20, 190, 0xFFFFFF,
 		"Exit program: ESC");
 }
 

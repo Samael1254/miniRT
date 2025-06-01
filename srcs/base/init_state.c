@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 12:52:20 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 21:10:53 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "minirt_parsing.h"
 #include "mlx.h"
 #include <stddef.h>
+#include <stdio.h>
 
 static void	init_mlx(t_state *state)
 {
@@ -48,7 +49,7 @@ static void	initialize_state(t_state *state)
 	state->len_mats_tab = 0;
 	state->mats_tab = NULL;
 	state->keys_state.hold_alt = 0;
-	state->keys_state.hold_maj = 0;
+	state->keys_state.hold_shift = 0;
 	state->keys_state.toggle_lights = false;
 	state->keys_state.toggle_fps = false;
 	state->keys_state.toggle_help = false;

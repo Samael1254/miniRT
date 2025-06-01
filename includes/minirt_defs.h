@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:08 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 13:37:53 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 21:10:21 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ enum					e_keycode
 	MAJ_KEY = 65505,
 	H_KEY = 0x0068,
 	P_KEY = 0x0070,
+	SPACE_KEY = 0x20,
 };
 
 enum					e_post_process
@@ -303,7 +304,7 @@ typedef struct s_intersection
 typedef struct s_keys_state
 {
 	bool				hold_alt;
-	bool				hold_maj;
+	bool				hold_shift;
 	bool				toggle_lights;
 	bool				toggle_fps;
 	bool				toggle_help;

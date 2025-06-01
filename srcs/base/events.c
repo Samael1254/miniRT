@@ -6,13 +6,14 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 13:38:09 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 21:10:44 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_algebra.h"
 #include "minirt_base.h"
 #include "minirt_defs.h"
+#include "minirt_graphics.h"
 #include "minirt_raytracing.h"
 #include "mlx.h"
 #include <stdlib.h>
@@ -65,8 +66,8 @@ static int	key_pressed(enum e_keycode key, t_state *state)
 		exit_program(state, EXIT_SUCCESS);
 	if (key == ALT_KEY && !keys_state->hold_alt)
 		keys_state->hold_alt = true;
-	if (key == MAJ_KEY && !keys_state->hold_maj)
-		keys_state->hold_maj = true;
+	if (key == MAJ_KEY && !keys_state->hold_shift)
+		keys_state->hold_shift = true;
 	if (!keys_state->hold_alt && (key == W_KEY || key == S_KEY || key == A_KEY
 			|| key == D_KEY))
 		move_camera(state, &state->scene.camera, key);
@@ -79,6 +80,8 @@ static int	key_pressed(enum e_keycode key, t_state *state)
 		modify_step_size(state, '-');
 	if (key == RIGHT_ARROW_KEY)
 		modify_rot_step_size(state, '+');
+	if (key == SPACE_KEY)
+		save_image(state);
 	key_pressed_utils(key, state);
 	return (1);
 }

@@ -89,9 +89,10 @@ This project comes with a few pre-made scenes, meshes, textures and materials to
 
 #### User Interaction
 
-- The user can move and rotate the camera around in real time to get different views of the scene (see keybindings below)
-- Modifiable camera parameters (field of view, movement and rotation speed)
-- A FPS counter can be displayed, as well as help for the different keybindings (also listed below)
+- The user can move and rotate the camera around in real time to get different views of the scene (see keybindings below).
+- Modifiable camera parameters (field of view, movement and rotation speed).
+- A FPS counter can be displayed, as well as help for the different keybindings (also listed below).
+- You can save the image currently displayed on the screen by pressing `Space`. The image will be saved as a .bmp file in the _screenshots_ directory.
 
 #### Configuration
 
@@ -128,6 +129,8 @@ The following keybindings allow the user to interact with miniRT:
 - Toggle lights visibility : L
 - Toggle anti-aliasing : K
 - Next post-process filter : P
+- Previous post-process filter : Shift-P
+- Take screenshot: Space
 - Help : H
 - Exit : Escape
 
