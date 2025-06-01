@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt_errors.h                              :+:      :+:    :+:   */
+/*   minirt_errors.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,8 +13,8 @@
 #ifndef MINIRT_ERRORS_BONUS_H
 # define MINIRT_ERRORS_BONUS_H
 
-# include <stdbool.h>
 # include "minirt_defs.h"
+# include <stdbool.h>
 
 // check_arguments.c
 void			check_arguments(int argc, char **argv);
