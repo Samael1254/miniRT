@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/05/18 19:04:45 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/02 00:41:53 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 # include "minirt_defs.h"
 # include <pthread.h>
 
+double	vertical_fov_2(double horizontal_fov_2);
 void	shoot_rays(t_state *state, int render_index);
 int		render_loop(t_state *state);
 void	ray_tracing(t_state *state);
+t_ray	init_ray(t_camera camera, t_vec2 rotator);
 t_color	trace_ray(t_vec2 rotator, t_ivec2 coords, t_state *state);
 void	supersampling(t_vec2 rotator, t_ivec2 coords, t_vec2 delta,
 			t_state *state);

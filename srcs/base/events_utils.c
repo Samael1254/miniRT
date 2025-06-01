@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 21:10:58 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/02 01:14:56 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,22 +68,22 @@ void	recreate_image(t_state *state)
 		post_process(state);
 }
 
-int	on_mouse_moov(enum e_keycode key, int x, int y, t_state *state)
+int	mouse_clicked(enum e_keycode button, int x, int y, t_state *state)
 {
-	(void)x;
-	(void)y;
-	if (key == SCROLL_UP)
+	if (button == SCROLL_UP)
 		move_camera(state, &state->scene.camera, SCROLL_UP);
-	if (key == SCROLL_DOWN)
+	if (button == SCROLL_DOWN)
 		move_camera(state, &state->scene.camera, SCROLL_DOWN);
+	if (button == LEFT_CLICK)
+		get_clicked_object_info(x, y, state);
 	return (0);
 }
 
-int	key_released(int button, t_state *state)
+int	key_released(int key, t_state *state)
 {
-	if (button == ALT_KEY && state->keys_state.hold_alt)
+	if (key == ALT_KEY && state->keys_state.hold_alt)
 		state->keys_state.hold_alt = false;
-	if (button == MAJ_KEY && state->keys_state.hold_shift)
+	if (key == MAJ_KEY && state->keys_state.hold_shift)
 		state->keys_state.hold_shift = false;
 	return (0);
 }

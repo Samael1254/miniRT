@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:05 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 13:15:53 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/02 01:05:10 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void			modify_rot_step_size(t_state *state, char sign);
 void			display_fps(t_state *state);
 void			recreate_image(t_state *state);
 void			reload_image(t_state *state);
-int				on_mouse_moov(enum e_keycode key, int x, int y, t_state *state);
+int				mouse_clicked(enum e_keycode key, int x, int y, t_state *state);
 int				key_released(int button, t_state *state);
 void			display_help(t_state *state);
 
@@ -52,6 +52,8 @@ void			init_state(t_state *state, char *filename);
 long			get_time_diff(struct timeval time, struct timeval start_time);
 struct timeval	get_time(t_state *state);
 char			*get_fps_string(long time);
+
+void			get_clicked_object_info(int x, int y, t_state *state);
 
 char			*select_scene(void);
 

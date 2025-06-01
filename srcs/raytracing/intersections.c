@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   intersections.c                              :+:      :+:    :+:   */
+/*   intersections.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/06/02 01:22:17 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include "minirt_normals.h"
 #include <math.h>
 #include <stddef.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 static t_intersection	make_intersection(t_ray ray, t_object *object,
@@ -48,7 +47,7 @@ static t_intersection	make_intersection(t_ray ray, t_object *object,
 	return (inter);
 }
 
-static double	intersect_object(t_ray ray, t_object **object)
+double	intersect_object(t_ray ray, t_object **object)
 {
 	void	*object_r;
 
@@ -65,14 +64,6 @@ static double	intersect_object(t_ray ray, t_object **object)
 		return (intersect_mesh(ray, (t_mesh *)object_r, object));
 	warning("invalid object", "object type not found");
 	return (INFINITY);
-}
-
-static void	update_distance_and_object(double *distance_min,
-		t_object **closest_object, double cur_distance, t_object *cur_object)
-{
-	*distance_min = cur_distance;
-	free_triangle_obj(*closest_object);
-	*closest_object = cur_object;
 }
 
 t_intersection	intersect_scene(t_ray ray, t_state *state)
@@ -92,10 +83,14 @@ t_intersection	intersect_scene(t_ray ray, t_state *state)
 		cur_distance = intersect_object(ray, &cur_object);
 		if (isnan(cur_distance))
 			error("malloc failed", "in face_to_triangle", state);
-		if (ft_in_rangef(cur_distance, RAY_REACH_MIN, distance_min)
+		if (cur_distance < INFINITY && ft_in_rangef(cur_distance, RAY_REACH_MIN,
+				distance_min)
 			&& state->mats_tab[cur_object->index_mat].kd.a != 0)
-			update_distance_and_object(&distance_min, &closest_object,
-				cur_distance, cur_object);
+		{
+			distance_min = cur_distance;
+			free_triangle_obj(closest_object);
+			closest_object = cur_object;
+		}
 		else
 			free_triangle_obj(cur_object);
 		iter = iter->next;

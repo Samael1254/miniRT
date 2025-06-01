@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:08 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 21:10:21 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/02 00:34:03 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@
 enum					e_event
 {
 	ON_KEYPRESS = 2,
+	ON_KEYRELEASE = 3,
+	ON_BUTTONPRESS = 4,
 	ON_CLIENTMSG = 33,
 };
 
@@ -56,6 +58,8 @@ enum					e_event
 enum					e_keycode
 {
 	ESC_KEY = 0xff1b,
+	LEFT_CLICK = 1,
+	RIGHT_CLICK = 3,
 	SCROLL_UP = 4,
 	SCROLL_DOWN = 5,
 	W_KEY = 119,

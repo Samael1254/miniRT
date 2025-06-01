@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt_intersections.h                       :+:      :+:    :+:   */
+/*   minirt_intersections.h                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:09 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:09 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/06/02 00:59:14 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "minirt_defs.h"
 
+double			intersect_object(t_ray ray, t_object **object);
 t_intersection	intersect_scene(t_ray ray, t_state *state);
 
 // Intersect objects

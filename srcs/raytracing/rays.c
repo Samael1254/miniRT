@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:30 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 13:04:09 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/02 00:41:48 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <pthread.h>
 #include <unistd.h>
 
-static double	vertical_fov_2(double horizontal_fov_2)
+double	vertical_fov_2(double horizontal_fov_2)
 {
 	return (atan(((double)WIN_Y / (double)WIN_X) * tan(horizontal_fov_2)));
 }

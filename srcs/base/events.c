@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 21:10:44 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/02 01:05:01 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ static int	key_pressed(enum e_keycode key, t_state *state)
 
 void	loop_events(t_state *state)
 {
-	mlx_hook(state->win, 2, 1L << 0, key_pressed, state);
-	mlx_hook(state->win, 3, 1L << 1, key_released, state);
-	mlx_hook(state->win, 4, 1L << 2, on_mouse_moov, state);
+	mlx_hook(state->win, ON_KEYPRESS, 1L << 0, key_pressed, state);
+	mlx_hook(state->win, ON_KEYRELEASE, 1L << 1, key_released, state);
+	mlx_hook(state->win, ON_BUTTONPRESS, 1L << 2, mouse_clicked, state);
 	mlx_hook(state->win, ON_CLIENTMSG, 0L, exit_program, state);
 	mlx_loop_hook(state->display, render_loop, state);
 	mlx_loop(state->display);
