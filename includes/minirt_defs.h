@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:08 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 12:43:56 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 13:37:53 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ enum					e_keycode
 	LEFT_ARROW_KEY = 65361,
 	RIGHT_ARROW_KEY = 65363,
 	ALT_KEY = 65513,
+	MAJ_KEY = 65505,
 	H_KEY = 0x0068,
 	P_KEY = 0x0070,
 };
@@ -299,6 +300,16 @@ typedef struct s_intersection
 	t_vec2				uv;
 }						t_intersection;
 
+typedef struct s_keys_state
+{
+	bool				hold_alt;
+	bool				hold_maj;
+	bool				toggle_lights;
+	bool				toggle_fps;
+	bool				toggle_help;
+	bool				toggle_aa;
+}						t_keys_state;
+
 // State of the program
 typedef struct s_state
 {
@@ -314,12 +325,8 @@ typedef struct s_state
 	unsigned int		len_mats_tab;
 	struct timeval		start_time;
 	struct timeval		end_time;
-	unsigned char		hold_alt;
-	bool				toggle_lights;
-	bool				toggle_fps;
-	bool				toggle_help;
-	bool				toggle_aa;
 	enum e_post_process	post_process;
+	t_keys_state		keys_state;
 }						t_state;
 
 typedef struct s_thread_data

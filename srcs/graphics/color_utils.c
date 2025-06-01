@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color_utils.c                                :+:      :+:    :+:   */
+/*   color_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/06/01 13:03:58 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_color	get_sky_color(t_state *state, t_ray ray)
 
 	sky_color = lerp_colors(state->scene.sky.top, state->scene.sky.bottom,
 			(ray.direction.y + 1) / 2);
-	if (!state->toggle_lights)
+	if (!state->keys_state.toggle_lights)
 		return (sky_color);
 	iter = state->scene.lights;
 	while (iter)

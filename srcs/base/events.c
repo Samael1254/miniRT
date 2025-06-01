@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/05/18 19:04:54 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 13:38:09 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,19 @@ static void	key_pressed_utils(enum e_keycode key, t_state *state)
 
 static int	key_pressed(enum e_keycode key, t_state *state)
 {
+	t_keys_state	*keys_state;
+
+	keys_state = &state->keys_state;
 	if (key == ESC_KEY)
 		exit_program(state, EXIT_SUCCESS);
-	if (key == ALT_KEY && state->hold_alt == 0)
-		state->hold_alt = 1;
-	if (state->hold_alt == 0 && (key == W_KEY || key == S_KEY || key == A_KEY
+	if (key == ALT_KEY && !keys_state->hold_alt)
+		keys_state->hold_alt = true;
+	if (key == MAJ_KEY && !keys_state->hold_maj)
+		keys_state->hold_maj = true;
+	if (!keys_state->hold_alt && (key == W_KEY || key == S_KEY || key == A_KEY
 			|| key == D_KEY))
 		move_camera(state, &state->scene.camera, key);
-	else if (state->hold_alt == 1 && (key == W_KEY || key == S_KEY
+	else if (keys_state->hold_alt && (key == W_KEY || key == S_KEY
 			|| key == A_KEY || key == D_KEY))
 		rotate_camera(state, &state->scene.camera, key);
 	if (key == UP_ARROW_KEY)
@@ -81,7 +86,7 @@ static int	key_pressed(enum e_keycode key, t_state *state)
 void	loop_events(t_state *state)
 {
 	mlx_hook(state->win, 2, 1L << 0, key_pressed, state);
-	mlx_hook(state->win, 3, 1L << 1, end_hold_alt_hook, state);
+	mlx_hook(state->win, 3, 1L << 1, key_released, state);
 	mlx_hook(state->win, 4, 1L << 2, on_mouse_moov, state);
 	mlx_hook(state->win, ON_CLIENTMSG, 0L, exit_program, state);
 	mlx_loop_hook(state->display, render_loop, state);

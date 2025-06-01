@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/05/18 19:15:31 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 12:52:20 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,12 @@ static void	initialize_state(t_state *state)
 		state->id_list[i] = NULL;
 	state->len_mats_tab = 0;
 	state->mats_tab = NULL;
-	state->hold_alt = 0;
-	state->toggle_lights = false;
-	state->toggle_fps = false;
-	state->toggle_help = false;
-	state->toggle_aa = false;
+	state->keys_state.hold_alt = 0;
+	state->keys_state.hold_maj = 0;
+	state->keys_state.toggle_lights = false;
+	state->keys_state.toggle_fps = false;
+	state->keys_state.toggle_help = false;
+	state->keys_state.toggle_aa = false;
 	state->post_process = PP_NONE;
 }
 

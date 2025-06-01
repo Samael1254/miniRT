@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   events_utils_execution.c                     :+:      :+:    :+:   */
+/*   events_utils_execution.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/06/01 13:03:40 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	display_help(t_state *state)
 {
-	if (!state->toggle_help)
+	if (!state->keys_state.toggle_help)
 		return ;
 	mlx_string_put(state->display, state->win, 20, 20, 0xFFFFFF, "-- HELP --");
 	mlx_string_put(state->display, state->win, 20, 40, 0xFFFFFF,

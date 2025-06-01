@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   light.c                                      :+:      :+:    :+:   */
+/*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/06/01 13:04:35 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include <stdbool.h>
 
 static void	shade_light_loop(t_state *state, t_intersection *light_inter,
-							t_ray *light_ray, t_point_light *light)
+		t_ray *light_ray, t_point_light *light)
 {
 	double		max_dist;
 	t_material	mat;
@@ -71,7 +71,7 @@ static t_color	shade_point_light(t_intersection inter, t_ray ray,
 	t_ray			light_ray;
 	t_intersection	light_inter;
 
-	if (!state->toggle_lights)
+	if (!state->keys_state.toggle_lights)
 		return (init_color(0, 0, 0));
 	light_ray.origin = inter.point;
 	light_ray.direction = get_light_direction(light_ray, light);

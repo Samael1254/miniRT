@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:30 by macuesta          #+#    #+#             */
-/*   Updated: 2025/05/18 17:43:34 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 13:04:24 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_color	trace_ray(t_vec2 rotator, t_ivec2 coords, t_state *state)
 	ray = init_ray(state->scene.camera, rotator);
 	inter = intersect_scene(ray, state);
 	color = phong_illumination(state, inter, ray);
-	if (!state->toggle_aa)
+	if (!state->keys_state.toggle_aa)
 		put_pixel(&state->img_data, coords, color);
 	return (color);
 }

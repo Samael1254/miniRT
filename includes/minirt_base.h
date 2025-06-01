@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:05 by macuesta          #+#    #+#             */
-/*   Updated: 2025/05/18 16:22:02 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 13:15:53 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void			display_fps(t_state *state);
 void			recreate_image(t_state *state);
 void			reload_image(t_state *state);
 int				on_mouse_moov(enum e_keycode key, int x, int y, t_state *state);
-int				end_hold_alt_hook(int button, t_state *state);
+int				key_released(int button, t_state *state);
 void			display_help(t_state *state);
 
 // events_utils_toggle.c

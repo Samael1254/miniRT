@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/05/18 19:10:22 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 13:16:56 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	display_fps(t_state *state)
 {
 	char	*fps_str;
 
-	if (!state->toggle_fps)
+	if (!state->keys_state.toggle_fps)
 		return ;
 	fps_str = get_fps_string(get_time_diff(state->end_time, state->start_time));
 	if (!fps_str)
@@ -62,7 +62,8 @@ void	recreate_image(t_state *state)
 		error("init_mlx", "failed to retrieve addr", state);
 	state->redraw_column = 0;
 	state->rendering = true;
-	write(1, "\e[1A\e[2K", 8);
+	if (write(1, "\e[1A\e[2K", 8) == -1)
+		error("write failed", "in recreate_image", state);
 	if (state->post_process != PP_NONE)
 		post_process(state);
 }
@@ -78,9 +79,11 @@ int	on_mouse_moov(enum e_keycode key, int x, int y, t_state *state)
 	return (0);
 }
 
-int	end_hold_alt_hook(int button, t_state *state)
+int	key_released(int button, t_state *state)
 {
-	if (button == ALT_KEY && state->hold_alt == 1)
-		state->hold_alt = 0;
+	if (button == ALT_KEY && state->keys_state.hold_alt)
+		state->keys_state.hold_alt = false;
+	if (button == MAJ_KEY && state->keys_state.hold_maj)
+		state->keys_state.hold_maj = false;
 	return (0);
 }

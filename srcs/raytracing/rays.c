@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:30 by macuesta          #+#    #+#             */
-/*   Updated: 2025/05/18 18:32:52 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 13:04:09 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	*thread_shoot_rays(void *arg)
 		rotator.y = data->state->scene.camera.fov_2 - coords.x * delta.y;
 		while (coords.x < WIN_X)
 		{
-			if (data->state->toggle_aa)
+			if (data->state->keys_state.toggle_aa)
 				supersampling(rotator, coords, delta, data->state);
 			else
 				trace_ray(rotator, coords, data->state);
