@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:08 by macuesta          #+#    #+#             */
-/*   Updated: 2025/05/18 19:14:06 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 12:43:56 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # define AA_LEVEL 2
 
 # define PARTIAL_RENDER 16
+
+# define NB_FILTERS 10
 
 # define RAY_REACH_MAX 1000
 # define RAY_REACH_MIN 1e-4
@@ -86,6 +88,7 @@ enum					e_post_process
 	PP_GRAY,
 	PP_POSTER,
 	PP_SCANLINES,
+	PP_BLACKWHITE,
 	PP_SATURATION,
 };
 

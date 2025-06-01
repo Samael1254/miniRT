@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/05/18 15:56:45 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 12:30:01 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,15 @@ t_color	posterization(t_color color)
 	hdr.y = floor(hdr.y) / (double)levels;
 	hdr.z = floor(hdr.z) / (double)levels;
 	return (hdr_to_ldr_color(hdr));
+}
+
+t_color	black_and_white(t_color color)
+{
+	const int	threshold = 300;
+	int			sum;
+
+	sum = color.r + color.g + color.b;
+	if (sum > threshold)
+		return (init_color(255, 255, 255));
+	return (init_color(0, 0, 0));
 }

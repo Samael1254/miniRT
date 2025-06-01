@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/05/18 16:25:34 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 12:27:16 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ t_color	post_process_color(t_color color, t_ivec2 coords,
 		break ;
 	case PP_NEGATIVE:
 		processed_color = negative(processed_color);
+		break ;
+	case PP_BLACKWHITE:
+		processed_color = black_and_white(processed_color);
 		break ;
 	case PP_NONE:
 		break ;

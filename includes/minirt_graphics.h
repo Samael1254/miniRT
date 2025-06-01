@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:09 by macuesta          #+#    #+#             */
-/*   Updated: 2025/05/18 16:14:36 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 12:22:50 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_color	posterization(t_color color);
 t_color	saturation_boost(t_color color);
 t_color	scanlines(t_color color, t_ivec2 coords);
 t_color	gray_tone(t_color color);
+t_color	black_and_white(t_color color);
 
 // post_process_utils.c
 t_vec3	ldr_to_hdr_color(t_color ldr);

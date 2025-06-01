@@ -6,14 +6,13 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/05/18 16:35:54 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/01 12:44:08 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt_base.h"
 #include "minirt_defs.h"
 #include "minirt_graphics.h"
-#include "mlx.h"
 
 void	toggle_lights(t_state *state)
 {
@@ -53,7 +52,7 @@ void	toggle_fps(t_state *state)
 
 void	change_post_processing(t_state *state)
 {
-	state->post_process = (state->post_process + 1) % 9;
+	state->post_process = (state->post_process + 1) % NB_FILTERS;
 	if (state->post_process != PP_NONE)
 		post_process(state);
 	reload_image(state);
