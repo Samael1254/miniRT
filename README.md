@@ -143,8 +143,9 @@ The following keybindings allow the user to interact with miniRT:
 
 ##### User interaction
 - Display filter name in the terminal when pressing P
-- Display initialization time
+- Display initialization time and total render time
 - Lower movements steps
+- CLI for interacting with the scene
 
 ##### Camera movement
 - Drag and drop for rotations
