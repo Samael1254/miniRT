@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:08 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/03 18:40:50 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/03 19:56:44 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,10 +318,7 @@ typedef struct s_keys_state
 
 typedef struct s_cli
 {
-	pthread_t			cli_thread;
-	pthread_mutex_t		cli_mutex;
 	char				*command;
-	bool				has_new_command;
 }						t_cli;
 
 // State of the program
