@@ -6,15 +6,17 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 21:10:53 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:54:37 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt_base.h"
+#include "minirt_cli.h"
 #include "minirt_defs.h"
 #include "minirt_errors.h"
 #include "minirt_parsing.h"
 #include "mlx.h"
+#include <pthread.h>
 #include <stddef.h>
 #include <stdio.h>
 
@@ -57,6 +59,18 @@ static void	initialize_state(t_state *state)
 	state->post_process = PP_NONE;
 }
 
+static void	init_cli(t_state *state)
+{
+	if (pthread_mutex_init(&state->cli.cli_mutex, NULL) != 0)
+		error("failed to init mutex", "in init_cli", state);
+	state->cli.command = NULL;
+	state->cli.has_new_command = false;
+	if (pthread_create(&state->cli.cli_thread, NULL, cli_loop,
+			(void *)&state->cli) != 0)
+		error("failed to create cli thread", "in init_cli", state);
+	pthread_detach(state->cli.cli_thread);
+}
+
 void	init_state(t_state *state, char *filename)
 {
 	info("Starting minirt bonus version with following scene", filename);
@@ -64,5 +78,6 @@ void	init_state(t_state *state, char *filename)
 	initialize_state(state);
 	init_mlx(state);
 	init_scene(state, filename);
+	init_cli(state);
 	state->start_time = get_time(state);
 }

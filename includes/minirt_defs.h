@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:08 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/02 00:34:03 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:40:50 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "ft_algebra.h"
 # include "ft_binary_tree.h"
 # include "ft_list.h"
+# include <pthread.h>
 # include <stdbool.h>
 # include <sys/time.h>
 
@@ -315,6 +316,14 @@ typedef struct s_keys_state
 	bool				toggle_aa;
 }						t_keys_state;
 
+typedef struct s_cli
+{
+	pthread_t			cli_thread;
+	pthread_mutex_t		cli_mutex;
+	char				*command;
+	bool				has_new_command;
+}						t_cli;
+
 // State of the program
 typedef struct s_state
 {
@@ -332,6 +341,7 @@ typedef struct s_state
 	struct timeval		end_time;
 	enum e_post_process	post_process;
 	t_keys_state		keys_state;
+	t_cli				cli;
 }						t_state;
 
 typedef struct s_thread_data

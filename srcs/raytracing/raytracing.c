@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:30 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 22:47:00 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:52:06 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,21 @@
 #include "minirt_errors.h"
 #include "minirt_graphics.h"
 #include "minirt_raytracing.h"
+#include <pthread.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 int	render_loop(t_state *state)
 {
+	pthread_mutex_lock(&state->cli.cli_mutex);
+	if (state->cli.has_new_command)
+	{
+		printf("new command: %s\n", state->cli.command);
+		free(state->cli.command);
+		state->cli.command = NULL;
+		state->cli.has_new_command = false;
+	}
+	pthread_mutex_unlock(&state->cli.cli_mutex);
 	if (!state->rendering)
 		return (0);
 	if (state->redraw_column >= PARTIAL_RENDER)

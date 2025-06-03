@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/02 01:14:56 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:39:24 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	reload_image(t_state *state)
 
 void	recreate_image(t_state *state)
 {
-	info(NULL, "LOADING...");
 	state->start_time = get_time(state);
 	mlx_destroy_image(state->display, state->img_data.img);
 	state->img_data.img = mlx_new_image(state->display, WIN_X, WIN_Y);
@@ -62,8 +61,6 @@ void	recreate_image(t_state *state)
 		error("init_mlx", "failed to retrieve addr", state);
 	state->redraw_column = 0;
 	state->rendering = true;
-	if (write(1, "\e[1A\e[2K", 8) == -1)
-		error("write failed", "in recreate_image", state);
 	if (state->post_process != PP_NONE)
 		post_process(state);
 }

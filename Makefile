@@ -36,6 +36,8 @@ SRCS_TEXTURING := uv_mapping.c normal_map.c mapping_utils.c object_mapping.c
 
 SRCS_MESH := init_mesh.c mesh_utils.c parse_obj_element.c parse_obj_file.c
 
+SRCS_CLI := cli.c
+
 SRCS := $(addprefix $(SRCS_DIR)base/, $(SRCS_MAIN)) \
            $(addprefix $(SRCS_DIR)bvh/, $(SRCS_BVH)) \
            $(addprefix $(SRCS_DIR)parsing/, $(SRCS_PARSING)) \
@@ -45,6 +47,7 @@ SRCS := $(addprefix $(SRCS_DIR)base/, $(SRCS_MAIN)) \
            $(addprefix $(SRCS_DIR)light/, $(SRCS_LIGHT)) \
            $(addprefix $(SRCS_DIR)texturing/, $(SRCS_TEXTURING)) \
            $(addprefix $(SRCS_DIR)mesh_parsing/, $(SRCS_MESH)) \
+           $(addprefix $(SRCS_DIR)cli/, $(SRCS_CLI)) \
 
 OBJS := $(addprefix $(BUILD_DIR), $(notdir $(SRCS:.c=.o)))
 
@@ -60,11 +63,11 @@ MLX = ./libs/mlx/libmlx.a
 
 OBJ_PARSER = ./libs/obj_parser/lib/libobjParser.a
 
-LIBFLAGS := -lft -Llibs/libft/lib -lmlx -Llibs/mlx -lobjParser -Llibs/obj_parser/lib -lX11 -lXext -lm
+LDFLAGS := -lft -Llibs/libft/lib -lmlx -Llibs/mlx -lobjParser -Llibs/obj_parser/lib -lX11 -lXext -lm -lreadline
 
 $(NAME): $(LIBFT) $(MLX) $(OBJ_PARSER) $(OBJS) $(HEADERS)
 	@ echo " \033[33mCompiling miniRT\033[m"
-	@ $(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFLAGS)
+	@ $(CC) $(CFLAGS) -o $@ $(OBJS) $(LDFLAGS)
 	@ echo " \033[1;32m MiniRT\033[0;1;32m binary compiled\033[m"
 
 $(BUILD_DIR)%.o: $(SRCS_DIR)*/%.c

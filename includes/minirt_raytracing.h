@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/02 00:41:53 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:22:13 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINIRT_RAYTRACING_BONUS_H
 
 # include "minirt_defs.h"
-# include <pthread.h>
 
 double	vertical_fov_2(double horizontal_fov_2);
 void	shoot_rays(t_state *state, int render_index);
