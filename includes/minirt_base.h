@@ -1,25 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minirt_base.h                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 17:21:05 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/02 01:05:10 by gfulconi         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINIRT_BASE_BONUS_H
 # define MINIRT_BASE_BONUS_H
 
 # include "minirt_defs.h"
 
 // events.c
-
-void			move_camera(t_state *state, t_camera *camera,
-					enum e_keycode key);
-void			loop_events(t_state *state);
 
 // events_utils.c
 

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   post_process.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 12:27:16 by gfulconi         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ft_algebra.h"
 #include "minirt_defs.h"
 #include "minirt_errors.h"
@@ -50,6 +38,9 @@ t_color	post_process_color(t_color color, t_ivec2 coords,
 		break ;
 	case PP_BLACKWHITE:
 		processed_color = black_and_white(processed_color);
+		break ;
+	case PP_DARK:
+		processed_color = dark(processed_color);
 		break ;
 	case PP_NONE:
 		break ;

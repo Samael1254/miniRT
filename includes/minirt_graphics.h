@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:09 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 14:04:46 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/04 14:08:16 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ t_color	post_process_color(t_color color, t_ivec2 coords,
 // post_process_filters.c
 t_color	vignette(t_color color, t_ivec2 coords);
 t_color	sepia_tone(t_color color);
-t_color	vignette(t_color color, t_ivec2 coords);
 t_color	negative(t_color color);
 t_color	gamma_correction(t_color color);
 t_color	posterization(t_color color);
@@ -48,6 +47,7 @@ t_color	saturation_boost(t_color color);
 t_color	scanlines(t_color color, t_ivec2 coords);
 t_color	gray_tone(t_color color);
 t_color	black_and_white(t_color color);
+t_color	dark(t_color color);
 
 // post_process_utils.c
 t_vec3	ldr_to_hdr_color(t_color ldr);

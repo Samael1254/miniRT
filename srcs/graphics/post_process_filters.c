@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 12:30:01 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/04 14:06:38 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ t_color	vignette(t_color color, t_ivec2 coords)
 
 	vignette_scale = 1 - (dx * dx + dy * dy) * intensity;
 	return (scale_color(color, vignette_scale));
+}
+
+t_color	dark(t_color color)
+{
+	return (scale_color(color, 0.5));
 }
 
 t_color	sepia_tone(t_color color)

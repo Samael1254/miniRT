@@ -1,17 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   init_state.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/03 20:03:13 by gfulconi         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minirt_base.h"
-#include "minirt_cli.h"
 #include "minirt_defs.h"
 #include "minirt_errors.h"
 #include "minirt_parsing.h"
@@ -56,6 +43,7 @@ static void	initialize_state(t_state *state)
 	state->keys_state.toggle_fps = false;
 	state->keys_state.toggle_help = false;
 	state->keys_state.toggle_aa = false;
+	state->keys_state.toggle_command = false;
 	state->post_process = PP_NONE;
 }
 

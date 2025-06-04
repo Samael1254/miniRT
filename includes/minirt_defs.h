@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minirt_defs.h                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 17:21:08 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/03 19:56:44 by gfulconi         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINIRT_DEFS_BONUS_H
 # define MINIRT_DEFS_BONUS_H
 
@@ -83,6 +71,7 @@ enum					e_keycode
 	H_KEY = 0x0068,
 	P_KEY = 0x0070,
 	SPACE_KEY = 0x20,
+	TAB_KEY = 0xff09,
 };
 
 enum					e_post_process
@@ -97,6 +86,7 @@ enum					e_post_process
 	PP_SCANLINES,
 	PP_BLACKWHITE,
 	PP_SATURATION,
+	PP_DARK,
 };
 
 enum					e_mat_param
@@ -314,6 +304,7 @@ typedef struct s_keys_state
 	bool				toggle_fps;
 	bool				toggle_help;
 	bool				toggle_aa;
+	bool				toggle_command;
 }						t_keys_state;
 
 typedef struct s_cli

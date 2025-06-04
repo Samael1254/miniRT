@@ -1,5 +1,3 @@
-#include "minirt_defs.h"
-#include <pthread.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <stdbool.h>

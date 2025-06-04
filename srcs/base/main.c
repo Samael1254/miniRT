@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 22:51:28 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/04 18:48:55 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "minirt_base.h"
 #include "minirt_defs.h"
 #include "minirt_errors.h"
+#include "minirt_events.h"
 #include "minirt_raytracing.h"
 #include <bits/types/struct_timeval.h>
 #include <stdlib.h>

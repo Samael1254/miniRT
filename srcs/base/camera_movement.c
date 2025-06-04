@@ -1,46 +1,26 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   events_utils_execution.c                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/01 21:06:50 by gfulconi         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "mlx.h"
 #include "minirt_base.h"
 #include <stdio.h>
 
-void	display_help(t_state *state)
+void	rotate_camera(t_state *state, t_camera *camera, enum e_keycode keycode)
 {
-	if (!state->keys_state.toggle_help)
-		return ;
-	mlx_string_put(state->display, state->win, 20, 20, 0xFFFFFF, "-- HELP --");
-	mlx_string_put(state->display, state->win, 20, 40, 0xFFFFFF,
-		"Move: WASD");
-	mlx_string_put(state->display, state->win, 20, 55, 0xFFFFFF,
-		"Zoom: Mouse wheel");
-	mlx_string_put(state->display, state->win, 20, 70, 0xFFFFFF,
-		"Rotate: ALT + WASD");
-	mlx_string_put(state->display, state->win, 20, 85, 0xFFFFFF,
-		"Change movement speed: UP/DOWN");
-	mlx_string_put(state->display, state->win, 20, 100, 0xFFFFFF,
-		"Change rotation speed: LEFT/RIGHT");
-	mlx_string_put(state->display, state->win, 20, 115, 0xFFFFFF,
-		"Show source light(s): L");
-	mlx_string_put(state->display, state->win, 20, 130, 0xFFFFFF,
-		"Change post-process: P (Shift-P to go backwards)");
-	mlx_string_put(state->display, state->win, 20, 145, 0xFFFFFF,
-		"Anti-aliasing: K");
-	mlx_string_put(state->display, state->win, 20, 160, 0xFFFFFF,
-		"Show FPS: F");
-	mlx_string_put(state->display, state->win, 20, 175, 0xFFFFFF,
-		"Save image: SPACE");
-	mlx_string_put(state->display, state->win, 20, 190, 0xFFFFFF,
-		"Exit program: ESC");
+	double	angle;
+	double	m_rot[4][4];
+
+	angle = ft_deg_to_rad(camera->rot_step);
+	if (keycode == D_KEY || keycode == S_KEY)
+		angle *= -1;
+	if (keycode == A_KEY || keycode == D_KEY)
+		ft_set_base_rotation_mat4(m_rot, angle, Y_AXIS);
+	else if (keycode == W_KEY || keycode == S_KEY)
+		ft_set_rotation_mat4(m_rot, angle, camera->x_axis);
+	camera->dir = ft_4dto3d_vector(ft_mat_vec_product4(m_rot,
+				ft_3dto4d_vector(camera->dir)));
+	if (keycode == A_KEY || keycode == D_KEY)
+		camera->x_axis = ft_4dto3d_vector(ft_mat_vec_product4(m_rot,
+					ft_3dto4d_vector(camera->x_axis)));
+	camera->y_axis = ft_4dto3d_vector(ft_mat_vec_product4(m_rot,
+				ft_3dto4d_vector(camera->y_axis)));
+	recreate_image(state);
 }
 
 void	move_camera(t_state *state, t_camera *camera, enum e_keycode key)
