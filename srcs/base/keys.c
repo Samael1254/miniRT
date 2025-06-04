@@ -70,7 +70,7 @@ int	key_pressed(enum e_keycode key, t_state *state)
 	render_keys(key, state);
 	ui_keys(key, state);
 	program_keys(key, state);
-	return (1);
+	return (0);
 }
 
 int	key_released(int key, t_state *state)

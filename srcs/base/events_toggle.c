@@ -1,6 +1,7 @@
 #include "minirt_base.h"
 #include "ft_strings.h"
 #include "minirt_base.h"
+#include "minirt_cli.h"
 #include "minirt_defs.h"
 #include "minirt_errors.h"
 #include "minirt_graphics.h"
@@ -50,6 +51,8 @@ void	toggle_fps(t_state *state)
 
 void	toggle_command_mode(t_state *state)
 {
+	if (state->rendering)
+		return;
 	state->keys_state.toggle_command = true;
 	state->post_process = PP_DARK;
 	post_process(state);

@@ -4,6 +4,6 @@
 # include "minirt_defs.h"
 
 void	toggle_command_mode(t_state *state);
-void	*cli_loop(void *arg);
+void	cli(t_state *state);
 
 #endif

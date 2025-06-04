@@ -6,11 +6,12 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:30 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/03 19:59:47 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/04 19:05:48 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt_base.h"
+#include "minirt_cli.h"
 #include "minirt_defs.h"
 #include "minirt_errors.h"
 #include "minirt_graphics.h"
@@ -22,6 +23,11 @@
 
 int	render_loop(t_state *state)
 {
+	if (!state->rendering && state->keys_state.toggle_command)
+	{
+		cli(state);
+		return (0);
+	}
 	if (!state->rendering)
 		return (0);
 	if (state->redraw_column >= PARTIAL_RENDER)
