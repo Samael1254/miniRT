@@ -1,5 +1,4 @@
 #include "minirt_base.h"
-#include "minirt_cli.h"
 #include "minirt_defs.h"
 #include "minirt_events.h"
 #include "minirt_graphics.h"
@@ -56,8 +55,6 @@ static void	program_keys(enum e_keycode key, t_state *state)
 		exit_program(state, EXIT_SUCCESS);
 	else if (key == SPACE_KEY)
 		save_image(state);
-	else if (key == TAB_KEY)
-		toggle_command_mode(state);
 }
 
 int	key_pressed(enum e_keycode key, t_state *state)

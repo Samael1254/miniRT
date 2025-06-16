@@ -1,23 +1,17 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/04 18:48:55 by gfulconi         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ft_strings.h"
 #include "minirt_base.h"
+#include "minirt_cli.h"
 #include "minirt_defs.h"
 #include "minirt_errors.h"
 #include "minirt_events.h"
 #include "minirt_raytracing.h"
 #include <bits/types/struct_timeval.h>
+#include <fcntl.h>
+#include <readline/history.h>
+#include <readline/readline.h>
+#include <readline/rltypedefs.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 int	main(int argc, char **argv)
 {
@@ -32,6 +26,7 @@ int	main(int argc, char **argv)
 	init_state(&state, scene_name);
 	free(scene_name);
 	ray_tracing(&state);
+	// init_cli();
 	loop_events(&state);
 	warning("unusal exit", "program should be closed with ESC or cross");
 	exit_program(&state, EXIT_FAILURE);

@@ -63,7 +63,7 @@ MLX = ./libs/mlx/libmlx.a
 
 OBJ_PARSER = ./libs/obj_parser/lib/libobjParser.a
 
-LDFLAGS := -lft -Llibs/libft/lib -lmlx -Llibs/mlx -lobjParser -Llibs/obj_parser/lib -lX11 -lXext -lm -lreadline
+LDFLAGS := -lft -Llibs/libft/lib -lmlx -Llibs/mlx -lobjParser -Llibs/obj_parser/lib -lX11 -lXext -lm -lreadline -pthread
 
 $(NAME): $(LIBFT) $(MLX) $(OBJ_PARSER) $(OBJS) $(HEADERS)
 	@ echo " \033[33mCompiling miniRT\033[m"

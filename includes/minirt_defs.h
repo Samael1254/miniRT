@@ -17,8 +17,8 @@
 # define BVH_DEPTH 8
 # define BVH_MIN_TRIANGLES 5
 
-# define WIN_X 800
-# define WIN_Y 600
+# define WIN_X 1000
+# define WIN_Y 800
 
 # define AA_LEVEL 2
 
@@ -310,6 +310,9 @@ typedef struct s_keys_state
 typedef struct s_cli
 {
 	char				*command;
+	pthread_t			thread;
+	pthread_mutex_t		mutex;
+	bool				is_new_command;
 }						t_cli;
 
 // State of the program

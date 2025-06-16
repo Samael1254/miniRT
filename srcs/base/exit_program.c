@@ -6,13 +6,14 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/05/18 16:27:30 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:23:55 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_list.h"
 #include "minirt_obj_parser.h"
 #include "mlx.h"
+#include <pthread.h>
 #include <stdlib.h>
 
 static void	free_materials(t_state *state)
@@ -67,6 +68,13 @@ static void	free_mlx(t_state *state)
 	free(state->display);
 }
 
+static void	free_cli(t_cli *cli)
+{
+	pthread_cancel(cli->thread);
+	pthread_join(cli->thread, NULL);
+	pthread_mutex_destroy(&cli->mutex);
+}
+
 int	exit_program(t_state *state, int status)
 {
 	int	i;
@@ -83,6 +91,7 @@ int	exit_program(t_state *state, int status)
 		free_materials(state);
 		free_scene(&state->scene);
 		free_mlx(state);
+		free_cli(&state->cli);
 	}
 	exit(status);
 }

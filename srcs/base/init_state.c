@@ -1,4 +1,5 @@
 #include "minirt_base.h"
+#include "minirt_cli.h"
 #include "minirt_defs.h"
 #include "minirt_errors.h"
 #include "minirt_parsing.h"
@@ -49,10 +50,11 @@ static void	initialize_state(t_state *state)
 
 void	init_state(t_state *state, char *filename)
 {
-	info("Starting minirt bonus version with following scene", filename);
-	info(NULL, "initialization...");
+	info("Starting minirt with following scene", filename);
+	info(NULL, "Initialization...");
 	initialize_state(state);
 	init_mlx(state);
 	init_scene(state, filename);
+	init_cli(&state->cli);
 	state->start_time = get_time(state);
 }
