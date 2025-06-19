@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+int	keys_cmd(void)
+{
+	printf("-- Keybindings --\n");
+	printf("Move: WASD\n");
+	printf("Zoom: Mouse wheel\n");
+	printf("Rotate: ALT + WASD\n");
+	printf("Change movement speed: UP/DOWN\n");
+	printf("Change rotation speed: LEFT/RIGHT\n");
+	printf("Show source light(s): L\n");
+	printf("Change post-process: P (Shift-P to go backwards)\n");
+	printf("Anti-aliasing: K\n");
+	printf("Show FPS: F\n");
+	printf("Save image: SPACE\n");
+	printf("Exit program: ESC\n");
+	return (0);
+}

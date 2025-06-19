@@ -38,9 +38,7 @@ void	process_command(t_cli *cli)
 		pthread_mutex_unlock(&cli->mutex);
 		return ;
 	}
-	write(STDOUT_FILENO, "command: ", 9);
-	write(STDOUT_FILENO, command, strlen(command));
-	write(STDOUT_FILENO, "\n", 1);
+	parse_command(command);
 	free(command);
 	pthread_mutex_unlock(&cli->mutex);
 }
