@@ -1,6 +1,5 @@
 #include "ft_conversion.h"
 #include "ft_strings.h"
-#include "get_next_line.h"
 #include "minirt_base.h"
 #include "minirt_errors.h"
 #include <dirent.h>

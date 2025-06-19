@@ -38,7 +38,7 @@ int	render_loop(t_state *state)
 
 void	ray_tracing(t_state *state)
 {
-	info(NULL, "ray tracing...");
+	info(NULL, "Ray-tracing...");
 	state->redraw_column = 0;
 	state->rendering = true;
 	info(NULL, "press ESC to close, H for help");

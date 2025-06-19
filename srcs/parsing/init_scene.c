@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_scene.c                                 :+:      :+:    :+:   */
+/*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:29 by macuesta         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:29:46 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ static void	check_directory(t_state *state, char *filename)
 	fd = open(filename, O_WRONLY);
 	if (fd == -1)
 	{
+		free(filename);
 		if (errno == EISDIR)
 			error("wrong filename", "given name is a directory", state);
 		else if (errno == EACCES)
@@ -110,6 +111,7 @@ void	init_scene(t_state *state, char *filename)
 
 	check_directory(state, filename);
 	fd = open_and_count_mats(state, filename);
+	free(filename);
 	if (fd == -1)
 		error("wrong filename", "cannot open file", state);
 	i = 0;

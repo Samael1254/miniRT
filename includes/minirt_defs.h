@@ -313,6 +313,7 @@ typedef struct s_cli
 	pthread_t			thread;
 	pthread_mutex_t		mutex;
 	bool				is_new_command;
+	bool				is_init;
 }						t_cli;
 
 // State of the program

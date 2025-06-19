@@ -6,7 +6,7 @@
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/16 17:23:55 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:21:28 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ static void	free_mlx(t_state *state)
 
 static void	free_cli(t_cli *cli)
 {
+	if (!cli->is_init)
+		return ;
 	pthread_cancel(cli->thread);
 	pthread_join(cli->thread, NULL);
 	pthread_mutex_destroy(&cli->mutex);

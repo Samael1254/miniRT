@@ -33,13 +33,16 @@ void	process_command(t_cli *cli)
 	cli->command = NULL;
 	cli->is_new_command = false;
 	pthread_setcancelstate(old_cancel_state, NULL);
-	pthread_mutex_unlock(&cli->mutex);
 	if (!command)
+	{
+		pthread_mutex_unlock(&cli->mutex);
 		return ;
+	}
 	write(STDOUT_FILENO, "command: ", 9);
 	write(STDOUT_FILENO, command, strlen(command));
 	write(STDOUT_FILENO, "\n", 1);
 	free(command);
+	pthread_mutex_unlock(&cli->mutex);
 }
 
 static void	cli(t_cli *cli)
@@ -79,4 +82,5 @@ void	init_cli(t_cli *cli)
 	cli->is_new_command = false;
 	pthread_mutex_init(&cli->mutex, NULL);
 	pthread_create(&cli->thread, NULL, start_cli, cli);
+	cli->is_init = true;
 }

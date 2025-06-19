@@ -1,5 +1,6 @@
 #include "ft_strings.h"
 #include "minirt_base.h"
+#include "minirt_cli.h"
 #include "minirt_defs.h"
 #include "minirt_errors.h"
 #include "minirt_events.h"
@@ -23,7 +24,7 @@ int	main(int argc, char **argv)
 	else
 		scene_name = select_scene();
 	init_state(&state, scene_name);
-	free(scene_name);
+	init_cli(&state.cli);
 	ray_tracing(&state);
 	loop_events(&state);
 	warning("unusal exit", "program should be closed with ESC or cross");

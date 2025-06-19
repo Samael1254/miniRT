@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   open_and_count_mats.c                        :+:      :+:    :+:   */
+/*   open_and_count_mats.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/04/15 13:27:37 by gfulconi         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:32:09 by gfulconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,10 @@ int	open_and_count_mats(t_state *state, char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd <= 0)
-		error("cannot open file", filename, state);
+	{
+		free(filename);
+		error("wrong filename", "cannot open file", state);
+	}
 	nb_mt_found = 0;
 	while (1)
 	{
@@ -137,13 +140,20 @@ int	open_and_count_mats(t_state *state, char *filename)
 		if (!ft_strncmp("MT", line, 2))
 		{
 			if (line_mt_handler(state, line))
+				// FIX: filename is not freed in case of error in line_mt_handler
+			{
+				free(filename);
 				error(NULL, "problem on material line", state);
+			}
 			nb_mt_found++;
 		}
 		else
 			free(line);
 	}
 	if (close(fd) == -1 || nb_mt_found != 1)
+	{
+		free(filename);
 		error("materials", "need one and only one MT line", state);
+	}
 	return (open(filename, O_RDONLY));
 }
