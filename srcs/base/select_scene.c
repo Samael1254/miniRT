@@ -5,6 +5,7 @@
 #include "minirt_errors.h"
 #include <dirent.h>
 #include <errno.h>
+#include <readline/readline.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -83,9 +84,21 @@ static char	**load_available_scenes(int count)
 	return (scenes);
 }
 
+static void	print_available_scenes(char **scenes)
+{
+	int	i;
+
+	printf("Available scenes:\n\n");
+	i = 0;
+	while (scenes[i])
+	{
+		printf("\e[33m%2d.\e[34m %s\e[0m\n", i + 1, scenes[i]);
+		i++;
+	}
+}
+
 char	*select_scene(void)
 {
-	int		i;
 	int		scene_index;
 	int		count;
 	char	**scenes;
@@ -94,23 +107,16 @@ char	*select_scene(void)
 
 	count = count_scenes();
 	scenes = load_available_scenes(count);
-	printf("Available scenes:\n\n");
-	i = 0;
-	while (scenes[i])
-	{
-		printf("\e[33m%2d.\e[34m %s\e[0m\n", i + 1, scenes[i]);
-		i++;
-	}
-	printf("\nPlease select a scene to launch by entering its \e[33mindex\e[0m: \n");
+	print_available_scenes(scenes);
+	printf("\nPlease select a scene to launch by entering its \e[33mindex\e[0m\n");
 	while (true)
 	{
-		user_input = get_next_line(STDIN_FILENO);
+		user_input = readline("> ");
 		if (!user_input)
 		{
 			ft_free_strtab(scenes);
 			error(NULL, "input stopped or crashed", NULL);
 		}
-		*ft_strchr(user_input, '\n') = '\0';
 		scene_index = ft_atoi(user_input);
 		if (scene_index > 0 && scene_index <= count
 			&& ft_str_is_number(user_input))
@@ -119,7 +125,8 @@ char	*select_scene(void)
 			break ;
 		}
 		free(user_input);
-		printf("Please enter a valid scene index (between 1 and %d)\n", count);
+		printf("Please enter a \e[32mvalid\e[0m scene \e[33mindex\e[0m ");
+		printf("(between 1 and %d)\n", count);
 	}
 	scene = ft_strjoin("maps/", scenes[scene_index - 1]);
 	ft_free_strtab(scenes);
