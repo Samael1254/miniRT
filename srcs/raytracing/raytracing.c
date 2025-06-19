@@ -11,8 +11,14 @@
 
 int	render_loop(t_state *state)
 {
+	pthread_mutex_lock(&state->cli.mutex);
 	if (state->cli.is_new_command)
+	{
+		pthread_mutex_unlock(&state->cli.mutex);
 		process_command(&state->cli);
+	}
+	else
+		pthread_mutex_unlock(&state->cli.mutex);
 	if (!state->rendering)
 		return (0);
 	if (state->redraw_column >= PARTIAL_RENDER)

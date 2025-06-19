@@ -9,28 +9,6 @@
 #include <string.h>
 #include <unistd.h>
 
-void	process_command(t_cli *cli)
-{
-	char	*command;
-	int		old_cancel_state;
-
-	pthread_mutex_lock(&cli->mutex);
-	command = cli->command;
-	pthread_mutex_unlock(&cli->mutex);
-	if (!command)
-		return ;
-	if (command[0])
-		add_history(command);
-	printf("command: %s\n", command);
-	pthread_mutex_lock(&cli->mutex);
-	pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, &old_cancel_state);
-	free(cli->command);
-	cli->command = NULL;
-	pthread_setcancelstate(old_cancel_state, NULL);
-	cli->is_new_command = false;
-	pthread_mutex_unlock(&cli->mutex);
-}
-
 static void	cli_cleanup(void *arg)
 {
 	t_cli	*cli;
@@ -43,7 +21,28 @@ static void	cli_cleanup(void *arg)
 	rl_clear_history();
 }
 
-void	cli(t_cli *cli)
+void	process_command(t_cli *cli)
+{
+	char	*command;
+	int		old_cancel_state;
+
+	pthread_mutex_lock(&cli->mutex);
+	command = strdup(cli->command);
+	pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, &old_cancel_state);
+	free(cli->command);
+	cli->command = NULL;
+	cli->is_new_command = false;
+	pthread_setcancelstate(old_cancel_state, NULL);
+	pthread_mutex_unlock(&cli->mutex);
+	if (!command)
+		return ;
+	write(STDOUT_FILENO, "command: ", 9);
+	write(STDOUT_FILENO, command, strlen(command));
+	write(STDOUT_FILENO, "\n", 1);
+	free(command);
+}
+
+static void	cli(t_cli *cli)
 {
 	char	*line;
 
@@ -52,6 +51,8 @@ void	cli(t_cli *cli)
 		line = readline("> ");
 		if (!line)
 			break ;
+		if (line[0])
+			add_history(line);
 		pthread_mutex_lock(&cli->mutex);
 		cli->command = strdup(line);
 		cli->is_new_command = true;
@@ -62,9 +63,13 @@ void	cli(t_cli *cli)
 
 void	*start_cli(void *args)
 {
+	pthread_mutex_lock(&((t_cli *)args)->mutex);
 	pthread_cleanup_push(cli_cleanup, args);
+	pthread_mutex_unlock(&((t_cli *)args)->mutex);
 	cli((t_cli *)args);
+	pthread_mutex_lock(&((t_cli *)args)->mutex);
 	pthread_cleanup_pop(false);
+	pthread_mutex_unlock(&((t_cli *)args)->mutex);
 	return (NULL);
 }
 
