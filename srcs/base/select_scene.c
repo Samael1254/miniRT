@@ -4,13 +4,15 @@
 #include "minirt_base.h"
 #include "minirt_errors.h"
 #include <dirent.h>
+#include <errno.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
-bool	is_scene(const char *filename)
+static bool	is_scene(const char *filename)
 {
 	char	*file_ext;
 
@@ -47,19 +49,14 @@ static int	count_scenes(void)
 	return (count);
 }
 
-char	*select_scene(void)
+static char	**load_available_scenes(int count)
 {
+	int					i;
 	DIR					*d;
 	const struct dirent	*dir;
-	int					i;
-	int					scene_index;
-	int					count;
 	char				**scenes;
-	char				*user_input;
-	char				*scene;
 
 	info(NULL, "Scene selection");
-	count = count_scenes();
 	if (count == 0)
 		error("could not find any valid scene in maps/",
 			"please provide a .rt scene file as argument", NULL);
@@ -68,7 +65,10 @@ char	*select_scene(void)
 		error("malloc failed", "in select_scene", NULL);
 	d = opendir("maps");
 	if (!d)
-		return (free(scenes), NULL);
+	{
+		free(scenes);
+		error("failed to open maps directory", strerror(errno), NULL);
+	}
 	i = 0;
 	while (i < count)
 	{
@@ -80,6 +80,20 @@ char	*select_scene(void)
 	}
 	scenes[i] = NULL;
 	closedir(d);
+	return (scenes);
+}
+
+char	*select_scene(void)
+{
+	int		i;
+	int		scene_index;
+	int		count;
+	char	**scenes;
+	char	*user_input;
+	char	*scene;
+
+	count = count_scenes();
+	scenes = load_available_scenes(count);
 	printf("Available scenes:\n\n");
 	i = 0;
 	while (scenes[i])
@@ -92,7 +106,10 @@ char	*select_scene(void)
 	{
 		user_input = get_next_line(STDIN_FILENO);
 		if (!user_input)
+		{
+			ft_free_strtab(scenes);
 			error(NULL, "input stopped or crashed", NULL);
+		}
 		*ft_strchr(user_input, '\n') = '\0';
 		scene_index = ft_atoi(user_input);
 		if (scene_index > 0 && scene_index <= count
