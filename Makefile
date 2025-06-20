@@ -36,7 +36,7 @@ SRCS_TEXTURING := uv_mapping.c normal_map.c mapping_utils.c object_mapping.c
 
 SRCS_MESH := init_mesh.c mesh_utils.c parse_obj_element.c parse_obj_file.c
 
-SRCS_CLI := cli.c parse_command.c commands.c
+SRCS_CLI := cli.c commands.c
 
 SRCS := $(addprefix $(SRCS_DIR)base/, $(SRCS_MAIN)) \
            $(addprefix $(SRCS_DIR)bvh/, $(SRCS_BVH)) \

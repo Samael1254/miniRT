@@ -74,6 +74,14 @@ enum					e_keycode
 	TAB_KEY = 0xff09,
 };
 
+enum					e_cmd_status
+{
+	CS_OK,
+	CS_FAIL,
+	CS_EXIT,
+	CS_CRASH,
+};
+
 enum					e_post_process
 {
 	PP_NONE,
@@ -314,6 +322,7 @@ typedef struct s_cli
 	pthread_mutex_t		mutex;
 	bool				is_new_command;
 	bool				is_init;
+	bool				is_closed;
 }						t_cli;
 
 // State of the program

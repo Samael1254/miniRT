@@ -9,16 +9,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	render_loop(t_state *state)
+static void	evaluate_cli(t_state *state)
 {
 	pthread_mutex_lock(&state->cli.mutex);
+	if (state->cli.is_closed)
+	{
+		pthread_mutex_unlock(&state->cli.mutex);
+		exit_program(state, EXIT_SUCCESS);
+	}
 	if (state->cli.is_new_command)
 	{
 		pthread_mutex_unlock(&state->cli.mutex);
-		process_command(&state->cli);
+		process_command(state);
 	}
 	else
 		pthread_mutex_unlock(&state->cli.mutex);
+}
+
+int	render_loop(t_state *state)
+{
+	evaluate_cli(state);
 	if (!state->rendering)
 		return (0);
 	if (state->redraw_column >= PARTIAL_RENDER)

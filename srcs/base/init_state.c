@@ -1,4 +1,5 @@
 #include "minirt_base.h"
+#include "minirt_cli.h"
 #include "minirt_defs.h"
 #include "minirt_errors.h"
 #include "minirt_parsing.h"
@@ -56,4 +57,5 @@ void	init_state(t_state *state, char *filename)
 	init_scene(state, filename);
 	init_mlx(state);
 	state->start_time = get_time(state);
+	init_cli(state);
 }

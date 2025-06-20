@@ -1,20 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exit_program.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: macuesta <macuesta@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 17:21:29 by macuesta          #+#    #+#             */
-/*   Updated: 2025/06/19 16:21:28 by gfulconi         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ft_list.h"
 #include "minirt_obj_parser.h"
 #include "mlx.h"
 #include <pthread.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 static void	free_materials(t_state *state)
 {

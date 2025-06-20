@@ -1,6 +1,7 @@
+#include "minirt_defs.h"
 #include <stdio.h>
 
-int	keys_cmd(void)
+enum e_cmd_status	keys_cmd(void)
 {
 	printf("-- Keybindings --\n");
 	printf("Move: WASD\n");
@@ -14,5 +15,11 @@ int	keys_cmd(void)
 	printf("Show FPS: F\n");
 	printf("Save image: SPACE\n");
 	printf("Exit program: ESC\n");
-	return (0);
+	return (CS_OK);
+}
+
+enum e_cmd_status	exit_cmd(t_state *state)
+{
+	(void)state;
+	return (CS_EXIT);
 }

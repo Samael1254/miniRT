@@ -1,3 +1,5 @@
+#include "ft_strings.h"
+#include "minirt_base.h"
 #include "minirt_cli.h"
 #include "minirt_defs.h"
 #include <fcntl.h>
@@ -14,71 +16,109 @@ static void	cli_cleanup(void *arg)
 	t_cli	*cli;
 
 	cli = (t_cli *)arg;
-	pthread_mutex_lock(&cli->mutex);
-	if (cli->command)
-		free(cli->command);
-	pthread_mutex_unlock(&cli->mutex);
+	if (pthread_mutex_trylock(&cli->mutex) == 0)
+	{
+		if (cli->command)
+			free(cli->command);
+		pthread_mutex_unlock(&cli->mutex);
+	}
 	rl_clear_history();
 }
 
-void	process_command(t_cli *cli)
+static int	exec_command(char *line, t_state *state)
 {
-	char	*command;
-	int		old_cancel_state;
+	char				**command;
+	enum e_cmd_status	status;
 
-	pthread_mutex_lock(&cli->mutex);
-	command = strdup(cli->command);
-	pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, &old_cancel_state);
-	free(cli->command);
-	cli->command = NULL;
-	cli->is_new_command = false;
-	pthread_setcancelstate(old_cancel_state, NULL);
-	if (!command)
+	command = ft_split(line, ' ');
+	if (!command || !command[0])
+		return (CS_EXIT);
+	if (strcmp(command[0], "keys") == 0)
+		status = keys_cmd();
+	else if (strcmp(command[0], "exit") == 0)
+		status = exit_cmd(state);
+	else
 	{
-		pthread_mutex_unlock(&cli->mutex);
-		return ;
+		printf("command not found: %s\n", command[0]);
+		status = CS_FAIL;
 	}
-	parse_command(command);
-	free(command);
-	pthread_mutex_unlock(&cli->mutex);
+	ft_free_strtab(command);
+	return (status);
 }
 
-static void	cli(t_cli *cli)
+void	process_command(t_state *state)
+{
+	t_cli				*cli;
+	enum e_cmd_status	status;
+	int					old_cancel_state;
+
+	cli = &state->cli;
+	pthread_mutex_lock(&cli->mutex);
+	pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, &old_cancel_state);
+	status = exec_command(cli->command, state);
+	free(cli->command);
+	cli->command = NULL;
+	if (status != CS_EXIT && status != CS_CRASH)
+		cli->is_new_command = false;
+	pthread_setcancelstate(old_cancel_state, NULL);
+	pthread_mutex_unlock(&cli->mutex);
+	if (status == CS_EXIT)
+		exit_program(state, EXIT_SUCCESS);
+	if (status == CS_CRASH)
+		exit_program(state, EXIT_FAILURE);
+}
+
+static void	cli(t_state *state)
 {
 	char	*line;
+	t_cli	*cli_ptr;
 
+	cli_ptr = &state->cli;
 	while (true)
 	{
+		pthread_mutex_lock(&cli_ptr->mutex);
+		if (cli_ptr->is_new_command)
+		{
+			pthread_mutex_unlock(&cli_ptr->mutex);
+			usleep(100);
+			continue ;
+		}
+		pthread_mutex_unlock(&cli_ptr->mutex);
 		line = readline("> ");
 		if (!line)
+		{
+			pthread_mutex_lock(&cli_ptr->mutex);
+			cli_ptr->is_closed = true;
+			pthread_mutex_unlock(&cli_ptr->mutex);
 			break ;
+		}
 		if (line[0])
 			add_history(line);
-		pthread_mutex_lock(&cli->mutex);
-		cli->command = strdup(line);
-		cli->is_new_command = true;
-		pthread_mutex_unlock(&cli->mutex);
+		pthread_mutex_lock(&cli_ptr->mutex);
+		cli_ptr->command = strdup(line);
+		cli_ptr->is_new_command = true;
+		pthread_mutex_unlock(&cli_ptr->mutex);
 		free(line);
 	}
 }
 
 void	*start_cli(void *args)
 {
-	pthread_mutex_lock(&((t_cli *)args)->mutex);
-	pthread_cleanup_push(cli_cleanup, args);
-	pthread_mutex_unlock(&((t_cli *)args)->mutex);
-	cli((t_cli *)args);
-	pthread_mutex_lock(&((t_cli *)args)->mutex);
-	pthread_cleanup_pop(false);
-	pthread_mutex_unlock(&((t_cli *)args)->mutex);
+	t_cli	*cli_ptr;
+
+	cli_ptr = &((t_state *)args)->cli;
+	pthread_cleanup_push(cli_cleanup, cli_ptr);
+	cli(args);
+	pthread_cleanup_pop(true);
 	return (NULL);
 }
 
-void	init_cli(t_cli *cli)
+void	init_cli(t_state *state)
 {
-	cli->command = NULL;
-	cli->is_new_command = false;
-	pthread_mutex_init(&cli->mutex, NULL);
-	pthread_create(&cli->thread, NULL, start_cli, cli);
-	cli->is_init = true;
+	state->cli.command = NULL;
+	state->cli.is_new_command = false;
+	state->cli.is_closed = false;
+	pthread_mutex_init(&state->cli.mutex, NULL);
+	pthread_create(&state->cli.thread, NULL, start_cli, state);
+	state->cli.is_init = true;
 }

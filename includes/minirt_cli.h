@@ -3,11 +3,11 @@
 
 # include "minirt_defs.h"
 
-void	parse_command(char *line);
-void	process_command(t_cli *cli);
-void	init_cli(t_cli *cli);
-void	*start_cli(void *state);
+void				process_command(t_state *state);
+void				init_cli(t_state *state);
+void				*start_cli(void *state);
 
-int		keys_cmd(void);
+enum e_cmd_status	keys_cmd(void);
+enum e_cmd_status	exit_cmd(t_state *state);
 
 #endif
