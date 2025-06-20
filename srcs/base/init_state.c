@@ -54,8 +54,8 @@ void	init_state(t_state *state, char *filename)
 	info("Starting minirt with following scene", filename);
 	info(NULL, "Initialization...");
 	initialize_state(state);
-	init_scene(state, filename);
 	init_mlx(state);
+	init_scene(state, filename);
 	state->start_time = get_time(state);
 	init_cli(state);
 }
