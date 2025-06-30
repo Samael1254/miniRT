@@ -2,6 +2,7 @@
 #include "minirt_base.h"
 #include "minirt_cli.h"
 #include "minirt_defs.h"
+#include "minirt_errors.h"
 #include <fcntl.h>
 #include <pthread.h>
 #include <readline/history.h>
@@ -35,11 +36,13 @@ static int	exec_command(char *line, t_state *state)
 		return (CS_EXIT);
 	if (strcmp(command[0], "keys") == 0)
 		status = keys_cmd();
+	else if (strcmp(command[0], "screenshot") == 0)
+		status = screenshot_cmd(state);
 	else if (strcmp(command[0], "exit") == 0)
 		status = exit_cmd(state);
 	else
 	{
-		printf("command not found: %s\n", command[0]);
+		warning("command not found", command[0]);
 		status = CS_FAIL;
 	}
 	ft_free_strtab(command);
