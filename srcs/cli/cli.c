@@ -35,17 +35,17 @@ static enum e_cmd_status	exec_command(char *line, t_state *state)
 	if (!command || !command[0])
 		return (CS_EXIT);
 	if (strcmp(command[0], "keys") == 0)
-		status = keys_cmd();
+		status = keys_cmd(command);
 	else if (strcmp(command[0], "screenshot") == 0)
-		status = screenshot_cmd(state);
+		status = screenshot_cmd(command, state);
 	else if (strcmp(command[0], "fps") == 0)
-		status = fps_cmd(state);
+		status = fps_cmd(command, state);
 	else if (strcmp(command[0], "antialiasing") == 0)
-		status = antialiasing_cmd(state);
+		status = antialiasing_cmd(command, state);
 	else if (strcmp(command[0], "postprocess") == 0)
 		status = post_process_cmd(command, state);
 	else if (strcmp(command[0], "exit") == 0)
-		status = exit_cmd(state);
+		status = exit_cmd(command);
 	else
 	{
 		warning("command not found", command[0]);

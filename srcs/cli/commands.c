@@ -9,46 +9,83 @@
 #include <stdlib.h>
 #include <string.h>
 
-enum e_cmd_status	keys_cmd(void)
+enum e_cmd_status	keys_cmd(char **command)
 {
-	printf("-- Keybindings --\n");
-	printf("- Move: WASD\n");
-	printf("- Zoom: Mouse wheel\n");
-	printf("- Rotate: ALT + WASD\n");
-	printf("- Change movement speed: UP/DOWN\n");
-	printf("- Change rotation speed: LEFT/RIGHT\n");
-	printf("- Show source light(s): L\n");
-	printf("- Change post-process: P (Shift-P to go backwards)\n");
-	printf("- Anti-aliasing: K\n");
-	printf("- Show FPS: F\n");
-	printf("- Save image: SPACE\n");
-	printf("- Exit program: ESC\n");
+	int	cmd_len;
+
+	cmd_len = ft_strtab_size(command);
+	if (cmd_len == 1)
+	{
+		printf("- Move: WASD\n");
+		printf("- Zoom: Mouse wheel\n");
+		printf("- Rotate: ALT + WASD\n");
+		printf("- Change movement speed: UP/DOWN\n");
+		printf("- Change rotation speed: LEFT/RIGHT\n");
+		printf("- Show source light(s): L\n");
+		printf("- Change post-process: P (Shift-P to go backwards)\n");
+		printf("- Anti-aliasing: K\n");
+		printf("- Show FPS: F\n");
+		printf("- Save image: SPACE\n");
+		printf("- Exit program: ESC\n");
+	}
+	else if (strcmp(command[1], "help") == 0)
+		return (cmd_help("Show all the available keybindings.\n", cmd_len));
 	return (CS_OK);
 }
 
-enum e_cmd_status	screenshot_cmd(t_state *state)
+enum e_cmd_status	screenshot_cmd(char **command, t_state *state)
 {
-	save_image(state);
-	return (CS_OK);
-}
+	int	cmd_len;
 
-enum e_cmd_status	fps_cmd(t_state *state)
-{
-	toggle_fps(state);
-	if (state->keys_state.toggle_fps)
-		info("Show FPS", "\e[32mON\e[0m");
+	cmd_len = ft_strtab_size(command);
+	if (cmd_len == 1)
+		save_image(state);
+	else if (strcmp(command[1], "help") == 0)
+		return (cmd_help("Save a screenshot of the window on the computer.\n",
+				cmd_len));
 	else
-		info("Show FPS", "\e[31mOFF\e[0m");
+		return (warning("unknown argument", command[1]), CS_FAIL);
 	return (CS_OK);
 }
 
-enum e_cmd_status	antialiasing_cmd(t_state *state)
+enum e_cmd_status	fps_cmd(char **command, t_state *state)
 {
-	toggle_aa(state);
-	if (state->keys_state.toggle_aa)
-		info("Anti-aliasing", "\e[32mON\e[0m");
+	int	cmd_len;
+
+	cmd_len = ft_strtab_size(command);
+	if (cmd_len == 1)
+	{
+		toggle_fps(state);
+		if (state->keys_state.toggle_fps)
+			info("Show FPS", "\e[32mON\e[0m");
+		else
+			info("Show FPS", "\e[31mOFF\e[0m");
+		return (CS_OK);
+	}
+	if (strcmp(command[1], "help") == 0)
+		return (cmd_help("Toggle FPS counter on screen.\n", cmd_len));
 	else
-		info("Anti-aliasing", "\e[31mOFF\e[0m");
+		return (warning("unknown argument", command[1]), CS_FAIL);
+	return (CS_OK);
+}
+
+enum e_cmd_status	antialiasing_cmd(char **command, t_state *state)
+{
+	int	cmd_len;
+
+	cmd_len = ft_strtab_size(command);
+	if (cmd_len == 1)
+	{
+		toggle_aa(state);
+		if (state->keys_state.toggle_aa)
+			info("Anti-aliasing", "\e[32mON\e[0m");
+		else
+			info("Anti-aliasing", "\e[31mOFF\e[0m");
+	}
+	else if (strcmp(command[1], "help") == 0)
+		return (cmd_help("Toggle anti-aliasing.\n", cmd_len));
+	else
+		return (warning("unknown argument", command[1]), CS_FAIL);
 	return (CS_OK);
 }
 
@@ -64,9 +101,8 @@ enum e_cmd_status	post_process_cmd(char **command, t_state *state)
 			post_process(state);
 		reload_image(state);
 		info("Post process filter", pp_filter_name(state->post_process));
-		return (CS_OK);
 	}
-	if (strcmp(command[1], "list") == 0)
+	else if (strcmp(command[1], "list") == 0)
 	{
 		if (cmd_len > 2)
 			return (warning("too many arguments",
@@ -112,24 +148,26 @@ enum e_cmd_status	post_process_cmd(char **command, t_state *state)
 		info("Post process filter", pp_filter_name(state->post_process));
 	}
 	else if (strcmp(command[1], "help") == 0)
-	{
-		if (cmd_len > 2)
-			return (warning("too many arguments",
-					"no argument expected after 'help'"), CS_FAIL);
-		printf("Change or get information about the post-processing of the scene.\n");
-		printf("With no argument, it changes the filter to the next one.\n");
-		printf("Arguments:\n");
-		printf("- list: show all available filters\n");
-		printf("- info: display the name of the current filter\n");
-		printf("- set [index]: change to the filter corresponding to 'index'\n");
-	}
+		return (cmd_help("Change or get information about the post-processing of the scene.\n\
+With no argument, it changes the filter to the next one.\n\
+Arguments:\n\
+- list: show all available filters\n\
+- info: display the name of the current filter\n\
+- set [index]: change to the filter corresponding to 'index'\n ",
+							cmd_len));
 	else
 		return (warning("unknown argument", command[1]), CS_FAIL);
 	return (CS_OK);
 }
 
-enum e_cmd_status	exit_cmd(t_state *state)
+enum e_cmd_status	exit_cmd(char **command)
 {
-	(void)state;
-	return (CS_EXIT);
+	int	cmd_len;
+
+	cmd_len = ft_strtab_size(command);
+	if (cmd_len == 1)
+		return (CS_EXIT);
+	if (strcmp(command[1], "help") == 0)
+		return (cmd_help("Exit miniRT.\n", cmd_len));
+	return (warning("unknown argument", command[1]), CS_FAIL);
 }
