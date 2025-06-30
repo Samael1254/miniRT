@@ -26,7 +26,7 @@ static void	cli_cleanup(void *arg)
 	rl_clear_history();
 }
 
-static int	exec_command(char *line, t_state *state)
+static enum e_cmd_status	exec_command(char *line, t_state *state)
 {
 	char				**command;
 	enum e_cmd_status	status;
@@ -40,6 +40,10 @@ static int	exec_command(char *line, t_state *state)
 		status = screenshot_cmd(state);
 	else if (strcmp(command[0], "fps") == 0)
 		status = fps_cmd(state);
+	else if (strcmp(command[0], "antialiasing") == 0)
+		status = antialiasing_cmd(state);
+	else if (strcmp(command[0], "postprocess") == 0)
+		status = post_process_cmd(command, state);
 	else if (strcmp(command[0], "exit") == 0)
 		status = exit_cmd(state);
 	else
@@ -97,8 +101,9 @@ static void	cli(t_state *state)
 			pthread_mutex_unlock(&cli_ptr->mutex);
 			break ;
 		}
-		if (line[0])
-			add_history(line);
+		if (!line[0])
+			continue ;
+		add_history(line);
 		pthread_mutex_lock(&cli_ptr->mutex);
 		cli_ptr->command = strdup(line);
 		cli_ptr->is_new_command = true;

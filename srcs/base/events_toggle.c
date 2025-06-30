@@ -48,16 +48,6 @@ void	toggle_fps(t_state *state)
 	reload_image(state);
 }
 
-void	toggle_command_mode(t_state *state)
-{
-	if (state->rendering)
-		return;
-	state->keys_state.toggle_command = true;
-	state->post_process = PP_DARK;
-	post_process(state);
-	reload_image(state);
-}
-
 void	change_post_processing(t_state *state)
 {
 	if (!state->keys_state.hold_shift)

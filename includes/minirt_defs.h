@@ -24,7 +24,7 @@
 
 # define PARTIAL_RENDER 16
 
-# define NB_FILTERS 10
+# define NB_FILTERS 11
 
 # define RAY_REACH_MAX 1000
 # define RAY_REACH_MIN 1e-4
