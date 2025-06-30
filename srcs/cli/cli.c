@@ -38,6 +38,8 @@ static int	exec_command(char *line, t_state *state)
 		status = keys_cmd();
 	else if (strcmp(command[0], "screenshot") == 0)
 		status = screenshot_cmd(state);
+	else if (strcmp(command[0], "fps") == 0)
+		status = fps_cmd(state);
 	else if (strcmp(command[0], "exit") == 0)
 		status = exit_cmd(state);
 	else

@@ -17,8 +17,8 @@
 # define BVH_DEPTH 8
 # define BVH_MIN_TRIANGLES 5
 
-# define WIN_X 1000
-# define WIN_Y 800
+# define WIN_X 800
+# define WIN_Y 600
 
 # define AA_LEVEL 2
 

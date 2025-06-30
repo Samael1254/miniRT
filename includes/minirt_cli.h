@@ -9,6 +9,7 @@ void				*start_cli(void *state);
 
 enum e_cmd_status	keys_cmd(void);
 enum e_cmd_status	screenshot_cmd(t_state *state);
+enum e_cmd_status	fps_cmd(t_state *state);
 enum e_cmd_status	exit_cmd(t_state *state);
 
 #endif

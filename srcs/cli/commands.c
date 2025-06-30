@@ -1,4 +1,6 @@
+#include "minirt_base.h"
 #include "minirt_defs.h"
+#include "minirt_errors.h"
 #include "minirt_graphics.h"
 #include <stdio.h>
 
@@ -22,6 +24,16 @@ enum e_cmd_status	keys_cmd(void)
 enum e_cmd_status	screenshot_cmd(t_state *state)
 {
 	save_image(state);
+	return (CS_OK);
+}
+
+enum e_cmd_status	fps_cmd(t_state *state)
+{
+	toggle_fps(state);
+	if (state->keys_state.toggle_fps)
+		info("Show FPS", "\e[32mON\e[0m");
+	else
+		info("Show FPS", "\e[31mOFF\e[0m");
 	return (CS_OK);
 }
 
