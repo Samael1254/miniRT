@@ -101,12 +101,12 @@ This project comes with a few pre-made scenes, meshes, textures and materials to
 ## 📦 Installation and usage
 Clone and build miniRT at the location of your choice :
 ```
-git clone --recursive-submodules https://github.com/Samael1254/miniRT.git
+git clone --recurse-submodules https://github.com/Samael1254/miniRT.git
 cd miniRT
 make
 ```
 
-⚠️ This project uses submodules for libraries. If you forgot to clone them recursively, exectute this command in the repository:
+⚠️ This project uses submodules for libraries. If you forgot to clone them recursively, execute this command in the repository:
 ```
 git submodule update --init --recursive
 ```
