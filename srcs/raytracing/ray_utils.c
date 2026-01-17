@@ -76,13 +76,13 @@ t_ray	init_ray(t_camera camera, t_vec2 rotator)
 	double	m_rot_y[4][4];
 
 	ft_set_rotation_mat4(m_rot_y, rotator.y, camera.y_axis);
-	ray.direction = ft_4dto3d_vector(ft_mat_vec_product4(m_rot_y,
-				ft_3dto4d_vector(camera.dir)));
-	camera.x_axis = ft_4dto3d_vector(ft_mat_vec_product4(m_rot_y,
-				ft_3dto4d_vector(camera.x_axis)));
+	ray.direction = ft_4to3_vec(ft_mat_vec_product4(m_rot_y,
+				ft_3to4_vec(camera.dir)));
+	camera.x_axis = ft_4to3_vec(ft_mat_vec_product4(m_rot_y,
+				ft_3to4_vec(camera.x_axis)));
 	ft_set_rotation_mat4(m_rot_x, rotator.x, camera.x_axis);
-	ray.direction = ft_4dto3d_vector(ft_mat_vec_product4(m_rot_x,
-				ft_3dto4d_vector(ray.direction)));
+	ray.direction = ft_4to3_vec(ft_mat_vec_product4(m_rot_x,
+				ft_3to4_vec(ray.direction)));
 	ray.origin = camera.pos;
 	ray.refraction = AIR_REFRACTION;
 	return (ray);
