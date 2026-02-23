@@ -6,16 +6,13 @@
 #include "minirt_raytracing.h"
 #include <bits/types/struct_timeval.h>
 #include <fcntl.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <readline/rltypedefs.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	t_state	state;
-	char	*scene_name;
+	t_state state;
+	char   *scene_name;
 
 	check_arguments(argc, argv);
 	if (argc > 1)

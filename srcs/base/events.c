@@ -4,7 +4,7 @@
 #include "minirt_raytracing.h"
 #include "mlx.h"
 
-int	mouse_clicked(enum e_keycode button, int x, int y, t_state *state)
+int mouse_clicked(enum e_keycode button, int x, int y, t_state *state)
 {
 	if (button == SCROLL_UP)
 		move_camera(state, &state->scene.camera, SCROLL_UP);
@@ -15,12 +15,12 @@ int	mouse_clicked(enum e_keycode button, int x, int y, t_state *state)
 	return (0);
 }
 
-void	loop_events(t_state *state)
+void loop_events(t_state *state)
 {
-	mlx_hook(state->win, ON_KEYPRESS, 1L << 0, key_pressed, state);
-	mlx_hook(state->win, ON_KEYRELEASE, 1L << 1, key_released, state);
-	mlx_hook(state->win, ON_BUTTONPRESS, 1L << 2, mouse_clicked, state);
-	mlx_hook(state->win, ON_CLIENTMSG, 0L, exit_program, state);
-	mlx_loop_hook(state->display, render_loop, state);
+	mlx_hook(state->win, ON_KEYPRESS, 1L << 0, (void *)key_pressed, state);
+	mlx_hook(state->win, ON_KEYRELEASE, 1L << 1, (void *)key_released, state);
+	mlx_hook(state->win, ON_BUTTONPRESS, 1L << 2, (void *)mouse_clicked, state);
+	mlx_hook(state->win, ON_CLIENTMSG, 0L, (void *)exit_program, state);
+	mlx_loop_hook(state->display, (void *)render_loop, state);
 	mlx_loop(state->display);
 }

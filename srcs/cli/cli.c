@@ -5,16 +5,18 @@
 #include "minirt_errors.h"
 #include <fcntl.h>
 #include <pthread.h>
+// clang-format off
+#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
-#include <stdio.h>
+// clang-format on
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
-static void	cli_cleanup(void *arg)
+static void cli_cleanup(void *arg)
 {
-	t_cli	*cli;
+	t_cli *cli;
 
 	cli = (t_cli *)arg;
 	if (pthread_mutex_trylock(&cli->mutex) == 0)
@@ -26,10 +28,10 @@ static void	cli_cleanup(void *arg)
 	rl_clear_history();
 }
 
-static enum e_cmd_status	exec_command(char *line, t_state *state)
+static enum e_cmd_status exec_command(char *line, t_state *state)
 {
-	char				**command;
-	enum e_cmd_status	status;
+	char            **command;
+	enum e_cmd_status status;
 
 	command = ft_split(line, ' ');
 	if (!command || !command[0])
@@ -55,11 +57,11 @@ static enum e_cmd_status	exec_command(char *line, t_state *state)
 	return (status);
 }
 
-void	process_command(t_state *state)
+void process_command(t_state *state)
 {
-	t_cli				*cli;
-	enum e_cmd_status	status;
-	int					old_cancel_state;
+	t_cli            *cli;
+	enum e_cmd_status status;
+	int               old_cancel_state;
 
 	cli = &state->cli;
 	pthread_mutex_lock(&cli->mutex);
@@ -77,10 +79,10 @@ void	process_command(t_state *state)
 		exit_program(state, EXIT_FAILURE);
 }
 
-static void	cli(t_state *state)
+static void cli(t_state *state)
 {
-	char	*line;
-	t_cli	*cli_ptr;
+	char  *line;
+	t_cli *cli_ptr;
 
 	cli_ptr = &state->cli;
 	while (true)
@@ -90,7 +92,7 @@ static void	cli(t_state *state)
 		{
 			pthread_mutex_unlock(&cli_ptr->mutex);
 			usleep(100);
-			continue ;
+			continue;
 		}
 		pthread_mutex_unlock(&cli_ptr->mutex);
 		line = readline("> ");
@@ -99,10 +101,10 @@ static void	cli(t_state *state)
 			pthread_mutex_lock(&cli_ptr->mutex);
 			cli_ptr->is_closed = true;
 			pthread_mutex_unlock(&cli_ptr->mutex);
-			break ;
+			break;
 		}
 		if (!line[0])
-			continue ;
+			continue;
 		add_history(line);
 		pthread_mutex_lock(&cli_ptr->mutex);
 		cli_ptr->command = strdup(line);
@@ -112,9 +114,9 @@ static void	cli(t_state *state)
 	}
 }
 
-void	*start_cli(void *args)
+void *start_cli(void *args)
 {
-	t_cli	*cli_ptr;
+	t_cli *cli_ptr;
 
 	cli_ptr = &((t_state *)args)->cli;
 	pthread_cleanup_push(cli_cleanup, cli_ptr);
@@ -123,7 +125,7 @@ void	*start_cli(void *args)
 	return (NULL);
 }
 
-void	init_cli(t_state *state)
+void init_cli(t_state *state)
 {
 	state->cli.command = NULL;
 	state->cli.is_new_command = false;

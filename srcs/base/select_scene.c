@@ -4,17 +4,19 @@
 #include "minirt_errors.h"
 #include <dirent.h>
 #include <errno.h>
+// clang-format off
+#include <stdio.h>
 #include <readline/readline.h>
+// clang-format on
 #include <stdbool.h>
 #include <stddef.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
-static bool	is_scene(const char *filename)
+static bool is_scene(const char *filename)
 {
-	char	*file_ext;
+	char *file_ext;
 
 	file_ext = ft_strrchr(filename, '.');
 	if (!file_ext)
@@ -26,22 +28,22 @@ static bool	is_scene(const char *filename)
 	return (true);
 }
 
-static int	count_scenes(void)
+static int count_scenes(void)
 {
-	DIR					*d;
-	const struct dirent	*dir;
-	int					count;
+	DIR                 *d;
+	const struct dirent *dir;
+	int                  count;
 
 	d = opendir("maps");
 	if (!d)
-		error("could not select any scene, maps/ directory not found",
-			"please provide a .rt scene file as argument", NULL);
+		error("could not select any scene, maps/ directory not found", "please provide a .rt scene file as argument",
+		      NULL);
 	count = 0;
 	while (true)
 	{
 		dir = readdir(d);
 		if (!dir)
-			break ;
+			break;
 		if (is_scene((dir->d_name)))
 			count++;
 	}
@@ -49,17 +51,16 @@ static int	count_scenes(void)
 	return (count);
 }
 
-static char	**load_available_scenes(int count)
+static char **load_available_scenes(int count)
 {
-	int					i;
-	DIR					*d;
-	const struct dirent	*dir;
-	char				**scenes;
+	int                  i;
+	DIR                 *d;
+	const struct dirent *dir;
+	char               **scenes;
 
 	info(NULL, "Scene selection");
 	if (count == 0)
-		error("could not find any valid scene in maps/",
-			"please provide a .rt scene file as argument", NULL);
+		error("could not find any valid scene in maps/", "please provide a .rt scene file as argument", NULL);
 	scenes = malloc((count + 1) * sizeof(char *));
 	if (!scenes)
 		error("malloc failed", "in select_scene", NULL);
@@ -74,7 +75,7 @@ static char	**load_available_scenes(int count)
 	{
 		dir = readdir(d);
 		if (!dir)
-			break ;
+			break;
 		if (is_scene((dir->d_name)))
 			scenes[i++] = ft_strdup(dir->d_name);
 	}
@@ -83,9 +84,9 @@ static char	**load_available_scenes(int count)
 	return (scenes);
 }
 
-static void	print_available_scenes(char **scenes)
+static void print_available_scenes(char **scenes)
 {
-	int	i;
+	int i;
 
 	printf("Available scenes:\n\n");
 	i = 0;
@@ -96,13 +97,13 @@ static void	print_available_scenes(char **scenes)
 	}
 }
 
-char	*select_scene(void)
+char *select_scene(void)
 {
-	int		scene_index;
-	int		count;
-	char	**scenes;
-	char	*user_input;
-	char	*scene;
+	int    scene_index;
+	int    count;
+	char **scenes;
+	char  *user_input;
+	char  *scene;
 
 	count = count_scenes();
 	scenes = load_available_scenes(count);
@@ -117,11 +118,10 @@ char	*select_scene(void)
 			error(NULL, "input stopped or crashed", NULL);
 		}
 		scene_index = ft_atoi(user_input);
-		if (scene_index > 0 && scene_index <= count
-			&& ft_str_is_number(user_input))
+		if (scene_index > 0 && scene_index <= count && ft_str_is_number(user_input))
 		{
 			free(user_input);
-			break ;
+			break;
 		}
 		free(user_input);
 		printf("Please enter a \e[32mvalid\e[0m scene \e[33mindex\e[0m ");

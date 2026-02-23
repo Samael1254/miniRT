@@ -5,11 +5,13 @@
 #include "minirt_graphics.h"
 #include "minirt_raytracing.h"
 #include <pthread.h>
-#include <readline/readline.h>
+// clang-format off
 #include <stdio.h>
+#include <readline/readline.h>
+// clang-format on
 #include <stdlib.h>
 
-static void	evaluate_cli(t_state *state)
+static void evaluate_cli(t_state *state)
 {
 	pthread_mutex_lock(&state->cli.mutex);
 	if (state->cli.is_closed)
@@ -26,7 +28,7 @@ static void	evaluate_cli(t_state *state)
 		pthread_mutex_unlock(&state->cli.mutex);
 }
 
-int	render_loop(t_state *state)
+int render_loop(t_state *state)
 {
 	evaluate_cli(state);
 	if (!state->rendering)
@@ -46,7 +48,7 @@ int	render_loop(t_state *state)
 	return (0);
 }
 
-void	ray_tracing(t_state *state)
+void ray_tracing(t_state *state)
 {
 	info(NULL, "Ray-tracing...");
 	state->redraw_column = 0;
