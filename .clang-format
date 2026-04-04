@@ -1,0 +1,38 @@
+# Base style
+BasedOnStyle: LLVM
+
+# Language
+Language: C
+Standard: C99
+
+# Tabs and indent
+UseTab: ForIndentation
+TabWidth: 4
+IndentWidth: 4
+
+# Column limit
+ColumnLimit: 120
+
+# Braces on new line
+BreakBeforeBraces: Allman
+
+# AccessModifierOffset: 2
+
+# Alignement
+AlignConsecutiveDeclarations: Consecutive
+AlignConsecutiveMacros: Consecutive
+AlignEscapedNewlines: Left
+AlignOperands: Align
+
+# Lines
+AllowShortFunctionsOnASingleLine: Inline
+EmptyLineBeforeAccessModifier: LogicalBlock
+KeepEmptyLinesAtTheStartOfBlocks: false
+
+# Templates
+AlwaysBreakTemplateDeclarations: Yes
+
+# Includes
+SortIncludes: true
+IncludeBlocks: Merge
+PointerAlignment: Right

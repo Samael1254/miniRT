@@ -188,7 +188,7 @@ typedef struct s_bvh
 	t_bntree			*root;
 }						t_bvh;
 
-typedef struct vertex
+typedef struct s_vertex
 {
 	int					geo_id;
 	int					text_id;

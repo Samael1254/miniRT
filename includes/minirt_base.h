@@ -12,7 +12,7 @@ void			modify_rot_step_size(t_state *state, char sign);
 void			display_fps(t_state *state);
 void			recreate_image(t_state *state);
 void			reload_image(t_state *state);
-int				mouse_clicked(enum e_keycode key, int x, int y, t_state *state);
+int				mouse_clicked(enum e_keycode button, int x, int y, t_state *state);
 int				key_released(int button, t_state *state);
 void			display_help(t_state *state);
 

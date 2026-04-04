@@ -1,0 +1,49 @@
+Checks:
+- performance-*,
+- bugprone-*,
+- -bugprone-easily-swappable-parameters
+- readability-*,
+- -readability-braces-around-statements
+- -readability-identifier-length
+- -readability-implicit-bool-conversion
+- -readability-magic-numbers
+- -readability-function-cognitive-complexity
+- clang-analyzer-*,
+- -readability-function-cognitive-complexity
+- -performance-avoid-endl
+- modernize-use-bool-literals, modernize-deprecated-ios-base-aliases, modernize-use-equals-default,
+
+CheckOptions:
+# IDENTIFIER NAMING
+# Case
+  # Class and class members
+  readability-identifier-naming.ClassCase: "lower_case"
+  readability-identifier-naming.StructCase: "lower_case"
+  # readability-identifier-naming.ClassMemberCase: "camelBack"
+  # readability-identifier-naming.MemberCase: "camelBack"
+  # readability-identifier-naming.ClassMethodCase: "camelBack"
+  # readability-identifier-naming.MethodCase: "camelBack"
+  readability-identifier-naming.PublicMemberCase: "lower_case"
+  readability-identifier-naming.PublicMethodCase: "lower_case"
+  readability-identifier-naming.PrivateMemberCase: "lower_case"
+  readability-identifier-naming.PrivateMethodCase: "lower_case"
+  readability-identifier-naming.ProtectedMemberCase: "lower_case"
+  readability-identifier-naming.ProtectedMethodCase: "lower_case"
+  #Enum and macro
+  readability-identifier-naming.EnumCase: "lower_case"
+  readability-identifier-naming.EnumConstantCase: "UPPER_CASE"
+  readability-identifier-naming.MacroDefinitionCase: "UPPER_CASE" #PB
+  # Variables, functions and parameters
+  readability-identifier-naming.VariableCase: "lower_case"
+  readability-identifier-naming.ParameterCase: "lower_case"
+  readability-identifier-naming.FunctionCase: "lower_case"
+# Prefixes
+  readability-identifier-naming.GlobalVariablePrefix: "g_"
+  readability-identifier-naming.TypedefPrefix: "t_"
+  readability-identifier-naming.StructPrefix: "s_"
+  readability-identifier-naming.EnumPrefix: "e_"
+  # Undescore prefix before private and protected member variables
+  readability-identifier-naming.PrivateMemberPrefix: "_"
+  readability-identifier-naming.PrivateMethodPrefix: "_"
+  readability-identifier-naming.ProtectedMemberPrefix: "_"
+  readability-identifier-naming.ProtectedMethodPrefix: "_"
