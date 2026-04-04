@@ -64,9 +64,9 @@ MLX = ./libs/libmlx.a
 LDFLAGS := -lft -Llibs -lmlx -Llibs -lX11 -lXext -lm -lreadline -pthread
 
 $(NAME): $(OBJS) $(HEADERS)
-	@ echo " \033[33mCompiling miniRT\033[m"
+	@ printf " \033[33mCompiling miniRT\033[m\n"
 	@ $(CC) $(CFLAGS) -o $@ $(OBJS) $(LDFLAGS)
-	@ echo " \033[1;32m MiniRT\033[0;1;32m binary compiled\033[m"
+	@ printf " \033[1;32m MiniRT\033[0;1;32m binary compiled\033[m\n"
 
 $(BUILD_DIR)%.o: $(SRCS_DIR)*/%.c
 	@ mkdir -p $(BUILD_DIR)
@@ -75,14 +75,14 @@ $(BUILD_DIR)%.o: $(SRCS_DIR)*/%.c
 all: $(NAME)
 
 clean:
-	@ echo " \033[33mCleaning\033[m"
+	@ printf " \033[33mCleaning\033[m\n"
 	@ rm -f $(OBJS) $(DEPS)
 	@ rm -rf $(BUILD_DIR)
-	@ echo " \033[32m MiniRT build files cleaned\033[m"
+	@ printf " \033[32m MiniRT build files cleaned\033[m\n"
 
 fclean: clean
 	@ rm -f $(NAME)
-	@ echo " \033[32m MiniRT binary cleaned\033[m"
+	@ printf " \033[32m MiniRT binary cleaned\033[m\n"
 
 re: fclean all
 
